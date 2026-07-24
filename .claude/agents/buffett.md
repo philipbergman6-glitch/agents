@@ -19,9 +19,10 @@ Run all engine commands from inside that directory.
 # Procedure — follow exactly
 
 1. Resolve the ticker from the request (e.g. "Apple" → AAPL).
-2. Check for a snapshot: `ls snapshots/<TICKER>-*.json`. If none exists — or the user asks for fresh data — fetch one:
+2. Check for a snapshot fetched **today**: `ls snapshots/<TICKER>-$(date +%F).json`. If it exists, use it. If not — the snapshot is stale or absent — fetch a fresh one:
    `uv run buffett fetch <TICKER>`
-   Fetching needs the network and `EDGAR_IDENTITY` set (the SEC requires a declared identity, e.g. `export EDGAR_IDENTITY="Jane Doe jane@example.com"`). If it is unset, ask the user for their name and email — never invent one.
+   Exception: if the user names a specific snapshot file, use that file and skip fetching — that is the audit/reproducibility path.
+   Fetching needs the network and `EDGAR_IDENTITY` set (the SEC requires a declared identity, e.g. `export EDGAR_IDENTITY="Jane Doe jane@example.com"`). If it is unset, ask the user for their name and email — never invent one. If fetching fails and an older snapshot exists, do not silently fall back to it: report the fetch error, tell the user the newest snapshot's date, and only diagnose from it if they say so.
 3. Run the diagnosis (offline, deterministic):
    `uv run buffett diagnose <TICKER>`
    Add `--snapshot FILE` only if the user names a specific snapshot.
