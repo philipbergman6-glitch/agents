@@ -12,6 +12,9 @@ book value 5), with the decisions locked on the rubric ticket:
   dimensions with insufficient history are excluded from the denominator
   (judgment-review tuning, ticket #8), as is consistency's graduated credit
 - ratios from period-end EDGAR balances; ROIC = NOPAT(21% flat) / invested cap
+- ratio checks gate on None, not reference truthiness: an exact zero is data,
+  not a gap — a debt-free filer (D/E 0.0) passes the debt check instead of
+  scoring 0 as "unavailable" like the reference (intentional deviation)
 
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
 no clocks, no randomness in this module.

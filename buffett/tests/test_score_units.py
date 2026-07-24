@@ -2,7 +2,12 @@
 
 import pytest
 
-from buffett_engine.score import analyze_book_value, calculate_intrinsic_value, compute_signal
+from buffett_engine.score import (
+    analyze_book_value,
+    analyze_fundamentals,
+    calculate_intrinsic_value,
+    compute_signal,
+)
 
 
 def _period(net_income):
@@ -25,6 +30,23 @@ def test_negative_latest_earnings_does_not_crash():
     assert isinstance(result["intrinsic_value"], float)
     # Fallback growth path: 3% headline, staged down per the locked DCF.
     assert result["dcf_stages"]["stage1_growth"] == pytest.approx(0.03)
+
+
+def test_zero_debt_is_data_not_a_gap():
+    """Intentional deviation from the reference, which truthiness-gates ratios
+    and scores an exact D/E of 0.0 as 'unavailable'. Zero debt is the best
+    case and must earn the +2, with no missing-data flag."""
+    metrics = {
+        "return_on_equity": 0.20,
+        "debt_to_equity": 0.0,
+        "operating_margin": 0.20,
+        "current_ratio": 2.0,
+    }
+    flags = []
+    result = analyze_fundamentals(metrics, flags)
+    assert result["score"] == 7
+    assert any("Debt/equity 0.00 < 0.5" in d for d in result["details"])
+    assert flags == []
 
 
 def _bv_period(period_end, equity, shares):
