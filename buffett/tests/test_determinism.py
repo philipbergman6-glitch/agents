@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from buffett_engine.score import diagnose
+from whale_engine.scorers.buffett import diagnose
 
 from conftest import SNAPSHOT_DATE, SNAPSHOTS, load_snapshot
 
@@ -24,7 +24,7 @@ def test_diagnose_is_deterministic(ticker):
 
 
 def test_cli_output_is_byte_identical(capsys):
-    from buffett_engine.cli import main
+    from whale_engine.cli import buffett_main as main
 
     args = ["diagnose", "AAPL", "--snapshot", str(SNAPSHOTS / f"AAPL-{SNAPSHOT_DATE}.json")]
     assert main(args) == 0

@@ -1,12 +1,17 @@
-"""Two-phase CLI.
+"""Two-phase CLI, one engine, many whales.
 
-  buffett fetch TICKER      networked: EDGAR + yfinance -> snapshots/TICKER-DATE.json
-  buffett diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
+  <prog> fetch TICKER      networked: EDGAR + yfinance -> snapshots/TICKER-DATE.json
+  <prog> diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
 
-Snapshots directory: --snapshots-dir, else $BUFFETT_SNAPSHOTS, else ./snapshots.
-Diagnose is a pure function of the snapshot file; byte-identical output for the
-same snapshot. All errors exit non-zero with a message on stderr — no silent
-fallbacks.
+Entry points:
+  buffett ...              Buffett-only prog; behavior identical to the original CLI
+  whale ... --whale NAME   generic prog; diagnose requires picking a whale scorer
+
+Snapshots are whale-agnostic (raw filings data, no opinions): fetch once, then
+any whale diagnoses from the same file. Snapshots directory: --snapshots-dir,
+else $BUFFETT_SNAPSHOTS, else ./snapshots. Diagnose is a pure function of the
+snapshot file; byte-identical output for the same snapshot. All errors exit
+non-zero with a message on stderr — no silent fallbacks.
 """
 
 from __future__ import annotations
@@ -16,6 +21,8 @@ import json
 import os
 import sys
 from pathlib import Path
+
+from .scorers import WHALES, get_diagnose
 
 
 def _snapshots_dir(arg: str | None) -> Path:
@@ -39,7 +46,7 @@ def cmd_fetch(args) -> int:
 
 
 def cmd_diagnose(args) -> int:
-    from .score import diagnose
+    diagnose = get_diagnose(args.whale)
 
     if args.snapshot:
         path = Path(args.snapshot)
@@ -52,7 +59,7 @@ def cmd_diagnose(args) -> int:
         if not candidates:
             print(
                 f"error: no snapshot for {ticker} in {_snapshots_dir(args.snapshots_dir)}/ "
-                f"— run `buffett fetch {ticker}` first",
+                f"— run `{args.prog} fetch {ticker}` first",
                 file=sys.stderr,
             )
             return 2
@@ -65,20 +72,22 @@ def cmd_diagnose(args) -> int:
     return 0
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="buffett", description=__doc__)
+def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | None = None) -> int:
+    parser = argparse.ArgumentParser(prog=prog, description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_fetch = sub.add_parser("fetch", help="fetch EDGAR + market data into a snapshot (networked)")
     p_fetch.add_argument("ticker")
     p_fetch.add_argument("--snapshots-dir")
-    p_fetch.set_defaults(func=cmd_fetch)
+    p_fetch.set_defaults(func=cmd_fetch, prog=prog)
 
     p_diag = sub.add_parser("diagnose", help="score a snapshot (offline, deterministic)")
     p_diag.add_argument("ticker")
     p_diag.add_argument("--snapshot", help="explicit snapshot file (default: latest for ticker)")
     p_diag.add_argument("--snapshots-dir")
-    p_diag.set_defaults(func=cmd_diagnose)
+    if whale is None:
+        p_diag.add_argument("--whale", required=True, choices=WHALES, help="scorer to apply")
+    p_diag.set_defaults(func=cmd_diagnose, prog=prog, **({} if whale is None else {"whale": whale}))
 
     args = parser.parse_args(argv)
     try:
@@ -86,6 +95,10 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as e:
         print(f"error: {type(e).__name__}: {e}", file=sys.stderr)
         return 1
+
+
+def buffett_main(argv: list[str] | None = None) -> int:
+    return main(argv, prog="buffett", whale="buffett")
 
 
 if __name__ == "__main__":

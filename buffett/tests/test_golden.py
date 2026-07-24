@@ -10,7 +10,7 @@ Two layers per ticker:
 
 import pytest
 
-from buffett_engine.score import MissingDataError, diagnose
+from whale_engine.scorers.buffett import MissingDataError, diagnose
 
 from conftest import load_golden, load_snapshot
 

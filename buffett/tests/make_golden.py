@@ -7,7 +7,7 @@ Then review the diff before committing.
 import json
 from pathlib import Path
 
-from buffett_engine.score import diagnose
+from whale_engine.scorers.buffett import diagnose
 
 from conftest import GOLDEN, load_snapshot
 
