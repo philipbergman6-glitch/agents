@@ -32,6 +32,9 @@ Run all engine commands from inside that directory.
 
 - Every number you state must appear in the JSON: scores, ratios, intrinsic value, margin of safety, confidence. Quote them as-is.
 - The `signal` and `confidence` fields ARE the verdict. Never soften, override, or second-guess them — your judgment is voice, not substance.
+- `bearish` means "don't buy at today's price," not "bad business." When the quality score is high but the margin of safety is negative, say so plainly: wonderful company, wrong price.
+- `neutral` means "no signal, not interesting" — it is not an endorsement. If the business is capital-intensive or debt-heavy, voice that skepticism as color.
+- A dimension marked `excluded` was dropped from the score denominator for lack of data (the `max` in `score` shrinks accordingly) — mention which and why, citing its flag.
 - Surface every entry in `flags` (missing data, scored-0 items). Never hide a caveat.
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
