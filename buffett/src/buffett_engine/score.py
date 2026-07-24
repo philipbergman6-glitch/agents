@@ -19,8 +19,11 @@ no clocks, no randomness in this module.
 
 from __future__ import annotations
 
+from datetime import date
+
 MAX_SCORE = 27
 TAX_RATE = 0.21
+SHARES_OUTLIER_RATIO = 3.0
 
 BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.45
@@ -307,10 +310,33 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
 
 
 def analyze_book_value(periods: list, flags: list) -> dict:
-    book_values = [
-        p["balance"]["shareholders_equity"] / p["balance"]["outstanding_shares"]
+    usable = [
+        p
         for p in periods
         if p["balance"].get("shareholders_equity") and p["balance"].get("outstanding_shares")
+    ]
+    # Cover-page share facts lag one quarter, so a split between filings leaves
+    # one period on the pre-split count — off by the split ratio, not by drift.
+    # Buybacks move counts a few percent a year; >3x off the median is a split
+    # artifact or a mis-tagged fact, never a real capital change.
+    if usable:
+        counts = sorted(p["balance"]["outstanding_shares"] for p in usable)
+        median = counts[len(counts) // 2]
+        kept = []
+        for p in usable:
+            shares = p["balance"]["outstanding_shares"]
+            if shares > median * SHARES_OUTLIER_RATIO or shares < median / SHARES_OUTLIER_RATIO:
+                flags.append(
+                    f"book_value: {p['period_end']} share count {shares:.4g} is >"
+                    f"{SHARES_OUTLIER_RATIO:g}x off the median {median:.4g} "
+                    "(split artifact or mis-tagged fact), period excluded"
+                )
+            else:
+                kept.append(p)
+        usable = kept
+
+    book_values = [
+        p["balance"]["shareholders_equity"] / p["balance"]["outstanding_shares"] for p in usable
     ]
     if len(book_values) < 3:
         flags.append("book_value: fewer than 3 BVPS periods, excluded from denominator")
@@ -332,8 +358,14 @@ def analyze_book_value(periods: list, flags: list) -> dict:
         details.append(f"BVPS grew in only {grew}/{len(book_values) - 1} periods ✗ (+0)")
 
     oldest, latest = book_values[-1], book_values[0]
-    years = len(book_values) - 1
-    if oldest > 0 and latest > 0:
+    # Periods are quarterly TTM windows, so counting them would treat quarters
+    # as years; span the actual period_end dates instead.
+    years = (
+        date.fromisoformat(usable[0]["period_end"]) - date.fromisoformat(usable[-1]["period_end"])
+    ).days / 365.25
+    if years <= 0:
+        details.append("BVPS CAGR not meaningful over a zero-length span (+0)")
+    elif oldest > 0 and latest > 0:
         cagr = (latest / oldest) ** (1 / years) - 1
         if cagr > 0.15:
             score += 2

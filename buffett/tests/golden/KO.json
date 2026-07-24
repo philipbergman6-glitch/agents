@@ -1,13 +1,13 @@
 {
-  "confidence": 57,
+  "confidence": 62,
   "dimensions": {
     "book_value": {
       "details": [
         "BVPS grew in 7/9 periods ✓ (+2)",
-        "BVPS CAGR 3.0% (+0)"
+        "BVPS CAGR 12.5% > 10% ✓ (+1)"
       ],
       "max": 5,
-      "score": 2
+      "score": 3
     },
     "consistency": {
       "details": [
@@ -77,8 +77,8 @@
   "score": {
     "max": 27,
     "max_possible": 27,
-    "pct": 0.7037,
-    "total": 19
+    "pct": 0.7407,
+    "total": 20
   },
   "signal": "bearish",
   "ticker": "KO",
