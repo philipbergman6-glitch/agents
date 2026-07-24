@@ -39,7 +39,11 @@ FLOW_TAGS: dict[str, list[str]] = {
         "DepreciationAmortizationAndOther",
         "Depreciation",
     ],
-    "dividends_paid": ["PaymentsOfDividends", "PaymentsOfDividendsCommonStock"],
+    "dividends_paid": [
+        "PaymentsOfDividends",
+        "PaymentsOfDividendsCommonStock",
+        "PaymentsOfOrdinaryDividends",
+    ],
     "share_repurchase": ["PaymentsForRepurchaseOfCommonStock"],
     "share_issuance": [
         "ProceedsFromIssuanceOfCommonStock",
