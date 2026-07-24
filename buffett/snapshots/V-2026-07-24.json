@@ -1,0 +1,443 @@
+{
+  "fetched_at": "2026-07-24",
+  "market_cap": 668653131687.323,
+  "market_cap_source": "yfinance:fast_info.market_cap",
+  "periods": [
+    {
+      "as_of_quarter": "2026-Q3",
+      "balance": {
+        "cash_and_equivalents": 12404000000.0,
+        "current_assets": 31625000000.0,
+        "current_liabilities": 29076000000.0,
+        "long_term_debt": 22417000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 35661000000.0,
+        "short_term_debt": 1559000000.0,
+        "total_assets": 95049000000.0,
+        "total_liabilities": 59388000000.0
+      },
+      "period_end": "2026-03-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2026-03-31",
+        "current_assets": "AssetsCurrent@2026-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2026-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2026-03-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2026-03-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2026-03-31",
+        "total_liabilities": "Liabilities@2026-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1571000000.0,
+        "depreciation_and_amortization": 1292000000.0,
+        "dividends_and_other_cash_distributions": -4879000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -21334000000.0,
+        "net_income": 22236000000.0,
+        "operating_income": 26296000000.0,
+        "revenue": 43027000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q4",
+      "balance": {
+        "cash_and_equivalents": 14756000000.0,
+        "current_assets": 34997000000.0,
+        "current_liabilities": 31491000000.0,
+        "long_term_debt": 19588000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 38777000000.0,
+        "short_term_debt": 1589000000.0,
+        "total_assets": 96814000000.0,
+        "total_liabilities": 58037000000.0
+      },
+      "period_end": "2025-12-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-12-31",
+        "current_assets": "AssetsCurrent@2025-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2025-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2025-12-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2025-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2025-12-31",
+        "total_liabilities": "Liabilities@2025-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1515000000.0,
+        "depreciation_and_amortization": 1264000000.0,
+        "dividends_and_other_cash_distributions": -4757000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -18030000000.0,
+        "net_income": 20792000000.0,
+        "operating_income": 24497000000.0,
+        "revenue": 41391000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q3",
+      "balance": {
+        "cash_and_equivalents": 17164000000.0,
+        "current_assets": 37766000000.0,
+        "current_liabilities": 35048000000.0,
+        "long_term_debt": 19602000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 37909000000.0,
+        "short_term_debt": 5569000000.0,
+        "total_assets": 99627000000.0,
+        "total_liabilities": 61718000000.0
+      },
+      "period_end": "2025-09-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-09-30",
+        "current_assets": "AssetsCurrent@2025-09-30",
+        "current_liabilities": "LiabilitiesCurrent@2025-09-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2025-09-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2025-09-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2025-09-30",
+        "total_liabilities": "Liabilities@2025-09-30"
+      },
+      "ttm": {
+        "capital_expenditure": -1482000000.0,
+        "depreciation_and_amortization": 1220000000.0,
+        "dividends_and_other_cash_distributions": -4634000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -18316000000.0,
+        "net_income": 20058000000.0,
+        "operating_income": 23994000000.0,
+        "revenue": 40000000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q2",
+      "balance": {
+        "cash_and_equivalents": 17092000000.0,
+        "current_assets": 38398000000.0,
+        "current_liabilities": 34427000000.0,
+        "long_term_debt": 19590000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 38664000000.0,
+        "short_term_debt": 5548000000.0,
+        "total_assets": 100024000000.0,
+        "total_liabilities": 61360000000.0
+      },
+      "period_end": "2025-06-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-06-30",
+        "current_assets": "AssetsCurrent@2025-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2025-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2025-06-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2025-06-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2025-06-30",
+        "total_liabilities": "Liabilities@2025-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": -1402000000.0,
+        "depreciation_and_amortization": 1178000000.0,
+        "dividends_and_other_cash_distributions": -4529000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -19237000000.0,
+        "net_income": 20286000000.0,
+        "operating_income": 24195000000.0,
+        "revenue": 38893000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q1",
+      "balance": {
+        "cash_and_equivalents": 11734000000.0,
+        "current_assets": 32934000000.0,
+        "current_liabilities": 30381000000.0,
+        "long_term_debt": 16814000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 38030000000.0,
+        "short_term_debt": 3948000000.0,
+        "total_assets": 92853000000.0,
+        "total_liabilities": 54823000000.0
+      },
+      "period_end": "2025-03-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-03-31",
+        "current_assets": "AssetsCurrent@2025-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2025-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2025-03-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2025-03-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2025-03-31",
+        "total_liabilities": "Liabilities@2025-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1381000000.0,
+        "depreciation_and_amortization": 1125000000.0,
+        "dividends_and_other_cash_distributions": -4431000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -18982000000.0,
+        "net_income": 19886000000.0,
+        "operating_income": 23956000000.0,
+        "revenue": 37621000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q4",
+      "balance": {
+        "cash_and_equivalents": 12367000000.0,
+        "current_assets": 32622000000.0,
+        "current_liabilities": 29091000000.0,
+        "long_term_debt": 16680000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 38296000000.0,
+        "short_term_debt": 3929000000.0,
+        "total_assets": 91888000000.0,
+        "total_liabilities": 53592000000.0
+      },
+      "period_end": "2024-12-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-12-31",
+        "current_assets": "AssetsCurrent@2024-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2024-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-12-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2024-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-12-31",
+        "total_liabilities": "Liabilities@2024-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1335000000.0,
+        "depreciation_and_amortization": 1069000000.0,
+        "dividends_and_other_cash_distributions": -4327000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -17144000000.0,
+        "net_income": 19972000000.0,
+        "operating_income": 23875000000.0,
+        "revenue": 36802000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q3",
+      "balance": {
+        "cash_and_equivalents": 11975000000.0,
+        "current_assets": 34033000000.0,
+        "current_liabilities": 26517000000.0,
+        "long_term_debt": 20836000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 39137000000.0,
+        "short_term_debt": 0.0,
+        "total_assets": 94511000000.0,
+        "total_liabilities": 55374000000.0
+      },
+      "period_end": "2024-09-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-09-30",
+        "current_assets": "AssetsCurrent@2024-09-30",
+        "current_liabilities": "LiabilitiesCurrent@2024-09-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-09-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2024-09-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-09-30",
+        "total_liabilities": "Liabilities@2024-09-30"
+      },
+      "ttm": {
+        "capital_expenditure": -1257000000.0,
+        "depreciation_and_amortization": 1034000000.0,
+        "dividends_and_other_cash_distributions": -4217000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -16713000000.0,
+        "net_income": 19743000000.0,
+        "operating_income": 23595000000.0,
+        "revenue": 35926000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q2",
+      "balance": {
+        "cash_and_equivalents": 12947000000.0,
+        "current_assets": 31039000000.0,
+        "current_liabilities": 22612000000.0,
+        "long_term_debt": 20602000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 39729000000.0,
+        "short_term_debt": 0.0,
+        "total_assets": 91040000000.0,
+        "total_liabilities": 51311000000.0
+      },
+      "period_end": "2024-06-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-06-30",
+        "current_assets": "AssetsCurrent@2024-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2024-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-06-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2024-06-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-06-30",
+        "total_liabilities": "Liabilities@2024-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": -1253000000.0,
+        "depreciation_and_amortization": 1007000000.0,
+        "dividends_and_other_cash_distributions": -4104000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -14616000000.0,
+        "net_income": 19106000000.0,
+        "operating_income": 22796000000.0,
+        "revenue": 34918000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q1",
+      "balance": {
+        "cash_and_equivalents": 12993000000.0,
+        "current_assets": 32775000000.0,
+        "current_liabilities": 23443000000.0,
+        "long_term_debt": 20603000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 40485000000.0,
+        "short_term_debt": 0.0,
+        "total_assets": 92399000000.0,
+        "total_liabilities": 51914000000.0
+      },
+      "period_end": "2024-03-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-03-31",
+        "current_assets": "AssetsCurrent@2024-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2024-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-03-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2024-03-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-03-31",
+        "total_liabilities": "Liabilities@2024-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1148000000.0,
+        "depreciation_and_amortization": 978000000.0,
+        "dividends_and_other_cash_distributions": -3985000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -13130000000.0,
+        "net_income": 18390000000.0,
+        "operating_income": 21882000000.0,
+        "revenue": 34141000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2023-Q4",
+      "balance": {
+        "cash_and_equivalents": 13591000000.0,
+        "current_assets": 32732000000.0,
+        "current_liabilities": 22634000000.0,
+        "long_term_debt": 20703000000.0,
+        "outstanding_shares": null,
+        "shareholders_equity": 39733000000.0,
+        "short_term_debt": 0.0,
+        "total_assets": 91409000000.0,
+        "total_liabilities": 51676000000.0
+      },
+      "period_end": "2023-12-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquireProductiveAssets",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-12-31",
+        "current_assets": "AssetsCurrent@2023-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2023-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "dividends_paid": "PaymentsOfDividends",
+        "long_term_debt": "LongTermDebtNoncurrent@2023-12-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2023-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2023-12-31",
+        "total_liabilities": "Liabilities@2023-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": -1077000000.0,
+        "depreciation_and_amortization": 963000000.0,
+        "dividends_and_other_cash_distributions": -3866000000.0,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": -12566000000.0,
+        "net_income": 17984000000.0,
+        "operating_income": 21864000000.0,
+        "revenue": 33351000000.0
+      }
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+    "market_data": "yfinance"
+  },
+  "ticker": "V"
+}

@@ -403,7 +403,9 @@ def calculate_intrinsic_value(periods: list) -> dict:
     owner_earnings = earnings_data["owner_earnings"]
 
     historical = [p["ttm"]["net_income"] for p in periods[:5] if p["ttm"].get("net_income")]
-    if len(historical) >= 3 and historical[-1] > 0:
+    # Both endpoints must be positive: a negative ratio raised to 1/years is
+    # complex (reference bug — it only guarded the oldest value).
+    if len(historical) >= 3 and historical[-1] > 0 and historical[0] > 0:
         years = len(historical) - 1
         growth = (historical[0] / historical[-1]) ** (1 / years) - 1
         growth = max(-0.05, min(growth, 0.15)) * 0.7

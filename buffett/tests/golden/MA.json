@@ -1,0 +1,111 @@
+{
+  "confidence": 73,
+  "dimensions": {
+    "book_value": {
+      "details": [
+        "BVPS grew in 6/9 periods ✓ (+2)",
+        "BVPS CAGR 0.3% (+0)"
+      ],
+      "max": 5,
+      "score": 2
+    },
+    "consistency": {
+      "details": [
+        "Earnings grew every period across 10 TTM windows ✓ (+3)",
+        "Total earnings growth 39.1% oldest-to-latest"
+      ],
+      "max": 3,
+      "score": 3
+    },
+    "fundamentals": {
+      "details": [
+        "ROE 231.7% > 15% ✓ (+2)",
+        "Debt/equity 2.82 >= 0.5 ✗ (+0)",
+        "Operating margin 57.9% > 15% ✓ (+2)",
+        "Current ratio 0.98 <= 1.5 ✗ (+0)"
+      ],
+      "max": 7,
+      "score": 4
+    },
+    "management": {
+      "details": [
+        "Net share repurchases of $13,213,000,000 TTM ✓ (+1)",
+        "Dividends paid: $2,839,000,000 TTM ✓ (+1)"
+      ],
+      "max": 2,
+      "score": 2
+    },
+    "moat": {
+      "details": [
+        "ROE > 15% in 10/10 periods (avg 183.0%) ✓ (+2)",
+        "Operating margins avg 56.3% > 20% and stable/improving ✓ (+1)",
+        "Performance stability 93.4% > 70% ✓ (+1)"
+      ],
+      "max": 5,
+      "score": 4
+    },
+    "pricing_power": {
+      "details": [
+        "Insufficient gross margin history (+0)"
+      ],
+      "max": 5,
+      "score": 0
+    }
+  },
+  "flags": [
+    "pricing_power: fewer than 3 gross-margin periods, scored 0"
+  ],
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "periods": [
+      "2026-03-31",
+      "2025-12-31",
+      "2025-09-30",
+      "2025-06-30",
+      "2025-03-31",
+      "2024-12-31",
+      "2024-09-30",
+      "2024-06-30",
+      "2024-03-31",
+      "2023-12-31"
+    ],
+    "snapshot_fetched_at": "2026-07-24",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "score": {
+    "max": 27,
+    "pct": 0.5556,
+    "total": 15
+  },
+  "signal": "bearish",
+  "ticker": "MA",
+  "valuation": {
+    "dcf_stages": {
+      "discount_rate": 0.1,
+      "stage1_growth": 0.03029203868075656,
+      "stage1_pv": 72073647645.81177,
+      "stage1_years": 5,
+      "stage2_growth": 0.01514601934037828,
+      "stage2_pv": 49802890624.006165,
+      "stage2_years": 5,
+      "terminal_growth": 0.025,
+      "terminal_pv": 115192417291.01155
+    },
+    "intrinsic_value": 201508612226.70505,
+    "margin_of_safety": -0.5699,
+    "market_cap": 468555663053.2657,
+    "owner_earnings": 17468026494.715202,
+    "owner_earnings_components": {
+      "depreciation": 1167000000.0,
+      "maintenance_capex": 500973505.2847992,
+      "net_income": 15570000000.0,
+      "owner_earnings": 17468026494.715202,
+      "total_capex": 484000000.0,
+      "working_capital_change": -1232000000.0
+    },
+    "raw_intrinsic_value": 237068955560.82947
+  }
+}

@@ -78,6 +78,14 @@ BALANCE_TAGS: dict[str, list[str]] = {
 ST_DEBT_PRIMARY = "DebtCurrent"
 ST_DEBT_COMPONENTS = ["ShortTermBorrowings", "CommercialPaper", "LongTermDebtCurrent"]
 
+# Many filers (KO, AAL, CCL) never tag Liabilities directly; derive it from the
+# balance-sheet identity when both sides are filed for the same period end.
+LIABILITIES_TOTAL_TAG = "LiabilitiesAndStockholdersEquity"
+
+# Some filers (F) expose no point-in-time common share count in the facts API;
+# fall back to TTM-window weighted-average basic shares as a proxy.
+SHARES_PROXY_TAG = "WeightedAverageNumberOfSharesOutstandingBasic"
+
 # How far a balance-sheet instant may sit before the TTM window end and still
 # count as "the balance for that period" (covers 13/14-week fiscal quarters).
 BALANCE_STALENESS_DAYS = 135
@@ -157,16 +165,52 @@ def _balance_at(history, window_end: date) -> tuple[float, str] | None:
     return float(row["numeric_value"]), str(row["period_end"])
 
 
+def _duration_at(history, window_end: date) -> tuple[float, str] | None:
+    """Latest duration-typed value ending at or before window_end, within
+    staleness bounds. Same restatement rule as _balance_at: latest filing wins.
+    """
+    dur = history[history["period_type"] == "duration"].copy()
+    dur = dur[dur["period_end"].notna()]
+    if dur.empty:
+        return None
+
+    def _to_date(v):
+        if isinstance(v, date):
+            return v
+        if hasattr(v, "date"):
+            return v.date()
+        return date.fromisoformat(str(v)[:10])
+
+    dur["_end"] = dur["period_end"].map(_to_date)
+    floor = window_end - timedelta(days=BALANCE_STALENESS_DAYS)
+    hits = dur[(dur["_end"] <= window_end) & (dur["_end"] >= floor)]
+    if hits.empty:
+        return None
+    best_end = hits["_end"].max()
+    at_end = hits[hits["_end"] == best_end].sort_values("filing_date")
+    row = at_end.iloc[-1]
+    return float(row["numeric_value"]), str(row["period_end"])
+
+
 def _ttm_value(company, tags: list[str], quarter: str):
-    """First tag in the fallback list that yields a TTM value for the quarter."""
+    """Freshest TTM window across the fallback tags; tag order breaks ties.
+
+    get_ttm clamps to the latest window a tag can build, so a tag abandoned
+    years ago (e.g. MA files NetIncomeLoss annually since 2014) still returns a
+    value — a decade stale. Picking the freshest as_of_date across tags lets a
+    later, still-current tag (ProfitLoss) win over a stale earlier one.
+    """
+    best, best_tag = None, None
     for tag in tags:
         try:
             m = company.get_ttm(tag, as_of=quarter)
         except Exception:
             continue
-        if m is not None and m.value is not None:
-            return m, tag
-    return None, None
+        if m is None or m.value is None or m.as_of_date is None:
+            continue
+        if best is None or m.as_of_date > best.as_of_date:
+            best, best_tag = m, tag
+    return best, best_tag
 
 
 def _fetch_market_cap(ticker: str) -> tuple[float, str]:
@@ -229,6 +273,8 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
         (tag, _concept_history(company, tag))
         for tag in [ST_DEBT_PRIMARY] + ST_DEBT_COMPONENTS
     ]
+    liabilities_total_history = _concept_history(company, LIABILITIES_TOTAL_TAG)
+    shares_proxy_history = _concept_history(company, SHARES_PROXY_TAG)
 
     periods = []
     for q in quarters:
@@ -274,6 +320,33 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                     balance[field] = hit[0]
                     tags_used[field] = f"{tag}@{hit[1]}"
                     break
+
+        # Filers without a Liabilities tag: derive from the balance-sheet
+        # identity, but only when both sides are stated as of the same date —
+        # otherwise leave it None and let validation hard-fail loudly.
+        if balance["total_liabilities"] is None and liabilities_total_history is not None:
+            lse_hit = _balance_at(liabilities_total_history, window_end)
+            if lse_hit is not None:
+                # LiabilitiesAndStockholdersEquity includes noncontrolling
+                # interest, so prefer the NCI-inclusive equity tag (listed last).
+                for eq_tag, eq_history in reversed(balance_histories["shareholders_equity"]):
+                    if eq_history is None:
+                        continue
+                    eq_hit = _balance_at(eq_history, window_end)
+                    if eq_hit is not None and eq_hit[1] == lse_hit[1]:
+                        balance["total_liabilities"] = lse_hit[0] - eq_hit[0]
+                        tags_used["total_liabilities"] = (
+                            f"derived:{LIABILITIES_TOTAL_TAG}-{eq_tag}@{lse_hit[1]}"
+                        )
+                        break
+
+        # Filers with no point-in-time share count: weighted-average basic
+        # shares for the latest reported duration is the closest proxy.
+        if balance["outstanding_shares"] is None and shares_proxy_history is not None:
+            proxy_hit = _duration_at(shares_proxy_history, window_end)
+            if proxy_hit is not None:
+                balance["outstanding_shares"] = proxy_hit[0]
+                tags_used["outstanding_shares"] = f"proxy:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
 
         primary_tag, primary_hist = st_debt_histories[0]
         primary_hit = _balance_at(primary_hist, window_end) if primary_hist is not None else None
