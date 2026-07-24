@@ -96,6 +96,24 @@ BALANCE_STALENESS_DAYS = 135
 
 N_PERIODS = 10
 
+# --- per-filing XBRL fallback ---------------------------------------------
+# The companyfacts API only carries us-gaap/dei facts and drops dimensioned
+# ones, which loses (a) extension-tagged D&A lines (MSFT's
+# msft:DepreciationAmortizationAndOther) and (b) per-class cover-page share
+# counts (V's Class A/B-1/B-2/C). Both are present in each filing's own XBRL,
+# so when the companyfacts path leaves those fields null we re-derive them by
+# iterating 10-K/10-Q filings directly.
+FALLBACK_FORMS = ["10-K", "10-Q"]
+MAX_FALLBACK_FILINGS = 24
+COVER_SHARES_TAG = "EntityCommonStockSharesOutstanding"
+# A raw sum of per-class counts ignores conversion ratios (V's B/C convert to
+# A at ~1.6x/1x), so it can sit ~5-10% off the market's as-converted count.
+# Anything beyond this factor vs yfinance means classes were double-counted,
+# missed, or include preferred — corrupt, so hard-fail.
+SHARES_MISMATCH_FACTOR = 1.4
+_ANNUAL_DAYS = (350, 380)
+_END_MATCH_DAYS = 5
+
 
 class FetchError(RuntimeError):
     pass
@@ -236,6 +254,150 @@ def _fetch_market_cap(ticker: str) -> tuple[float, str]:
     raise FetchError(
         f"Could not fetch market cap for {ticker} from yfinance. "
         "Market cap is a hard-fail input; retry later or check the ticker symbol."
+    )
+
+
+def _to_plain_date(v) -> date | None:
+    if v is None:
+        return None
+    if isinstance(v, date) and not hasattr(v, "date"):
+        return v
+    if hasattr(v, "date"):  # pandas Timestamp / datetime
+        return v.date()
+    s = str(v)[:10]
+    try:
+        return date.fromisoformat(s)
+    except ValueError:
+        return None
+
+
+def _collect_filing_facts(company, dna_tags: list[str], need_shares: bool):
+    """One pass over recent 10-K/10-Q XBRL documents.
+
+    Returns (dna_by_localname, cover_share_rows):
+    - dna_by_localname: {local tag name: {(start, end): (value, full_concept)}},
+      consolidated duration facts only; the most recent filing wins a (start,
+      end) key, so restated values shadow originals.
+    - cover_share_rows: [(instant, summed value, n class rows, filing_date)],
+      one row per filing cover page, most recent filing first per instant.
+    """
+    dna_by_localname: dict[str, dict] = {tag: {} for tag in dna_tags}
+    cover_rows: list[tuple] = []
+    seen_instants: set = set()
+
+    filings = company.get_filings(form=FALLBACK_FORMS).head(MAX_FALLBACK_FILINGS)
+    for filing in filings:
+        try:
+            xbrl = filing.xbrl()
+        except Exception:
+            continue
+        if xbrl is None:
+            continue
+
+        for tag in dna_tags:
+            try:
+                df = xbrl.query().by_concept(tag).to_dataframe()
+            except Exception:
+                continue
+            if df is None or df.empty:
+                continue
+            # by_concept matches fuzzily and ignores namespace prefixes, which
+            # is what lets it find extension tags — but require an exact local
+            # name so e.g. 'Depreciation' does not absorb 'DepreciationAnd...'.
+            df = df[df["concept"].str.split(":").str[-1] == tag]
+            if "is_dimensioned" in df.columns:
+                df = df[~df["is_dimensioned"].astype(bool)]
+            for row in df.itertuples():
+                start = _to_plain_date(getattr(row, "period_start", None))
+                end = _to_plain_date(getattr(row, "period_end", None))
+                value = getattr(row, "numeric_value", None)
+                if start is None or end is None or value is None:
+                    continue
+                dna_by_localname[tag].setdefault((start, end), (float(value), row.concept))
+
+        if need_shares:
+            try:
+                df = xbrl.query().by_concept(COVER_SHARES_TAG).to_dataframe()
+            except Exception:
+                df = None
+            if df is not None and not df.empty:
+                df = df[df["concept"] == f"dei:{COVER_SHARES_TAG}"]
+                if not df.empty and "numeric_value" in df.columns:
+                    by_instant: dict = {}
+                    for row in df.itertuples():
+                        instant = _to_plain_date(getattr(row, "period_instant", None))
+                        value = getattr(row, "numeric_value", None)
+                        if instant is None or value is None:
+                            continue
+                        by_instant.setdefault(instant, []).append(float(value))
+                    for instant, values in by_instant.items():
+                        if instant not in seen_instants:
+                            seen_instants.add(instant)
+                            cover_rows.append(
+                                (instant, sum(values), len(values), str(filing.filing_date))
+                            )
+
+    return dna_by_localname, cover_rows
+
+
+def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
+    """TTM value ending at window_end from per-filing duration facts.
+
+    Per concept (never mixing concepts): a direct ~12-month fact wins;
+    otherwise stitch annual(prior FY) + YTD(current) - YTD(prior year), all
+    three sharing fiscal-year boundaries. Returns (value, provenance) or None.
+    """
+    for tag, facts in dna_by_localname.items():
+        # Direct 12-month duration ending at the window end.
+        for (start, end), (value, concept) in sorted(facts.items()):
+            if (
+                abs((end - window_end).days) <= _END_MATCH_DAYS
+                and _ANNUAL_DAYS[0] <= (end - start).days <= _ANNUAL_DAYS[1]
+            ):
+                return value, f"filing-fallback:{concept}@{start}..{end}"
+
+        # Stitch: prefer the longest YTD ending at the window end.
+        ytds = [
+            (start, end, value, concept)
+            for (start, end), (value, concept) in facts.items()
+            if abs((end - window_end).days) <= _END_MATCH_DAYS
+            and (end - start).days < _ANNUAL_DAYS[0]
+        ]
+        for y_start, y_end, y_value, y_concept in sorted(
+            ytds, key=lambda t: (t[1] - t[0]).days, reverse=True
+        ):
+            for (a_start, a_end), (a_value, _) in sorted(facts.items()):
+                if not (
+                    _ANNUAL_DAYS[0] <= (a_end - a_start).days <= _ANNUAL_DAYS[1]
+                    and 0 <= (y_start - a_end).days <= _END_MATCH_DAYS
+                ):
+                    continue
+                ytd_days = (y_end - y_start).days
+                for (p_start, p_end), (p_value, _) in sorted(facts.items()):
+                    if (
+                        abs((p_start - a_start).days) <= _END_MATCH_DAYS
+                        and abs((p_end - p_start).days - ytd_days) <= 10
+                    ):
+                        return (
+                            a_value + y_value - p_value,
+                            f"filing-fallback:{y_concept}"
+                            f"@FY{a_end}+YTD{y_end}-YTD{p_end}",
+                        )
+    return None
+
+
+def _fetch_share_reference(ticker: str) -> tuple[float, str]:
+    """yfinance share count used only to sanity-check cover-page sums."""
+    import yfinance as yf
+
+    info = yf.Ticker(ticker).info
+    for key in ("impliedSharesOutstanding", "sharesOutstanding"):
+        value = info.get(key)
+        if value:
+            return float(value), f"yfinance:info.{key}"
+    raise FetchError(
+        f"{ticker}: cover-page share fallback needs a yfinance share count to "
+        "validate against, and yfinance returned none."
     )
 
 
@@ -380,11 +542,69 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             }
         )
 
+    # Per-filing XBRL fallback for fields companyfacts drops (see constants).
+    missing_dna = [
+        p for p in periods if p["ttm"]["depreciation_and_amortization"] is None
+    ]
+    missing_shares = [p for p in periods if p["balance"]["outstanding_shares"] is None]
+    share_count_check = None
+    if missing_dna or missing_shares:
+        dna_facts, cover_rows = _collect_filing_facts(
+            company,
+            dna_tags=FLOW_TAGS["depreciation_and_amortization"] if missing_dna else [],
+            need_shares=bool(missing_shares),
+        )
+        for p in missing_dna:
+            hit = _ttm_from_filing_durations(dna_facts, date.fromisoformat(p["period_end"]))
+            if hit is not None:
+                p["ttm"]["depreciation_and_amortization"] = hit[0]
+                p["tags_used"]["depreciation_and_amortization"] = hit[1]
+
+        if missing_shares and cover_rows:
+            reference, reference_source = _fetch_share_reference(ticker)
+            latest = max(cover_rows, key=lambda r: r[0])
+            ratio = latest[1] / reference
+            if not (1 / SHARES_MISMATCH_FACTOR <= ratio <= SHARES_MISMATCH_FACTOR):
+                raise FetchError(
+                    f"{ticker}: cover-page share sum {latest[1]:.4g} "
+                    f"({latest[2]} classes @ {latest[0]}) is {ratio:.2f}x the "
+                    f"{reference_source} count {reference:.4g} — class "
+                    "conversion or preferred-stock mis-summation; refusing to "
+                    "snapshot a corrupt share count."
+                )
+            share_count_check = {
+                "cover_page_sum": latest[1],
+                "cover_page_instant": latest[0].isoformat(),
+                "share_classes": latest[2],
+                "reference": reference,
+                "reference_source": reference_source,
+                "ratio": ratio,
+            }
+            import pandas as pd
+
+            cover_history = pd.DataFrame(
+                {
+                    "period_type": "instant",
+                    "period_end": [r[0].isoformat() for r in cover_rows],
+                    "numeric_value": [r[1] for r in cover_rows],
+                    "filing_date": [r[3] for r in cover_rows],
+                }
+            )
+            classes_by_instant = {r[0].isoformat(): r[2] for r in cover_rows}
+            for p in missing_shares:
+                hit = _balance_at(cover_history, date.fromisoformat(p["period_end"]))
+                if hit is not None:
+                    p["balance"]["outstanding_shares"] = hit[0]
+                    p["tags_used"]["outstanding_shares"] = (
+                        f"filing-fallback:dei:{COVER_SHARES_TAG}@{hit[1]}"
+                        f"(sum of {classes_by_instant[hit[1]]} classes)"
+                    )
+
     market_cap, market_cap_source = _fetch_market_cap(ticker)
 
     import edgar as _edgar_mod
 
-    return {
+    snapshot = {
         "schema_version": 1,
         "ticker": ticker.upper(),
         "fetched_at": today.isoformat(),
@@ -396,3 +616,6 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
         },
         "periods": periods,  # most recent first
     }
+    if share_count_check is not None:
+        snapshot["share_count_check"] = share_count_check
+    return snapshot
