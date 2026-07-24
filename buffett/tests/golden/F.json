@@ -1,0 +1,114 @@
+{
+  "confidence": 100,
+  "dimensions": {
+    "book_value": {
+      "details": [
+        "BVPS grew in 7/9 periods ✓ (+2)",
+        "BVPS CAGR -5.7% (+0)"
+      ],
+      "max": 5,
+      "score": 2
+    },
+    "consistency": {
+      "details": [
+        "Earnings flat or declining: grew in 3/9 steps ✗ (+0)",
+        "Total earnings growth -258.4% oldest-to-latest"
+      ],
+      "max": 3,
+      "score": 0
+    },
+    "fundamentals": {
+      "details": [
+        "ROE -16.2% <= 15% ✗ (+0)",
+        "Debt/equity unavailable (+0)",
+        "Operating margin -3.8% <= 15% ✗ (+0)",
+        "Current ratio 1.09 <= 1.5 ✗ (+0)"
+      ],
+      "max": 7,
+      "score": 0
+    },
+    "management": {
+      "details": [
+        "Net share repurchases of $841,000,000 TTM ✓ (+1)",
+        "Dividends paid: $2,400,000,000 TTM ✓ (+1)"
+      ],
+      "max": 2,
+      "score": 2
+    },
+    "moat": {
+      "details": [
+        "ROE > 15% in only 0/10 periods ✗ (+0)",
+        "Operating margins avg 1.0% (recent -2.3% vs older 2.6%) ✗ (+0)",
+        "Performance stability -260.8% <= 70% ✗ (+0)"
+      ],
+      "max": 5,
+      "score": 0
+    },
+    "pricing_power": {
+      "details": [
+        "Insufficient gross margin history (excluded)"
+      ],
+      "excluded": true,
+      "max": 5,
+      "score": 0
+    }
+  },
+  "flags": [
+    "fundamentals: debt_to_equity missing, scored 0",
+    "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
+  ],
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "periods": [
+      "2026-03-31",
+      "2025-12-31",
+      "2025-09-30",
+      "2025-06-30",
+      "2025-03-31",
+      "2024-12-31",
+      "2024-09-30",
+      "2024-06-30",
+      "2024-03-31",
+      "2023-12-31"
+    ],
+    "snapshot_fetched_at": "2026-07-24",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "score": {
+    "max": 22,
+    "max_possible": 27,
+    "pct": 0.1818,
+    "total": 4
+  },
+  "signal": "bearish",
+  "ticker": "F",
+  "valuation": {
+    "dcf_stages": {
+      "discount_rate": 0.1,
+      "stage1_growth": 0.03,
+      "stage1_pv": 143791280.8612663,
+      "stage1_years": 5,
+      "stage2_growth": 0.015,
+      "stage2_pv": 99259212.86575826,
+      "stage2_years": 5,
+      "terminal_growth": 0.025,
+      "terminal_pv": 229511900.59098923
+    },
+    "intrinsic_value": 401678035.1703117,
+    "margin_of_safety": -0.9929,
+    "market_cap": 56383399194.46039,
+    "owner_earnings": 34878124.54839134,
+    "owner_earnings_components": {
+      "depreciation": 16009000000.0,
+      "maintenance_capex": 8837121875.451609,
+      "net_income": -6084000000.0,
+      "owner_earnings": 34878124.54839134,
+      "total_capex": 9373000000.0,
+      "working_capital_change": 1053000000.0
+    },
+    "raw_intrinsic_value": 472562394.3180138
+  }
+}
