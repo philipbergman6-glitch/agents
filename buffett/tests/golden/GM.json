@@ -11,7 +11,7 @@
     },
     "consistency": {
       "details": [
-        "Earnings not monotonically growing across 10 TTM windows ✗ (+0)",
+        "Earnings flat or declining: grew in 1/9 steps ✗ (+0)",
         "Total earnings growth -81.8% oldest-to-latest"
       ],
       "max": 3,
@@ -78,6 +78,7 @@
   },
   "score": {
     "max": 27,
+    "max_possible": 27,
     "pct": 0.1852,
     "total": 5
   },

@@ -11,7 +11,7 @@
     },
     "consistency": {
       "details": [
-        "Earnings not monotonically growing across 10 TTM windows ✗ (+0)",
+        "Earnings flat or declining: grew in 3/9 steps ✗ (+0)",
         "Total earnings growth -258.4% oldest-to-latest"
       ],
       "max": 3,
@@ -46,15 +46,16 @@
     },
     "pricing_power": {
       "details": [
-        "Insufficient gross margin history (+0)"
+        "Insufficient gross margin history (excluded)"
       ],
+      "excluded": true,
       "max": 5,
       "score": 0
     }
   },
   "flags": [
     "fundamentals: debt_to_equity missing, scored 0",
-    "pricing_power: fewer than 3 gross-margin periods, scored 0"
+    "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
   ],
   "provenance": {
     "market_cap_source": "yfinance:fast_info.market_cap",
@@ -77,8 +78,9 @@
     }
   },
   "score": {
-    "max": 27,
-    "pct": 0.1481,
+    "max": 22,
+    "max_possible": 27,
+    "pct": 0.1818,
     "total": 4
   },
   "signal": "bearish",

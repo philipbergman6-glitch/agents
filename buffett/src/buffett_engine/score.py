@@ -8,7 +8,9 @@ book value 5), with the decisions locked on the rubric ticket:
   MoS <= -0.30; else neutral
 - confidence 50-100: distance from the nearest decision boundary
 - missing data: mandatory inputs hard-fail unless present in >= 5 periods;
-  dividends/buybacks are zero-if-absent; per-ratio gaps score 0 and are flagged
+  dividends/buybacks are zero-if-absent; per-ratio gaps score 0 and are flagged;
+  dimensions with insufficient history are excluded from the denominator
+  (judgment-review tuning, ticket #8), as is consistency's graduated credit
 - ratios from period-end EDGAR balances; ROIC = NOPAT(21% flat) / invested cap
 
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
@@ -159,15 +161,24 @@ def analyze_consistency(periods: list, flags: list) -> dict:
     details = []
     earnings = [p["ttm"]["net_income"] for p in periods if p["ttm"].get("net_income")]
     if len(earnings) < 4:
-        flags.append("consistency: fewer than 4 earnings periods, scored 0")
-        return {"score": 0, "max": 3, "details": ["Insufficient earnings history (+0)"]}
-    score = 0
-    growing = all(earnings[i] > earnings[i + 1] for i in range(len(earnings) - 1))
-    if growing:
+        flags.append("consistency: fewer than 4 earnings periods, excluded from denominator")
+        return {"score": 0, "max": 3, "excluded": True, "details": ["Insufficient earnings history (excluded)"]}
+    # Graduated credit (judgment-review tuning): monotonic = 3, at most one
+    # down-step = 2, positive overall trend = 1.
+    steps = len(earnings) - 1
+    grew_steps = sum(1 for i in range(steps) if earnings[i] > earnings[i + 1])
+    if grew_steps == steps:
         score = 3
         details.append(f"Earnings grew every period across {len(earnings)} TTM windows ✓ (+3)")
+    elif grew_steps >= steps - 1:
+        score = 2
+        details.append(f"Earnings grew in {grew_steps}/{steps} steps across {len(earnings)} TTM windows ✓ (+2)")
+    elif earnings[0] > earnings[-1]:
+        score = 1
+        details.append(f"Earnings up oldest-to-latest but grew in only {grew_steps}/{steps} steps ✓ (+1)")
     else:
-        details.append(f"Earnings not monotonically growing across {len(earnings)} TTM windows ✗ (+0)")
+        score = 0
+        details.append(f"Earnings flat or declining: grew in {grew_steps}/{steps} steps ✗ (+0)")
     if earnings[-1] != 0:
         total_growth = (earnings[0] - earnings[-1]) / abs(earnings[-1])
         details.append(f"Total earnings growth {total_growth:.1%} oldest-to-latest")
@@ -176,8 +187,8 @@ def analyze_consistency(periods: list, flags: list) -> dict:
 
 def analyze_moat(metrics: list, flags: list) -> dict:
     if len(metrics) < 5:
-        flags.append("moat: fewer than 5 metric periods, scored 0")
-        return {"score": 0, "max": 5, "details": ["Insufficient history for moat analysis (+0)"]}
+        flags.append("moat: fewer than 5 metric periods, excluded from denominator")
+        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient history for moat analysis (excluded)"]}
     score, details = 0, []
 
     roes = [m["return_on_equity"] for m in metrics if m["return_on_equity"] is not None]
@@ -265,8 +276,8 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
         if gm is not None:
             margins.append(gm)
     if len(margins) < 3:
-        flags.append("pricing_power: fewer than 3 gross-margin periods, scored 0")
-        return {"score": 0, "max": 5, "details": ["Insufficient gross margin history (+0)"]}
+        flags.append("pricing_power: fewer than 3 gross-margin periods, excluded from denominator")
+        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient gross margin history (excluded)"]}
 
     recent = sum(margins[:2]) / 2
     older = sum(margins[-2:]) / 2
@@ -302,8 +313,8 @@ def analyze_book_value(periods: list, flags: list) -> dict:
         if p["balance"].get("shareholders_equity") and p["balance"].get("outstanding_shares")
     ]
     if len(book_values) < 3:
-        flags.append("book_value: fewer than 3 BVPS periods, scored 0")
-        return {"score": 0, "max": 5, "details": ["Insufficient book value history (+0)"]}
+        flags.append("book_value: fewer than 3 BVPS periods, excluded from denominator")
+        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient book value history (excluded)"]}
 
     score, details = 0, []
     grew = sum(1 for i in range(len(book_values) - 1) if book_values[i] > book_values[i + 1])
@@ -486,8 +497,13 @@ def diagnose(snapshot: dict) -> dict:
         "book_value": analyze_book_value(periods, flags),
     }
 
+    # Renormalize (judgment-review tuning): dimensions with insufficient data
+    # are excluded from the denominator rather than counted as zeros.
     total = sum(d["score"] for d in dimensions.values())
-    score_pct = total / MAX_SCORE
+    max_effective = sum(d["max"] for d in dimensions.values() if not d.get("excluded"))
+    if max_effective == 0:
+        raise MissingDataError(f"{snapshot['ticker']}: no scorable dimensions")
+    score_pct = total / max_effective
 
     valuation = calculate_intrinsic_value(periods)
     market_cap = snapshot["market_cap"]
@@ -497,7 +513,7 @@ def diagnose(snapshot: dict) -> dict:
         "ticker": snapshot["ticker"],
         "signal": compute_signal(score_pct, mos),
         "confidence": compute_confidence(score_pct, mos),
-        "score": {"total": total, "max": MAX_SCORE, "pct": round(score_pct, 4)},
+        "score": {"total": total, "max": max_effective, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
         "dimensions": dimensions,
         "valuation": {
             "intrinsic_value": valuation["intrinsic_value"],
