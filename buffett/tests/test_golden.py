@@ -43,11 +43,33 @@ def test_compounders_outscore_cyclicals():
     assert min(scores["KO"], scores["MA"]) > max(scores["GM"], scores["F"])
 
 
-@pytest.mark.parametrize("ticker", ["V", "MSFT"])
-def test_unscorable_ticker_hard_fails(ticker):
-    """V has no share-count data on EDGAR, MSFT no quarterly D&A before 2025.
+# field kept alive by the per-filing fallback -> provenance marker prefix
+FALLBACK_TICKERS = {
+    "MSFT": ("ttm", "depreciation_and_amortization"),
+    "V": ("balance", "outstanding_shares"),
+}
 
-    The engine must refuse loudly rather than score around the gap.
-    """
+
+@pytest.mark.parametrize("ticker", FALLBACK_TICKERS)
+def test_filing_fallback_ticker_scores(ticker):
+    """companyfacts drops MSFT's extension-tagged D&A and V's class-dimensioned
+    share counts; the per-filing fallback recovers both, so these snapshots
+    must diagnose cleanly with fallback provenance recorded."""
+    snapshot = load_snapshot(ticker)
+    result = diagnose(snapshot)
+    assert result["signal"] in ("bullish", "neutral", "bearish")
+    section, field = FALLBACK_TICKERS[ticker]
+    assert any(
+        str(p["tags_used"].get(field, "")).startswith("filing-fallback:")
+        for p in snapshot["periods"]
+    )
+
+
+def test_valuation_critical_gap_still_hard_fails():
+    """Nulling a mandatory field below the 5-complete-period floor must raise:
+    the fallback closes real gaps, it does not soften the refusal."""
+    snapshot = load_snapshot("MSFT")
+    for period in snapshot["periods"][:6]:
+        period["ttm"]["depreciation_and_amortization"] = None
     with pytest.raises(MissingDataError):
-        diagnose(load_snapshot(ticker))
+        diagnose(snapshot)

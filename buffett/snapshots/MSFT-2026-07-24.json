@@ -1,6 +1,6 @@
 {
   "fetched_at": "2026-07-24",
-  "market_cap": 2834542014605.272,
+  "market_cap": 2857421720444.3804,
   "market_cap_source": "yfinance:fast_info.market_cap",
   "periods": [
     {
@@ -206,6 +206,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-03-31",
         "current_assets": "AssetsCurrent@2025-03-31",
         "current_liabilities": "LiabilitiesCurrent@2025-03-31",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@FY2024-06-30+YTD2025-03-31-YTD2024-03-31",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2025-03-31",
@@ -223,7 +224,7 @@
       },
       "ttm": {
         "capital_expenditure": -61345000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 26496000000.0,
         "dividends_and_other_cash_distributions": -23487000000.0,
         "gross_profit": 186509000000.0,
         "issuance_or_purchase_of_equity_shares": -16042000000.0,
@@ -251,6 +252,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-12-31",
         "current_assets": "AssetsCurrent@2024-12-31",
         "current_liabilities": "LiabilitiesCurrent@2024-12-31",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@FY2024-06-30+YTD2024-12-31-YTD2023-12-31",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2024-12-31",
@@ -268,7 +270,7 @@
       },
       "ttm": {
         "capital_expenditure": -55552000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 24790000000.0,
         "dividends_and_other_cash_distributions": -22890000000.0,
         "gross_profit": 181715000000.0,
         "issuance_or_purchase_of_equity_shares": -15498000000.0,
@@ -296,6 +298,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-09-30",
         "current_assets": "AssetsCurrent@2024-09-30",
         "current_liabilities": "LiabilitiesCurrent@2024-09-30",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@FY2024-06-30+YTD2024-09-30-YTD2023-09-30",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2024-09-30",
@@ -313,7 +316,7 @@
       },
       "ttm": {
         "capital_expenditure": -49483000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 25749000000.0,
         "dividends_and_other_cash_distributions": -22294000000.0,
         "gross_profit": 176279000000.0,
         "issuance_or_purchase_of_equity_shares": -14507000000.0,
@@ -341,6 +344,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-06-30",
         "current_assets": "AssetsCurrent@2024-06-30",
         "current_liabilities": "LiabilitiesCurrent@2024-06-30",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@2023-07-01..2024-06-30",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2024-06-30",
@@ -358,7 +362,7 @@
       },
       "ttm": {
         "capital_expenditure": -44477000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 22287000000.0,
         "dividends_and_other_cash_distributions": -21771000000.0,
         "gross_profit": 171008000000.0,
         "issuance_or_purchase_of_equity_shares": -15252000000.0,
@@ -386,6 +390,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-03-31",
         "current_assets": "AssetsCurrent@2024-03-31",
         "current_liabilities": "LiabilitiesCurrent@2024-03-31",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@FY2023-06-30+YTD2024-03-31-YTD2023-03-31",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2024-03-31",
@@ -403,7 +408,7 @@
       },
       "ttm": {
         "capital_expenditure": -39547000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 19781000000.0,
         "dividends_and_other_cash_distributions": -21251000000.0,
         "gross_profit": 165359000000.0,
         "issuance_or_purchase_of_equity_shares": -16768000000.0,
@@ -431,6 +436,7 @@
         "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-12-31",
         "current_assets": "AssetsCurrent@2023-12-31",
         "current_liabilities": "LiabilitiesCurrent@2023-12-31",
+        "depreciation_and_amortization": "filing-fallback:msft:DepreciationAmortizationAndOther@FY2023-06-30+YTD2023-12-31-YTD2022-12-31",
         "dividends_paid": "PaymentsOfDividendsCommonStock",
         "gross_profit": "GrossProfit",
         "long_term_debt": "LongTermDebtNoncurrent@2023-12-31",
@@ -448,7 +454,7 @@
       },
       "ttm": {
         "capital_expenditure": -35202000000.0,
-        "depreciation_and_amortization": null,
+        "depreciation_and_amortization": 17303000000.0,
         "dividends_and_other_cash_distributions": -20738000000.0,
         "gross_profit": 158735000000.0,
         "issuance_or_purchase_of_equity_shares": -18050000000.0,
