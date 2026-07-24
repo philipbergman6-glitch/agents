@@ -2,7 +2,7 @@
 
 import pytest
 
-from buffett_engine.score import (
+from whale_engine.scorers.buffett import (
     analyze_book_value,
     analyze_fundamentals,
     calculate_intrinsic_value,

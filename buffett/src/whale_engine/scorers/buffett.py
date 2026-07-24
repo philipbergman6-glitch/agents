@@ -24,6 +24,8 @@ from __future__ import annotations
 
 from datetime import date
 
+from ..errors import MissingDataError
+
 MAX_SCORE = 27
 TAX_RATE = 0.21
 SHARES_OUTLIER_RATIO = 3.0
@@ -45,10 +47,6 @@ MANDATORY_BALANCE = [
     "total_liabilities",
 ]
 MIN_COMPLETE_PERIODS = 5
-
-
-class MissingDataError(ValueError):
-    """A valuation-critical input is absent. Hard fail; never score around it."""
 
 
 # ---------------------------------------------------------------------------

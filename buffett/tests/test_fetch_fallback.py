@@ -7,7 +7,7 @@ in 10-Ks and YTD windows in 10-Qs, with prior-year comparatives.
 
 from datetime import date
 
-from buffett_engine.fetch import _ttm_from_filing_durations
+from whale_engine.fetch import _ttm_from_filing_durations
 
 TAG = "DepreciationAmortizationAndOther"
 CONCEPT = f"msft:{TAG}"
