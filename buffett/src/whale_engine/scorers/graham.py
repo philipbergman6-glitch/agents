@@ -8,11 +8,17 @@ ticket:
 - EPS is derived per period as net_income / outstanding_shares (snapshots
   carry no per-share fields); periods are most-recent-first and the endpoint
   growth check is explicit latest > oldest (the reference never pins ordering)
-- signal (faithful): bullish if score >= 70%, bearish if <= 30%, else neutral;
-  no separate MoS gate — bullish needs >= 11.2/16 and the non-valuation
-  dimensions max at 9, so a real valuation discount is arithmetically required
+- signal: bullish if score >= 70%, bearish if <= 30%, else neutral; no
+  separate MoS gate on the bullish side — bullish needs >= 11.2/16 and the
+  non-valuation dimensions max at 9, so a real valuation discount is
+  arithmetically required
+- deep-overprice override (judgment-review tuning, ticket #31): MoS <= -0.50
+  vs the Graham Number forces bearish regardless of quality points — bearish
+  means "don't buy at today's price", and price alone must be able to say it;
+  quality-driven neutral at 9x Graham Number is not a Graham read
 - confidence 50-100: distance of score% from the nearest boundary, saturating
-  at 0.30 (the max attainable distance)
+  at 0.30 (the max attainable distance); when the override fires, confidence
+  is the greater of that and the overprice depth (-0.50 -> 50, -1.00 -> 100)
 - missing data: mandatory inputs hard-fail unless present in >= 5 periods;
   dividends are optional (absent -> 0 + flag); per-ratio gaps score 0 with a
   flag; ratio checks gate on None, never truthiness — an exact zero is data,
@@ -40,6 +46,7 @@ SHARES_OUTLIER_RATIO = 3.0
 BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.30
 MAX_BOUNDARY_DIST = 0.30
+DEEP_OVERPRICE_MOS = -0.50
 
 MANDATORY_TTM = ["net_income"]
 MANDATORY_BALANCE = [
@@ -278,7 +285,9 @@ def analyze_valuation(periods: list, market_cap: float, flags: list) -> dict:
 # signal, confidence, diagnosis
 
 
-def compute_signal(score_pct: float) -> str:
+def compute_signal(score_pct: float, mos: float | None) -> str:
+    if mos is not None and mos <= DEEP_OVERPRICE_MOS:
+        return "bearish"
     if score_pct >= BULLISH_SCORE:
         return "bullish"
     if score_pct <= BEARISH_SCORE:
@@ -286,9 +295,13 @@ def compute_signal(score_pct: float) -> str:
     return "neutral"
 
 
-def compute_confidence(score_pct: float) -> int:
+def compute_confidence(score_pct: float, mos: float | None) -> int:
     dist = min(abs(score_pct - BULLISH_SCORE), abs(score_pct - BEARISH_SCORE))
-    return round(50 + 50 * min(1.0, dist / MAX_BOUNDARY_DIST))
+    conf = round(50 + 50 * min(1.0, dist / MAX_BOUNDARY_DIST))
+    if mos is not None and mos <= DEEP_OVERPRICE_MOS:
+        depth = round(50 + 100 * min(0.5, DEEP_OVERPRICE_MOS - mos))
+        conf = max(conf, depth)
+    return conf
 
 
 def diagnose(snapshot: dict) -> dict:
@@ -306,11 +319,19 @@ def diagnose(snapshot: dict) -> dict:
 
     total = sum(d["score"] for d in dimensions.values())
     score_pct = total / MAX_SCORE
+    mos = valuation["margin_of_safety"]
+
+    signal = compute_signal(score_pct, mos)
+    if mos is not None and mos <= DEEP_OVERPRICE_MOS and score_pct > BEARISH_SCORE:
+        dimensions["valuation"]["details"].append(
+            f"Deep-overprice override: margin of safety {mos:.1%} <= {DEEP_OVERPRICE_MOS:.0%}"
+            " vs Graham Number forces bearish — price alone rules the name out"
+        )
 
     return {
         "ticker": snapshot["ticker"],
-        "signal": compute_signal(score_pct),
-        "confidence": compute_confidence(score_pct),
+        "signal": signal,
+        "confidence": compute_confidence(score_pct, mos),
         "score": {"total": total, "max": MAX_SCORE, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
         "dimensions": dimensions,
         "valuation": {
