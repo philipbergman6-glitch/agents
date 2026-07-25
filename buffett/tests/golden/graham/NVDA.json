@@ -1,0 +1,72 @@
+{
+  "confidence": 73,
+  "dimensions": {
+    "earnings_stability": {
+      "details": [
+        "EPS positive in all 9 periods ✓ (+3)",
+        "EPS grew oldest-to-latest (1.21 -> 6.57) ✓ (+1)"
+      ],
+      "max": 4,
+      "score": 4
+    },
+    "financial_strength": {
+      "details": [
+        "Current ratio 3.44 >= 2.0 ✓ (+2)",
+        "Debt ratio 0.25 < 0.50 ✓ (+2)",
+        "Dividends paid in 10/10 reporting periods (majority) ✓ (+1)"
+      ],
+      "max": 5,
+      "score": 5
+    },
+    "valuation": {
+      "details": [
+        "NCAV $86,995,000,000 vs market cap $5,056,375,826,950",
+        "NCAV/share $3.58 < 2/3 of price/share $208.05 ✗ (+0)",
+        "Graham Number $34.47",
+        "Margin of safety -83.4% vs Graham Number ✗ (+0)"
+      ],
+      "max": 7,
+      "score": 0
+    }
+  },
+  "flags": [
+    "earnings_stability: 2024-07-28 share count 2.46e+09 is >3x off the median 2.448e+10 (split artifact or mis-tagged fact), period excluded"
+  ],
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "periods": [
+      "2026-04-26",
+      "2026-01-25",
+      "2025-10-26",
+      "2025-07-27",
+      "2025-04-27",
+      "2025-01-26",
+      "2024-10-27",
+      "2024-07-28",
+      "2024-04-28",
+      "2024-01-28"
+    ],
+    "snapshot_fetched_at": "2026-07-24",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "score": {
+    "max": 16,
+    "max_possible": 16,
+    "pct": 0.5625,
+    "total": 9
+  },
+  "signal": "neutral",
+  "ticker": "NVDA",
+  "valuation": {
+    "book_value_per_share": 8.042873601053325,
+    "eps": 6.567355167873601,
+    "graham_number": 34.47403615679071,
+    "margin_of_safety": -0.8343,
+    "market_cap": 5056375826950.073,
+    "ncav": 86995000000.0,
+    "price_per_share": 208.04706332085556
+  }
+}

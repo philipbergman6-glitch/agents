@@ -1,0 +1,70 @@
+{
+  "confidence": 62,
+  "dimensions": {
+    "earnings_stability": {
+      "details": [
+        "EPS positive in all 10 periods ✓ (+3)",
+        "EPS grew oldest-to-latest (2.48 -> 3.19) ✓ (+1)"
+      ],
+      "max": 4,
+      "score": 4
+    },
+    "financial_strength": {
+      "details": [
+        "Current ratio 1.36 < 1.5 ✗ (+0)",
+        "Debt ratio 0.66 < 0.80 ✓ (+1)",
+        "Dividends paid in 10/10 reporting periods (majority) ✓ (+1)"
+      ],
+      "max": 5,
+      "score": 2
+    },
+    "valuation": {
+      "details": [
+        "NCAV $-38,093,000,000 vs market cap $349,232,489,991",
+        "NCAV/share $-8.86 < 2/3 of price/share $81.20 ✗ (+0)",
+        "Graham Number $23.68",
+        "Margin of safety -70.8% vs Graham Number ✗ (+0)"
+      ],
+      "max": 7,
+      "score": 0
+    }
+  },
+  "flags": [],
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "periods": [
+      "2026-04-03",
+      "2025-12-31",
+      "2025-09-26",
+      "2025-06-27",
+      "2025-03-28",
+      "2024-12-31",
+      "2024-09-27",
+      "2024-06-28",
+      "2024-03-29",
+      "2023-12-31"
+    ],
+    "snapshot_fetched_at": "2026-07-24",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "score": {
+    "max": 16,
+    "max_possible": 16,
+    "pct": 0.375,
+    "total": 6
+  },
+  "signal": "neutral",
+  "ticker": "KO",
+  "valuation": {
+    "book_value_per_share": 7.820312877718098,
+    "eps": 3.185743369239011,
+    "graham_number": 23.676021047680493,
+    "margin_of_safety": -0.7084,
+    "market_cap": 349232489990.9794,
+    "ncav": -38093000000.0,
+    "price_per_share": 81.20320336556397
+  }
+}
