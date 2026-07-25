@@ -1,5 +1,5 @@
 {
-  "confidence": 73,
+  "confidence": 83,
   "dimensions": {
     "earnings_stability": {
       "details": [
@@ -23,7 +23,8 @@
         "NCAV $86,995,000,000 vs market cap $5,056,375,826,950",
         "NCAV/share $3.58 < 2/3 of price/share $208.05 ✗ (+0)",
         "Graham Number $34.47",
-        "Margin of safety -83.4% vs Graham Number ✗ (+0)"
+        "Margin of safety -83.4% vs Graham Number ✗ (+0)",
+        "Deep-overprice override: margin of safety -83.4% <= -50% vs Graham Number forces bearish — price alone rules the name out"
       ],
       "max": 7,
       "score": 0
@@ -58,7 +59,7 @@
     "pct": 0.5625,
     "total": 9
   },
-  "signal": "neutral",
+  "signal": "bearish",
   "ticker": "NVDA",
   "valuation": {
     "book_value_per_share": 8.042873601053325,

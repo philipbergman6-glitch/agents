@@ -1,5 +1,5 @@
 {
-  "confidence": 62,
+  "confidence": 71,
   "dimensions": {
     "earnings_stability": {
       "details": [
@@ -23,7 +23,8 @@
         "NCAV $-38,093,000,000 vs market cap $349,232,489,991",
         "NCAV/share $-8.86 < 2/3 of price/share $81.20 ✗ (+0)",
         "Graham Number $23.68",
-        "Margin of safety -70.8% vs Graham Number ✗ (+0)"
+        "Margin of safety -70.8% vs Graham Number ✗ (+0)",
+        "Deep-overprice override: margin of safety -70.8% <= -50% vs Graham Number forces bearish — price alone rules the name out"
       ],
       "max": 7,
       "score": 0
@@ -56,7 +57,7 @@
     "pct": 0.375,
     "total": 6
   },
-  "signal": "neutral",
+  "signal": "bearish",
   "ticker": "KO",
   "valuation": {
     "book_value_per_share": 7.820312877718098,

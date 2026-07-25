@@ -134,7 +134,20 @@ def test_negative_eps_graham_number_is_legitimate_zero_not_flagged():
     ],
 )
 def test_signal_boundaries(score_pct, expected):
-    assert compute_signal(score_pct) == expected
+    assert compute_signal(score_pct, mos=None) == expected
+
+
+@pytest.mark.parametrize(
+    ("score_pct", "mos", "expected"),
+    [
+        (0.5625, -0.50, "bearish"),  # inclusive at the override threshold
+        (0.5625, -0.4999, "neutral"),
+        (1.00, -0.90, "bearish"),    # price alone overrules even a perfect score
+        (0.50, None, "neutral"),     # no MoS (e.g. negative EPS) -> no override
+    ],
+)
+def test_deep_overprice_override(score_pct, mos, expected):
+    assert compute_signal(score_pct, mos) == expected
 
 
 @pytest.mark.parametrize(
@@ -148,4 +161,17 @@ def test_signal_boundaries(score_pct, expected):
     ],
 )
 def test_confidence_range(score_pct, expected):
-    assert compute_confidence(score_pct) == expected
+    assert compute_confidence(score_pct, mos=None) == expected
+
+
+@pytest.mark.parametrize(
+    ("score_pct", "mos", "expected"),
+    [
+        (0.5625, -0.50, 73),   # at the threshold: score-based confidence still wins
+        (0.375, -0.885, 88),   # AAPL shape: depth-based 88 beats score-based 62
+        (0.375, -1.00, 100),   # saturates at 2x Graham Number past the line
+        (0.1875, -0.60, 69),   # already score-bearish and deeper: max(69, 60)
+    ],
+)
+def test_override_confidence(score_pct, mos, expected):
+    assert compute_confidence(score_pct, mos) == expected
