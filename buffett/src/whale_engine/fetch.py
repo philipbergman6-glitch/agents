@@ -9,6 +9,14 @@ Sign conventions follow the reference implementation (financialdatasets style):
 - dividends_and_other_cash_distributions: negative = paid
 - issuance_or_purchase_of_equity_shares: issuance proceeds minus repurchase
   payments; negative = net buyback
+
+Two period arrays, both most recent first:
+- periods: N_PERIODS trailing-twelve-month windows stepped quarterly (~2.5y).
+- annual_periods: up to N_ANNUAL_PERIODS directly-filed fiscal-year durations
+  (~10y). Each entry keeps the same ttm/balance/tags_used shape — a fiscal-year
+  duration is the TTM as of that fiscal year end — so scorers can consume
+  either array with the same code. Fields a year never filed under any known
+  tag stay None; completeness rules belong to the consuming scorer.
 """
 
 from __future__ import annotations
@@ -95,6 +103,11 @@ SHARES_PROXY_TAG = "WeightedAverageNumberOfSharesOutstandingBasic"
 BALANCE_STALENESS_DAYS = 135
 
 N_PERIODS = 10
+
+# Deep-history window: fiscal years of annual facts. EDGAR's companyfacts API
+# carries XBRL back to ~2009, so most filers fill all 10; younger companies get
+# however many fiscal years exist.
+N_ANNUAL_PERIODS = 10
 
 # --- per-filing XBRL fallback ---------------------------------------------
 # The companyfacts API only carries us-gaap/dei facts and drops dimensioned
@@ -212,6 +225,51 @@ def _duration_at(history, window_end: date) -> tuple[float, str] | None:
     at_end = hits[hits["_end"] == best_end].sort_values("filing_date")
     row = at_end.iloc[-1]
     return float(row["numeric_value"]), str(row["period_end"])
+
+
+def _annual_fiscal_year_ends(history) -> set:
+    """End dates of all annual-length durations in a concept history.
+
+    Companyfacts durations come straight from filings (FY, quarter, YTD), so
+    annual-length ones only ever end at fiscal year ends.
+    """
+    if history is None or "period_start" not in history.columns:
+        return set()
+    dur = history[history["period_type"] == "duration"]
+    ends = set()
+    for s, e in zip(dur["period_start"], dur["period_end"]):
+        sd, ed = _to_plain_date(s), _to_plain_date(e)
+        if sd and ed and _ANNUAL_DAYS[0] <= (ed - sd).days <= _ANNUAL_DAYS[1]:
+            ends.add(ed)
+    return ends
+
+
+def _annual_at(history, fy_end: date) -> tuple[float, date, date] | None:
+    """Annual-length duration ending at fy_end (within _END_MATCH_DAYS).
+
+    Restatements file the same fiscal year again; the row from the latest
+    filing_date wins. Returns (value, period_start, period_end) or None.
+    """
+    if history is None or "period_start" not in history.columns:
+        return None
+    dur = history[history["period_type"] == "duration"].copy()
+    dur = dur[dur["period_start"].notna() & dur["period_end"].notna()]
+    if dur.empty:
+        return None
+    dur["_start"] = dur["period_start"].map(_to_plain_date)
+    dur["_end"] = dur["period_end"].map(_to_plain_date)
+    keep = [
+        s is not None
+        and e is not None
+        and _ANNUAL_DAYS[0] <= (e - s).days <= _ANNUAL_DAYS[1]
+        and abs((e - fy_end).days) <= _END_MATCH_DAYS
+        for s, e in zip(dur["_start"], dur["_end"])
+    ]
+    hits = dur[keep]
+    if hits.empty:
+        return None
+    row = hits.sort_values("filing_date").iloc[-1]
+    return float(row["numeric_value"]), row["_start"], row["_end"]
 
 
 def _ttm_value(company, tags: list[str], quarter: str):
@@ -401,6 +459,153 @@ def _fetch_share_reference(ticker: str) -> tuple[float, str]:
     )
 
 
+def _build_balance(
+    window_end: date,
+    balance_histories: dict,
+    st_debt_histories: list,
+    liabilities_total_history,
+    shares_proxy_history,
+) -> tuple[dict, dict]:
+    """Point-in-time balance sheet at window_end, with per-field tag provenance.
+
+    Shared by the quarterly and annual paths; returns (balance, tags_used).
+    """
+    balance: dict = {}
+    tags_used: dict = {}
+    for field, histories in balance_histories.items():
+        balance[field] = None
+        for tag, history in histories:
+            if history is None:
+                continue
+            hit = _balance_at(history, window_end)
+            if hit is not None:
+                balance[field] = hit[0]
+                tags_used[field] = f"{tag}@{hit[1]}"
+                break
+
+    # Filers without a Liabilities tag: derive from the balance-sheet
+    # identity, but only when both sides are stated as of the same date —
+    # otherwise leave it None and let validation hard-fail loudly.
+    if balance["total_liabilities"] is None and liabilities_total_history is not None:
+        lse_hit = _balance_at(liabilities_total_history, window_end)
+        if lse_hit is not None:
+            # LiabilitiesAndStockholdersEquity includes noncontrolling
+            # interest, so prefer the NCI-inclusive equity tag (listed last).
+            for eq_tag, eq_history in reversed(balance_histories["shareholders_equity"]):
+                if eq_history is None:
+                    continue
+                eq_hit = _balance_at(eq_history, window_end)
+                if eq_hit is not None and eq_hit[1] == lse_hit[1]:
+                    balance["total_liabilities"] = lse_hit[0] - eq_hit[0]
+                    tags_used["total_liabilities"] = (
+                        f"derived:{LIABILITIES_TOTAL_TAG}-{eq_tag}@{lse_hit[1]}"
+                    )
+                    break
+
+    # Filers with no point-in-time share count: weighted-average basic
+    # shares for the latest reported duration is the closest proxy.
+    if balance["outstanding_shares"] is None and shares_proxy_history is not None:
+        proxy_hit = _duration_at(shares_proxy_history, window_end)
+        if proxy_hit is not None:
+            balance["outstanding_shares"] = proxy_hit[0]
+            tags_used["outstanding_shares"] = f"proxy:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
+
+    primary_tag, primary_hist = st_debt_histories[0]
+    primary_hit = _balance_at(primary_hist, window_end) if primary_hist is not None else None
+    if primary_hit is not None:
+        balance["short_term_debt"] = primary_hit[0]
+        tags_used["short_term_debt"] = f"{primary_tag}@{primary_hit[1]}"
+    else:
+        parts, part_tags = [], []
+        for tag, history in st_debt_histories[1:]:
+            if history is None:
+                continue
+            hit = _balance_at(history, window_end)
+            if hit is not None:
+                parts.append(hit[0])
+                part_tags.append(tag)
+        balance["short_term_debt"] = sum(parts) if parts else None
+        if parts:
+            tags_used["short_term_debt"] = "+".join(part_tags)
+
+    return balance, tags_used
+
+
+def _fetch_annual_periods(
+    ticker: str,
+    flow_histories: dict,
+    balance_histories: dict,
+    st_debt_histories: list,
+    liabilities_total_history,
+    shares_proxy_history,
+) -> list[dict]:
+    """Up to N_ANNUAL_PERIODS fiscal years of directly-filed annual facts.
+
+    Anchored on net-income FY durations; each field walks its fallback-tag
+    list per fiscal year, so years filed under retired tags (e.g.
+    SalesRevenueNet before 2018) still resolve.
+    """
+    ends: set = set()
+    for _tag, history in flow_histories["net_income"]:
+        ends |= _annual_fiscal_year_ends(history)
+    fy_ends = sorted(ends, reverse=True)[:N_ANNUAL_PERIODS]
+    if not fy_ends:
+        raise FetchError(
+            f"{ticker}: no annual net-income durations on EDGAR — cannot build "
+            "deep-history annual periods."
+        )
+
+    annual_periods = []
+    for fy_end in fy_ends:
+        ttm: dict = {}
+        tags_used: dict = {}
+        period_start: date | None = None
+
+        for field, histories in flow_histories.items():
+            ttm[field] = None
+            for tag, history in histories:
+                hit = _annual_at(history, fy_end)
+                if hit is None:
+                    continue
+                value, start, end = hit
+                ttm[field] = -value if field in NEGATE_FLOWS else value
+                tags_used[field] = f"{tag}@{start}..{end}"
+                if field == "net_income":
+                    period_start = start
+                break
+
+        # Net issuance/buyback per reference convention (negative = buyback).
+        issuance = ttm.pop("share_issuance", None)
+        repurchase = ttm.pop("share_repurchase", None)  # already negated
+        if issuance is None and repurchase is None:
+            ttm["issuance_or_purchase_of_equity_shares"] = None
+        else:
+            ttm["issuance_or_purchase_of_equity_shares"] = (issuance or 0.0) + (
+                repurchase or 0.0
+            )
+        ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
+
+        balance, balance_tags = _build_balance(
+            fy_end,
+            balance_histories,
+            st_debt_histories,
+            liabilities_total_history,
+            shares_proxy_history,
+        )
+        tags_used.update(balance_tags)
+
+        annual_periods.append(
+            {
+                "period_start": period_start.isoformat() if period_start else None,
+                "period_end": fy_end.isoformat(),
+                "ttm": ttm,
+                "balance": balance,
+                "tags_used": tags_used,
+            }
+        )
+    return annual_periods
+
+
 def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
     """Fetch N_PERIODS historical TTM periods + market cap into a snapshot dict."""
     import edgar
@@ -431,6 +636,10 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             f"(need {N_PERIODS})."
         )
 
+    flow_histories = {
+        field: [(tag, _concept_history(company, tag)) for tag in tags]
+        for field, tags in FLOW_TAGS.items()
+    }
     balance_histories = {
         field: [(tag, _concept_history(company, tag)) for tag in tags]
         for field, tags in BALANCE_TAGS.items()
@@ -475,62 +684,14 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             )
         ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
 
-        balance: dict = {}
-        for field, histories in balance_histories.items():
-            balance[field] = None
-            for tag, history in histories:
-                if history is None:
-                    continue
-                hit = _balance_at(history, window_end)
-                if hit is not None:
-                    balance[field] = hit[0]
-                    tags_used[field] = f"{tag}@{hit[1]}"
-                    break
-
-        # Filers without a Liabilities tag: derive from the balance-sheet
-        # identity, but only when both sides are stated as of the same date —
-        # otherwise leave it None and let validation hard-fail loudly.
-        if balance["total_liabilities"] is None and liabilities_total_history is not None:
-            lse_hit = _balance_at(liabilities_total_history, window_end)
-            if lse_hit is not None:
-                # LiabilitiesAndStockholdersEquity includes noncontrolling
-                # interest, so prefer the NCI-inclusive equity tag (listed last).
-                for eq_tag, eq_history in reversed(balance_histories["shareholders_equity"]):
-                    if eq_history is None:
-                        continue
-                    eq_hit = _balance_at(eq_history, window_end)
-                    if eq_hit is not None and eq_hit[1] == lse_hit[1]:
-                        balance["total_liabilities"] = lse_hit[0] - eq_hit[0]
-                        tags_used["total_liabilities"] = (
-                            f"derived:{LIABILITIES_TOTAL_TAG}-{eq_tag}@{lse_hit[1]}"
-                        )
-                        break
-
-        # Filers with no point-in-time share count: weighted-average basic
-        # shares for the latest reported duration is the closest proxy.
-        if balance["outstanding_shares"] is None and shares_proxy_history is not None:
-            proxy_hit = _duration_at(shares_proxy_history, window_end)
-            if proxy_hit is not None:
-                balance["outstanding_shares"] = proxy_hit[0]
-                tags_used["outstanding_shares"] = f"proxy:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
-
-        primary_tag, primary_hist = st_debt_histories[0]
-        primary_hit = _balance_at(primary_hist, window_end) if primary_hist is not None else None
-        if primary_hit is not None:
-            balance["short_term_debt"] = primary_hit[0]
-            tags_used["short_term_debt"] = f"{primary_tag}@{primary_hit[1]}"
-        else:
-            parts, part_tags = [], []
-            for tag, history in st_debt_histories[1:]:
-                if history is None:
-                    continue
-                hit = _balance_at(history, window_end)
-                if hit is not None:
-                    parts.append(hit[0])
-                    part_tags.append(tag)
-            balance["short_term_debt"] = sum(parts) if parts else None
-            if parts:
-                tags_used["short_term_debt"] = "+".join(part_tags)
+        balance, balance_tags = _build_balance(
+            window_end,
+            balance_histories,
+            st_debt_histories,
+            liabilities_total_history,
+            shares_proxy_history,
+        )
+        tags_used.update(balance_tags)
 
         periods.append(
             {
@@ -541,6 +702,15 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                 "tags_used": tags_used,
             }
         )
+
+    annual_periods = _fetch_annual_periods(
+        ticker,
+        flow_histories,
+        balance_histories,
+        st_debt_histories,
+        liabilities_total_history,
+        shares_proxy_history,
+    )
 
     # Per-filing XBRL fallback for fields companyfacts drops (see constants).
     missing_dna = [
@@ -559,6 +729,19 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             if hit is not None:
                 p["ttm"]["depreciation_and_amortization"] = hit[0]
                 p["tags_used"]["depreciation_and_amortization"] = hit[1]
+
+        # Opportunistic: the collected filings only reach ~6 years back, but
+        # the direct-annual branch of the stitcher fills whatever they cover.
+        if missing_dna:
+            for p in annual_periods:
+                if p["ttm"]["depreciation_and_amortization"] is not None:
+                    continue
+                hit = _ttm_from_filing_durations(
+                    dna_facts, date.fromisoformat(p["period_end"])
+                )
+                if hit is not None:
+                    p["ttm"]["depreciation_and_amortization"] = hit[0]
+                    p["tags_used"]["depreciation_and_amortization"] = hit[1]
 
         if missing_shares and cover_rows:
             reference, reference_source = _fetch_share_reference(ticker)
@@ -605,7 +788,7 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
     import edgar as _edgar_mod
 
     snapshot = {
-        "schema_version": 1,
+        "schema_version": 2,
         "ticker": ticker.upper(),
         "fetched_at": today.isoformat(),
         "market_cap": market_cap,
@@ -615,6 +798,7 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             "market_data": market_cap_source.split(":")[0],
         },
         "periods": periods,  # most recent first
+        "annual_periods": annual_periods,  # most recent fiscal year first
     }
     if share_count_check is not None:
         snapshot["share_count_check"] = share_count_check
