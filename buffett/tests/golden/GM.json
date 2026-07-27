@@ -1,18 +1,18 @@
 {
-  "confidence": 83,
+  "confidence": 78,
   "dimensions": {
     "book_value": {
       "details": [
-        "BVPS grew in 7/9 periods ✓ (+2)",
-        "BVPS CAGR 7.1% (+0)"
+        "BVPS grew in 8/9 periods ✓ (+3)",
+        "BVPS CAGR 9.8% (+0)"
       ],
       "max": 5,
-      "score": 2
+      "score": 3
     },
     "consistency": {
       "details": [
-        "Earnings flat or declining: grew in 1/9 steps ✗ (+0)",
-        "Total earnings growth -81.8% oldest-to-latest"
+        "Earnings flat or declining: grew in 3/9 steps ✗ (+0)",
+        "Total earnings growth -70.5% oldest-to-latest"
       ],
       "max": 3,
       "score": 0
@@ -37,26 +37,39 @@
     },
     "moat": {
       "details": [
-        "ROE > 15% in only 3/10 periods ✗ (+0)",
-        "Operating margins avg 5.1% (recent 1.4% vs older 7.0%) ✗ (+0)",
-        "Performance stability 47.6% <= 70% ✗ (+0)"
+        "ROE > 15% in only 5/10 periods ✗ (+0)",
+        "Operating margins avg 5.6% (recent 5.0% vs older 5.0%) ✗ (+0)",
+        "Performance stability 46.3% <= 70% ✗ (+0)"
       ],
       "max": 5,
       "score": 0
     },
     "pricing_power": {
       "details": [
-        "Gross margin stable near 6.0% ✓ (+1)",
-        "Average gross margin 6.0% <= 30% (+0)"
+        "Insufficient gross margin history (excluded)"
       ],
+      "excluded": true,
       "max": 5,
-      "score": 1
+      "score": 0
     }
   },
   "flags": [
-    "fundamentals: debt_to_equity missing, scored 0"
+    "fundamentals: debt_to_equity missing, scored 0",
+    "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
   ],
   "provenance": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31",
+      "2020-12-31",
+      "2019-12-31",
+      "2018-12-31",
+      "2017-12-31",
+      "2016-12-31"
+    ],
     "market_cap_source": "yfinance:fast_info.market_cap",
     "periods": [
       "2026-06-30",
@@ -70,16 +83,17 @@
       "2024-06-30",
       "2024-03-31"
     ],
-    "snapshot_fetched_at": "2026-07-24",
+    "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
       "market_data": "yfinance"
     }
   },
+  "rubric_version": 2,
   "score": {
-    "max": 27,
+    "max": 22,
     "max_possible": 27,
-    "pct": 0.1852,
+    "pct": 0.2273,
     "total": 5
   },
   "signal": "bearish",
@@ -97,8 +111,8 @@
       "terminal_pv": 24918452893.359116
     },
     "intrinsic_value": 49036012615.35995,
-    "margin_of_safety": -0.3279,
-    "market_cap": 72962104156.36977,
+    "margin_of_safety": -0.3439,
+    "market_cap": 74743875348.24,
     "owner_earnings": 6172853393.396305,
     "owner_earnings_components": {
       "depreciation": 12127000000.0,

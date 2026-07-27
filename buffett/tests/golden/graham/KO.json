@@ -20,11 +20,11 @@
     },
     "valuation": {
       "details": [
-        "NCAV $-38,093,000,000 vs market cap $349,232,489,991",
-        "NCAV/share $-8.86 < 2/3 of price/share $81.20 ✗ (+0)",
+        "NCAV $-38,093,000,000 vs market cap $353,879,178,880",
+        "NCAV/share $-8.86 < 2/3 of price/share $82.28 ✗ (+0)",
         "Graham Number $23.68",
-        "Margin of safety -70.8% vs Graham Number ✗ (+0)",
-        "Deep-overprice override: margin of safety -70.8% <= -50% vs Graham Number forces bearish — price alone rules the name out"
+        "Margin of safety -71.2% vs Graham Number ✗ (+0)",
+        "Deep-overprice override: margin of safety -71.2% <= -50% vs Graham Number forces bearish — price alone rules the name out"
       ],
       "max": 7,
       "score": 0
@@ -45,7 +45,7 @@
       "2024-03-29",
       "2023-12-31"
     ],
-    "snapshot_fetched_at": "2026-07-24",
+    "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
       "market_data": "yfinance"
@@ -63,9 +63,9 @@
     "book_value_per_share": 7.820312877718098,
     "eps": 3.185743369239011,
     "graham_number": 23.676021047680493,
-    "margin_of_safety": -0.7084,
-    "market_cap": 349232489990.9794,
+    "margin_of_safety": -0.7123,
+    "market_cap": 353879178880.5,
     "ncav": -38093000000.0,
-    "price_per_share": 81.20320336556397
+    "price_per_share": 82.28364700607976
   }
 }

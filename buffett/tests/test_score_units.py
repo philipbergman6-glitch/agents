@@ -23,10 +23,11 @@ def _period(net_income):
 
 
 def test_negative_latest_earnings_does_not_crash():
-    """Latest TTM loss with positive oldest earnings used to produce a complex
-    growth rate ((negative ratio) ** (1/years)) and crash the DCF."""
+    """Latest loss with positive oldest earnings used to produce a complex
+    growth rate ((negative ratio) ** (1/years)) and crash the DCF. Growth now
+    derives from annual periods; the same guard must hold there."""
     periods = [_period(-20.0), _period(5.0), _period(10.0), _period(15.0), _period(20.0)]
-    result = calculate_intrinsic_value(periods)
+    result = calculate_intrinsic_value(periods, annual_periods=periods)
     assert isinstance(result["intrinsic_value"], float)
     # Fallback growth path: 3% headline, staged down per the locked DCF.
     assert result["dcf_stages"]["stage1_growth"] == pytest.approx(0.03)

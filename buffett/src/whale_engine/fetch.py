@@ -717,12 +717,15 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
         p for p in periods if p["ttm"]["depreciation_and_amortization"] is None
     ]
     missing_shares = [p for p in periods if p["balance"]["outstanding_shares"] is None]
+    missing_shares_annual = [
+        p for p in annual_periods if p["balance"]["outstanding_shares"] is None
+    ]
     share_count_check = None
-    if missing_dna or missing_shares:
+    if missing_dna or missing_shares or missing_shares_annual:
         dna_facts, cover_rows = _collect_filing_facts(
             company,
             dna_tags=FLOW_TAGS["depreciation_and_amortization"] if missing_dna else [],
-            need_shares=bool(missing_shares),
+            need_shares=bool(missing_shares or missing_shares_annual),
         )
         for p in missing_dna:
             hit = _ttm_from_filing_durations(dna_facts, date.fromisoformat(p["period_end"]))
@@ -743,7 +746,7 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                     p["ttm"]["depreciation_and_amortization"] = hit[0]
                     p["tags_used"]["depreciation_and_amortization"] = hit[1]
 
-        if missing_shares and cover_rows:
+        if (missing_shares or missing_shares_annual) and cover_rows:
             reference, reference_source = _fetch_share_reference(ticker)
             latest = max(cover_rows, key=lambda r: r[0])
             ratio = latest[1] / reference
@@ -774,7 +777,9 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                 }
             )
             classes_by_instant = {r[0].isoformat(): r[2] for r in cover_rows}
-            for p in missing_shares:
+            # Annual periods too: collected filings only reach ~6 years back,
+            # so old fiscal years may stay None — validation handles that.
+            for p in missing_shares + missing_shares_annual:
                 hit = _balance_at(cover_history, date.fromisoformat(p["period_end"]))
                 if hit is not None:
                     p["balance"]["outstanding_shares"] = hit[0]

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-SNAPSHOT_DATE = "2026-07-24"
+SNAPSHOT_DATE = "2026-07-27"
 SNAPSHOTS = Path(__file__).parent.parent / "snapshots"
 GOLDEN = Path(__file__).parent / "golden"
 GOLDEN_GRAHAM = GOLDEN / "graham"

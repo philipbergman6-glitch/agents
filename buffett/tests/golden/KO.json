@@ -1,18 +1,18 @@
 {
-  "confidence": 62,
+  "confidence": 60,
   "dimensions": {
     "book_value": {
       "details": [
-        "BVPS grew in 7/9 periods ✓ (+2)",
-        "BVPS CAGR 12.5% > 10% ✓ (+1)"
+        "BVPS grew in 6/9 periods ✓ (+2)",
+        "BVPS CAGR 3.8% (+0)"
       ],
       "max": 5,
-      "score": 3
+      "score": 2
     },
     "consistency": {
       "details": [
-        "Earnings up oldest-to-latest but grew in only 7/9 steps ✓ (+1)",
-        "Total earnings growth 27.9% oldest-to-latest"
+        "Earnings up oldest-to-latest but grew in only 5/9 steps ✓ (+1)",
+        "Total earnings growth 100.8% oldest-to-latest"
       ],
       "max": 3,
       "score": 1
@@ -37,24 +37,36 @@
     },
     "moat": {
       "details": [
-        "ROE > 15% in 10/10 periods (avg 41.2%) ✓ (+2)",
-        "Operating margins avg 25.2% > 20% and stable/improving ✓ (+1)",
-        "Performance stability 91.8% > 70% ✓ (+1)"
+        "ROE > 15% in 9/10 periods (avg 36.8%) ✓ (+2)",
+        "Operating margins avg 25.0% > 20% and stable/improving ✓ (+1)",
+        "Performance stability 79.8% > 70% ✓ (+1)"
       ],
       "max": 5,
       "score": 4
     },
     "pricing_power": {
       "details": [
-        "Gross margin improving: 59.8% -> 61.7% ✓ (+2)",
-        "Average gross margin 60.9% > 50% ✓ (+2)"
+        "Gross margin stable near 61.3% ✓ (+1)",
+        "Average gross margin 60.5% > 50% ✓ (+2)"
       ],
       "max": 5,
-      "score": 4
+      "score": 3
     }
   },
   "flags": [],
   "provenance": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31",
+      "2020-12-31",
+      "2019-12-31",
+      "2018-12-31",
+      "2017-12-31",
+      "2016-12-31"
+    ],
     "market_cap_source": "yfinance:fast_info.market_cap",
     "periods": [
       "2026-04-03",
@@ -68,35 +80,36 @@
       "2024-03-29",
       "2023-12-31"
     ],
-    "snapshot_fetched_at": "2026-07-24",
+    "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
       "market_data": "yfinance"
     }
   },
+  "rubric_version": 2,
   "score": {
     "max": 27,
     "max_possible": 27,
-    "pct": 0.7407,
-    "total": 20
+    "pct": 0.6667,
+    "total": 18
   },
   "signal": "bearish",
   "ticker": "KO",
   "valuation": {
     "dcf_stages": {
       "discount_rate": 0.1,
-      "stage1_growth": 0.043175076997086156,
-      "stage1_pv": 63036550126.60352,
+      "stage1_growth": 0.05333667615495086,
+      "stage1_pv": 64836126976.73891,
       "stage1_years": 5,
-      "stage2_growth": 0.021587538498543078,
-      "stage2_pv": 45532491832.6954,
+      "stage2_growth": 0.02666833807747543,
+      "stage2_pv": 48476123076.07901,
       "stage2_years": 5,
       "terminal_growth": 0.025,
-      "terminal_pv": 106759736301.3601
+      "terminal_pv": 114876295191.75441
     },
-    "intrinsic_value": 183029461521.56018,
-    "margin_of_safety": -0.4759,
-    "market_cap": 349232489990.9794,
+    "intrinsic_value": 193960263457.88647,
+    "margin_of_safety": -0.4519,
+    "market_cap": 353879178880.5,
     "owner_earnings": 14740350000.0,
     "owner_earnings_components": {
       "depreciation": 1047000000.0,
@@ -106,6 +119,6 @@
       "total_capex": 2069000000.0,
       "working_capital_change": -1751000000.0
     },
-    "raw_intrinsic_value": 215328778260.65903
+    "raw_intrinsic_value": 228188545244.57233
   }
 }

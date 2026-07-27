@@ -16,6 +16,15 @@ book value 5), with the decisions locked on the rubric ticket:
   not a gap — a debt-free filer (D/E 0.0) passes the debt check instead of
   scoring 0 as "unavailable" like the reference (intentional deviation)
 
+Rubric v2 (ticket #40): the history-judging dimensions — consistency, moat,
+pricing power, book value, and the DCF growth derivation — read the snapshot's
+annual_periods (up to 10 fiscal years, ticket #38) so they measure the decade
+they were designed for instead of 2.5 years of seasonal quarterly steps.
+Present-state inputs — fundamentals, management, owner earnings — stay on the
+latest quarterly TTM, which is fresher than any fiscal-year figure. Snapshots
+without annual_periods (schema v1) hard-fail: refetch rather than silently
+diagnose from the shallow window. Every diagnosis carries rubric_version.
+
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
 no clocks, no randomness in this module.
 """
@@ -27,6 +36,7 @@ from datetime import date
 from ..errors import MissingDataError
 
 MAX_SCORE = 27
+RUBRIC_VERSION = 2
 TAX_RATE = 0.21
 SHARES_OUTLIER_RATIO = 3.0
 
@@ -47,6 +57,11 @@ MANDATORY_BALANCE = [
     "total_liabilities",
 ]
 MIN_COMPLETE_PERIODS = 5
+# Below 3 complete fiscal years, every history dimension is excluded and the
+# DCF growth falls back — the result would be quarterly-quality wearing a v2
+# stamp. Young-IPO filers with 3-4 years still diagnose; dimensions that need
+# more history exclude themselves from the denominator as usual.
+MIN_COMPLETE_ANNUAL = 3
 
 
 # ---------------------------------------------------------------------------
@@ -76,6 +91,18 @@ def validate(snapshot: dict) -> None:
         raise MissingDataError(
             f"{snapshot.get('ticker')}: only {len(complete)} complete periods "
             f"(need >= {MIN_COMPLETE_PERIODS}). Gaps -- " + "; ".join(gaps)
+        )
+    annual = snapshot.get("annual_periods")
+    if annual is None:
+        raise MissingDataError(
+            f"{snapshot.get('ticker')}: snapshot has no annual_periods (schema v1); "
+            "rubric v2 scores history from fiscal years -- refetch the snapshot"
+        )
+    complete_annual = [p for p in annual if _is_complete(p)]
+    if len(complete_annual) < MIN_COMPLETE_ANNUAL:
+        raise MissingDataError(
+            f"{snapshot.get('ticker')}: only {len(complete_annual)} complete annual periods "
+            f"(need >= {MIN_COMPLETE_ANNUAL})"
         )
 
 
@@ -359,8 +386,8 @@ def analyze_book_value(periods: list, flags: list) -> dict:
         details.append(f"BVPS grew in only {grew}/{len(book_values) - 1} periods ✗ (+0)")
 
     oldest, latest = book_values[-1], book_values[0]
-    # Periods are quarterly TTM windows, so counting them would treat quarters
-    # as years; span the actual period_end dates instead.
+    # Span the actual period_end dates: counting entries would mis-annualize
+    # whenever the cadence isn't exactly yearly (quarterly lists, gap years).
     years = (
         date.fromisoformat(usable[0]["period_end"]) - date.fromisoformat(usable[-1]["period_end"])
     ).days / 365.25
@@ -440,13 +467,16 @@ def calculate_owner_earnings(periods: list) -> dict:
     }
 
 
-def calculate_intrinsic_value(periods: list) -> dict:
+def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
     if len(periods) < 3:
         raise MissingDataError("intrinsic value: fewer than 3 periods")
     earnings_data = calculate_owner_earnings(periods)
     owner_earnings = earnings_data["owner_earnings"]
 
-    historical = [p["ttm"]["net_income"] for p in periods[:5] if p["ttm"].get("net_income")]
+    # Growth from the 5 most recent fiscal years — the window the reference
+    # actually used (period="annual", limit up to 10); the quarterly window
+    # made this a seasonal-noise estimate.
+    historical = [p["ttm"]["net_income"] for p in annual_periods[:5] if p["ttm"].get("net_income")]
     # Both endpoints must be positive: a negative ratio raised to 1/years is
     # complex (reference bug — it only guarded the oldest value).
     if len(historical) >= 3 and historical[-1] > 0 and historical[0] > 0:
@@ -517,17 +547,21 @@ def compute_confidence(score_pct: float, mos: float) -> int:
 def diagnose(snapshot: dict) -> dict:
     validate(snapshot)
     periods = snapshot["periods"]
+    annual = snapshot["annual_periods"]
     flags: list[str] = []
 
     metrics = [compute_metrics(p) for p in periods]
+    annual_metrics = [compute_metrics(p) for p in annual]
 
+    # Present-state dimensions read the latest quarterly TTM; history-judging
+    # dimensions read fiscal years (rubric v2).
     dimensions = {
         "fundamentals": analyze_fundamentals(metrics[0], flags),
-        "consistency": analyze_consistency(periods, flags),
-        "moat": analyze_moat(metrics, flags),
+        "consistency": analyze_consistency(annual, flags),
+        "moat": analyze_moat(annual_metrics, flags),
         "management": analyze_management(periods, flags),
-        "pricing_power": analyze_pricing_power(periods, flags),
-        "book_value": analyze_book_value(periods, flags),
+        "pricing_power": analyze_pricing_power(annual, flags),
+        "book_value": analyze_book_value(annual, flags),
     }
 
     # Renormalize (judgment-review tuning): dimensions with insufficient data
@@ -538,12 +572,13 @@ def diagnose(snapshot: dict) -> dict:
         raise MissingDataError(f"{snapshot['ticker']}: no scorable dimensions")
     score_pct = total / max_effective
 
-    valuation = calculate_intrinsic_value(periods)
+    valuation = calculate_intrinsic_value(periods, annual)
     market_cap = snapshot["market_cap"]
     mos = (valuation["intrinsic_value"] - market_cap) / market_cap
 
     return {
         "ticker": snapshot["ticker"],
+        "rubric_version": RUBRIC_VERSION,
         "signal": compute_signal(score_pct, mos),
         "confidence": compute_confidence(score_pct, mos),
         "score": {"total": total, "max": max_effective, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
@@ -563,5 +598,6 @@ def diagnose(snapshot: dict) -> dict:
             "market_cap_source": snapshot["market_cap_source"],
             "source": snapshot["source"],
             "periods": [p["period_end"] for p in periods],
+            "annual_periods": [p["period_end"] for p in annual],
         },
     }
