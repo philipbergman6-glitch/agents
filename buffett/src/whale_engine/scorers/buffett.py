@@ -473,9 +473,10 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
     earnings_data = calculate_owner_earnings(periods)
     owner_earnings = earnings_data["owner_earnings"]
 
-    # Growth from the 5 most recent fiscal years — the window the reference
-    # actually used (period="annual", limit up to 10); the quarterly window
-    # made this a seasonal-noise estimate.
+    # Growth from the 5 most recent fiscal years. Deliberate deviation from
+    # the reference, which fed 5 quarterly-spaced TTM windows (~1 year of real
+    # span) into a formula that divides by len-1 "years" — understating any
+    # steady grower's rate ~4x and amplifying seasonality into the sign.
     historical = [p["ttm"]["net_income"] for p in annual_periods[:5] if p["ttm"].get("net_income")]
     # Both endpoints must be positive: a negative ratio raised to 1/years is
     # complex (reference bug — it only guarded the oldest value).
