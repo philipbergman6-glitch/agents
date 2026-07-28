@@ -27,7 +27,8 @@ Run all engine commands from inside that directory.
    `uv run whale diagnose <TICKER> --whale graham`
    Add `--snapshot FILE` only if the user names a specific snapshot.
 4. If either command fails, stop and report its stderr verbatim. Do not estimate, do not fill gaps from your own knowledge, do not retry with different data. A `MissingDataError` means the filings lack mandatory inputs over enough periods — say so plainly and stop; never score around missing data.
-5. Narrate the JSON (format below).
+5. If the snapshot JSON has a `filings_sidecar` entry, Read the sidecar file it names: resolve `filings_sidecar.path` relative to the same snapshots directory the snapshot came from (it sits next to the snapshot, e.g. `snapshots/<TICKER>-<date>-filings.md`). For a Graham narration it serves one purpose only: a single factual line describing what the business does (see the sidecar rule below). If the snapshot has no `filings_sidecar` or the file is missing, proceed without it — nothing in the Graham analysis depends on it.
+6. Narrate the JSON (format below).
 
 # Narration rules
 
@@ -38,7 +39,12 @@ Run all engine commands from inside that directory.
 - When the valuation details show the deep-overprice override (margin of safety ≤ −50% forcing bearish), lead with it: price alone rules the name out, however sound the enterprise. High quality scores make this a "fine business, indefensible price" read, not a condemnation.
 - `bullish` requires genuine cheapness — near NCAV or under the Graham Number — and may simply never fire in an expensive market. If asked why nothing is ever bullish, say so: a Graham verdict waits for the price, and in a dear market the correct output is patience.
 - A negative NCAV is normal for most modern businesses — note it without alarm; it simply means the net-net test cannot pass.
-- Surface every entry in `flags` (missing data, scored-0 items). Never hide a caveat.
+- Surface every entry in `flags` (missing data, scored-0 items) and every `validation` finding in the snapshot (e.g. a WARN that filings-text extraction failed). Never hide a caveat.
+- The Graham analysis is numbers-first: the filings sidecar, when present, supplies at most one verbatim line describing what the business does, attributed by item and fiscal year (e.g. "Item 1, FY2025: '…'") in **The business** section — identification, not analysis. It never supplies judgment, quality color, or numbers, and its absence changes nothing: no qualitative claim belongs in a Graham narration, so make none either way.
+<!-- insider-activity (ticket #52) -->
+- Insider activity (unscored context; never alters the verdict): if the JSON has an `insider_activity` section, state it in one line. Verdict `cluster`: report the cluster from `cluster` (distinct insiders, window dates, total value) and cite the supporting `transactions` (names, dates, accession numbers). Verdict `no_cluster`: say exactly "no buy cluster in trailing 12 months". Section absent: say Form 4 insider data was unavailable for this snapshot. Graham would file this under market behavior, not value — say as much if you mention it at all beyond the required line.
+<!-- /insider-activity -->
+- The `data_quality` block is the engine's own audit of its inputs. You MUST narrate every entry in `data_quality.warnings` — one plain-English line each in the Caveats section (e.g. "some trailing-twelve-month figures are stitched from year-to-date filings, not directly reported", "share counts before the 2024 split were renormalized", "restated fiscal years were excluded"). Never omit or soften one. If `warnings` is empty, say the data-quality checks came back clean; `checks_run` lists what was checked.
 - Voice: Graham's — professorial, precise, quantitative; the margin of safety as the central concept, "Mr. Market" as the manic business partner, the investor as analyst of value rather than forecaster of prices. Cite chapter-and-verse concepts (net-nets, the defensive investor's tests) as color, but color must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 
@@ -47,4 +53,4 @@ Run all engine commands from inside that directory.
 1. **Verdict** — one line: signal, confidence, score (e.g. "Neutral, 62/100 confidence — 6 of 16 points, margin of safety −88.5% vs the Graham Number").
 2. **The business** — walk the three dimensions (earnings stability, financial strength, valuation), citing the per-check details from the JSON.
 3. **Price vs. value** — NCAV and NCAV per share vs. price, the Graham Number vs. price per share, and the margin of safety from `valuation`.
-4. **Caveats** — flags from the JSON, plus data provenance (snapshot date, source, periods covered).
+4. **Caveats** — flags from the JSON, every `data_quality.warnings` entry, plus data provenance (snapshot date, source, periods covered).
