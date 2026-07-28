@@ -72,6 +72,71 @@ MIN_COMPLETE_PERIODS = 5
 # more history exclude themselves from the denominator as usual.
 MIN_COMPLETE_ANNUAL = 3
 
+# Which scored dimensions consume each snapshot field (ticket #55 A2): every
+# data_quality warning that names a field gains a dimensions_affected list so
+# a reader can see exactly which scores rest on degraded data. Split by the
+# array the dimension reads (rubric v2): present-state dimensions and the
+# owner-earnings side of valuation read periods[0]; history dimensions and the
+# DCF growth window read annual_periods.
+_PRESENT_FIELD_DIMENSIONS = {
+    "net_income": ["fundamentals", "valuation"],
+    "revenue": ["fundamentals", "valuation"],
+    "operating_income": ["fundamentals"],
+    "gross_profit": [],
+    "capital_expenditure": ["valuation"],
+    "depreciation_and_amortization": ["valuation"],
+    "dividends_and_other_cash_distributions": ["management"],
+    "issuance_or_purchase_of_equity_shares": ["management"],
+    "shareholders_equity": ["fundamentals"],
+    "short_term_debt": ["fundamentals"],
+    "long_term_debt": ["fundamentals"],
+    "current_assets": ["fundamentals", "valuation"],
+    "current_liabilities": ["fundamentals", "valuation"],
+}
+_ANNUAL_FIELD_DIMENSIONS = {
+    "net_income": ["consistency", "valuation"],
+    "revenue": ["moat", "pricing_power"],
+    "operating_income": ["moat"],
+    "gross_profit": ["pricing_power"],
+    "shareholders_equity": ["moat", "book_value"],
+    "outstanding_shares": ["book_value"],
+    "total_assets": ["moat"],
+}
+# Warnings that name no single field but still touch scores.
+_CODE_DIMENSIONS = {
+    "debt_unresolved": ["fundamentals"],
+    "market_cap_manual_unverified": ["valuation"],
+    "fundamentals_stale_vs_price": ["fundamentals", "management", "valuation"],
+    "restatement_402": ["consistency", "moat", "pricing_power", "book_value", "valuation"],
+}
+
+
+def _dimensions_affected(finding: dict) -> list[str]:
+    ctx = finding.get("context") or {}
+    field, array = ctx.get("field"), ctx.get("array")
+    if field is not None:
+        if array == "annual_periods":
+            return _ANNUAL_FIELD_DIMENSIONS.get(field, [])
+        if array == "periods":
+            return _PRESENT_FIELD_DIMENSIONS.get(field, [])
+        return sorted(
+            set(_PRESENT_FIELD_DIMENSIONS.get(field, []))
+            | set(_ANNUAL_FIELD_DIMENSIONS.get(field, []))
+        )
+    return _CODE_DIMENSIONS.get(finding.get("code"), [])
+
+
+def _link_data_quality(dq: dict) -> dict:
+    """Add dimensions_affected to every warning (copies — carried snapshot
+    findings are never mutated)."""
+    return {
+        **dq,
+        "warnings": [
+            {**f, "dimensions_affected": _dimensions_affected(f)}
+            for f in dq["warnings"]
+        ],
+    }
+
 
 # ---------------------------------------------------------------------------
 # validation & metrics
@@ -119,6 +184,76 @@ def _ratio(num, den):
     if num is None or den is None or den == 0:
         return None
     return num / den
+
+
+def _gate_stale_present(periods: list, annual: list, flags: list) -> list:
+    """No point from a stale-flagged value (ticket #55 A2).
+
+    A TTM field in the present-state period whose stitched window ends beyond
+    validation.STALE_WINDOW_DAYS before the period's own end describes an
+    older era. Policy, in order: (a) fall back to the same field's clean
+    latest-fiscal-year value when one exists; (b) discard it so the consuming
+    check scores 0 with the standard missing-input flag; (c) mandatory inputs
+    with no clean fallback are retained but flagged loudly — zeroing net
+    income or capex would corrupt the valuation worse than the staleness does.
+    Returns a new periods list; the snapshot is never mutated.
+    """
+    stale = validation.stale_ttm_fields(periods[0])
+    if not stale:
+        return periods
+    patched = {**periods[0], "ttm": dict(periods[0]["ttm"])}
+    annual_stale = validation.stale_ttm_fields(annual[0]) if annual else {}
+    for field, lag in sorted(stale.items()):
+        annual_value = annual[0]["ttm"].get(field) if annual else None
+        fy = annual[0]["period_end"][:4] if annual else "?"
+        if annual_value is not None and field not in annual_stale:
+            patched["ttm"][field] = annual_value
+            flags.append(
+                f"stale_data: {field} TTM window ends {lag} days before the "
+                f"period end; using the clean FY{fy} annual value instead"
+            )
+        elif field in MANDATORY_TTM:
+            flags.append(
+                f"stale_data: {field} TTM window ends {lag} days before the "
+                "period end and no clean annual fallback exists; stale value "
+                "retained (mandatory input) — treat dependent scores with care"
+            )
+        else:
+            patched["ttm"][field] = None
+            flags.append(
+                f"stale_data: {field} TTM window ends {lag} days before the "
+                "period end and no clean annual fallback exists; value "
+                "discarded, dependent checks score 0"
+            )
+    return [patched] + periods[1:]
+
+
+def recent_trajectory(periods: list) -> dict:
+    """Unscored recent-direction context (ticket #55 A5, per the #46/#47
+    cited-evidence pattern): the last four quarterly points, engine-computed,
+    so narration can state when the present contradicts a decade-earned score.
+    Every flow in the snapshot is a 12-month window, so ttm_net_income is a
+    smoothed trajectory, not single-quarter earnings."""
+    points = []
+    for p in periods[:4]:
+        eq = p["balance"].get("shareholders_equity")
+        sh = p["balance"].get("outstanding_shares")
+        points.append(
+            {
+                "period_end": p["period_end"],
+                "ttm_net_income": p["ttm"].get("net_income"),
+                "shareholders_equity": eq,
+                "bvps": eq / sh if eq is not None and sh else None,
+            }
+        )
+    return {
+        "note": (
+            "unscored context: last four quarterly TTM windows, most recent "
+            "first; narration must state the direction when it contradicts a "
+            "high history score"
+        ),
+        "points": points,
+    }
 
 
 def compute_metrics(period: dict) -> dict:
@@ -199,7 +334,16 @@ def analyze_fundamentals(m: dict, flags: list) -> dict:
 
 def analyze_consistency(periods: list, flags: list) -> dict:
     details = []
-    earnings = [p["ttm"]["net_income"] for p in periods if p["ttm"].get("net_income")]
+    # None-gated, not truthiness (ticket #55 A6): a true-zero year is data.
+    earnings = [
+        p["ttm"]["net_income"] for p in periods if p["ttm"].get("net_income") is not None
+    ]
+    n_missing = len(periods) - len(earnings)
+    if n_missing:
+        flags.append(
+            f"consistency: {n_missing} fiscal years missing net_income excluded "
+            "from the streak"
+        )
     if len(earnings) < 4:
         flags.append("consistency: fewer than 4 earnings periods, excluded from denominator")
         return {"score": 0, "max": 3, "excluded": True, "details": ["Insufficient earnings history (excluded)"]}
@@ -258,11 +402,20 @@ def analyze_moat(metrics: list, flags: list) -> dict:
             details.append(f"Operating margins avg {avg:.1%} > 20% and stable/improving ✓ (+1)")
         else:
             details.append(f"Operating margins avg {avg:.1%} (recent {recent:.1%} vs older {older:.1%}) ✗ (+0)")
+    else:
+        details.append("Insufficient operating-margin history (+0)")
+        flags.append("moat: fewer than 5 operating-margin periods, margin check scored 0")
 
     turnovers = [m["asset_turnover"] for m in metrics if m["asset_turnover"] is not None]
-    if len(turnovers) >= 3 and any(t > 1.0 for t in turnovers):
-        score += 1
-        details.append("Asset turnover > 1.0 observed ✓ (+1)")
+    if len(turnovers) >= 3:
+        if any(t > 1.0 for t in turnovers):
+            score += 1
+            details.append("Asset turnover > 1.0 observed ✓ (+1)")
+        else:
+            details.append("Asset turnover never above 1.0 ✗ (+0)")
+    else:
+        details.append("Insufficient asset-turnover history (+0)")
+        flags.append("moat: fewer than 3 asset-turnover periods, turnover check scored 0")
 
     if len(roes) >= 5 and len(margins) >= 5:
         roe_avg = sum(roes) / len(roes)
@@ -277,6 +430,9 @@ def analyze_moat(metrics: list, flags: list) -> dict:
             details.append(f"Performance stability {stability:.1%} > 70% ✓ (+1)")
         else:
             details.append(f"Performance stability {stability:.1%} <= 70% ✗ (+0)")
+    else:
+        details.append("Insufficient history for the stability check (+0)")
+        flags.append("moat: fewer than 5 ROE or margin periods, stability check scored 0")
 
     return {"score": min(score, 5), "max": 5, "details": details}
 
@@ -347,11 +503,22 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
 
 
 def analyze_book_value(periods: list, flags: list) -> dict:
-    usable = [
-        p
-        for p in periods
-        if p["balance"].get("shareholders_equity") and p["balance"].get("outstanding_shares")
-    ]
+    # None-gated equity (ticket #55 A6): a true-zero book value is data, not a
+    # gap. Shares stay truthiness-gated — zero shares cannot denominate.
+    usable, dropped = [], []
+    for p in periods:
+        if (
+            p["balance"].get("shareholders_equity") is not None
+            and p["balance"].get("outstanding_shares")
+        ):
+            usable.append(p)
+        else:
+            dropped.append(p["period_end"])
+    if dropped:
+        flags.append(
+            f"book_value: {len(dropped)} periods missing equity or share count "
+            f"excluded ({', '.join(dropped)})"
+        )
     # Split-aware renormalization (ticket #48, replacing the majority-cohort
     # outlier filter that excluded NVDA's *correct* post-split years): jumps
     # consistent with a split rebase older counts onto the current share basis,
@@ -497,10 +664,14 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
     historical = [p["ttm"]["net_income"] for p in annual_periods[:5] if p["ttm"].get("net_income")]
     # Both endpoints must be positive: a negative ratio raised to 1/years is
     # complex (reference bug — it only guarded the oldest value).
+    # raw_growth_cagr rides the output (ticket #55 A7): the clamp to
+    # [-5%, +15%] can sit far from reality (BLDR's actual 5y CAGR is -29%),
+    # and calling the result "conservative" without stating the clamp misleads.
+    raw_growth = None
     if len(historical) >= 3 and historical[-1] > 0 and historical[0] > 0:
         years = len(historical) - 1
-        growth = (historical[0] / historical[-1]) ** (1 / years) - 1
-        growth = max(-0.05, min(growth, 0.15)) * 0.7
+        raw_growth = (historical[0] / historical[-1]) ** (1 / years) - 1
+        growth = max(-0.05, min(raw_growth, 0.15)) * 0.7
     else:
         growth = 0.03
 
@@ -530,6 +701,10 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
         "owner_earnings": owner_earnings,
         "owner_earnings_components": earnings_data,
         "dcf_stages": {
+            "raw_growth_cagr": raw_growth,
+            "growth_clamped": raw_growth is not None
+            and not (-0.05 <= raw_growth <= 0.15),
+            "growth_fallback": raw_growth is None,
             "stage1_growth": stage1_growth,
             "stage2_growth": stage2_growth,
             "terminal_growth": terminal_growth,
@@ -597,6 +772,12 @@ def diagnose(snapshot: dict) -> dict:
                 "years " + ", ".join(excluded_years)
             )
 
+    # No point from a stale-flagged value (ticket #55 A2): gate the
+    # present-state period before any dimension reads it. The raw snapshot
+    # periods stay untouched for the trajectory block below.
+    raw_periods = periods
+    periods = _gate_stale_present(periods, annual, flags)
+
     metrics = [compute_metrics(p) for p in periods]
     annual_metrics = [compute_metrics(p) for p in annual]
 
@@ -639,8 +820,11 @@ def diagnose(snapshot: dict) -> dict:
             "margin_of_safety": round(mos, 4),
             "dcf_stages": valuation["dcf_stages"],
         },
+        "recent_trajectory": recent_trajectory(raw_periods),
         "flags": flags,
-        "data_quality": validation.data_quality(findings, checks_run),
+        "data_quality": _link_data_quality(
+            validation.data_quality(findings, checks_run)
+        ),
         "provenance": {
             "snapshot_fetched_at": snapshot["fetched_at"],
             "market_cap_source": snapshot["market_cap_source"],

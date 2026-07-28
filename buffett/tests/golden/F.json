@@ -7,7 +7,9 @@
       "share_renormalization",
       "sector_applicability",
       "tags_alignment_and_zero_marker",
-      "invariants"
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
     ],
     "errors": [],
     "warnings": [
@@ -30,7 +32,26 @@
           ],
           "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
         },
+        "dimensions_affected": [
+          "fundamentals",
+          "valuation"
+        ],
         "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-07-27",
+          "lag_days": 118,
+          "period_end": "2026-03-31"
+        },
+        "dimensions_affected": [
+          "fundamentals",
+          "management",
+          "valuation"
+        ],
+        "message": "latest fundamentals period ends 2026-03-31, 118 days before the snapshot date 2026-07-27 — the price is 118 days fresher than the books it is being compared against",
         "severity": "WARN"
       }
     ]
@@ -74,6 +95,7 @@
       "details": [
         "ROE > 15% in only 3/10 periods ✗ (+0)",
         "Operating margins avg 1.1% (recent 0.3% vs older 1.8%) ✗ (+0)",
+        "Asset turnover never above 1.0 ✗ (+0)",
         "Performance stability -133.2% <= 70% ✗ (+0)"
       ],
       "max": 5,
@@ -124,6 +146,35 @@
       "market_data": "yfinance"
     }
   },
+  "recent_trajectory": {
+    "note": "unscored context: last four quarterly TTM windows, most recent first; narration must state the direction when it contradicts a high history score",
+    "points": [
+      {
+        "bvps": 9.384364820846905,
+        "period_end": "2026-03-31",
+        "shareholders_equity": 37453000000.0,
+        "ttm_net_income": -6084000000.0
+      },
+      {
+        "bvps": 9.03543603920583,
+        "period_end": "2025-12-31",
+        "shareholders_equity": 35952000000.0,
+        "ttm_net_income": -8162000000.0
+      },
+      {
+        "bvps": 11.898568917901079,
+        "period_end": "2025-09-30",
+        "shareholders_equity": 47392000000.0,
+        "ttm_net_income": 4723000000.0
+      },
+      {
+        "bvps": 11.320854271356785,
+        "period_end": "2025-06-30",
+        "shareholders_equity": 45057000000.0,
+        "ttm_net_income": 1827000000.0
+      }
+    ]
+  },
   "rubric_version": 2,
   "score": {
     "max": 22,
@@ -136,6 +187,9 @@
   "valuation": {
     "dcf_stages": {
       "discount_rate": 0.1,
+      "growth_clamped": false,
+      "growth_fallback": true,
+      "raw_growth_cagr": null,
       "stage1_growth": 0.03,
       "stage1_pv": 143791280.8612663,
       "stage1_years": 5,

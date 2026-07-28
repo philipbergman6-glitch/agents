@@ -7,7 +7,9 @@
       "share_renormalization",
       "sector_applicability",
       "tags_alignment_and_zero_marker",
-      "invariants"
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
     ],
     "errors": [],
     "warnings": [
@@ -30,6 +32,10 @@
           ],
           "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
         },
+        "dimensions_affected": [
+          "earnings_stability",
+          "valuation"
+        ],
         "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
         "severity": "WARN"
       }

@@ -7,7 +7,9 @@
       "share_renormalization",
       "sector_applicability",
       "tags_alignment_and_zero_marker",
-      "invariants"
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
     ],
     "errors": [],
     "warnings": [
@@ -30,7 +32,38 @@
           ],
           "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
         },
+        "dimensions_affected": [
+          "earnings_stability",
+          "valuation"
+        ],
         "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "debt_unresolved",
+        "context": {
+          "fields": [
+            "short_term_debt",
+            "long_term_debt"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "no short- or long-term debt resolved under any known XBRL tag in any period — a debt-free filer and unresolved tags are indistinguishable, and real debt may be invisible; debt-dependent checks (debt/equity, ROIC) are scored 0 as a data gap, not treated as zero debt",
+        "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-07-27",
+          "lag_days": 118,
+          "period_end": "2026-03-31"
+        },
+        "dimensions_affected": [
+          "earnings_stability",
+          "financial_strength",
+          "valuation"
+        ],
+        "message": "latest fundamentals period ends 2026-03-31, 118 days before the snapshot date 2026-07-27 — the price is 118 days fresher than the books it is being compared against",
         "severity": "WARN"
       }
     ]
