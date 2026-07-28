@@ -104,7 +104,7 @@
       "market_data": "yfinance"
     }
   },
-  "rubric_version": 1,
+  "rubric_version": 2,
   "score": {
     "max": 15,
     "max_possible": 15,

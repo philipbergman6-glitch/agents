@@ -155,14 +155,18 @@ def test_debt_tiers_and_derived_fcf():
 # signal, confidence, band
 
 
-def test_bullish_is_garp_gated():
-    """Score alone never makes bullish: PEG must be defined and < 2 (#64,
-    mirroring Buffett's MoS-gated bullish)."""
+def test_signal_is_garp_gated_both_directions():
+    """Score alone never sets the signal (v2, #67 owner review): bullish needs
+    PEG defined and < 2 (#64, mirroring Buffett's MoS-gated bullish), and
+    bearish needs the GARP story to actually fail — PEG < 2 floors at
+    neutral (the MA case)."""
     assert compute_signal(0.80, 1.5) == "bullish"
     assert compute_signal(0.80, 2.0) == "neutral"
     assert compute_signal(0.80, None) == "neutral"
     assert compute_signal(0.69, 0.5) == "neutral"
-    assert compute_signal(0.45, 0.5) == "bearish"
+    assert compute_signal(0.45, 0.5) == "neutral"
+    assert compute_signal(0.45, 2.0) == "bearish"
+    assert compute_signal(0.40, 1.79) == "neutral"
     assert compute_signal(0.40, None) == "bearish"
 
 

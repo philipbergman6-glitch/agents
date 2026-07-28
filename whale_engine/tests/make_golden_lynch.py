@@ -10,7 +10,7 @@ from whale_engine.scorers.lynch import diagnose
 
 from conftest import GOLDEN_LYNCH, load_snapshot
 
-GOLDEN_TICKERS = ["NVDA", "LULU", "KO", "CCL", "AAL"]
+GOLDEN_TICKERS = ["NVDA", "LULU", "KO", "CCL", "AAL", "MA"]
 
 if __name__ == "__main__":
     GOLDEN_LYNCH.mkdir(parents=True, exist_ok=True)

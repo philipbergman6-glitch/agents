@@ -1,5 +1,5 @@
 {
-  "confidence": 100,
+  "confidence": 58,
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -19,7 +19,6 @@
           "array": "periods",
           "field": "net_income",
           "period_ends": [
-            "2026-06-30",
             "2026-03-31",
             "2025-12-31",
             "2025-09-30",
@@ -28,7 +27,8 @@
             "2024-12-31",
             "2024-09-30",
             "2024-06-30",
-            "2024-03-31"
+            "2024-03-31",
+            "2023-12-31"
           ],
           "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
         },
@@ -39,40 +39,55 @@
         ],
         "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
         "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-07-27",
+          "lag_days": 118,
+          "period_end": "2026-03-31"
+        },
+        "dimensions_affected": [
+          "valuation",
+          "fundamentals"
+        ],
+        "message": "latest fundamentals period ends 2026-03-31, 118 days before the snapshot date 2026-07-27 — the price is 118 days fresher than the books it is being compared against",
+        "severity": "WARN"
       }
     ]
   },
   "dimensions": {
     "fundamentals": {
       "details": [
-        "D/E not meaningful (shareholders' equity -3,972,000,000 <= 0) (+0)",
-        "TTM operating margin 1.7% < 10% ✗ (+0)",
-        "Derived TTM FCF $-2,516,000,000 <= 0 ✗ (+0)"
+        "Debt/equity 2.82 >= 1.00 ✗ (+0)",
+        "TTM operating margin 57.9% >= 10% ✓ (+1)",
+        "Derived TTM FCF $16,253,000,000 > 0 ✓ (+1)"
       ],
       "max": 4,
-      "score": 0
+      "score": 2
     },
     "growth": {
       "details": [
-        "Revenue 5y CAGR 16.3% ✓ (+2)",
-        "EPS CAGR not meaningful (endpoint <= 0: oldest -3.08, latest 0.17) (+0)"
+        "Revenue 5y CAGR 2.4% ✗ (+0)",
+        "EPS 5y CAGR 17.1% ✓ (+2)"
       ],
       "max": 6,
       "score": 2
     },
     "valuation": {
       "details": [
-        "P/E not meaningful (TTM net income -326,000,000 <= 0) (+0)",
-        "PEG unavailable: no positive TTM earnings for a P/E (+0)"
+        "P/E 30.63 >= 25 ✗ (+0)",
+        "PEG 1.79 < 2 ✓ (+2)",
+        "GARP floor: score 40% is under the bearish bar but PEG 1.79 < 2 — growth is still reasonably priced; floored at neutral"
       ],
       "max": 5,
-      "score": 0
+      "score": 2
     }
   },
   "flags": [],
   "growth_band": {
-    "eps_cagr_5y": null,
-    "label": "not_meaningful"
+    "eps_cagr_5y": 0.1711,
+    "label": "stalwart"
   },
   "provenance": {
     "annual_periods": [
@@ -83,7 +98,7 @@
       "2021-12-31"
     ],
     "market_cap_source": "yfinance:fast_info.market_cap",
-    "quarterly_period": "2026-06-30",
+    "quarterly_period": "2026-03-31",
     "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
@@ -94,19 +109,19 @@
   "score": {
     "max": 15,
     "max_possible": 15,
-    "pct": 0.1333,
-    "total": 2
+    "pct": 0.4,
+    "total": 6
   },
-  "signal": "bearish",
-  "ticker": "AAL",
+  "signal": "neutral",
+  "ticker": "MA",
   "valuation": {
-    "debt_to_equity": null,
-    "eps_cagr_5y": null,
-    "fcf_ttm": -2516000000.0,
-    "market_cap": 9582015040.725,
-    "operating_margin_ttm": 0.0173,
-    "pe_ttm": null,
-    "peg": null,
-    "revenue_cagr_5y": 0.1628
+    "debt_to_equity": 2.8218,
+    "eps_cagr_5y": 0.1711,
+    "fcf_ttm": 16253000000.0,
+    "market_cap": 476834863189.3,
+    "operating_margin_ttm": 0.5791,
+    "pe_ttm": 30.6252,
+    "peg": 1.7897,
+    "revenue_cagr_5y": 0.0238
   }
 }

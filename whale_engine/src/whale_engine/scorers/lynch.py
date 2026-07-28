@@ -1,6 +1,6 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
-Peter Lynch GARP rubric v1 (max 15 = growth 6 + valuation 5 + fundamentals 4),
+Peter Lynch GARP rubric v2 (max 15 = growth 6 + valuation 5 + fundamentals 4),
 ported from reference/peter_lynch.py with the decisions locked on the rubric
 ticket (#64, from the #63 owner grilling):
 
@@ -18,10 +18,14 @@ ticket (#64, from the #63 owner grilling):
 - P/E = market_cap / quarterly TTM periods[0] net income (freshest earnings to
   match the near-live market cap; Buffett/Graham parity); PEG = P/E /
   (annual 5y EPS CAGR x 100), reference-verbatim, canonical Lynch
-- bullish is GARP-gated: score >= 0.70 AND PEG defined & < 2 (mirrors
-  Buffett's MoS-gated bullish); failing the gate caps at neutral with a
-  detail line. Bearish <= 0.45. Confidence is the Graham rule: 50-100 by
-  distance from the nearest boundary, saturating at 0.30.
+- the signal is GARP-gated in BOTH directions (v2, #67 owner review): bullish
+  needs score >= 0.70 AND PEG defined & < 2 (mirrors Buffett's MoS-gated
+  bullish); bearish needs score <= 0.45 AND the GARP story to actually fail
+  (PEG undefined or >= 2) — a PEG-passing stalwart whose scorecard checks
+  drain the score (the MA case: 17% EPS CAGR, PEG 1.79, but P/E >= 25,
+  flat revenue, D/E > 1) floors at neutral, not bearish. Either cap/floor
+  appends a detail line. Confidence is the Graham rule: 50-100 by distance
+  from the nearest boundary, saturating at 0.30.
 - growth-band label (unscored context, #63): from the 5y EPS CAGR, same edges
   as the scoring tiers; the persona narrates cyclical/turnaround/asset-play
   angles qualitatively
@@ -50,7 +54,7 @@ from __future__ import annotations
 from .. import validation
 from ..errors import MissingDataError
 
-RUBRIC_VERSION = 1
+RUBRIC_VERSION = 2
 MAX_SCORE = 15
 
 BULLISH_SCORE = 0.70
@@ -348,9 +352,10 @@ def analyze_fundamentals(latest: dict) -> dict:
 
 
 def compute_signal(score_pct: float, peg: float | None) -> str:
-    if score_pct >= BULLISH_SCORE and peg is not None and peg < PEG_BULLISH_GATE:
+    garp_priced = peg is not None and peg < PEG_BULLISH_GATE
+    if score_pct >= BULLISH_SCORE and garp_priced:
         return "bullish"
-    if score_pct <= BEARISH_SCORE:
+    if score_pct <= BEARISH_SCORE and not garp_priced:
         return "bearish"
     return "neutral"
 
@@ -435,6 +440,12 @@ def diagnose(snapshot: dict) -> dict:
             f"GARP gate: score {score_pct:.0%} clears the bullish bar but PEG "
             + (f"{peg:.2f} >= {PEG_BULLISH_GATE:g}" if peg is not None else "is undefined")
             + " — growth is not reasonably priced; capped at neutral"
+        )
+    if score_pct <= BEARISH_SCORE and signal != "bearish":
+        dimensions["valuation"]["details"].append(
+            f"GARP floor: score {score_pct:.0%} is under the bearish bar but "
+            f"PEG {peg:.2f} < {PEG_BULLISH_GATE:g} — growth is still "
+            "reasonably priced; floored at neutral"
         )
 
     def _r(v):

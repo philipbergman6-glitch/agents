@@ -23,6 +23,8 @@ GOLDEN_BANDS = {
     "KO": ("bearish", 0.25, 0.45),    # slow grower at 26x, PEG 3.3 — growth priced away
     "CCL": ("neutral", 0.45, 0.70),   # cheap (P/E 12) but EPS history crosses zero, no PEG
     "AAL": ("bearish", 0.00, 0.25),   # negative equity, negative TTM EPS, FCF burn
+    "MA": ("neutral", 0.25, 0.45),    # v2 GARP floor: 17% EPS CAGR at PEG 1.79 — scorecard
+                                      # under the bearish bar, but growth is reasonably priced
 }
 
 
@@ -53,7 +55,7 @@ def test_growth_band_labels():
 
 
 def test_rubric_version_pinned():
-    assert diagnose(load_snapshot("KO"))["rubric_version"] == 1
+    assert diagnose(load_snapshot("KO"))["rubric_version"] == 2
 
 
 # ---------------------------------------------------------------------------
