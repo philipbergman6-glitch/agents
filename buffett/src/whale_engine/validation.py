@@ -23,6 +23,9 @@ Determinism contract: run_checks is a pure function of the snapshot dict.
 
 from __future__ import annotations
 
+import re
+from datetime import date
+
 ERROR = "ERROR"
 WARN = "WARN"
 INFO = "INFO"
@@ -36,6 +39,26 @@ INFO = "INFO"
 IMPLIED_PRICE_MIN = 0.10  # USD per share
 IMPLIED_PRICE_MAX = 1_000_000.0  # BRK.A trades ~$7e5; anything above is corrupt
 MARKET_CAP_RELATIVE_TOLERANCE = 0.10
+# Mirrors fetch.MARKET_CAP_MANUAL_SOURCE (fetch imports validation, not the
+# reverse). A manual cap has no price_reference, so the ±10% cross-check above
+# can never fire on it — the WARN keeps that bypass honest (ticket #55 A8).
+_MANUAL_MARKET_CAP_SOURCE = "manual:owner-supplied"
+
+# --- stale TTM windows (ticket #55 A1/A2) ----------------------------------
+# edgartools clamps get_ttm to the latest window a tag can build, so an
+# abandoned tag returns a years-stale value with only a prose warning. 185
+# days is edgartools' own staleness threshold. The window end is parsed from
+# the warning text and compared to the period's own period_end (the warning's
+# stated day-count uses the requested calendar quarter, which can inflate the
+# lag by up to two quarters).
+STALE_WINDOW_DAYS = 185
+_WINDOW_END_RE = re.compile(r"TTM window ends (\d{4}-\d{2}-\d{2})")
+
+# --- fundamentals staleness vs the price (ticket #55 A4) -------------------
+# The market cap is near-live (Cboe delayed close); the fundamentals are as of
+# periods[0].period_end. Beyond ~a quarter of drift the diagnosis is pricing
+# fresh markets against old books, and must say so.
+FUNDAMENTALS_STALENESS_DAYS = 100
 
 # --- split-aware share renormalization (check 3) ---------------------------
 # An adjacent-period share-count ratio at or beyond SPLIT_DETECT_RATIO is a
@@ -97,9 +120,13 @@ _SECTOR_MARKERS = [("ttm", "capital_expenditure"), ("balance", "current_assets")
 _OPTIONAL_ZERO_FIELDS = [
     ("ttm", "dividends_and_other_cash_distributions"),
     ("ttm", "issuance_or_purchase_of_equity_shares"),
-    ("balance", "short_term_debt"),
-    ("balance", "long_term_debt"),
 ]
+# Debt is not zero-if-absent: dependent checks (D/E, ROIC) score 0 as a data
+# gap. One resolved component keeps the sum usable (the other is treated as
+# zero, INFO); both missing means real debt may be invisible (BLDR carried
+# ~$3.7B under tags outside the fallback lists, ticket #55 F3) — WARN, so it
+# reaches data_quality and must be narrated.
+_DEBT_FIELDS = [("balance", "short_term_debt"), ("balance", "long_term_debt")]
 
 # Findings only fetch time can produce; diagnose-time run_checks carries them
 # forward from the snapshot's stored validation section.
@@ -119,6 +146,30 @@ DEFAULT_ARRAYS = ("periods", "annual_periods")
 
 def finding(severity: str, code: str, message: str, **context) -> dict:
     return {"severity": severity, "code": code, "message": message, "context": context}
+
+
+def stale_ttm_fields(period: dict, threshold_days: int = STALE_WINDOW_DAYS) -> dict:
+    """TTM fields whose stitched window ends long before the period's own end.
+
+    Parses the edgartools warning text stored in tags_used ("TTM window ends
+    YYYY-MM-DD ...") and compares that window end to period_end. Returns
+    {field: lag_days} for every field lagging beyond threshold_days.
+    """
+    out: dict[str, int] = {}
+    period_end = period.get("period_end")
+    if not period_end:
+        return out
+    end = date.fromisoformat(period_end)
+    for key, msg in (period.get("tags_used") or {}).items():
+        if not key.endswith("_warning"):
+            continue
+        m = _WINDOW_END_RE.search(str(msg))
+        if m is None:
+            continue
+        lag = (end - date.fromisoformat(m.group(1))).days
+        if lag > threshold_days:
+            out[key[: -len("_warning")]] = lag
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -225,15 +276,31 @@ def _present_arrays(snapshot: dict, arrays) -> list[tuple[str, list]]:
 
 
 def _check_ttm_warnings(snapshot: dict, arrays) -> list[dict]:
-    """Check 1: edgartools stitched-TTM warnings, captured for all fields."""
+    """Check 1: edgartools stitched-TTM warnings, captured for all fields.
+
+    Two escalations beyond the generic stitched WARN (ticket #55):
+    - ttm_stale_window: the stitched window ends > STALE_WINDOW_DAYS before
+      the period's own end — the value describes a different era, and scorers
+      must not let it earn points (A2).
+    - stale_leg_dropped: fetch already dropped a stale leg from a multi-leg
+      combine (A1); the drop note lives in tags_used under a *_dropped key.
+    """
     grouped: dict[tuple[str, str, str], list[str]] = {}
+    stale: dict[tuple[str, str], tuple[int, list[str]]] = {}
+    dropped: dict[tuple[str, str, str], list[str]] = {}
     for name, periods in _present_arrays(snapshot, arrays):
         for p in periods:
             for key, msg in (p.get("tags_used") or {}).items():
                 if key.endswith("_warning"):
                     field = key[: -len("_warning")]
                     grouped.setdefault((name, field, str(msg)), []).append(p["period_end"])
-    return [
+                elif key.endswith("_dropped"):
+                    field = key[: -len("_dropped")]
+                    dropped.setdefault((name, field, str(msg)), []).append(p["period_end"])
+            for field, lag in stale_ttm_fields(p).items():
+                worst, ends = stale.get((name, field), (0, []))
+                stale[(name, field)] = (max(worst, lag), ends + [p["period_end"]])
+    out = [
         finding(
             WARN,
             "ttm_stitched",
@@ -245,6 +312,34 @@ def _check_ttm_warnings(snapshot: dict, arrays) -> list[dict]:
         )
         for (name, field, msg), ends in sorted(grouped.items())
     ]
+    out += [
+        finding(
+            WARN,
+            "ttm_stale_window",
+            f"{field} TTM window ends up to {lag} days before the period end it "
+            f"is stored under (threshold {STALE_WINDOW_DAYS}) — the value "
+            "describes an older era and must not earn rubric points",
+            array=name,
+            field=field,
+            lag_days=lag,
+            period_ends=ends,
+        )
+        for (name, field), (lag, ends) in sorted(stale.items())
+    ]
+    out += [
+        finding(
+            WARN,
+            "stale_leg_dropped",
+            f"{field}: a stale leg was dropped from this multi-leg combine at "
+            f"fetch time — {msg}",
+            array=name,
+            field=field,
+            note=msg,
+            period_ends=ends,
+        )
+        for (name, field, msg), ends in sorted(dropped.items())
+    ]
+    return out
 
 
 def _check_market_cap(snapshot: dict, arrays) -> list[dict]:
@@ -422,17 +517,27 @@ def _check_tags_alignment(snapshot: dict, arrays) -> list[dict]:
 
 
 def _check_zero_vs_missing(snapshot: dict, arrays) -> list[dict]:
-    """Check 5b: mark all-absent zero-if-absent fields — EDGAR cannot say 0."""
+    """Check 5b: mark all-absent zero-if-absent fields — EDGAR cannot say 0.
+
+    Debt fields escalate (ticket #55 A3): when *both* debt fields resolve
+    nowhere, every debt-dependent check silently loses its input while real
+    debt may simply live under tags outside the fallback lists — WARN, not
+    INFO, so it reaches data_quality and gets narrated.
+    """
     out = []
     present = _present_arrays(snapshot, arrays)
     if not present:
         return out
-    for section, field in _OPTIONAL_ZERO_FIELDS:
-        if all(
+
+    def _all_absent(section: str, field: str) -> bool:
+        return all(
             (p.get(section) or {}).get(field) is None
             for _name, periods in present
             for p in periods
-        ):
+        )
+
+    for section, field in _OPTIONAL_ZERO_FIELDS:
+        if _all_absent(section, field):
             out.append(
                 finding(
                     INFO,
@@ -443,7 +548,86 @@ def _check_zero_vs_missing(snapshot: dict, arrays) -> list[dict]:
                     field=field,
                 )
             )
+
+    debt_absent = [f for s, f in _DEBT_FIELDS if _all_absent(s, f)]
+    if len(debt_absent) == len(_DEBT_FIELDS):
+        out.append(
+            finding(
+                WARN,
+                "debt_unresolved",
+                "no short- or long-term debt resolved under any known XBRL tag "
+                "in any period — a debt-free filer and unresolved tags are "
+                "indistinguishable, and real debt may be invisible; "
+                "debt-dependent checks (debt/equity, ROIC) are scored 0 as a "
+                "data gap, not treated as zero debt",
+                fields=[f for _s, f in _DEBT_FIELDS],
+            )
+        )
+    else:
+        for field in debt_absent:
+            out.append(
+                finding(
+                    INFO,
+                    "absent_optional_field",
+                    f"{field} has no XBRL tag in any period — an untagged fact "
+                    "and a true zero are indistinguishable in EDGAR; the debt "
+                    "sum treats this component as zero (the other component "
+                    "resolved)",
+                    field=field,
+                )
+            )
     return out
+
+
+def _check_fundamentals_staleness(snapshot: dict, arrays) -> list[dict]:
+    """Check 8 (ticket #55 A4): how stale is the diagnosis's own "present"?
+
+    The market cap is near-live; the fundamentals are as of the latest
+    quarterly period end. Beyond FUNDAMENTALS_STALENESS_DAYS of drift the
+    output must state the lag rather than imply a synchronous read.
+    """
+    if "periods" not in arrays:
+        return []
+    periods = snapshot.get("periods") or []
+    fetched_at = snapshot.get("fetched_at")
+    if not periods or not fetched_at or not periods[0].get("period_end"):
+        return []
+    lag = (
+        date.fromisoformat(fetched_at)
+        - date.fromisoformat(periods[0]["period_end"])
+    ).days
+    if lag <= FUNDAMENTALS_STALENESS_DAYS:
+        return []
+    return [
+        finding(
+            WARN,
+            "fundamentals_stale_vs_price",
+            f"latest fundamentals period ends {periods[0]['period_end']}, "
+            f"{lag} days before the snapshot date {fetched_at} — the price is "
+            f"{lag} days fresher than the books it is being compared against",
+            period_end=periods[0]["period_end"],
+            fetched_at=fetched_at,
+            lag_days=lag,
+        )
+    ]
+
+
+def _check_manual_market_cap(snapshot: dict, arrays) -> list[dict]:
+    """Check 9 (ticket #55 A8): a manual --market-cap has no price_reference,
+    so the ±10% re-derivation cross-check can never fire on it. Say so."""
+    if snapshot.get("market_cap_source") != _MANUAL_MARKET_CAP_SOURCE:
+        return []
+    return [
+        finding(
+            WARN,
+            "market_cap_manual_unverified",
+            f"market_cap {snapshot.get('market_cap'):.4g} was supplied manually "
+            "(--market-cap) — it carries no pinned price_reference, so the "
+            "cross-check against a quoted price never ran; the valuation rests "
+            "on an unverified owner-supplied number",
+            market_cap=snapshot.get("market_cap"),
+        )
+    ]
 
 
 def _check_invariants(snapshot: dict, arrays) -> list[dict]:
@@ -538,6 +722,8 @@ def run_checks(snapshot: dict, arrays=DEFAULT_ARRAYS) -> tuple[list[dict], list[
     findings += _check_tags_alignment(snapshot, arrays)
     findings += _check_zero_vs_missing(snapshot, arrays)
     findings += _check_invariants(snapshot, arrays)
+    findings += _check_fundamentals_staleness(snapshot, arrays)
+    findings += _check_manual_market_cap(snapshot, arrays)
     checks_run = [
         "ttm_stitched_warnings",
         "market_cap_bounds",
@@ -545,6 +731,8 @@ def run_checks(snapshot: dict, arrays=DEFAULT_ARRAYS) -> tuple[list[dict], list[
         "sector_applicability",
         "tags_alignment_and_zero_marker",
         "invariants",
+        "fundamentals_staleness",
+        "manual_market_cap",
     ]
 
     stored = snapshot.get("validation") or {}

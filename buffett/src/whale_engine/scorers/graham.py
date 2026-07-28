@@ -53,6 +53,39 @@ BEARISH_SCORE = 0.30
 MAX_BOUNDARY_DIST = 0.30
 DEEP_OVERPRICE_MOS = -0.50
 
+# Which scored dimensions consume each snapshot field (ticket #55 A2 parity
+# with the Buffett scorer): data_quality warnings gain a dimensions_affected
+# list. Graham reads the quarterly array only.
+_FIELD_DIMENSIONS = {
+    "net_income": ["earnings_stability", "valuation"],
+    "outstanding_shares": ["earnings_stability", "valuation"],
+    "shareholders_equity": ["valuation"],
+    "current_assets": ["financial_strength", "valuation"],
+    "current_liabilities": ["financial_strength"],
+    "total_assets": ["financial_strength"],
+    "total_liabilities": ["financial_strength", "valuation"],
+    "dividends_and_other_cash_distributions": ["financial_strength"],
+}
+_CODE_DIMENSIONS = {
+    "market_cap_manual_unverified": ["valuation"],
+    "fundamentals_stale_vs_price": ["earnings_stability", "financial_strength", "valuation"],
+    "restatement_402": ["earnings_stability", "financial_strength", "valuation"],
+}
+
+
+def _link_data_quality(dq: dict) -> dict:
+    def dims(f: dict) -> list[str]:
+        field = (f.get("context") or {}).get("field")
+        if field is not None:
+            return _FIELD_DIMENSIONS.get(field, [])
+        return _CODE_DIMENSIONS.get(f.get("code"), [])
+
+    return {
+        **dq,
+        "warnings": [{**f, "dimensions_affected": dims(f)} for f in dq["warnings"]],
+    }
+
+
 MANDATORY_TTM = ["net_income"]
 MANDATORY_BALANCE = [
     "outstanding_shares",
@@ -339,6 +372,30 @@ def diagnose(snapshot: dict) -> dict:
     market_cap = snapshot["market_cap"]
     flags: list[str] = []
 
+    # 8-K Item 4.02 restatement guard (ticket #55 A9, parity with the Buffett
+    # scorer): the snapshot already carries the fetch-time finding; Graham
+    # scores quarterly TTM windows, so every window ending inside or before
+    # the latest restated fiscal year rests on non-reliable statements and is
+    # excluded (Buffett's exact-membership rule, widened to the windows that
+    # overlap those years).
+    excluded_years = validation.restatement_excluded_years(findings)
+    if excluded_years:
+        cutoff = max(excluded_years)
+        kept = [p for p in periods if p["period_end"] > cutoff]
+        flags.append(
+            "restatement: quarterly windows ending on or before "
+            f"{cutoff} excluded (8-K Item 4.02 non-reliance on fiscal years "
+            + ", ".join(excluded_years)
+            + ")"
+        )
+        if len([p for p in kept if _is_complete(p)]) < MIN_COMPLETE_PERIODS:
+            raise MissingDataError(
+                f"{snapshot.get('ticker')}: fewer than {MIN_COMPLETE_PERIODS} "
+                "complete quarterly periods remain after excluding windows "
+                f"ending on or before the restated fiscal year {cutoff}"
+            )
+        periods = kept
+
     valuation = analyze_valuation(periods, market_cap, flags)
     dimensions = {
         "earnings_stability": analyze_earnings_stability(periods, flags),
@@ -373,7 +430,9 @@ def diagnose(snapshot: dict) -> dict:
             "margin_of_safety": valuation["margin_of_safety"],
         },
         "flags": flags,
-        "data_quality": validation.data_quality(findings, checks_run),
+        "data_quality": _link_data_quality(
+            validation.data_quality(findings, checks_run)
+        ),
         "provenance": {
             "snapshot_fetched_at": snapshot["fetched_at"],
             "market_cap_source": snapshot["market_cap_source"],

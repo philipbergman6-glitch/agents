@@ -36,7 +36,7 @@ def test_findings_are_plain_mergeable_dicts():
         assert set(f) == {"severity", "code", "message", "context"}
         assert f["severity"] in (validation.ERROR, validation.WARN, validation.INFO)
         assert isinstance(f["context"], dict)
-    assert isinstance(checks_run, list) and len(checks_run) == 6  # no restatement stored
+    assert isinstance(checks_run, list) and len(checks_run) == 8  # no restatement stored
 
 
 def test_data_quality_block_shape_and_info_excluded():

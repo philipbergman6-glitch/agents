@@ -34,6 +34,8 @@ from __future__ import annotations
 import os
 from datetime import date, timedelta
 
+from . import validation
+
 # TTM flow concepts: engine field -> ordered XBRL tag fallbacks.
 FLOW_TAGS: dict[str, list[str]] = {
     "net_income": ["NetIncomeLoss", "ProfitLoss"],
@@ -87,7 +89,17 @@ BALANCE_TAGS: dict[str, list[str]] = {
         "CashAndCashEquivalentsAtCarryingValue",
         "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
     ],
-    "long_term_debt": ["LongTermDebtNoncurrent", "LongTermDebt"],
+    # Ordered specific-first; the later entries carry filers that retired the
+    # plain debt tags (BLDR files only LongTermDebtAndCapitalLeaseObligations
+    # since 2016 — ticket #55 F3). A tag only wins when it has a value at the
+    # period end, so era-appropriate tags resolve per fiscal year.
+    "long_term_debt": [
+        "LongTermDebtNoncurrent",
+        "LongTermDebt",
+        "LongTermDebtAndCapitalLeaseObligations",
+        "NotesPayableNoncurrent",
+        "FinanceLeaseLiabilityNoncurrent",
+    ],
     "outstanding_shares": [
         "CommonStockSharesOutstanding",
         "EntityCommonStockSharesOutstanding",
@@ -96,9 +108,17 @@ BALANCE_TAGS: dict[str, list[str]] = {
 }
 
 # Short-term debt is a sum-of-parts fallback: use DebtCurrent when filed,
-# otherwise sum whichever components exist at that period end.
+# otherwise sum one resolved tag per slot. Tags within a slot are alternative
+# spellings of the same component (summing both would double-count — BLDR
+# files LongTermDebtAndCapitalLeaseObligationsCurrent where older filers used
+# LongTermDebtCurrent); slots are disjoint components.
 ST_DEBT_PRIMARY = "DebtCurrent"
-ST_DEBT_COMPONENTS = ["ShortTermBorrowings", "CommercialPaper", "LongTermDebtCurrent"]
+ST_DEBT_COMPONENT_SLOTS = [
+    ["ShortTermBorrowings"],
+    ["CommercialPaper"],
+    ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent"],
+]
+ST_DEBT_COMPONENTS = [tag for slot in ST_DEBT_COMPONENT_SLOTS for tag in slot]
 
 # Many filers (KO, AAL, CCL) never tag Liabilities directly; derive it from the
 # balance-sheet identity when both sides are filed for the same period end.
@@ -577,6 +597,7 @@ _TAG_RENAMES = {"dividends_paid": "dividends_and_other_cash_distributions"}
 _TAG_COMBINES = {
     "issuance_or_purchase_of_equity_shares": ["share_issuance", "share_repurchase"]
 }
+_COMBINE_LEG_FIELDS = {leg for legs in _TAG_COMBINES.values() for leg in legs}
 
 
 def _realign_tags(tags_used: dict) -> None:
@@ -597,6 +618,13 @@ def _realign_tags(tags_used: dict) -> None:
         ]
         if warnings:
             tags_used[f"{new}_warning"] = " | ".join(dict.fromkeys(warnings))
+        dropped = [
+            tags_used.pop(f"{old}_dropped")
+            for old in olds
+            if f"{old}_dropped" in tags_used
+        ]
+        if dropped:
+            tags_used[f"{new}_dropped"] = " | ".join(dict.fromkeys(dropped))
 
 
 def _check_restatements(company, annual_periods: list, today: date) -> list[dict]:
@@ -779,14 +807,20 @@ def _build_balance(
         balance["short_term_debt"] = primary_hit[0]
         tags_used["short_term_debt"] = f"{primary_tag}@{primary_hit[1]}"
     else:
+        # One resolved tag per slot: tags within a slot are alternative
+        # spellings of the same component and must never be summed together.
+        by_tag = dict(st_debt_histories[1:])
         parts, part_tags = [], []
-        for tag, history in st_debt_histories[1:]:
-            if history is None:
-                continue
-            hit = _balance_at(history, window_end)
-            if hit is not None:
-                parts.append(hit[0])
-                part_tags.append(tag)
+        for slot in ST_DEBT_COMPONENT_SLOTS:
+            for tag in slot:
+                history = by_tag.get(tag)
+                if history is None:
+                    continue
+                hit = _balance_at(history, window_end)
+                if hit is not None:
+                    parts.append(hit[0])
+                    part_tags.append(tag)
+                    break
         balance["short_term_debt"] = sum(parts) if parts else None
         if parts:
             tags_used["short_term_debt"] = "+".join(part_tags)
@@ -935,6 +969,26 @@ def fetch_snapshot(
             if m is None:
                 ttm[field] = None
                 continue
+            # Freshness gate on multi-leg combines (ticket #55 A1): a combine
+            # sums legs fetched independently, so one abandoned tag (BLDR's
+            # share-issuance, last window 2015) silently pollutes the sum with
+            # a decade-stale value. net_income anchors window_end and is first
+            # in FLOW_TAGS, so it is always set before any combine leg.
+            if (
+                field in _COMBINE_LEG_FIELDS
+                and window_end is not None
+                and m.as_of_date is not None
+                and (window_end - m.as_of_date).days > validation.STALE_WINDOW_DAYS
+            ):
+                lag = (window_end - m.as_of_date).days
+                ttm[field] = None
+                tags_used[f"{field}_dropped"] = (
+                    f"{tag}: TTM window ends {m.as_of_date.isoformat()}, lagging "
+                    f"the period end {window_end.isoformat()} by {lag} days "
+                    f"(> {validation.STALE_WINDOW_DAYS}); stale leg dropped from "
+                    "the combine"
+                )
+                continue
             value = -float(m.value) if field in NEGATE_FLOWS else float(m.value)
             ttm[field] = value
             tags_used[field] = tag
@@ -972,7 +1026,12 @@ def fetch_snapshot(
 
         periods.append(
             {
-                "as_of_quarter": q,
+                # Labeled from the actual window end, not the requested
+                # calendar quarter: edgartools clamps a not-yet-filed quarter
+                # to the latest available window, so the requested q can run
+                # up to two quarters ahead of the data it returns (ticket #55
+                # F4 — BLDR's 2026-03-31 window labeled "2026-Q3").
+                "as_of_quarter": f"{window_end.year}-Q{(window_end.month - 1) // 3 + 1}",
                 "period_end": window_end.isoformat(),
                 "ttm": ttm,
                 "balance": balance,
