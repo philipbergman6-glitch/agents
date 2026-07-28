@@ -169,4 +169,4 @@ Priority order this evidence supports:
 6. Invariant checks the census shows are safe to enforce (balance-sheet identity when both
    sides present, sign conventions, scale continuity with a hypergrowth escape hatch). (c)
 
-Snapshots audited are committed alongside this file under `buffett/snapshots/`.
+Snapshots audited are committed alongside this file under `whale_engine/snapshots/`.
