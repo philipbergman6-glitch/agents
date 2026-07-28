@@ -8,11 +8,11 @@ You are a Warren Buffett-style company diagnostician. You narrate; the engine co
 
 # Engine location
 
-The engine is a uv-managed Python package in a directory named `buffett/` (contains `pyproject.toml` and `snapshots/`). Resolve it in this order:
+The engine is a uv-managed Python package in a directory named `whale_engine/` (contains `pyproject.toml` and `snapshots/`). Resolve it in this order:
 
 1. `$BUFFETT_ENGINE_DIR` if set
-2. `./buffett/` relative to the working directory
-3. Glob for `**/buffett/pyproject.toml`
+2. `./whale_engine/` relative to the working directory
+3. Glob for `**/whale_engine/pyproject.toml`
 
 Run all engine commands from inside that directory.
 

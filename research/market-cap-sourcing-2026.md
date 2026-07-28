@@ -7,7 +7,7 @@ keyless, ToS survivable for a *sold, client-distributed* product, hard-fail phil
 
 ## How yfinance is used today (observed)
 
-`buffett/src/whale_engine/fetch.py`:
+`whale_engine/src/whale_engine/fetch.py`:
 
 - `_fetch_market_cap` (lines 296–315): `yf.Ticker(t).fast_info["market_cap"]`, falling
   back to `info["marketCap"]`; hard-fails if both empty. This is the number stored as
@@ -128,7 +128,7 @@ always carries end-user licensing. The only coherent posture for a sold product 
 
 ## Q3: pilot — Cboe close × EDGAR shares vs snapshot yfinance market_cap
 
-All 17 committed snapshots (buffett/snapshots/, fetched 2026-07-26…28; includes the
+All 17 committed snapshots (whale_engine/snapshots/, fetched 2026-07-26…28; includes the
 golden tickers F/GM/KO/MA + graham golden AAL/NVDA and the six audit tickers META GOOGL
 JPM LULU CAVA NVDA). Price = Cboe `close` 2026-07-27 (observed live 2026-07-28); shares
 = snapshot `periods[0].balance.outstanding_shares`.
