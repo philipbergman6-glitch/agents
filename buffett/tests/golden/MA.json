@@ -1,21 +1,56 @@
 {
-  "confidence": 63,
+  "confidence": 69,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
   "dimensions": {
     "book_value": {
       "details": [
         "BVPS grew in 6/9 periods ✓ (+2)",
-        "BVPS CAGR 1.2% (+0)"
+        "BVPS CAGR 5.8% (+0)"
       ],
       "max": 5,
       "score": 2
     },
     "consistency": {
       "details": [
-        "Earnings grew every period across 10 TTM windows ✓ (+3)",
-        "Total earnings growth 39.1% oldest-to-latest"
+        "Earnings up oldest-to-latest but grew in only 7/9 steps ✓ (+1)",
+        "Total earnings growth 268.8% oldest-to-latest"
       ],
       "max": 3,
-      "score": 3
+      "score": 1
     },
     "fundamentals": {
       "details": [
@@ -37,9 +72,9 @@
     },
     "moat": {
       "details": [
-        "ROE > 15% in 10/10 periods (avg 183.0%) ✓ (+2)",
-        "Operating margins avg 56.3% > 20% and stable/improving ✓ (+1)",
-        "Performance stability 93.4% > 70% ✓ (+1)"
+        "ROE > 15% in 10/10 periods (avg 132.0%) ✓ (+2)",
+        "Operating margins avg 47.0% > 20% and stable/improving ✓ (+1)",
+        "Performance stability 73.0% > 70% ✓ (+1)"
       ],
       "max": 5,
       "score": 4
@@ -57,6 +92,18 @@
     "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
   ],
   "provenance": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31",
+      "2020-12-31",
+      "2019-12-31",
+      "2018-12-31",
+      "2017-12-31",
+      "2016-12-31"
+    ],
     "market_cap_source": "yfinance:fast_info.market_cap",
     "periods": [
       "2026-03-31",
@@ -70,35 +117,36 @@
       "2024-03-31",
       "2023-12-31"
     ],
-    "snapshot_fetched_at": "2026-07-24",
+    "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
       "market_data": "yfinance"
     }
   },
+  "rubric_version": 2,
   "score": {
     "max": 22,
     "max_possible": 27,
-    "pct": 0.6818,
-    "total": 15
+    "pct": 0.5909,
+    "total": 13
   },
   "signal": "bearish",
   "ticker": "MA",
   "valuation": {
     "dcf_stages": {
       "discount_rate": 0.1,
-      "stage1_growth": 0.03029203868075656,
-      "stage1_pv": 72073647645.81177,
+      "stage1_growth": 0.08,
+      "stage1_pv": 82690052872.53859,
       "stage1_years": 5,
-      "stage2_growth": 0.01514601934037828,
-      "stage2_pv": 49802890624.006165,
+      "stage2_growth": 0.04,
+      "stage2_pv": 67554849831.95534,
       "stage2_years": 5,
       "terminal_growth": 0.025,
-      "terminal_pv": 115192417291.01155
+      "terminal_pv": 164537565168.0284
     },
-    "intrinsic_value": 201508612226.70505,
-    "margin_of_safety": -0.5699,
-    "market_cap": 468555663053.2657,
+    "intrinsic_value": 267565097691.64398,
+    "margin_of_safety": -0.4389,
+    "market_cap": 476834863189.3,
     "owner_earnings": 17468026494.715202,
     "owner_earnings_components": {
       "depreciation": 1167000000.0,
@@ -108,6 +156,6 @@
       "total_capex": 484000000.0,
       "working_capital_change": -1232000000.0
     },
-    "raw_intrinsic_value": 237068955560.82947
+    "raw_intrinsic_value": 314782467872.52234
   }
 }

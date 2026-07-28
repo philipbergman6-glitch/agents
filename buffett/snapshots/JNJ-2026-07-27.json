@@ -1,6 +1,438 @@
 {
-  "fetched_at": "2026-07-24",
-  "market_cap": 624119117624.6945,
+  "annual_periods": [
+    {
+      "balance": {
+        "cash_and_equivalents": 19709000000.0,
+        "current_assets": 55624000000.0,
+        "current_liabilities": 54126000000.0,
+        "long_term_debt": 39438000000.0,
+        "outstanding_shares": 2409295102.0,
+        "shareholders_equity": 81544000000.0,
+        "short_term_debt": 8500000000.0,
+        "total_assets": 199210000000.0,
+        "total_liabilities": 117666000000.0
+      },
+      "period_end": "2025-12-28",
+      "period_start": "2024-12-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2024-12-30..2025-12-28",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-12-28",
+        "current_assets": "AssetsCurrent@2025-12-28",
+        "current_liabilities": "LiabilitiesCurrent@2025-12-28",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2024-12-30..2025-12-28",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2024-12-30..2025-12-28",
+        "gross_profit": "GrossProfit@2024-12-30..2025-12-28",
+        "long_term_debt": "LongTermDebtNoncurrent@2025-12-28",
+        "net_income": "NetIncomeLoss@2024-12-30..2025-12-28",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2025-10-17",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2024-12-30..2025-12-28",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2024-12-30..2025-12-28",
+        "shareholders_equity": "StockholdersEquity@2025-12-28",
+        "short_term_debt": "DebtCurrent@2025-12-28",
+        "total_assets": "Assets@2025-12-28",
+        "total_liabilities": "Liabilities@2025-12-28"
+      },
+      "ttm": {
+        "capital_expenditure": -4832000000.0,
+        "depreciation_and_amortization": 7503000000.0,
+        "dividends_and_other_cash_distributions": -12381000000.0,
+        "gross_profit": 63937000000.0,
+        "issuance_or_purchase_of_equity_shares": -5953000000.0,
+        "net_income": 26804000000.0,
+        "operating_income": null,
+        "revenue": 94193000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 24105000000.0,
+        "current_assets": 55893000000.0,
+        "current_liabilities": 50321000000.0,
+        "long_term_debt": 30651000000.0,
+        "outstanding_shares": 2407622972.0,
+        "shareholders_equity": 71490000000.0,
+        "short_term_debt": 6000000000.0,
+        "total_assets": 180104000000.0,
+        "total_liabilities": 108614000000.0
+      },
+      "period_end": "2024-12-29",
+      "period_start": "2024-01-01",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2024-01-01..2024-12-29",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-12-29",
+        "current_assets": "AssetsCurrent@2024-12-29",
+        "current_liabilities": "LiabilitiesCurrent@2024-12-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2024-01-01..2024-12-29",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2024-01-01..2024-12-29",
+        "gross_profit": "GrossProfit@2024-01-01..2024-12-29",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-12-29",
+        "net_income": "NetIncomeLoss@2024-01-01..2024-12-29",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2024-10-16",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2024-01-01..2024-12-29",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2024-01-01..2024-12-29",
+        "shareholders_equity": "StockholdersEquity@2024-12-29",
+        "short_term_debt": "DebtCurrent@2024-12-29",
+        "total_assets": "Assets@2024-12-29",
+        "total_liabilities": "Liabilities@2024-12-29"
+      },
+      "ttm": {
+        "capital_expenditure": -4424000000.0,
+        "depreciation_and_amortization": 7339000000.0,
+        "dividends_and_other_cash_distributions": -11823000000.0,
+        "gross_profit": 61350000000.0,
+        "issuance_or_purchase_of_equity_shares": -2432000000.0,
+        "net_income": 14066000000.0,
+        "operating_income": null,
+        "revenue": 88821000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 21859000000.0,
+        "current_assets": 53495000000.0,
+        "current_liabilities": 46282000000.0,
+        "long_term_debt": 25881000000.0,
+        "outstanding_shares": 2407278620.0,
+        "shareholders_equity": 68774000000.0,
+        "short_term_debt": 3500000000.0,
+        "total_assets": 167558000000.0,
+        "total_liabilities": 98784000000.0
+      },
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-02",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2023-01-02..2023-12-31",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-12-31",
+        "current_assets": "AssetsCurrent@2023-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2023-12-31",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2023-01-02..2023-12-31",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2023-01-02..2023-12-31",
+        "gross_profit": "GrossProfit@2023-01-02..2023-12-31",
+        "long_term_debt": "LongTermDebtNoncurrent@2023-12-31",
+        "net_income": "NetIncomeLoss@2023-01-02..2023-12-31",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2023-10-23",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2023-01-02..2023-12-31",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2023-01-02..2023-12-31",
+        "shareholders_equity": "StockholdersEquity@2023-12-31",
+        "short_term_debt": "DebtCurrent@2023-12-31",
+        "total_assets": "Assets@2023-12-31",
+        "total_liabilities": "Liabilities@2023-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": -4543000000.0,
+        "depreciation_and_amortization": 7486000000.0,
+        "dividends_and_other_cash_distributions": -11770000000.0,
+        "gross_profit": 58606000000.0,
+        "issuance_or_purchase_of_equity_shares": -5054000000.0,
+        "net_income": 35153000000.0,
+        "operating_income": null,
+        "revenue": 85159000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 12889000000.0,
+        "current_assets": 55294000000.0,
+        "current_liabilities": 55802000000.0,
+        "long_term_debt": 26886000000.0,
+        "outstanding_shares": 2614483607.0,
+        "shareholders_equity": 76804000000.0,
+        "short_term_debt": 12800000000.0,
+        "total_assets": 187378000000.0,
+        "total_liabilities": 110574000000.0
+      },
+      "period_end": "2023-01-01",
+      "period_start": "2022-01-03",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2022-01-03..2023-01-01",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-01-01",
+        "current_assets": "AssetsCurrent@2023-01-01",
+        "current_liabilities": "LiabilitiesCurrent@2023-01-01",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2022-01-03..2023-01-01",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2022-01-03..2023-01-01",
+        "gross_profit": "GrossProfit@2022-01-03..2023-01-01",
+        "long_term_debt": "LongTermDebtNoncurrent@2023-01-01",
+        "net_income": "NetIncomeLoss@2022-01-03..2023-01-01",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2022-10-21",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2022-01-03..2023-01-01",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2022-01-03..2023-01-01",
+        "shareholders_equity": "StockholdersEquity@2023-01-01",
+        "short_term_debt": "DebtCurrent@2023-01-01",
+        "total_assets": "Assets@2023-01-01",
+        "total_liabilities": "Liabilities@2023-01-01"
+      },
+      "ttm": {
+        "capital_expenditure": -4009000000.0,
+        "depreciation_and_amortization": 6970000000.0,
+        "dividends_and_other_cash_distributions": -11682000000.0,
+        "gross_profit": 55394000000.0,
+        "issuance_or_purchase_of_equity_shares": -6035000000.0,
+        "net_income": 17941000000.0,
+        "operating_income": null,
+        "revenue": 79990000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 14487000000.0,
+        "current_assets": 60979000000.0,
+        "current_liabilities": 45226000000.0,
+        "long_term_debt": 29985000000.0,
+        "outstanding_shares": 2632596969.0,
+        "shareholders_equity": 74023000000.0,
+        "short_term_debt": 3800000000.0,
+        "total_assets": 182018000000.0,
+        "total_liabilities": 107995000000.0
+      },
+      "period_end": "2022-01-02",
+      "period_start": "2021-01-04",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2021-01-04..2022-01-02",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2022-01-02",
+        "current_assets": "AssetsCurrent@2022-01-02",
+        "current_liabilities": "LiabilitiesCurrent@2022-01-02",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2021-01-04..2022-01-02",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2021-01-04..2022-01-02",
+        "gross_profit": "GrossProfit@2021-01-04..2022-01-02",
+        "long_term_debt": "LongTermDebtNoncurrent@2022-01-02",
+        "net_income": "NetIncomeLoss@2021-01-04..2022-01-02",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2021-10-22",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2021-01-04..2022-01-02",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2021-01-04..2022-01-02",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2022-01-02",
+        "short_term_debt": "DebtCurrent@2022-01-02",
+        "total_assets": "Assets@2022-01-02",
+        "total_liabilities": "Liabilities@2022-01-02"
+      },
+      "ttm": {
+        "capital_expenditure": -3652000000.0,
+        "depreciation_and_amortization": 7390000000.0,
+        "dividends_and_other_cash_distributions": -11032000000.0,
+        "gross_profit": 55338000000.0,
+        "issuance_or_purchase_of_equity_shares": -3456000000.0,
+        "net_income": 20878000000.0,
+        "operating_income": null,
+        "revenue": 78740000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 13985000000.0,
+        "current_assets": 51237000000.0,
+        "current_liabilities": 42493000000.0,
+        "long_term_debt": 32635000000.0,
+        "outstanding_shares": 2632542672.0,
+        "shareholders_equity": 63278000000.0,
+        "short_term_debt": 2600000000.0,
+        "total_assets": 174894000000.0,
+        "total_liabilities": 111616000000.0
+      },
+      "period_end": "2021-01-03",
+      "period_start": "2019-12-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2019-12-30..2021-01-03",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2021-01-03",
+        "current_assets": "AssetsCurrent@2021-01-03",
+        "current_liabilities": "LiabilitiesCurrent@2021-01-03",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2019-12-30..2021-01-03",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2019-12-30..2021-01-03",
+        "gross_profit": "GrossProfit@2019-12-30..2021-01-03",
+        "long_term_debt": "LongTermDebtNoncurrent@2021-01-03",
+        "net_income": "NetIncomeLoss@2019-12-30..2021-01-03",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2020-10-19",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2019-12-30..2021-01-03",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2019-12-30..2021-01-03",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2021-01-03",
+        "short_term_debt": "DebtCurrent@2021-01-03",
+        "total_assets": "Assets@2021-01-03",
+        "total_liabilities": "Liabilities@2021-01-03"
+      },
+      "ttm": {
+        "capital_expenditure": -3347000000.0,
+        "depreciation_and_amortization": 7231000000.0,
+        "dividends_and_other_cash_distributions": -10481000000.0,
+        "gross_profit": 54157000000.0,
+        "issuance_or_purchase_of_equity_shares": -3221000000.0,
+        "net_income": 14714000000.0,
+        "operating_income": null,
+        "revenue": 82584000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 17305000000.0,
+        "current_assets": 45274000000.0,
+        "current_liabilities": 35964000000.0,
+        "long_term_debt": 26494000000.0,
+        "outstanding_shares": 2631872399.0,
+        "shareholders_equity": 59471000000.0,
+        "short_term_debt": 1200000000.0,
+        "total_assets": 157728000000.0,
+        "total_liabilities": 98257000000.0
+      },
+      "period_end": "2019-12-29",
+      "period_start": "2018-12-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2018-12-31..2019-12-29",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2019-12-29",
+        "current_assets": "AssetsCurrent@2019-12-29",
+        "current_liabilities": "LiabilitiesCurrent@2019-12-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2018-12-31..2019-12-29",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2018-12-31..2019-12-29",
+        "gross_profit": "GrossProfit@2018-12-31..2019-12-29",
+        "long_term_debt": "LongTermDebtNoncurrent@2019-12-29",
+        "net_income": "NetIncomeLoss@2018-12-31..2019-12-29",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2019-10-22",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2018-12-31..2019-12-29",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2018-12-31..2019-12-29",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2019-12-29",
+        "short_term_debt": "DebtCurrent@2019-12-29",
+        "total_assets": "Assets@2019-12-29",
+        "total_liabilities": "Liabilities@2019-12-29"
+      },
+      "ttm": {
+        "capital_expenditure": -3498000000.0,
+        "depreciation_and_amortization": 7009000000.0,
+        "dividends_and_other_cash_distributions": -9917000000.0,
+        "gross_profit": 54503000000.0,
+        "issuance_or_purchase_of_equity_shares": -6746000000.0,
+        "net_income": 15119000000.0,
+        "operating_income": null,
+        "revenue": 82059000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 18107000000.0,
+        "current_assets": 46033000000.0,
+        "current_liabilities": 31230000000.0,
+        "long_term_debt": 27684000000.0,
+        "outstanding_shares": 2681977969.0,
+        "shareholders_equity": 59752000000.0,
+        "short_term_debt": 2800000000.0,
+        "total_assets": 152954000000.0,
+        "total_liabilities": 93202000000.0
+      },
+      "period_end": "2018-12-30",
+      "period_start": "2018-01-01",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2018-01-01..2018-12-30",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2018-12-30",
+        "current_assets": "AssetsCurrent@2018-12-30",
+        "current_liabilities": "LiabilitiesCurrent@2018-12-30",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2018-01-01..2018-12-30",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2018-01-01..2018-12-30",
+        "gross_profit": "GrossProfit@2018-01-01..2018-12-30",
+        "long_term_debt": "LongTermDebtNoncurrent@2018-12-30",
+        "net_income": "NetIncomeLoss@2018-01-01..2018-12-30",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2018-10-26",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2018-01-01..2018-12-30",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2018-01-01..2018-12-30",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2018-12-30",
+        "short_term_debt": "DebtCurrent@2018-12-30",
+        "total_assets": "Assets@2018-12-30",
+        "total_liabilities": "Liabilities@2018-12-30"
+      },
+      "ttm": {
+        "capital_expenditure": -3670000000.0,
+        "depreciation_and_amortization": 6929000000.0,
+        "dividends_and_other_cash_distributions": -9494000000.0,
+        "gross_profit": 54490000000.0,
+        "issuance_or_purchase_of_equity_shares": -5868000000.0,
+        "net_income": 15297000000.0,
+        "operating_income": null,
+        "revenue": 81581000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 17824000000.0,
+        "current_assets": 43088000000.0,
+        "current_liabilities": 30537000000.0,
+        "long_term_debt": 30675000000.0,
+        "outstanding_shares": 2686520050.0,
+        "shareholders_equity": 60160000000.0,
+        "short_term_debt": 3900000000.0,
+        "total_assets": 157303000000.0,
+        "total_liabilities": 97143000000.0
+      },
+      "period_end": "2017-12-31",
+      "period_start": "2017-01-02",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2017-01-02..2017-12-31",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2017-12-31",
+        "current_assets": "AssetsCurrent@2017-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2017-12-31",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2017-01-02..2017-12-31",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2017-01-02..2017-12-31",
+        "gross_profit": "GrossProfit@2017-01-02..2017-12-31",
+        "long_term_debt": "LongTermDebtNoncurrent@2017-12-31",
+        "net_income": "NetIncomeLoss@2017-01-02..2017-12-31",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2017-10-27",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2017-01-02..2017-12-31",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2017-01-02..2017-12-31",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2017-12-31",
+        "short_term_debt": "DebtCurrent@2017-12-31",
+        "total_assets": "Assets@2017-12-31",
+        "total_liabilities": "Liabilities@2017-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": -3279000000.0,
+        "depreciation_and_amortization": 5642000000.0,
+        "dividends_and_other_cash_distributions": -8943000000.0,
+        "gross_profit": 51011000000.0,
+        "issuance_or_purchase_of_equity_shares": -6358000000.0,
+        "net_income": 1300000000.0,
+        "operating_income": null,
+        "revenue": 76450000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 18972000000.0,
+        "current_assets": 65032000000.0,
+        "current_liabilities": 26287000000.0,
+        "long_term_debt": 22442000000.0,
+        "outstanding_shares": 2720531728.0,
+        "shareholders_equity": 70418000000.0,
+        "short_term_debt": 4700000000.0,
+        "total_assets": 141208000000.0,
+        "total_liabilities": 70790000000.0
+      },
+      "period_end": "2017-01-01",
+      "period_start": "2016-01-04",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2016-01-04..2017-01-01",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2017-01-01",
+        "current_assets": "AssetsCurrent@2017-01-01",
+        "current_liabilities": "LiabilitiesCurrent@2017-01-01",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2016-01-04..2017-01-01",
+        "dividends_paid": "PaymentsOfOrdinaryDividends@2016-01-04..2017-01-01",
+        "gross_profit": "GrossProfit@2016-01-04..2017-01-01",
+        "long_term_debt": "LongTermDebtNoncurrent@2017-01-01",
+        "net_income": "NetIncomeLoss@2016-01-04..2017-01-01",
+        "outstanding_shares": "EntityCommonStockSharesOutstanding@2016-10-28",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2016-01-04..2017-01-01",
+        "share_repurchase": "PaymentsForRepurchaseOfCommonStock@2016-01-04..2017-01-01",
+        "shareholders_equity": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest@2017-01-01",
+        "short_term_debt": "DebtCurrent@2017-01-01",
+        "total_assets": "Assets@2017-01-01",
+        "total_liabilities": "Liabilities@2017-01-01"
+      },
+      "ttm": {
+        "capital_expenditure": -3226000000.0,
+        "depreciation_and_amortization": 3754000000.0,
+        "dividends_and_other_cash_distributions": -8621000000.0,
+        "gross_profit": 50101000000.0,
+        "issuance_or_purchase_of_equity_shares": -8979000000.0,
+        "net_income": 16540000000.0,
+        "operating_income": null,
+        "revenue": 71890000000.0
+      }
+    }
+  ],
+  "fetched_at": "2026-07-27",
+  "market_cap": 634767290449.7999,
   "market_cap_source": "yfinance:fast_info.market_cap",
   "periods": [
     {
@@ -454,7 +886,7 @@
       }
     }
   ],
-  "schema_version": 1,
+  "schema_version": 2,
   "source": {
     "fundamentals": "SEC EDGAR via edgartools 5.43.0",
     "market_data": "yfinance"

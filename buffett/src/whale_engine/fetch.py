@@ -1,14 +1,32 @@
-"""Networked phase: SEC EDGAR (edgartools) + yfinance -> snapshot JSON.
+"""Networked phase: SEC EDGAR (edgartools) + Cboe delayed quote -> snapshot JSON.
 
 The snapshot is the only artifact `diagnose` ever reads. Everything fetched is
 recorded verbatim with the XBRL tag it came from, so any number in a diagnosis
 can be traced back to a filing.
+
+Market cap (issue #45 decision): derived as Cboe delayed close x the freshest
+*filed* EDGAR dei cover-page share count — never sourced from yfinance. A Cboe
+miss or a stale quote (last trade > QUOTE_STALENESS_DAYS calendar days) is a
+hard FetchError; the only alternative path is the explicit --market-cap manual
+override (provenance "manual:owner-supplied"). yfinance is an optional
+cross-check witness: if importable it contributes a market_cap_check block, if
+not the snapshot carries a WARN entry — it is never load-bearing. The fetched
+price + quote timestamp are pinned in the snapshot (price_reference) like all
+other raw data, so diagnose stays deterministic.
 
 Sign conventions follow the reference implementation (financialdatasets style):
 - capital_expenditure: negative = cash out
 - dividends_and_other_cash_distributions: negative = paid
 - issuance_or_purchase_of_equity_shares: issuance proceeds minus repurchase
   payments; negative = net buyback
+
+Two period arrays, both most recent first:
+- periods: N_PERIODS trailing-twelve-month windows stepped quarterly (~2.5y).
+- annual_periods: up to N_ANNUAL_PERIODS directly-filed fiscal-year durations
+  (~10y). Each entry keeps the same ttm/balance/tags_used shape — a fiscal-year
+  duration is the TTM as of that fiscal year end — so scorers can consume
+  either array with the same code. Fields a year never filed under any known
+  tag stay None; completeness rules belong to the consuming scorer.
 """
 
 from __future__ import annotations
@@ -96,6 +114,11 @@ BALANCE_STALENESS_DAYS = 135
 
 N_PERIODS = 10
 
+# Deep-history window: fiscal years of annual facts. EDGAR's companyfacts API
+# carries XBRL back to ~2009, so most filers fill all 10; younger companies get
+# however many fiscal years exist.
+N_ANNUAL_PERIODS = 10
+
 # --- per-filing XBRL fallback ---------------------------------------------
 # The companyfacts API only carries us-gaap/dei facts and drops dimensioned
 # ones, which loses (a) extension-tagged D&A lines (MSFT's
@@ -113,6 +136,25 @@ COVER_SHARES_TAG = "EntityCommonStockSharesOutstanding"
 SHARES_MISMATCH_FACTOR = 1.4
 _ANNUAL_DAYS = (350, 380)
 _END_MATCH_DAYS = 5
+
+# --- market cap: Cboe delayed quote (issue #45) ----------------------------
+# First-party keyless CDN endpoint backing Cboe's own quote pages. One JSON
+# GET, ~4 fields used; unknown tickers return HTTP 403.
+CBOE_QUOTE_URL = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{ticker}.json"
+# Last trade older than this many calendar days means halted/delisted/stale
+# feed — hard-fail, never silently use the price.
+QUOTE_STALENESS_DAYS = 5
+MARKET_CAP_MANUAL_SOURCE = "manual:owner-supplied"
+
+# --- 8-K Item 4.02 restatement guard (validation check 7, ticket #48) ------
+# A 4.02 8-K declares previously issued financial statements non-reliable.
+# Which fiscal years it covers is stated in prose, not metadata, so without
+# parsing the filing text we conservatively treat the fiscal years ending in
+# the RESTATEMENT_AFFECTED_YEARS before the 8-K filing date as affected;
+# scorers exclude them from history dimensions (standard renormalization path).
+RESTATEMENT_ITEM = "4.02"
+RESTATEMENT_WINDOW_YEARS = 10
+RESTATEMENT_AFFECTED_YEARS = 3
 
 
 class FetchError(RuntimeError):
@@ -214,6 +256,51 @@ def _duration_at(history, window_end: date) -> tuple[float, str] | None:
     return float(row["numeric_value"]), str(row["period_end"])
 
 
+def _annual_fiscal_year_ends(history) -> set:
+    """End dates of all annual-length durations in a concept history.
+
+    Companyfacts durations come straight from filings (FY, quarter, YTD), so
+    annual-length ones only ever end at fiscal year ends.
+    """
+    if history is None or "period_start" not in history.columns:
+        return set()
+    dur = history[history["period_type"] == "duration"]
+    ends = set()
+    for s, e in zip(dur["period_start"], dur["period_end"]):
+        sd, ed = _to_plain_date(s), _to_plain_date(e)
+        if sd and ed and _ANNUAL_DAYS[0] <= (ed - sd).days <= _ANNUAL_DAYS[1]:
+            ends.add(ed)
+    return ends
+
+
+def _annual_at(history, fy_end: date) -> tuple[float, date, date] | None:
+    """Annual-length duration ending at fy_end (within _END_MATCH_DAYS).
+
+    Restatements file the same fiscal year again; the row from the latest
+    filing_date wins. Returns (value, period_start, period_end) or None.
+    """
+    if history is None or "period_start" not in history.columns:
+        return None
+    dur = history[history["period_type"] == "duration"].copy()
+    dur = dur[dur["period_start"].notna() & dur["period_end"].notna()]
+    if dur.empty:
+        return None
+    dur["_start"] = dur["period_start"].map(_to_plain_date)
+    dur["_end"] = dur["period_end"].map(_to_plain_date)
+    keep = [
+        s is not None
+        and e is not None
+        and _ANNUAL_DAYS[0] <= (e - s).days <= _ANNUAL_DAYS[1]
+        and abs((e - fy_end).days) <= _END_MATCH_DAYS
+        for s, e in zip(dur["_start"], dur["_end"])
+    ]
+    hits = dur[keep]
+    if hits.empty:
+        return None
+    row = hits.sort_values("filing_date").iloc[-1]
+    return float(row["numeric_value"]), row["_start"], row["_end"]
+
+
 def _ttm_value(company, tags: list[str], quarter: str):
     """Freshest TTM window across the fallback tags; tag order breaks ties.
 
@@ -235,7 +322,81 @@ def _ttm_value(company, tags: list[str], quarter: str):
     return best, best_tag
 
 
-def _fetch_market_cap(ticker: str) -> tuple[float, str]:
+def _cboe_get_json(ticker: str) -> dict:
+    """One keyless GET against the Cboe delayed-quote CDN. Network seam for tests."""
+    import json as _json
+    import urllib.request
+
+    url = CBOE_QUOTE_URL.format(ticker=ticker.upper())
+    req = urllib.request.Request(url, headers={"User-Agent": "whale-engine snapshot fetch"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return _json.loads(resp.read().decode("utf-8"))
+
+
+def _fetch_cboe_close(ticker: str, today: date) -> tuple[float, str, str]:
+    """Cboe delayed close for ticker: (price, price_field, last_trade_time).
+
+    Hard-fails (FetchError) on any miss — unknown ticker (Cboe answers 403),
+    network failure, missing/non-positive price, or a last trade older than
+    QUOTE_STALENESS_DAYS calendar days. No silent fallback; the error names
+    the --market-cap manual override.
+    """
+    try:
+        payload = _cboe_get_json(ticker)
+    except Exception as e:
+        raise FetchError(
+            f"{ticker}: Cboe delayed-quote fetch failed "
+            f"({type(e).__name__}: {e}). Check the ticker symbol, retry, or "
+            "pass --market-cap VALUE to override manually."
+        ) from e
+
+    data = payload.get("data") or {}
+    price, price_field = None, None
+    for field in ("close", "prev_day_close"):
+        value = data.get(field)
+        if value:
+            price, price_field = float(value), field
+            break
+    if price is None or price <= 0:
+        raise FetchError(
+            f"{ticker}: Cboe quote carries no usable close price "
+            f"(close={data.get('close')!r}, prev_day_close={data.get('prev_day_close')!r}). "
+            "Pass --market-cap VALUE to override manually."
+        )
+
+    last_trade = data.get("last_trade_time")
+    try:
+        trade_date = date.fromisoformat(str(last_trade)[:10])
+    except (TypeError, ValueError):
+        raise FetchError(
+            f"{ticker}: Cboe quote has no parseable last_trade_time "
+            f"({last_trade!r}) — cannot verify quote freshness. "
+            "Pass --market-cap VALUE to override manually."
+        ) from None
+    age_days = (today - trade_date).days
+    if age_days > QUOTE_STALENESS_DAYS:
+        raise FetchError(
+            f"{ticker}: Cboe last trade {last_trade} is {age_days} calendar "
+            f"days old (limit {QUOTE_STALENESS_DAYS}) — halted, delisted, or a "
+            "stale feed. Refusing the price; pass --market-cap VALUE to "
+            "override manually."
+        )
+    return price, price_field, str(last_trade)
+
+
+def _manual_market_cap(value) -> tuple[float, str]:
+    """Validate the --market-cap override. Hard-fail on non-positive input."""
+    try:
+        cap = float(value)
+    except (TypeError, ValueError):
+        raise FetchError(f"--market-cap must be a number, got {value!r}") from None
+    if not cap > 0:
+        raise FetchError(f"--market-cap must be positive, got {value!r}")
+    return cap, MARKET_CAP_MANUAL_SOURCE
+
+
+def _yfinance_reference_cap(ticker: str) -> tuple[float, str]:
+    """Optional yfinance witness for the cross-check. Raises if unavailable."""
     import yfinance as yf
 
     t = yf.Ticker(ticker)
@@ -245,16 +406,39 @@ def _fetch_market_cap(ticker: str) -> tuple[float, str]:
             return float(mc), "yfinance:fast_info.market_cap"
     except Exception:
         pass
+    mc = t.info.get("marketCap")
+    if mc:
+        return float(mc), "yfinance:info.marketCap"
+    raise FetchError(f"{ticker}: yfinance returned no market cap")
+
+
+def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dict | None:
+    """Compare the derived cap to yfinance if it happens to work.
+
+    Never load-bearing: any failure appends a WARN entry and returns None.
+    (#48's validation layer consumes market_cap_check when present.)
+    """
     try:
-        mc = t.info.get("marketCap")
-        if mc:
-            return float(mc), "yfinance:info.marketCap"
-    except Exception:
-        pass
-    raise FetchError(
-        f"Could not fetch market cap for {ticker} from yfinance. "
-        "Market cap is a hard-fail input; retry later or check the ticker symbol."
-    )
+        reference, source = _yfinance_reference_cap(ticker)
+    except Exception as e:
+        warnings.append(
+            {
+                "severity": "WARN",
+                "code": "yfinance-crosscheck-unavailable",
+                "message": (
+                    f"{ticker}: optional yfinance market-cap cross-check "
+                    f"unavailable ({type(e).__name__}: {e}); derived market "
+                    "cap stands uncorroborated."
+                ),
+            }
+        )
+        return None
+    return {
+        "derived": derived_cap,
+        "reference": reference,
+        "reference_source": source,
+        "deviation_pct": (derived_cap - reference) / reference * 100.0,
+    }
 
 
 def _to_plain_date(v) -> date | None:
@@ -386,24 +570,318 @@ def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
     return None
 
 
-def _fetch_share_reference(ticker: str) -> tuple[float, str]:
-    """yfinance share count used only to sanity-check cover-page sums."""
-    import yfinance as yf
+# Value keys are renamed before the snapshot is written (reference naming);
+# tags_used provenance must follow, or a field->provenance join silently
+# reports the renamed fields as unattributed (audit b-6, validation check 5a).
+_TAG_RENAMES = {"dividends_paid": "dividends_and_other_cash_distributions"}
+_TAG_COMBINES = {
+    "issuance_or_purchase_of_equity_shares": ["share_issuance", "share_repurchase"]
+}
 
-    info = yf.Ticker(ticker).info
-    for key in ("impliedSharesOutstanding", "sharesOutstanding"):
-        value = info.get(key)
-        if value:
-            return float(value), f"yfinance:info.{key}"
+
+def _realign_tags(tags_used: dict) -> None:
+    """Rename provenance (and *_warning) keys to match the stored value keys."""
+    for old, new in _TAG_RENAMES.items():
+        if old in tags_used:
+            tags_used[new] = tags_used.pop(old)
+        if f"{old}_warning" in tags_used:
+            tags_used[f"{new}_warning"] = tags_used.pop(f"{old}_warning")
+    for new, olds in _TAG_COMBINES.items():
+        tags = [tags_used.pop(old) for old in olds if old in tags_used]
+        if tags:
+            tags_used[new] = "+".join(tags)
+        warnings = [
+            tags_used.pop(f"{old}_warning")
+            for old in olds
+            if f"{old}_warning" in tags_used
+        ]
+        if warnings:
+            tags_used[f"{new}_warning"] = " | ".join(dict.fromkeys(warnings))
+
+
+def _check_restatements(company, annual_periods: list, today: date) -> list[dict]:
+    """8-K Item 4.02 non-reliance filings in the lookback window -> findings.
+
+    Networked and fetch-time only. Failure to read the item metadata is
+    reported as an explicit WARN finding, never swallowed.
+    """
+    from . import validation
+
+    try:
+        filings = company.get_filings(form="8-K")
+        hits = []
+        for filing in filings or []:
+            filed = _to_plain_date(getattr(filing, "filing_date", None))
+            if filed is None or (today - filed).days > RESTATEMENT_WINDOW_YEARS * 365.25:
+                continue
+            items = getattr(filing, "items", None)
+            if items is None:
+                continue
+            item_list = items if isinstance(items, (list, tuple)) else [
+                s.strip() for s in str(items).replace(";", ",").split(",")
+            ]
+            if any(RESTATEMENT_ITEM in str(item) for item in item_list):
+                hits.append(filed)
+    except Exception as e:  # explicit degradation, not a silent skip
+        return [
+            validation.finding(
+                validation.WARN,
+                "restatement_guard_unavailable",
+                f"could not read 8-K item metadata ({type(e).__name__}: {e}); "
+                "the Item 4.02 restatement guard did not run",
+            )
+        ]
+
+    findings = []
+    for filed in sorted(hits):
+        affected = [
+            p["period_end"]
+            for p in annual_periods
+            if p.get("period_end")
+            and 0
+            <= (filed - date.fromisoformat(p["period_end"])).days
+            <= RESTATEMENT_AFFECTED_YEARS * 365.25
+        ]
+        findings.append(
+            validation.finding(
+                validation.WARN,
+                "restatement_402",
+                f"8-K Item {RESTATEMENT_ITEM} (non-reliance on previously issued "
+                f"financial statements) filed {filed.isoformat()}; fiscal years "
+                f"{', '.join(affected) if affected else '(none in window)'} are "
+                "excluded from history dimensions",
+                filing_date=filed.isoformat(),
+                affected_period_ends=affected,
+            )
+        )
+    return findings
+
+
+def _freshest_instant(history) -> tuple[float, str] | None:
+    """Latest instant fact in a concept history, regardless of period matching.
+
+    Used for market cap, where the freshest *filed* count beats the count
+    matched to the latest fiscal period end (cuts NVDA-style staleness).
+    Restatements: latest filing_date wins the instant.
+    """
+    inst = history[history["period_type"] == "instant"].copy()
+    inst = inst[inst["period_end"].notna()]
+    if inst.empty:
+        return None
+    inst["_end"] = inst["period_end"].map(_to_plain_date)
+    inst = inst[inst["_end"].notna()]
+    if inst.empty:
+        return None
+    best_end = inst["_end"].max()
+    at_end = inst[inst["_end"] == best_end].sort_values("filing_date")
+    row = at_end.iloc[-1]
+    return float(row["numeric_value"]), str(row["period_end"])[:10]
+
+
+def _freshest_share_count(
+    ticker: str,
+    share_histories: list,
+    cover_rows: list,
+    shares_proxy_history,
+    latest_window_end: date,
+) -> tuple[float, str]:
+    """Freshest filed share count for market cap, dei cover page first.
+
+    Order: (1) undimensioned dei EntityCommonStockSharesOutstanding from
+    companyfacts (freshest filed cover page); (2) per-filing multi-class cover
+    sums (V-type filers, where companyfacts drops the dimensioned counts);
+    (3) freshest us-gaap point-in-time count; (4) weighted-average-basic
+    proxy. Hard-fail if none exists — market cap needs a share count.
+    """
+    for tag, history in share_histories:
+        if tag != COVER_SHARES_TAG or history is None:
+            continue
+        hit = _freshest_instant(history)
+        if hit is not None:
+            return hit[0], f"dei:{COVER_SHARES_TAG}@{hit[1]}"
+    if cover_rows:
+        latest = max(cover_rows, key=lambda r: r[0])
+        return (
+            latest[1],
+            f"filing-cover-sum:dei:{COVER_SHARES_TAG}@{latest[0].isoformat()}"
+            f"(sum of {latest[2]} classes)",
+        )
+    for tag, history in share_histories:
+        if tag == COVER_SHARES_TAG or history is None:
+            continue
+        hit = _freshest_instant(history)
+        if hit is not None:
+            return hit[0], f"{tag}@{hit[1]}"
+    if shares_proxy_history is not None:
+        hit = _duration_at(shares_proxy_history, latest_window_end)
+        if hit is not None:
+            return hit[0], f"proxy:{SHARES_PROXY_TAG}@{hit[1]}"
     raise FetchError(
-        f"{ticker}: cover-page share fallback needs a yfinance share count to "
-        "validate against, and yfinance returned none."
+        f"{ticker}: no share count on EDGAR under any known tag — cannot "
+        "derive market cap. Pass --market-cap VALUE to override manually."
     )
 
 
-def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
+def _build_balance(
+    window_end: date,
+    balance_histories: dict,
+    st_debt_histories: list,
+    liabilities_total_history,
+    shares_proxy_history,
+) -> tuple[dict, dict]:
+    """Point-in-time balance sheet at window_end, with per-field tag provenance.
+
+    Shared by the quarterly and annual paths; returns (balance, tags_used).
+    """
+    balance: dict = {}
+    tags_used: dict = {}
+    for field, histories in balance_histories.items():
+        balance[field] = None
+        for tag, history in histories:
+            if history is None:
+                continue
+            hit = _balance_at(history, window_end)
+            if hit is not None:
+                balance[field] = hit[0]
+                tags_used[field] = f"{tag}@{hit[1]}"
+                break
+
+    # Filers without a Liabilities tag: derive from the balance-sheet
+    # identity, but only when both sides are stated as of the same date —
+    # otherwise leave it None and let validation hard-fail loudly.
+    if balance["total_liabilities"] is None and liabilities_total_history is not None:
+        lse_hit = _balance_at(liabilities_total_history, window_end)
+        if lse_hit is not None:
+            # LiabilitiesAndStockholdersEquity includes noncontrolling
+            # interest, so prefer the NCI-inclusive equity tag (listed last).
+            for eq_tag, eq_history in reversed(balance_histories["shareholders_equity"]):
+                if eq_history is None:
+                    continue
+                eq_hit = _balance_at(eq_history, window_end)
+                if eq_hit is not None and eq_hit[1] == lse_hit[1]:
+                    balance["total_liabilities"] = lse_hit[0] - eq_hit[0]
+                    tags_used["total_liabilities"] = (
+                        f"derived:{LIABILITIES_TOTAL_TAG}-{eq_tag}@{lse_hit[1]}"
+                    )
+                    break
+
+    # Filers with no point-in-time share count: weighted-average basic
+    # shares for the latest reported duration is the closest proxy.
+    if balance["outstanding_shares"] is None and shares_proxy_history is not None:
+        proxy_hit = _duration_at(shares_proxy_history, window_end)
+        if proxy_hit is not None:
+            balance["outstanding_shares"] = proxy_hit[0]
+            tags_used["outstanding_shares"] = f"proxy:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
+
+    primary_tag, primary_hist = st_debt_histories[0]
+    primary_hit = _balance_at(primary_hist, window_end) if primary_hist is not None else None
+    if primary_hit is not None:
+        balance["short_term_debt"] = primary_hit[0]
+        tags_used["short_term_debt"] = f"{primary_tag}@{primary_hit[1]}"
+    else:
+        parts, part_tags = [], []
+        for tag, history in st_debt_histories[1:]:
+            if history is None:
+                continue
+            hit = _balance_at(history, window_end)
+            if hit is not None:
+                parts.append(hit[0])
+                part_tags.append(tag)
+        balance["short_term_debt"] = sum(parts) if parts else None
+        if parts:
+            tags_used["short_term_debt"] = "+".join(part_tags)
+
+    return balance, tags_used
+
+
+def _fetch_annual_periods(
+    ticker: str,
+    flow_histories: dict,
+    balance_histories: dict,
+    st_debt_histories: list,
+    liabilities_total_history,
+    shares_proxy_history,
+) -> list[dict]:
+    """Up to N_ANNUAL_PERIODS fiscal years of directly-filed annual facts.
+
+    Anchored on net-income FY durations; each field walks its fallback-tag
+    list per fiscal year, so years filed under retired tags (e.g.
+    SalesRevenueNet before 2018) still resolve.
+    """
+    ends: set = set()
+    for _tag, history in flow_histories["net_income"]:
+        ends |= _annual_fiscal_year_ends(history)
+    fy_ends = sorted(ends, reverse=True)[:N_ANNUAL_PERIODS]
+    if not fy_ends:
+        raise FetchError(
+            f"{ticker}: no annual net-income durations on EDGAR — cannot build "
+            "deep-history annual periods."
+        )
+
+    annual_periods = []
+    for fy_end in fy_ends:
+        ttm: dict = {}
+        tags_used: dict = {}
+        period_start: date | None = None
+
+        for field, histories in flow_histories.items():
+            ttm[field] = None
+            for tag, history in histories:
+                hit = _annual_at(history, fy_end)
+                if hit is None:
+                    continue
+                value, start, end = hit
+                ttm[field] = -value if field in NEGATE_FLOWS else value
+                tags_used[field] = f"{tag}@{start}..{end}"
+                if field == "net_income":
+                    period_start = start
+                break
+
+        # Net issuance/buyback per reference convention (negative = buyback).
+        issuance = ttm.pop("share_issuance", None)
+        repurchase = ttm.pop("share_repurchase", None)  # already negated
+        if issuance is None and repurchase is None:
+            ttm["issuance_or_purchase_of_equity_shares"] = None
+        else:
+            ttm["issuance_or_purchase_of_equity_shares"] = (issuance or 0.0) + (
+                repurchase or 0.0
+            )
+        ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
+        _realign_tags(tags_used)
+
+        balance, balance_tags = _build_balance(
+            fy_end,
+            balance_histories,
+            st_debt_histories,
+            liabilities_total_history,
+            shares_proxy_history,
+        )
+        tags_used.update(balance_tags)
+
+        annual_periods.append(
+            {
+                "period_start": period_start.isoformat() if period_start else None,
+                "period_end": fy_end.isoformat(),
+                "ttm": ttm,
+                "balance": balance,
+                "tags_used": tags_used,
+            }
+        )
+    return annual_periods
+
+
+def fetch_snapshot(
+    ticker: str, today: date | None = None, market_cap_override: float | None = None
+) -> dict:
     """Fetch N_PERIODS historical TTM periods + market cap into a snapshot dict."""
     import edgar
+
+    # Validate the override before any network work: hard-fail on bad input.
+    manual_cap: tuple[float, str] | None = None
+    if market_cap_override is not None:
+        manual_cap = _manual_market_cap(market_cap_override)
+
+    warnings: list[dict] = []
 
     identity = _require_identity()
     edgar.set_identity(identity)
@@ -431,6 +909,10 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             f"(need {N_PERIODS})."
         )
 
+    flow_histories = {
+        field: [(tag, _concept_history(company, tag)) for tag in tags]
+        for field, tags in FLOW_TAGS.items()
+    }
     balance_histories = {
         field: [(tag, _concept_history(company, tag)) for tag in tags]
         for field, tags in BALANCE_TAGS.items()
@@ -456,10 +938,13 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             value = -float(m.value) if field in NEGATE_FLOWS else float(m.value)
             ttm[field] = value
             tags_used[field] = tag
+            # Stitched-TTM warnings for every field, not just net_income
+            # (audit a-3/b-1, validation check 1): the diagnosis must be able
+            # to surface that these are edgartools arithmetic, not filed data.
+            if m.has_gaps or m.warning:
+                tags_used[f"{field}_warning"] = str(m.warning or "has_gaps")
             if field == "net_income":
                 window_end = m.as_of_date
-                if m.has_gaps or m.warning:
-                    tags_used["net_income_warning"] = str(m.warning or "has_gaps")
 
         if window_end is None:
             raise FetchError(f"{ticker} {q}: net income TTM vanished mid-fetch.")
@@ -474,63 +959,16 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                 repurchase or 0.0
             )
         ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
+        _realign_tags(tags_used)
 
-        balance: dict = {}
-        for field, histories in balance_histories.items():
-            balance[field] = None
-            for tag, history in histories:
-                if history is None:
-                    continue
-                hit = _balance_at(history, window_end)
-                if hit is not None:
-                    balance[field] = hit[0]
-                    tags_used[field] = f"{tag}@{hit[1]}"
-                    break
-
-        # Filers without a Liabilities tag: derive from the balance-sheet
-        # identity, but only when both sides are stated as of the same date —
-        # otherwise leave it None and let validation hard-fail loudly.
-        if balance["total_liabilities"] is None and liabilities_total_history is not None:
-            lse_hit = _balance_at(liabilities_total_history, window_end)
-            if lse_hit is not None:
-                # LiabilitiesAndStockholdersEquity includes noncontrolling
-                # interest, so prefer the NCI-inclusive equity tag (listed last).
-                for eq_tag, eq_history in reversed(balance_histories["shareholders_equity"]):
-                    if eq_history is None:
-                        continue
-                    eq_hit = _balance_at(eq_history, window_end)
-                    if eq_hit is not None and eq_hit[1] == lse_hit[1]:
-                        balance["total_liabilities"] = lse_hit[0] - eq_hit[0]
-                        tags_used["total_liabilities"] = (
-                            f"derived:{LIABILITIES_TOTAL_TAG}-{eq_tag}@{lse_hit[1]}"
-                        )
-                        break
-
-        # Filers with no point-in-time share count: weighted-average basic
-        # shares for the latest reported duration is the closest proxy.
-        if balance["outstanding_shares"] is None and shares_proxy_history is not None:
-            proxy_hit = _duration_at(shares_proxy_history, window_end)
-            if proxy_hit is not None:
-                balance["outstanding_shares"] = proxy_hit[0]
-                tags_used["outstanding_shares"] = f"proxy:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
-
-        primary_tag, primary_hist = st_debt_histories[0]
-        primary_hit = _balance_at(primary_hist, window_end) if primary_hist is not None else None
-        if primary_hit is not None:
-            balance["short_term_debt"] = primary_hit[0]
-            tags_used["short_term_debt"] = f"{primary_tag}@{primary_hit[1]}"
-        else:
-            parts, part_tags = [], []
-            for tag, history in st_debt_histories[1:]:
-                if history is None:
-                    continue
-                hit = _balance_at(history, window_end)
-                if hit is not None:
-                    parts.append(hit[0])
-                    part_tags.append(tag)
-            balance["short_term_debt"] = sum(parts) if parts else None
-            if parts:
-                tags_used["short_term_debt"] = "+".join(part_tags)
+        balance, balance_tags = _build_balance(
+            window_end,
+            balance_histories,
+            st_debt_histories,
+            liabilities_total_history,
+            shares_proxy_history,
+        )
+        tags_used.update(balance_tags)
 
         periods.append(
             {
@@ -542,17 +980,30 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
             }
         )
 
+    annual_periods = _fetch_annual_periods(
+        ticker,
+        flow_histories,
+        balance_histories,
+        st_debt_histories,
+        liabilities_total_history,
+        shares_proxy_history,
+    )
+
     # Per-filing XBRL fallback for fields companyfacts drops (see constants).
     missing_dna = [
         p for p in periods if p["ttm"]["depreciation_and_amortization"] is None
     ]
     missing_shares = [p for p in periods if p["balance"]["outstanding_shares"] is None]
+    missing_shares_annual = [
+        p for p in annual_periods if p["balance"]["outstanding_shares"] is None
+    ]
     share_count_check = None
-    if missing_dna or missing_shares:
+    cover_rows: list = []
+    if missing_dna or missing_shares or missing_shares_annual:
         dna_facts, cover_rows = _collect_filing_facts(
             company,
             dna_tags=FLOW_TAGS["depreciation_and_amortization"] if missing_dna else [],
-            need_shares=bool(missing_shares),
+            need_shares=bool(missing_shares or missing_shares_annual),
         )
         for p in missing_dna:
             hit = _ttm_from_filing_durations(dna_facts, date.fromisoformat(p["period_end"]))
@@ -560,17 +1011,51 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                 p["ttm"]["depreciation_and_amortization"] = hit[0]
                 p["tags_used"]["depreciation_and_amortization"] = hit[1]
 
-        if missing_shares and cover_rows:
-            reference, reference_source = _fetch_share_reference(ticker)
+        # Opportunistic: the collected filings only reach ~6 years back, but
+        # the direct-annual branch of the stitcher fills whatever they cover.
+        if missing_dna:
+            for p in annual_periods:
+                if p["ttm"]["depreciation_and_amortization"] is not None:
+                    continue
+                hit = _ttm_from_filing_durations(
+                    dna_facts, date.fromisoformat(p["period_end"])
+                )
+                if hit is not None:
+                    p["ttm"]["depreciation_and_amortization"] = hit[0]
+                    p["tags_used"]["depreciation_and_amortization"] = hit[1]
+
+        if (missing_shares or missing_shares_annual) and cover_rows:
+            # Sanity-check the raw multi-class sum against EDGAR's own
+            # weighted-average-basic count (as-converted, so ~1x for sane
+            # sums) — yfinance is retired from this path (#45).
             latest = max(cover_rows, key=lambda r: r[0])
-            ratio = latest[1] / reference
-            if not (1 / SHARES_MISMATCH_FACTOR <= ratio <= SHARES_MISMATCH_FACTOR):
-                raise FetchError(
-                    f"{ticker}: cover-page share sum {latest[1]:.4g} "
-                    f"({latest[2]} classes @ {latest[0]}) is {ratio:.2f}x the "
-                    f"{reference_source} count {reference:.4g} — class "
-                    "conversion or preferred-stock mis-summation; refusing to "
-                    "snapshot a corrupt share count."
+            reference = reference_source = ratio = None
+            if shares_proxy_history is not None:
+                proxy_hit = _duration_at(shares_proxy_history, latest[0])
+                if proxy_hit is not None:
+                    reference = proxy_hit[0]
+                    reference_source = f"edgar:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
+            if reference:
+                ratio = latest[1] / reference
+                if not (1 / SHARES_MISMATCH_FACTOR <= ratio <= SHARES_MISMATCH_FACTOR):
+                    raise FetchError(
+                        f"{ticker}: cover-page share sum {latest[1]:.4g} "
+                        f"({latest[2]} classes @ {latest[0]}) is {ratio:.2f}x the "
+                        f"{reference_source} count {reference:.4g} — class "
+                        "conversion or preferred-stock mis-summation; refusing to "
+                        "snapshot a corrupt share count."
+                    )
+            else:
+                warnings.append(
+                    {
+                        "severity": "WARN",
+                        "code": "share-sum-reference-unavailable",
+                        "message": (
+                            f"{ticker}: no weighted-average share count on "
+                            "EDGAR to sanity-check the multi-class cover-page "
+                            "sum; the 1.4x mismatch guard did not run."
+                        ),
+                    }
                 )
             share_count_check = {
                 "cover_page_sum": latest[1],
@@ -591,7 +1076,9 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                 }
             )
             classes_by_instant = {r[0].isoformat(): r[2] for r in cover_rows}
-            for p in missing_shares:
+            # Annual periods too: collected filings only reach ~6 years back,
+            # so old fiscal years may stay None — validation handles that.
+            for p in missing_shares + missing_shares_annual:
                 hit = _balance_at(cover_history, date.fromisoformat(p["period_end"]))
                 if hit is not None:
                     p["balance"]["outstanding_shares"] = hit[0]
@@ -600,22 +1087,112 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                         f"(sum of {classes_by_instant[hit[1]]} classes)"
                     )
 
-    market_cap, market_cap_source = _fetch_market_cap(ticker)
+    # Market cap (#45): manual override, else Cboe delayed close x freshest
+    # filed EDGAR share count. Cboe miss / stale quote = hard FetchError.
+    price_reference = None
+    market_cap_check = None
+    if manual_cap is not None:
+        market_cap, market_cap_source = manual_cap
+        market_data_source = "manual override (--market-cap)"
+    else:
+        shares, shares_source = _freshest_share_count(
+            ticker,
+            balance_histories["outstanding_shares"],
+            cover_rows,
+            shares_proxy_history,
+            date.fromisoformat(periods[0]["period_end"]),
+        )
+        price, price_field, last_trade_time = _fetch_cboe_close(ticker, today)
+        market_cap = price * shares
+        market_cap_source = (
+            f"derived:cboe.{price_field}@{last_trade_time}x{shares_source}"
+        )
+        market_data_source = "cboe:delayed_quotes (keyless CDN, delayed close)"
+        # Pin the raw price like every other fetched number, so the derived
+        # cap is fully re-derivable and validation (#48) can bound-check it.
+        price_reference = {
+            "source": "cboe:delayed_quotes",
+            "price": price,
+            "price_field": price_field,
+            "last_trade_time": last_trade_time,
+            "shares": shares,
+            "shares_source": shares_source,
+        }
+        market_cap_check = _yfinance_crosscheck(ticker, market_cap, warnings)
+
+    # Filings-text moat sidecar (ticket #49): cited narration evidence, never
+    # a scoring input. Extraction failure must not fail the fetch — it lands
+    # as a WARN finding on the snapshot instead.
+    from .filings_text import extract_filings_text
+
+    filings_sidecar, filings_warnings = extract_filings_text(company, ticker)
 
     import edgar as _edgar_mod
 
     snapshot = {
-        "schema_version": 1,
+        "schema_version": 2,
         "ticker": ticker.upper(),
         "fetched_at": today.isoformat(),
         "market_cap": market_cap,
         "market_cap_source": market_cap_source,
         "source": {
             "fundamentals": f"SEC EDGAR via edgartools {getattr(_edgar_mod, '__version__', 'unknown')}",
-            "market_data": market_cap_source.split(":")[0],
+            "market_data": market_data_source,
         },
         "periods": periods,  # most recent first
+        "annual_periods": annual_periods,  # most recent fiscal year first
     }
+    if price_reference is not None:
+        snapshot["price_reference"] = price_reference
+    if market_cap_check is not None:
+        snapshot["market_cap_check"] = market_cap_check
     if share_count_check is not None:
         snapshot["share_count_check"] = share_count_check
+    if filings_sidecar is not None:
+        # Carries a transient "markdown" key; the CLI pops it, writes the
+        # sidecar file next to the snapshot, and records "path".
+        snapshot["filings_sidecar"] = filings_sidecar
+
+    # Form 4 insider buy-cluster context (ticket #52, per #47): whale-agnostic
+    # unscored section. Fetch failure = WARN in the validation findings, never
+    # a failed fetch; section omitted on failure so "no cluster" stays
+    # distinguishable from "not checked".
+    from .insider import collect_insider_activity
+
+    insider_section, insider_warning = collect_insider_activity(company, today)
+    if insider_section is not None:
+        snapshot["insider_activity"] = insider_section
+
+    # Fetch-only findings from the sidecar (#49), market-cap cross-check (#50)
+    # and Form 4 (#52) paths merge into the validation section (#48); their
+    # codes are registered in validation.FETCH_ONLY_CODES so diagnoses carry
+    # them forward from stored snapshots.
+    extra_findings = list(filings_warnings) + list(warnings)
+    if insider_warning is not None:
+        extra_findings.append(insider_warning)
+    _attach_validation(snapshot, company, today, extra_findings)
     return snapshot
+
+
+def _attach_validation(
+    snapshot: dict, company, today: date, extra_findings: list[dict] | None = None
+) -> None:
+    """Write the snapshot's validation section (ticket #48).
+
+    The pure checks over the snapshot, plus the fetch-only 8-K 4.02
+    restatement guard. INFO findings live here only; diagnose recomputes the
+    pure checks and carries the fetch-only findings forward.
+    """
+    from . import validation
+
+    findings, checks_run = validation.run_checks(snapshot)
+    restatement_findings = _check_restatements(
+        company, snapshot["annual_periods"], today
+    )
+    guard_ran = not any(
+        f["code"] == "restatement_guard_unavailable" for f in restatement_findings
+    )
+    snapshot["validation"] = {
+        "findings": (extra_findings or []) + findings + restatement_findings,
+        "checks_run": checks_run + (["restatement_402"] if guard_ran else []),
+    }

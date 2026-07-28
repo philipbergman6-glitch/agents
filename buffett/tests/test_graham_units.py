@@ -29,15 +29,17 @@ def test_eps_endpoint_growth_is_latest_vs_oldest():
     assert analyze_earnings_stability(shrinking, [])["score"] == 3  # growth point lost
 
 
-def test_eps_share_count_outlier_excluded_and_flagged():
-    """A pre-split cover-page share fact (10x off the median) must be dropped
-    from the EPS series with a flag, not scored as an EPS collapse."""
+def test_eps_share_count_split_jump_renormalized_and_flagged():
+    """A pre-split cover-page share fact (10x off its neighbor) is renormalized
+    onto the current basis with a flag (ticket #48: repair the count, not drop
+    the period), so it is scored as real EPS instead of an EPS collapse."""
     periods = [_period(100.0 - i) for i in range(9)]  # newest first, growing
-    periods.append(_period(100.0, shares=100.0, period_end="2024-07-28"))  # 10x below
+    periods.append(_period(90.0, shares=100.0, period_end="2024-07-28"))  # 10x below
     flags = []
     result = analyze_earnings_stability(periods, flags)
-    assert len(flags) == 1 and "2024-07-28" in flags[0] and "excluded" in flags[0]
-    assert result["score"] == 4  # 9 clean periods: all positive, latest > oldest
+    assert len(flags) == 1 and "2024-07-28" in flags[0] and "renormalized" in flags[0]
+    # All 10 periods scored on the adjusted basis: oldest EPS 90/1000 = 0.09.
+    assert result["score"] == 4  # all positive (+3), latest 0.10 > oldest 0.09 (+1)
 
 
 def test_zero_liabilities_is_data_not_a_gap():

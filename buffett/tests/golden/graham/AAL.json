@@ -1,5 +1,40 @@
 {
-  "confidence": 69,
+  "confidence": 79,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
   "dimensions": {
     "earnings_stability": {
       "details": [
@@ -13,15 +48,15 @@
       "details": [
         "Current ratio 0.53 < 1.5 ✗ (+0)",
         "Debt ratio 1.06 >= 0.80 ✗ (+0)",
-        "Dividends paid in 10/10 reporting periods (majority) ✓ (+1)"
+        "Dividends paid in only 0/10 reporting periods ✗ (+0)"
       ],
       "max": 5,
-      "score": 1
+      "score": 0
     },
     "valuation": {
       "details": [
-        "NCAV $-53,929,000,000 vs market cap $8,976,312,813",
-        "NCAV/share $-81.47 < 2/3 of price/share $13.56 ✗ (+0)",
+        "NCAV $-53,929,000,000 vs market cap $9,582,015,041",
+        "NCAV/share $-81.47 < 2/3 of price/share $14.48 ✗ (+0)",
         "Graham Number not meaningful (EPS -0.49, BVPS -6.00 — needs both > 0) (+0)"
       ],
       "max": 7,
@@ -43,7 +78,7 @@
       "2024-06-30",
       "2024-03-31"
     ],
-    "snapshot_fetched_at": "2026-07-24",
+    "snapshot_fetched_at": "2026-07-27",
     "source": {
       "fundamentals": "SEC EDGAR via edgartools 5.43.0",
       "market_data": "yfinance"
@@ -52,8 +87,8 @@
   "score": {
     "max": 16,
     "max_possible": 16,
-    "pct": 0.1875,
-    "total": 3
+    "pct": 0.125,
+    "total": 2
   },
   "signal": "bearish",
   "ticker": "AAL",
@@ -62,8 +97,8 @@
     "eps": -0.49249424717620943,
     "graham_number": null,
     "margin_of_safety": null,
-    "market_cap": 8976312813.333645,
+    "market_cap": 9582015040.725,
     "ncav": -53929000000.0,
-    "price_per_share": 13.560682274297289
+    "price_per_share": 14.475727864763726
   }
 }

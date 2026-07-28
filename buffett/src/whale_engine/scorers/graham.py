@@ -27,8 +27,13 @@ ticket:
   walks away), detail line only — flags are reserved for missing inputs
 - fixed denominator 16: the hard-fail gate keeps all three dimensions
   scorable, so there is no exclusion/renormalization machinery
-- the Buffett share-count outlier guard (> 3x off median -> split artifact,
-  period excluded + flag) protects the per-period EPS series
+- the shared split-aware share renormalization (ticket #48, replacing the
+  3x-median outlier guard) protects the per-period EPS series: split-shaped
+  jumps rebase older counts onto the current basis, unexplained jumps exclude
+  the older segment with a flag
+- validation layer (ticket #48): shared snapshot checks run first over the
+  quarterly array only (Graham ignores annual_periods by contract); ERROR
+  findings hard-fail, WARN findings ride the output in `data_quality`
 
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
 no clocks, no randomness in this module.
@@ -38,10 +43,10 @@ from __future__ import annotations
 
 import math
 
+from .. import validation
 from ..errors import MissingDataError
 
 MAX_SCORE = 16
-SHARES_OUTLIER_RATIO = 3.0
 
 BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.30
@@ -97,34 +102,47 @@ def _ratio(num, den):
 
 
 def eps_series(periods: list, flags: list) -> list[float]:
-    """Per-period EPS, most-recent-first, with the share-count outlier guard.
+    """Per-period EPS, most-recent-first, on a split-renormalized share basis.
 
     Cover-page share facts lag one quarter, so a split between filings leaves
     one period on the pre-split count — off by the split ratio, not by drift.
-    >3x off the median is a split artifact or a mis-tagged fact, never a real
-    capital change; such periods are excluded from the series with a flag.
+    The shared renormalization (ticket #48) rebases split-shaped jumps onto
+    the current share basis (repairing the lagged period instead of dropping
+    it); jumps no split factor explains exclude the older segment with a flag.
     """
     usable = [
         p
         for p in periods
         if p["ttm"].get("net_income") is not None and p["balance"].get("outstanding_shares")
     ]
-    if usable:
-        counts = sorted(p["balance"]["outstanding_shares"] for p in usable)
-        median = counts[len(counts) // 2]
-        kept = []
-        for p in usable:
-            shares = p["balance"]["outstanding_shares"]
-            if shares > median * SHARES_OUTLIER_RATIO or shares < median / SHARES_OUTLIER_RATIO:
-                flags.append(
-                    f"earnings_stability: {p['period_end']} share count {shares:.4g} is >"
-                    f"{SHARES_OUTLIER_RATIO:g}x off the median {median:.4g} "
-                    "(split artifact or mis-tagged fact), period excluded"
-                )
-            else:
-                kept.append(p)
-        usable = kept
-    return [p["ttm"]["net_income"] / p["balance"]["outstanding_shares"] for p in usable]
+    adjusted, events = validation.renormalize_share_series(
+        [(p["period_end"], p["balance"]["outstanding_shares"]) for p in usable]
+    )
+    for ev in events:
+        if ev["type"] == "repair":
+            flags.append(
+                f"earnings_stability: {ev['period_end']} share count is stale by "
+                f"x{ev['factor']:g} vs its neighbors (cover-page fact lagging a "
+                "split); repaired onto the surrounding basis"
+            )
+        elif ev["type"] == "split":
+            flags.append(
+                f"earnings_stability: share counts at and before "
+                f"{ev['older_period_end']} renormalized onto the current basis "
+                f"(split factor x{ev['factor']:g} at this boundary; observed "
+                f"jump x{ev['observed_ratio']:.3g})"
+            )
+        else:
+            flags.append(
+                f"earnings_stability: share count jumps x{ev['observed_ratio']:.3g} "
+                f"into {ev['newer_period_end']} with no plausible split factor; "
+                f"periods {', '.join(ev['excluded_period_ends'])} excluded"
+            )
+    return [
+        p["ttm"]["net_income"] / adj
+        for p, adj in zip(usable, adjusted)
+        if adj is not None
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -305,6 +323,17 @@ def compute_confidence(score_pct: float, mos: float | None) -> int:
 
 
 def diagnose(snapshot: dict) -> dict:
+    # Validation layer first (quarterly array only: Graham must stay invariant
+    # to annual_periods). ERROR findings hard-fail with a better message than
+    # the generic gap report; WARN findings surface in data_quality.
+    findings, checks_run = validation.run_checks(snapshot, arrays=("periods",))
+    errors = [f for f in findings if f["severity"] == validation.ERROR]
+    if errors:
+        raise MissingDataError(
+            f"{snapshot.get('ticker')}: validation failed -- "
+            + "; ".join(f["message"] for f in errors)
+        )
+
     validate(snapshot)
     periods = snapshot["periods"]
     market_cap = snapshot["market_cap"]
@@ -328,7 +357,7 @@ def diagnose(snapshot: dict) -> dict:
             " vs Graham Number forces bearish — price alone rules the name out"
         )
 
-    return {
+    result = {
         "ticker": snapshot["ticker"],
         "signal": signal,
         "confidence": compute_confidence(score_pct, mos),
@@ -344,6 +373,7 @@ def diagnose(snapshot: dict) -> dict:
             "margin_of_safety": valuation["margin_of_safety"],
         },
         "flags": flags,
+        "data_quality": validation.data_quality(findings, checks_run),
         "provenance": {
             "snapshot_fetched_at": snapshot["fetched_at"],
             "market_cap_source": snapshot["market_cap_source"],
@@ -351,3 +381,9 @@ def diagnose(snapshot: dict) -> dict:
             "periods": [p["period_end"] for p in periods],
         },
     }
+    # Unscored context (ticket #52): the insider_activity snapshot section is
+    # whale-agnostic; pass it through verbatim when present so any whale's
+    # subagent can cite it. Never scored.
+    if "insider_activity" in snapshot:
+        result["insider_activity"] = snapshot["insider_activity"]
+    return result
