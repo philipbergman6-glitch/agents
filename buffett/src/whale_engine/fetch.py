@@ -1,8 +1,18 @@
-"""Networked phase: SEC EDGAR (edgartools) + yfinance -> snapshot JSON.
+"""Networked phase: SEC EDGAR (edgartools) + Cboe delayed quote -> snapshot JSON.
 
 The snapshot is the only artifact `diagnose` ever reads. Everything fetched is
 recorded verbatim with the XBRL tag it came from, so any number in a diagnosis
 can be traced back to a filing.
+
+Market cap (issue #45 decision): derived as Cboe delayed close x the freshest
+*filed* EDGAR dei cover-page share count — never sourced from yfinance. A Cboe
+miss or a stale quote (last trade > QUOTE_STALENESS_DAYS calendar days) is a
+hard FetchError; the only alternative path is the explicit --market-cap manual
+override (provenance "manual:owner-supplied"). yfinance is an optional
+cross-check witness: if importable it contributes a market_cap_check block, if
+not the snapshot carries a WARN entry — it is never load-bearing. The fetched
+price + quote timestamp are pinned in the snapshot (price_reference) like all
+other raw data, so diagnose stays deterministic.
 
 Sign conventions follow the reference implementation (financialdatasets style):
 - capital_expenditure: negative = cash out
@@ -126,6 +136,15 @@ COVER_SHARES_TAG = "EntityCommonStockSharesOutstanding"
 SHARES_MISMATCH_FACTOR = 1.4
 _ANNUAL_DAYS = (350, 380)
 _END_MATCH_DAYS = 5
+
+# --- market cap: Cboe delayed quote (issue #45) ----------------------------
+# First-party keyless CDN endpoint backing Cboe's own quote pages. One JSON
+# GET, ~4 fields used; unknown tickers return HTTP 403.
+CBOE_QUOTE_URL = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{ticker}.json"
+# Last trade older than this many calendar days means halted/delisted/stale
+# feed — hard-fail, never silently use the price.
+QUOTE_STALENESS_DAYS = 5
+MARKET_CAP_MANUAL_SOURCE = "manual:owner-supplied"
 
 
 class FetchError(RuntimeError):
@@ -293,7 +312,81 @@ def _ttm_value(company, tags: list[str], quarter: str):
     return best, best_tag
 
 
-def _fetch_market_cap(ticker: str) -> tuple[float, str]:
+def _cboe_get_json(ticker: str) -> dict:
+    """One keyless GET against the Cboe delayed-quote CDN. Network seam for tests."""
+    import json as _json
+    import urllib.request
+
+    url = CBOE_QUOTE_URL.format(ticker=ticker.upper())
+    req = urllib.request.Request(url, headers={"User-Agent": "whale-engine snapshot fetch"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return _json.loads(resp.read().decode("utf-8"))
+
+
+def _fetch_cboe_close(ticker: str, today: date) -> tuple[float, str, str]:
+    """Cboe delayed close for ticker: (price, price_field, last_trade_time).
+
+    Hard-fails (FetchError) on any miss — unknown ticker (Cboe answers 403),
+    network failure, missing/non-positive price, or a last trade older than
+    QUOTE_STALENESS_DAYS calendar days. No silent fallback; the error names
+    the --market-cap manual override.
+    """
+    try:
+        payload = _cboe_get_json(ticker)
+    except Exception as e:
+        raise FetchError(
+            f"{ticker}: Cboe delayed-quote fetch failed "
+            f"({type(e).__name__}: {e}). Check the ticker symbol, retry, or "
+            "pass --market-cap VALUE to override manually."
+        ) from e
+
+    data = payload.get("data") or {}
+    price, price_field = None, None
+    for field in ("close", "prev_day_close"):
+        value = data.get(field)
+        if value:
+            price, price_field = float(value), field
+            break
+    if price is None or price <= 0:
+        raise FetchError(
+            f"{ticker}: Cboe quote carries no usable close price "
+            f"(close={data.get('close')!r}, prev_day_close={data.get('prev_day_close')!r}). "
+            "Pass --market-cap VALUE to override manually."
+        )
+
+    last_trade = data.get("last_trade_time")
+    try:
+        trade_date = date.fromisoformat(str(last_trade)[:10])
+    except (TypeError, ValueError):
+        raise FetchError(
+            f"{ticker}: Cboe quote has no parseable last_trade_time "
+            f"({last_trade!r}) — cannot verify quote freshness. "
+            "Pass --market-cap VALUE to override manually."
+        ) from None
+    age_days = (today - trade_date).days
+    if age_days > QUOTE_STALENESS_DAYS:
+        raise FetchError(
+            f"{ticker}: Cboe last trade {last_trade} is {age_days} calendar "
+            f"days old (limit {QUOTE_STALENESS_DAYS}) — halted, delisted, or a "
+            "stale feed. Refusing the price; pass --market-cap VALUE to "
+            "override manually."
+        )
+    return price, price_field, str(last_trade)
+
+
+def _manual_market_cap(value) -> tuple[float, str]:
+    """Validate the --market-cap override. Hard-fail on non-positive input."""
+    try:
+        cap = float(value)
+    except (TypeError, ValueError):
+        raise FetchError(f"--market-cap must be a number, got {value!r}") from None
+    if not cap > 0:
+        raise FetchError(f"--market-cap must be positive, got {value!r}")
+    return cap, MARKET_CAP_MANUAL_SOURCE
+
+
+def _yfinance_reference_cap(ticker: str) -> tuple[float, str]:
+    """Optional yfinance witness for the cross-check. Raises if unavailable."""
     import yfinance as yf
 
     t = yf.Ticker(ticker)
@@ -303,16 +396,39 @@ def _fetch_market_cap(ticker: str) -> tuple[float, str]:
             return float(mc), "yfinance:fast_info.market_cap"
     except Exception:
         pass
+    mc = t.info.get("marketCap")
+    if mc:
+        return float(mc), "yfinance:info.marketCap"
+    raise FetchError(f"{ticker}: yfinance returned no market cap")
+
+
+def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dict | None:
+    """Compare the derived cap to yfinance if it happens to work.
+
+    Never load-bearing: any failure appends a WARN entry and returns None.
+    (#48's validation layer consumes market_cap_check when present.)
+    """
     try:
-        mc = t.info.get("marketCap")
-        if mc:
-            return float(mc), "yfinance:info.marketCap"
-    except Exception:
-        pass
-    raise FetchError(
-        f"Could not fetch market cap for {ticker} from yfinance. "
-        "Market cap is a hard-fail input; retry later or check the ticker symbol."
-    )
+        reference, source = _yfinance_reference_cap(ticker)
+    except Exception as e:
+        warnings.append(
+            {
+                "severity": "WARN",
+                "code": "yfinance-crosscheck-unavailable",
+                "message": (
+                    f"{ticker}: optional yfinance market-cap cross-check "
+                    f"unavailable ({type(e).__name__}: {e}); derived market "
+                    "cap stands uncorroborated."
+                ),
+            }
+        )
+        return None
+    return {
+        "derived": derived_cap,
+        "reference": reference,
+        "reference_source": source,
+        "deviation_pct": (derived_cap - reference) / reference * 100.0,
+    }
 
 
 def _to_plain_date(v) -> date | None:
@@ -444,18 +560,68 @@ def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
     return None
 
 
-def _fetch_share_reference(ticker: str) -> tuple[float, str]:
-    """yfinance share count used only to sanity-check cover-page sums."""
-    import yfinance as yf
+def _freshest_instant(history) -> tuple[float, str] | None:
+    """Latest instant fact in a concept history, regardless of period matching.
 
-    info = yf.Ticker(ticker).info
-    for key in ("impliedSharesOutstanding", "sharesOutstanding"):
-        value = info.get(key)
-        if value:
-            return float(value), f"yfinance:info.{key}"
+    Used for market cap, where the freshest *filed* count beats the count
+    matched to the latest fiscal period end (cuts NVDA-style staleness).
+    Restatements: latest filing_date wins the instant.
+    """
+    inst = history[history["period_type"] == "instant"].copy()
+    inst = inst[inst["period_end"].notna()]
+    if inst.empty:
+        return None
+    inst["_end"] = inst["period_end"].map(_to_plain_date)
+    inst = inst[inst["_end"].notna()]
+    if inst.empty:
+        return None
+    best_end = inst["_end"].max()
+    at_end = inst[inst["_end"] == best_end].sort_values("filing_date")
+    row = at_end.iloc[-1]
+    return float(row["numeric_value"]), str(row["period_end"])[:10]
+
+
+def _freshest_share_count(
+    ticker: str,
+    share_histories: list,
+    cover_rows: list,
+    shares_proxy_history,
+    latest_window_end: date,
+) -> tuple[float, str]:
+    """Freshest filed share count for market cap, dei cover page first.
+
+    Order: (1) undimensioned dei EntityCommonStockSharesOutstanding from
+    companyfacts (freshest filed cover page); (2) per-filing multi-class cover
+    sums (V-type filers, where companyfacts drops the dimensioned counts);
+    (3) freshest us-gaap point-in-time count; (4) weighted-average-basic
+    proxy. Hard-fail if none exists — market cap needs a share count.
+    """
+    for tag, history in share_histories:
+        if tag != COVER_SHARES_TAG or history is None:
+            continue
+        hit = _freshest_instant(history)
+        if hit is not None:
+            return hit[0], f"dei:{COVER_SHARES_TAG}@{hit[1]}"
+    if cover_rows:
+        latest = max(cover_rows, key=lambda r: r[0])
+        return (
+            latest[1],
+            f"filing-cover-sum:dei:{COVER_SHARES_TAG}@{latest[0].isoformat()}"
+            f"(sum of {latest[2]} classes)",
+        )
+    for tag, history in share_histories:
+        if tag == COVER_SHARES_TAG or history is None:
+            continue
+        hit = _freshest_instant(history)
+        if hit is not None:
+            return hit[0], f"{tag}@{hit[1]}"
+    if shares_proxy_history is not None:
+        hit = _duration_at(shares_proxy_history, latest_window_end)
+        if hit is not None:
+            return hit[0], f"proxy:{SHARES_PROXY_TAG}@{hit[1]}"
     raise FetchError(
-        f"{ticker}: cover-page share fallback needs a yfinance share count to "
-        "validate against, and yfinance returned none."
+        f"{ticker}: no share count on EDGAR under any known tag — cannot "
+        "derive market cap. Pass --market-cap VALUE to override manually."
     )
 
 
@@ -606,9 +772,18 @@ def _fetch_annual_periods(
     return annual_periods
 
 
-def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
+def fetch_snapshot(
+    ticker: str, today: date | None = None, market_cap_override: float | None = None
+) -> dict:
     """Fetch N_PERIODS historical TTM periods + market cap into a snapshot dict."""
     import edgar
+
+    # Validate the override before any network work: hard-fail on bad input.
+    manual_cap: tuple[float, str] | None = None
+    if market_cap_override is not None:
+        manual_cap = _manual_market_cap(market_cap_override)
+
+    warnings: list[dict] = []
 
     identity = _require_identity()
     edgar.set_identity(identity)
@@ -721,6 +896,7 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
         p for p in annual_periods if p["balance"]["outstanding_shares"] is None
     ]
     share_count_check = None
+    cover_rows: list = []
     if missing_dna or missing_shares or missing_shares_annual:
         dna_facts, cover_rows = _collect_filing_facts(
             company,
@@ -747,16 +923,37 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                     p["tags_used"]["depreciation_and_amortization"] = hit[1]
 
         if (missing_shares or missing_shares_annual) and cover_rows:
-            reference, reference_source = _fetch_share_reference(ticker)
+            # Sanity-check the raw multi-class sum against EDGAR's own
+            # weighted-average-basic count (as-converted, so ~1x for sane
+            # sums) — yfinance is retired from this path (#45).
             latest = max(cover_rows, key=lambda r: r[0])
-            ratio = latest[1] / reference
-            if not (1 / SHARES_MISMATCH_FACTOR <= ratio <= SHARES_MISMATCH_FACTOR):
-                raise FetchError(
-                    f"{ticker}: cover-page share sum {latest[1]:.4g} "
-                    f"({latest[2]} classes @ {latest[0]}) is {ratio:.2f}x the "
-                    f"{reference_source} count {reference:.4g} — class "
-                    "conversion or preferred-stock mis-summation; refusing to "
-                    "snapshot a corrupt share count."
+            reference = reference_source = ratio = None
+            if shares_proxy_history is not None:
+                proxy_hit = _duration_at(shares_proxy_history, latest[0])
+                if proxy_hit is not None:
+                    reference = proxy_hit[0]
+                    reference_source = f"edgar:{SHARES_PROXY_TAG}@{proxy_hit[1]}"
+            if reference:
+                ratio = latest[1] / reference
+                if not (1 / SHARES_MISMATCH_FACTOR <= ratio <= SHARES_MISMATCH_FACTOR):
+                    raise FetchError(
+                        f"{ticker}: cover-page share sum {latest[1]:.4g} "
+                        f"({latest[2]} classes @ {latest[0]}) is {ratio:.2f}x the "
+                        f"{reference_source} count {reference:.4g} — class "
+                        "conversion or preferred-stock mis-summation; refusing to "
+                        "snapshot a corrupt share count."
+                    )
+            else:
+                warnings.append(
+                    {
+                        "severity": "WARN",
+                        "code": "share-sum-reference-unavailable",
+                        "message": (
+                            f"{ticker}: no weighted-average share count on "
+                            "EDGAR to sanity-check the multi-class cover-page "
+                            "sum; the 1.4x mismatch guard did not run."
+                        ),
+                    }
                 )
             share_count_check = {
                 "cover_page_sum": latest[1],
@@ -788,7 +985,38 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
                         f"(sum of {classes_by_instant[hit[1]]} classes)"
                     )
 
-    market_cap, market_cap_source = _fetch_market_cap(ticker)
+    # Market cap (#45): manual override, else Cboe delayed close x freshest
+    # filed EDGAR share count. Cboe miss / stale quote = hard FetchError.
+    price_reference = None
+    market_cap_check = None
+    if manual_cap is not None:
+        market_cap, market_cap_source = manual_cap
+        market_data_source = "manual override (--market-cap)"
+    else:
+        shares, shares_source = _freshest_share_count(
+            ticker,
+            balance_histories["outstanding_shares"],
+            cover_rows,
+            shares_proxy_history,
+            date.fromisoformat(periods[0]["period_end"]),
+        )
+        price, price_field, last_trade_time = _fetch_cboe_close(ticker, today)
+        market_cap = price * shares
+        market_cap_source = (
+            f"derived:cboe.{price_field}@{last_trade_time}x{shares_source}"
+        )
+        market_data_source = "cboe:delayed_quotes (keyless CDN, delayed close)"
+        # Pin the raw price like every other fetched number, so the derived
+        # cap is fully re-derivable and validation (#48) can bound-check it.
+        price_reference = {
+            "source": "cboe:delayed_quotes",
+            "price": price,
+            "price_field": price_field,
+            "last_trade_time": last_trade_time,
+            "shares": shares,
+            "shares_source": shares_source,
+        }
+        market_cap_check = _yfinance_crosscheck(ticker, market_cap, warnings)
 
     import edgar as _edgar_mod
 
@@ -800,11 +1028,19 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
         "market_cap_source": market_cap_source,
         "source": {
             "fundamentals": f"SEC EDGAR via edgartools {getattr(_edgar_mod, '__version__', 'unknown')}",
-            "market_data": market_cap_source.split(":")[0],
+            "market_data": market_data_source,
         },
         "periods": periods,  # most recent first
         "annual_periods": annual_periods,  # most recent fiscal year first
     }
+    if price_reference is not None:
+        snapshot["price_reference"] = price_reference
+    if market_cap_check is not None:
+        snapshot["market_cap_check"] = market_cap_check
     if share_count_check is not None:
         snapshot["share_count_check"] = share_count_check
+    if warnings:
+        # {severity, code, message} entries; #48's validation layer merges into
+        # the same list (bare list, created only when non-empty).
+        snapshot.setdefault("validation", []).extend(warnings)
     return snapshot
