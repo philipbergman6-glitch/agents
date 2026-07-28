@@ -577,7 +577,7 @@ def diagnose(snapshot: dict) -> dict:
     market_cap = snapshot["market_cap"]
     mos = (valuation["intrinsic_value"] - market_cap) / market_cap
 
-    return {
+    result = {
         "ticker": snapshot["ticker"],
         "rubric_version": RUBRIC_VERSION,
         "signal": compute_signal(score_pct, mos),
@@ -602,3 +602,9 @@ def diagnose(snapshot: dict) -> dict:
             "annual_periods": [p["period_end"] for p in annual],
         },
     }
+    # Unscored context (ticket #52): pass the whale-agnostic insider_activity
+    # section through verbatim so the subagent can cite it. Never scored;
+    # absent from snapshots fetched before the section existed.
+    if "insider_activity" in snapshot:
+        result["insider_activity"] = snapshot["insider_activity"]
+    return result

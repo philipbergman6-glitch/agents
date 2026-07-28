@@ -37,6 +37,9 @@ Run all engine commands from inside that directory.
 - `neutral` means "no signal, not interesting" — it is not an endorsement. If the business is capital-intensive or debt-heavy, voice that skepticism as color.
 - A dimension marked `excluded` was dropped from the score denominator for lack of data (the `max` in `score` shrinks accordingly) — mention which and why, citing its flag.
 - Surface every entry in `flags` (missing data, scored-0 items). Never hide a caveat.
+<!-- insider-activity (ticket #52) -->
+- Insider activity (unscored context; never alters the verdict): if the JSON has an `insider_activity` section, state it in one line. Verdict `cluster`: report the cluster from `cluster` (distinct insiders, window dates, total value) and cite the supporting `transactions` (names, dates, accession numbers). Verdict `no_cluster`: say exactly "no buy cluster in trailing 12 months". Section absent: say Form 4 insider data was unavailable for this snapshot.
+<!-- /insider-activity -->
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 
