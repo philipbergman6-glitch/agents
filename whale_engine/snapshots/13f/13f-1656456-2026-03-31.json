@@ -1,0 +1,321 @@
+{
+  "accession_no": "0001656456-26-000002",
+  "cik": 1656456,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "007903107",
+      "issuer": "ADVANCED MICRO DEVICES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 221400,
+      "ticker": "AMD",
+      "value": 45039402
+    },
+    {
+      "cusip": "01609W102",
+      "issuer": "ALIBABA GROUP HLDG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 3465000,
+      "ticker": "BABA",
+      "value": 434718900
+    },
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 1732700,
+      "ticker": "GOOG",
+      "value": 497042322
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4320000,
+      "ticker": "AMZN",
+      "value": 899726400
+    },
+    {
+      "cusip": "056752108",
+      "issuer": "BAIDU INC",
+      "share_classes": [
+        "SPON ADR REP A"
+      ],
+      "shares": 692100,
+      "ticker": "BIDU",
+      "value": 77113782
+    },
+    {
+      "cusip": "058498106",
+      "issuer": "BALL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 837000,
+      "ticker": "BALL",
+      "value": 49475070
+    },
+    {
+      "cusip": "219350105",
+      "issuer": "CORNING INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1129500,
+      "ticker": "GLW",
+      "value": 153578115
+    },
+    {
+      "cusip": "29273V100",
+      "issuer": "ENERGY TRANSFER L P",
+      "share_classes": [
+        "COM UT LTD PTN"
+      ],
+      "shares": 1576125,
+      "ticker": "ET",
+      "value": 30419213
+    },
+    {
+      "cusip": "30303M102",
+      "issuer": "META PLATFORMS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 436500,
+      "ticker": "META",
+      "value": 249734745
+    },
+    {
+      "cusip": "464286772",
+      "issuer": "ISHARES INC",
+      "share_classes": [
+        "MSCI STH KOR ETF"
+      ],
+      "shares": 2400000,
+      "ticker": "EWY",
+      "value": 295224000
+    },
+    {
+      "cusip": "47215P106",
+      "issuer": "JD.COM INC",
+      "share_classes": [
+        "SPON ADS CL A"
+      ],
+      "shares": 1305000,
+      "ticker": "JD",
+      "value": 38588850
+    },
+    {
+      "cusip": "500767306",
+      "issuer": "KRANESHARES TRUST",
+      "share_classes": [
+        "CSI CHI INTERNET"
+      ],
+      "shares": 1080000,
+      "ticker": "KWEB",
+      "value": 30704400
+    },
+    {
+      "cusip": "502431109",
+      "issuer": "L3HARRIS TECHNOLOGIES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 198000,
+      "ticker": "LHX",
+      "value": 68339700
+    },
+    {
+      "cusip": "512807306",
+      "issuer": "LAM RESEARCH CORP",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 382500,
+      "ticker": "LRCX",
+      "value": 81724950
+    },
+    {
+      "cusip": "55087P104",
+      "issuer": "LYFT INC",
+      "share_classes": [
+        "CL A COM"
+      ],
+      "shares": 2700000,
+      "ticker": "LYFT",
+      "value": 35910000
+    },
+    {
+      "cusip": "55336V100",
+      "issuer": "MPLX LP",
+      "share_classes": [
+        "COM UNIT REP LTD"
+      ],
+      "shares": 502460,
+      "ticker": "MPLX",
+      "value": 28675392
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 90000,
+      "ticker": "MSFT",
+      "value": 33315300
+    },
+    {
+      "cusip": "595112103",
+      "issuer": "MICRON TECHNOLOGY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1665000,
+      "ticker": "MU",
+      "value": 562503600
+    },
+    {
+      "cusip": "629377508",
+      "issuer": "NRG ENERGY INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 1734442,
+      "ticker": "NRG",
+      "value": 253471354
+    },
+    {
+      "cusip": "67066G104",
+      "issuer": "NVIDIA CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1471500,
+      "ticker": "NVDA",
+      "value": 256629600
+    },
+    {
+      "cusip": "722304102",
+      "issuer": "PDD HOLDINGS INC",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 900000,
+      "ticker": "PDD",
+      "value": 91962000
+    },
+    {
+      "cusip": "747525103",
+      "issuer": "QUALCOMM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 498613,
+      "ticker": "QCOM",
+      "value": 64211382
+    },
+    {
+      "cusip": "75513E101",
+      "issuer": "RTX CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 342000,
+      "ticker": "RTX",
+      "value": 65971800
+    },
+    {
+      "cusip": "80004C200",
+      "issuer": "SANDISK CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 281250,
+      "ticker": "SNDK",
+      "value": 178689375
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 1327500,
+      "ticker": "TSM",
+      "value": 448628625
+    },
+    {
+      "cusip": "90353T100",
+      "issuer": "UBER TECHNOLOGIES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6332720,
+      "ticker": "UBER",
+      "value": 455512550
+    },
+    {
+      "cusip": "91324P102",
+      "issuer": "UNITEDHEALTH GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 90000,
+      "ticker": "UNH",
+      "value": 24353100
+    },
+    {
+      "cusip": "92840M102",
+      "issuer": "VISTRA CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2022332,
+      "ticker": "VST",
+      "value": 304017170
+    },
+    {
+      "cusip": "963320106",
+      "issuer": "WHIRLPOOL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1950000,
+      "ticker": "WHR",
+      "value": 105144000
+    },
+    {
+      "cusip": "D18190898",
+      "issuer": "DEUTSCHE BK AG",
+      "share_classes": [
+        "NAMEN AKT"
+      ],
+      "shares": 257616,
+      "ticker": "DB",
+      "value": 7671804
+    },
+    {
+      "cusip": "N07059210",
+      "issuer": "ASML HLDG NV",
+      "share_classes": [
+        "N Y REGISTRY SHS"
+      ],
+      "shares": 49500,
+      "ticker": "ASML",
+      "value": 65381085
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

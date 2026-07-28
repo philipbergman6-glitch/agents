@@ -84,6 +84,25 @@ def cmd_diagnose(args) -> int:
     return 0
 
 
+def cmd_fetch_13f(args) -> int:
+    from .holdings import fetch_roster
+
+    out_dir = _snapshots_dir(args.snapshots_dir) / "13f"
+    fetch_roster(out_dir, only=args.only)
+    return 0
+
+
+def cmd_holdings(args) -> int:
+    from .holdings import format_holdings_markdown, scan_holdings
+
+    snapshots_dir = _snapshots_dir(args.snapshots_dir) / "13f"
+    holdings, absent, matched, label = scan_holdings(
+        args.ticker, snapshots_dir, cusip=args.cusip
+    )
+    print(format_holdings_markdown(args.ticker, holdings, absent, matched, label))
+    return 0
+
+
 def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | None = None) -> int:
     parser = argparse.ArgumentParser(prog=prog, description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -107,6 +126,25 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
     if whale is None:
         p_diag.add_argument("--whale", required=True, choices=WHALES, help="scorer to apply")
     p_diag.set_defaults(func=cmd_diagnose, prog=prog, **({} if whale is None else {"whale": whale}))
+
+    p_f13 = sub.add_parser(
+        "fetch-13f",
+        help="fetch latest-two 13F periods for every roster whale (networked)",
+    )
+    p_f13.add_argument("--snapshots-dir")
+    p_f13.add_argument("--only", help="fetch a single roster whale (exact name)")
+    p_f13.set_defaults(func=cmd_fetch_13f, prog=prog)
+
+    p_hold = sub.add_parser(
+        "holdings",
+        help="who on the whale roster holds a ticker, and what they did last quarter "
+        "(offline, from fetch-13f snapshots)",
+    )
+    p_hold.add_argument("ticker", nargs="?", help="ticker (omit only with --cusip)")
+    p_hold.add_argument("--cusip", help="match by CUSIP instead of ticker "
+                        "(for positions EDGAR never resolved to a ticker)")
+    p_hold.add_argument("--snapshots-dir")
+    p_hold.set_defaults(func=cmd_holdings, prog=prog)
 
     args = parser.parse_args(argv)
     try:

@@ -1,0 +1,281 @@
+{
+  "accession_no": "0001172661-26-001535",
+  "cik": 1484150,
+  "filing_date": "2026-04-24",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "00724F101",
+      "issuer": "ADOBE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7000,
+      "ticker": "ADBE",
+      "value": 1701560
+    },
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 1704639,
+      "ticker": "GOOGL",
+      "value": 490185991
+    },
+    {
+      "cusip": "025816109",
+      "issuer": "AMERICAN EXPRESS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9000,
+      "ticker": "AXP",
+      "value": 2722320
+    },
+    {
+      "cusip": "115637100",
+      "issuer": "BROWN FORMAN CORP",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2585222,
+      "ticker": "BFA",
+      "value": 69258097
+    },
+    {
+      "cusip": "115637209",
+      "issuer": "BROWN FORMAN CORP",
+      "share_classes": [
+        "CL B"
+      ],
+      "shares": 1576049,
+      "ticker": "BFB",
+      "value": 41670736
+    },
+    {
+      "cusip": "12572Q105",
+      "issuer": "CME GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6900,
+      "ticker": "CME",
+      "value": 2037915
+    },
+    {
+      "cusip": "13646K108",
+      "issuer": "CANADIAN PACIFIC KANSAS CITY",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 30000,
+      "ticker": "CP",
+      "value": 2359800
+    },
+    {
+      "cusip": "191216100",
+      "issuer": "COCA COLA CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 12000,
+      "ticker": "KO",
+      "value": 912600
+    },
+    {
+      "cusip": "194162103",
+      "issuer": "COLGATE PALMOLIVE CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 10000,
+      "ticker": "CL",
+      "value": 852300
+    },
+    {
+      "cusip": "254687106",
+      "issuer": "DISNEY WALT CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3206407,
+      "ticker": "DIS",
+      "value": 309033507
+    },
+    {
+      "cusip": "278642103",
+      "issuer": "EBAY INC.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1927485,
+      "ticker": "EBAY",
+      "value": 175439685
+    },
+    {
+      "cusip": "294429105",
+      "issuer": "EQUIFAX INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11500,
+      "ticker": "EFX",
+      "value": 2070805
+    },
+    {
+      "cusip": "303250104",
+      "issuer": "FAIR ISAAC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 249422,
+      "ticker": "FICO",
+      "value": 266267962
+    },
+    {
+      "cusip": "461202103",
+      "issuer": "INTUIT",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 733699,
+      "ticker": "INTU",
+      "value": 317236774
+    },
+    {
+      "cusip": "518439104",
+      "issuer": "LAUDER ESTEE COS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 15000,
+      "ticker": "EL",
+      "value": 1076550
+    },
+    {
+      "cusip": "55825T103",
+      "issuer": "MADISON SQUARE GRDN SPRT COR",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2800,
+      "ticker": "MSGS",
+      "value": 899920
+    },
+    {
+      "cusip": "609207105",
+      "issuer": "MONDELEZ INTL INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 3561964,
+      "ticker": "MDLZ",
+      "value": 205311605
+    },
+    {
+      "cusip": "654106103",
+      "issuer": "NIKE INC",
+      "share_classes": [
+        "CL B"
+      ],
+      "shares": 20800,
+      "ticker": "NKE",
+      "value": 1098656
+    },
+    {
+      "cusip": "68389X105",
+      "issuer": "ORACLE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9000,
+      "ticker": "ORCL",
+      "value": 1323990
+    },
+    {
+      "cusip": "70450Y103",
+      "issuer": "PAYPAL HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4179623,
+      "ticker": "PYPL",
+      "value": 189044348
+    },
+    {
+      "cusip": "713448108",
+      "issuer": "PEPSICO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1277185,
+      "ticker": "PEP",
+      "value": 198334059
+    },
+    {
+      "cusip": "78409V104",
+      "issuer": "S&P GLOBAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7300,
+      "ticker": "SPGI",
+      "value": 3104982
+    },
+    {
+      "cusip": "87256C101",
+      "issuer": "TKO GROUP HOLDINGS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2449468,
+      "ticker": "TKO",
+      "value": 493935222
+    },
+    {
+      "cusip": "883556102",
+      "issuer": "THERMO FISHER SCIENTIFIC INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 617211,
+      "ticker": "TMO",
+      "value": 303377723
+    },
+    {
+      "cusip": "92345Y106",
+      "issuer": "VERISK ANALYTICS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 8400,
+      "ticker": "VRSK",
+      "value": 1593900
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 10300,
+      "ticker": "V",
+      "value": 3113072
+    },
+    {
+      "cusip": "G5784H106",
+      "issuer": "MANCHESTER UTD PLC NEW",
+      "share_classes": [
+        "ORD CL A"
+      ],
+      "shares": 3142000,
+      "ticker": "MANU",
+      "value": 52848440
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

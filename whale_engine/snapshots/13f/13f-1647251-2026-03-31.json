@@ -1,0 +1,111 @@
+{
+  "accession_no": "0001647251-26-000004",
+  "cik": 1647251,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 8854019,
+      "ticker": "GOOG",
+      "value": 2539863890
+    },
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 2457000,
+      "ticker": "GOOGL",
+      "value": 706534920
+    },
+    {
+      "cusip": "136375102",
+      "issuer": "CANADIAN NATL RY CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9849934,
+      "ticker": "CNI",
+      "value": 1013208255
+    },
+    {
+      "cusip": "13646K108",
+      "issuer": "CANADIAN PACIFIC KANSAS CITY",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 46521923,
+      "ticker": "CP",
+      "value": 3659637907
+    },
+    {
+      "cusip": "369604301",
+      "issuer": "GE AEROSPACE",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 47510431,
+      "ticker": "GE",
+      "value": 13482035005
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2728412,
+      "ticker": "MSFT",
+      "value": 1009976270
+    },
+    {
+      "cusip": "615369105",
+      "issuer": "MOODYS CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 14334027,
+      "ticker": "MCO",
+      "value": 6253219279
+    },
+    {
+      "cusip": "78409V104",
+      "issuer": "S&P GLOBAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 14035310,
+      "ticker": "SPGI",
+      "value": 5969778755
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 30468133,
+      "ticker": "V",
+      "value": 9208688518
+    },
+    {
+      "cusip": "N3168P101",
+      "issuer": "FERROVIAL SE",
+      "share_classes": [
+        "ORD SHS"
+      ],
+      "shares": 20740214,
+      "ticker": "FER",
+      "value": 1327927999
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

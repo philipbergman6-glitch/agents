@@ -1,0 +1,121 @@
+{
+  "accession_no": "0001172661-26-001091",
+  "cik": 1336528,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 6163871,
+      "ticker": "GOOG",
+      "value": 1934222720
+    },
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 678297,
+      "ticker": "GOOGL",
+      "value": 212306961
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9607824,
+      "ticker": "AMZN",
+      "value": 2217677936
+    },
+    {
+      "cusip": "11271J107",
+      "issuer": "BROOKFIELD CORP",
+      "share_classes": [
+        "CL A LTD VT SH"
+      ],
+      "shares": 61403089,
+      "ticker": "BN",
+      "value": 2817787754
+    },
+    {
+      "cusip": "30303M102",
+      "issuer": "META PLATFORMS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2673569,
+      "ticker": "META",
+      "value": 1764796161
+    },
+    {
+      "cusip": "42806J700",
+      "issuer": "HERTZ GLOBAL HLDGS INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 15241127,
+      "ticker": "HTZ",
+      "value": 78339393
+    },
+    {
+      "cusip": "43300A203",
+      "issuer": "HILTON WORLDWIDE HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3028664,
+      "ticker": "HLT",
+      "value": 869983734
+    },
+    {
+      "cusip": "44267T102",
+      "issuer": "HOWARD HUGHES HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 18852064,
+      "ticker": "HHH",
+      "value": 1503829145
+    },
+    {
+      "cusip": "76131D103",
+      "issuer": "RESTAURANT BRANDS INTL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 22866773,
+      "ticker": "QSR",
+      "value": 1560199922
+    },
+    {
+      "cusip": "812215200",
+      "issuer": "SEAPORT ENTMT GROUP INC",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 5023780,
+      "ticker": "SEG",
+      "value": 99320131
+    },
+    {
+      "cusip": "90353T100",
+      "issuer": "UBER TECHNOLOGIES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 30207734,
+      "ticker": "UBER",
+      "value": 2468273945
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

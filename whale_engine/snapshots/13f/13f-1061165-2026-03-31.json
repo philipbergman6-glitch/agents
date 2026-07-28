@@ -1,0 +1,371 @@
+{
+  "accession_no": "0000919574-26-003439",
+  "cik": 1061165,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 187561,
+      "ticker": "GOOGL",
+      "value": 53935041
+    },
+    {
+      "cusip": "032095101",
+      "issuer": "AMPHENOL CORP",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 223084,
+      "ticker": "APH",
+      "value": 28186663
+    },
+    {
+      "cusip": "03831W108",
+      "issuer": "APPLOVIN CORP",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 1464923,
+      "ticker": "APP",
+      "value": 583039354
+    },
+    {
+      "cusip": "04010E109",
+      "issuer": "ARGAN INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 393134,
+      "ticker": "AGX",
+      "value": 214120433
+    },
+    {
+      "cusip": "09857L108",
+      "issuer": "BOOKING HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2405,
+      "ticker": "BKNG",
+      "value": 10125820
+    },
+    {
+      "cusip": "101137107",
+      "issuer": "BOSTON SCIENTIFIC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 104655,
+      "ticker": "BSX",
+      "value": 6567101
+    },
+    {
+      "cusip": "11271J107",
+      "issuer": "BROOKFIELD CORP",
+      "share_classes": [
+        "CL A LTD VT SH"
+      ],
+      "shares": 11208969,
+      "ticker": "BN",
+      "value": 453626975
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2267056,
+      "ticker": "COF",
+      "value": 413579026
+    },
+    {
+      "cusip": "144285103",
+      "issuer": "CARPENTER TECHNOLOGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1817940,
+      "ticker": "CRS",
+      "value": 716541051
+    },
+    {
+      "cusip": "146869102",
+      "issuer": "CARVANA CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1754709,
+      "ticker": "CVNA",
+      "value": 551645415
+    },
+    {
+      "cusip": "171779309",
+      "issuer": "CIENA CORP",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 809522,
+      "ticker": "CIEN",
+      "value": 314280726
+    },
+    {
+      "cusip": "184496107",
+      "issuer": "CLEAN HARBORS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1754950,
+      "ticker": "CLH",
+      "value": 503196814
+    },
+    {
+      "cusip": "219350105",
+      "issuer": "CORNING INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3718147,
+      "ticker": "GLW",
+      "value": 505556448
+    },
+    {
+      "cusip": "29362U104",
+      "issuer": "ENTEGRIS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3115054,
+      "ticker": "ENTG",
+      "value": 365208931
+    },
+    {
+      "cusip": "43300A203",
+      "issuer": "HILTON WORLDWIDE HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 89249,
+      "ticker": "HLT",
+      "value": 27138836
+    },
+    {
+      "cusip": "44812J104",
+      "issuer": "HUT 8 CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6078951,
+      "ticker": "HUT",
+      "value": 285163591
+    },
+    {
+      "cusip": "48251W104",
+      "issuer": "KKR & CO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 179308,
+      "ticker": "KKR",
+      "value": 16585990
+    },
+    {
+      "cusip": "50212V100",
+      "issuer": "LPL FINL HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2049967,
+      "ticker": "LPLA",
+      "value": 616691573
+    },
+    {
+      "cusip": "576323109",
+      "issuer": "MASTEC INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1531050,
+      "ticker": "MTZ",
+      "value": 492600027
+    },
+    {
+      "cusip": "57636Q104",
+      "issuer": "MASTERCARD INCORPORATED",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 57201,
+      "ticker": "MA",
+      "value": 28581052
+    },
+    {
+      "cusip": "58155Q103",
+      "issuer": "MCKESSON CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 392224,
+      "ticker": "MCK",
+      "value": 339414961
+    },
+    {
+      "cusip": "58507V107",
+      "issuer": "MEDLINE INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 11789156,
+      "ticker": "MDLN",
+      "value": 524617442
+    },
+    {
+      "cusip": "71377A103",
+      "issuer": "PERFORMANCE FOOD GROUP CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3978158,
+      "ticker": "PFGC",
+      "value": 340769014
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 1389530,
+      "ticker": "TSM",
+      "value": 469591664
+    },
+    {
+      "cusip": "87422Q109",
+      "issuer": "TALEN ENERGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1817947,
+      "ticker": "TLN",
+      "value": 580343221
+    },
+    {
+      "cusip": "88033G407",
+      "issuer": "TENET HEALTHCARE CORP",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 2258717,
+      "ticker": "THC",
+      "value": 426242485
+    },
+    {
+      "cusip": "880770102",
+      "issuer": "TERADYNE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1872876,
+      "ticker": "TER",
+      "value": 555232819
+    },
+    {
+      "cusip": "88080T104",
+      "issuer": "TERAWULF INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19921430,
+      "ticker": "WULF",
+      "value": 287466235
+    },
+    {
+      "cusip": "893641100",
+      "issuer": "TRANSDIGM GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 35677,
+      "ticker": "TDG",
+      "value": 41348216
+    },
+    {
+      "cusip": "912008109",
+      "issuer": "US FOODS HLDG CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3795998,
+      "ticker": "USFD",
+      "value": 350028976
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 92775,
+      "ticker": "V",
+      "value": 28040316
+    },
+    {
+      "cusip": "92840M102",
+      "issuer": "VISTRA CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6187585,
+      "ticker": "VST",
+      "value": 930179653
+    },
+    {
+      "cusip": "929160109",
+      "issuer": "VULCAN MATLS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 144179,
+      "ticker": "VMC",
+      "value": 39259942
+    },
+    {
+      "cusip": "G6683N103",
+      "issuer": "NU HLDGS LTD",
+      "share_classes": [
+        "ORD SHS CL A"
+      ],
+      "shares": 38011225,
+      "ticker": "NU",
+      "value": 546221303
+    },
+    {
+      "cusip": "L8681T102",
+      "issuer": "SPOTIFY TECHNOLOGY S A",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 68844,
+      "ticker": "SPOT",
+      "value": 33383144
+    },
+    {
+      "cusip": "N07059210",
+      "issuer": "ASML HLDG NV",
+      "share_classes": [
+        "N Y REGISTRY SHS"
+      ],
+      "shares": 655148,
+      "ticker": "ASML",
+      "value": 865339133
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

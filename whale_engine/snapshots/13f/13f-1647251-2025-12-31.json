@@ -1,0 +1,101 @@
+{
+  "accession_no": "0001647251-26-000002",
+  "cik": 1647251,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 7596819,
+      "ticker": "GOOG",
+      "value": 2383881802
+    },
+    {
+      "cusip": "136375102",
+      "issuer": "CANADIAN NATL RY CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9849934,
+      "ticker": "CNI",
+      "value": 974114657
+    },
+    {
+      "cusip": "13646K108",
+      "issuer": "CANADIAN PACIFIC KANSAS CITY",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 47654423,
+      "ticker": "CP",
+      "value": 3508630329
+    },
+    {
+      "cusip": "369604301",
+      "issuer": "GE AEROSPACE",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 47510431,
+      "ticker": "GE",
+      "value": 14634638061
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 16781953,
+      "ticker": "MSFT",
+      "value": 8116088110
+    },
+    {
+      "cusip": "615369105",
+      "issuer": "MOODYS CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 13308479,
+      "ticker": "MCO",
+      "value": 6798636497
+    },
+    {
+      "cusip": "78409V104",
+      "issuer": "S&P GLOBAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11790310,
+      "ticker": "SPGI",
+      "value": 6161498103
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 27724233,
+      "ticker": "V",
+      "value": 9723165755
+    },
+    {
+      "cusip": "N3168P101",
+      "issuer": "FERROVIAL SE",
+      "share_classes": [
+        "ORD SHS"
+      ],
+      "shares": 20740214,
+      "ticker": "FER",
+      "value": 1348162940
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}
