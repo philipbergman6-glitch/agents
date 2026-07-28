@@ -1,0 +1,451 @@
+{
+  "accession_no": "0001040273-26-000001",
+  "cik": 1040273,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "00187Y100",
+      "issuer": "API GROUP CORP",
+      "share_classes": [
+        "COM STK"
+      ],
+      "shares": 3000000,
+      "ticker": "APG",
+      "value": 114780000
+    },
+    {
+      "cusip": "01609W102",
+      "issuer": "ALIBABA GROUP HLDG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 825000,
+      "ticker": "BABA",
+      "value": 120928500
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2165000,
+      "ticker": "AMZN",
+      "value": 499725300
+    },
+    {
+      "cusip": "051774107",
+      "issuer": "AURORA INNOVATION INC",
+      "share_classes": [
+        "CLASS A COM"
+      ],
+      "shares": 1032463,
+      "ticker": "AUR",
+      "value": 3964658
+    },
+    {
+      "cusip": "051774115",
+      "issuer": "AURORA INNOVATION INC",
+      "share_classes": [
+        "*W EXP 11/03/202"
+      ],
+      "shares": 1835000,
+      "ticker": "AUROW",
+      "value": 413059
+    },
+    {
+      "cusip": "071734107",
+      "issuer": "BAUSCH HEALTH COS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 350000,
+      "ticker": "BHC",
+      "value": 2432500
+    },
+    {
+      "cusip": "092667104",
+      "issuer": "STRATA CRITICAL MEDICAL INC",
+      "share_classes": [
+        "CL A COM"
+      ],
+      "shares": 5000000,
+      "ticker": "SRTA",
+      "value": 24050000
+    },
+    {
+      "cusip": "11271J107",
+      "issuer": "BROOKFIELD CORP",
+      "share_classes": [
+        "CL A LTD VT SH"
+      ],
+      "shares": 6200000,
+      "ticker": "BN",
+      "value": 284518000
+    },
+    {
+      "cusip": "126408103",
+      "issuer": "CSX CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 500000,
+      "ticker": "CSX",
+      "value": 18125000
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1100000,
+      "ticker": "COF",
+      "value": 266596000
+    },
+    {
+      "cusip": "144285103",
+      "issuer": "CARPENTER TECHNOLOGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 785000,
+      "ticker": "CRS",
+      "value": 247149400
+    },
+    {
+      "cusip": "147528103",
+      "issuer": "CASEYS GEN STORES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 455000,
+      "ticker": "CASY",
+      "value": 251483050
+    },
+    {
+      "cusip": "169656105",
+      "issuer": "CHIPOTLE MEXICAN GRILL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4725000,
+      "ticker": "CMG",
+      "value": 174825000
+    },
+    {
+      "cusip": "199908104",
+      "issuer": "COMFORT SYS USA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 105000,
+      "ticker": "FIX",
+      "value": 97995450
+    },
+    {
+      "cusip": "21037T109",
+      "issuer": "CONSTELLATION ENERGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 475000,
+      "ticker": "CEG",
+      "value": 167803250
+    },
+    {
+      "cusip": "22160N109",
+      "issuer": "COSTAR GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3165000,
+      "ticker": "CSGP",
+      "value": 212814600
+    },
+    {
+      "cusip": "235851102",
+      "issuer": "DANAHER CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 600000,
+      "ticker": "DHR",
+      "value": 137352000
+    },
+    {
+      "cusip": "343928107",
+      "issuer": "FLYEXCLUSIVE INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 1022000,
+      "ticker": "FLYX",
+      "value": 4200420
+    },
+    {
+      "cusip": "343928115",
+      "issuer": "FLYEXCLUSIVE INC",
+      "share_classes": [
+        "*W EXP 99/99/999"
+      ],
+      "shares": 367499,
+      "ticker": "FLYXWS",
+      "value": 104664
+    },
+    {
+      "cusip": "42806J148",
+      "issuer": "HERTZ GLOBAL HLDGS INC",
+      "share_classes": [
+        "*W EXP 06/30/205"
+      ],
+      "shares": 3970000,
+      "ticker": "HTZWW",
+      "value": 10639600
+    },
+    {
+      "cusip": "49177J102",
+      "issuer": "KENVUE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3250000,
+      "ticker": "KVUE",
+      "value": 56062500
+    },
+    {
+      "cusip": "50212V100",
+      "issuer": "LPL FINL HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 510000,
+      "ticker": "LPLA",
+      "value": 182156700
+    },
+    {
+      "cusip": "538034109",
+      "issuer": "LIVE NATION ENTERTAINMENT IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1725000,
+      "ticker": "LYV",
+      "value": 245812500
+    },
+    {
+      "cusip": "576323109",
+      "issuer": "MASTEC INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 925000,
+      "ticker": "MTZ",
+      "value": 201067250
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 925000,
+      "ticker": "MSFT",
+      "value": 447348500
+    },
+    {
+      "cusip": "62548M209",
+      "issuer": "CLARITEV CORPORATION",
+      "share_classes": [
+        "CL A NEW"
+      ],
+      "shares": 145000,
+      "ticker": "CTEV",
+      "value": 6198750
+    },
+    {
+      "cusip": "655844108",
+      "issuer": "NORFOLK SOUTHN CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 975000,
+      "ticker": "NSC",
+      "value": 281502000
+    },
+    {
+      "cusip": "67066G104",
+      "issuer": "NVIDIA CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2950000,
+      "ticker": "NVDA",
+      "value": 550175000
+    },
+    {
+      "cusip": "69331C108",
+      "issuer": "PG&E CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 34300000,
+      "ticker": "PCG",
+      "value": 551201000
+    },
+    {
+      "cusip": "69331C306",
+      "issuer": "PG&E CORP",
+      "share_classes": [
+        "PFD CONV SER A"
+      ],
+      "shares": 140000,
+      "ticker": "PCGPRX",
+      "value": 5740000
+    },
+    {
+      "cusip": "69331CAL2",
+      "issuer": "PG&E CORP",
+      "share_classes": [
+        "NOTE 4.250%12/0"
+      ],
+      "shares": 10000000,
+      "ticker": "nan",
+      "value": 10283406
+    },
+    {
+      "cusip": "743315103",
+      "issuer": "PROGRESSIVE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 220000,
+      "ticker": "PGR",
+      "value": 50098400
+    },
+    {
+      "cusip": "77311W101",
+      "issuer": "ROCKET COS INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 9515000,
+      "ticker": "RKT",
+      "value": 184210400
+    },
+    {
+      "cusip": "82835W108",
+      "issuer": "ARS PHARMACEUTICALS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 556237,
+      "ticker": "SPRY",
+      "value": 6480161
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MFG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 425000,
+      "ticker": "TSM",
+      "value": 129153250
+    },
+    {
+      "cusip": "879433829",
+      "issuer": "TELEPHONE & DATA SYS INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 6675000,
+      "ticker": "TDS",
+      "value": 273675000
+    },
+    {
+      "cusip": "88023U101",
+      "issuer": "SOMNIGROUP INTERNATIONAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3400000,
+      "ticker": "SGI",
+      "value": 303552000
+    },
+    {
+      "cusip": "883556102",
+      "issuer": "THERMO FISHER SCIENTIFIC INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 50000,
+      "ticker": "TMO",
+      "value": 28972500
+    },
+    {
+      "cusip": "907818108",
+      "issuer": "UNION PAC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1810000,
+      "ticker": "UNP",
+      "value": 418689200
+    },
+    {
+      "cusip": "92840M102",
+      "issuer": "VISTRA CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1005000,
+      "ticker": "VST",
+      "value": 162136650
+    },
+    {
+      "cusip": "G25508105",
+      "issuer": "CRH PLC",
+      "share_classes": [
+        "ORD"
+      ],
+      "shares": 2600000,
+      "ticker": "CRH",
+      "value": 324480000
+    },
+    {
+      "cusip": "G8068L108",
+      "issuer": "SHARKNINJA INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 1200000,
+      "ticker": "SN",
+      "value": 134280000
+    },
+    {
+      "cusip": "L8681T102",
+      "issuer": "SPOTIFY TECHNOLOGY S A",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 100000,
+      "ticker": "SPOT",
+      "value": 58071000
+    },
+    {
+      "cusip": "M98068105",
+      "issuer": "WIX COM LTD",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 225000,
+      "ticker": "WIX",
+      "value": 23375250
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

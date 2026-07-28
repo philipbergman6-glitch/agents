@@ -1,0 +1,431 @@
+{
+  "accession_no": "0001193125-26-054580",
+  "cik": 1067983,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02005N100",
+      "issuer": "ALLY FINL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 29000000,
+      "ticker": "ALLY",
+      "value": 1313410001
+    },
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 17846142,
+      "ticker": "GOOGL",
+      "value": 5585842446
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2276000,
+      "ticker": "AMZN",
+      "value": 525346320
+    },
+    {
+      "cusip": "025816109",
+      "issuer": "AMERICAN EXPRESS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 151610700,
+      "ticker": "AXP",
+      "value": 56088378465
+    },
+    {
+      "cusip": "037833100",
+      "issuer": "APPLE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 227917808,
+      "ticker": "AAPL",
+      "value": 61961735283
+    },
+    {
+      "cusip": "047726302",
+      "issuer": "ATLANTA BRAVES HLDGS INC",
+      "share_classes": [
+        "COM SER C"
+      ],
+      "shares": 115428,
+      "ticker": "BATRK",
+      "value": 4553634
+    },
+    {
+      "cusip": "060505104",
+      "issuer": "BANK AMERICA CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 517295934,
+      "ticker": "BAC",
+      "value": 28451276370
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7150000,
+      "ticker": "COF",
+      "value": 1732874000
+    },
+    {
+      "cusip": "16119P108",
+      "issuer": "CHARTER COMMUNICATIONS INC N",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1060882,
+      "ticker": "CHTR",
+      "value": 221459118
+    },
+    {
+      "cusip": "166764100",
+      "issuer": "CHEVRON CORP NEW",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 130156362,
+      "ticker": "CVX",
+      "value": 19837131131
+    },
+    {
+      "cusip": "191216100",
+      "issuer": "COCA COLA CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 400000000,
+      "ticker": "KO",
+      "value": 27964000000
+    },
+    {
+      "cusip": "21036P108",
+      "issuer": "CONSTELLATION BRANDS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 13000000,
+      "ticker": "STZ",
+      "value": 1793480000
+    },
+    {
+      "cusip": "23918K108",
+      "issuer": "DAVITA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 31759065,
+      "ticker": "DVA",
+      "value": 3608147375
+    },
+    {
+      "cusip": "25243Q205",
+      "issuer": "DIAGEO PLC",
+      "share_classes": [
+        "SPON ADR NEW"
+      ],
+      "shares": 227750,
+      "ticker": "DEO",
+      "value": 19647993
+    },
+    {
+      "cusip": "25754A201",
+      "issuer": "DOMINOS PIZZA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3350000,
+      "ticker": "DPZ",
+      "value": 1396347000
+    },
+    {
+      "cusip": "422806208",
+      "issuer": "HEICO CORP NEW",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1294612,
+      "ticker": "HEIA",
+      "value": 326798907
+    },
+    {
+      "cusip": "47233W109",
+      "issuer": "JEFFERIES FINL GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 433558,
+      "ticker": "JEF",
+      "value": 26867589
+    },
+    {
+      "cusip": "500754106",
+      "issuer": "KRAFT HEINZ CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 325634818,
+      "ticker": "KHC",
+      "value": 7896644337
+    },
+    {
+      "cusip": "501044101",
+      "issuer": "KROGER CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 50000000,
+      "ticker": "KR",
+      "value": 3124000000
+    },
+    {
+      "cusip": "512816109",
+      "issuer": "LAMAR ADVERTISING CO NEW",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1202410,
+      "ticker": "LAMR",
+      "value": 152201058
+    },
+    {
+      "cusip": "526057104",
+      "issuer": "LENNAR CORP",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 7050950,
+      "ticker": "LEN",
+      "value": 724837660
+    },
+    {
+      "cusip": "526057302",
+      "issuer": "LENNAR CORP",
+      "share_classes": [
+        "CL B"
+      ],
+      "shares": 180980,
+      "ticker": "LENB",
+      "value": 17214818
+    },
+    {
+      "cusip": "530909100",
+      "issuer": "LIBERTY LIVE HOLDINGS INC",
+      "share_classes": [
+        "COM SER A"
+      ],
+      "shares": 4986588,
+      "ticker": "LLYVA",
+      "value": 406406923
+    },
+    {
+      "cusip": "530909308",
+      "issuer": "LIBERTY LIVE HOLDINGS INC",
+      "share_classes": [
+        "COM SHS SER C"
+      ],
+      "shares": 10917661,
+      "ticker": "LLYVK",
+      "value": 907912688
+    },
+    {
+      "cusip": "531229755",
+      "issuer": "LIBERTY MEDIA CORP DEL",
+      "share_classes": [
+        "COM LBTY ONE S C"
+      ],
+      "shares": 3018555,
+      "ticker": "FWONK",
+      "value": 297357853
+    },
+    {
+      "cusip": "546347105",
+      "issuer": "LOUISIANA PAC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5664793,
+      "ticker": "LPX",
+      "value": 457488683
+    },
+    {
+      "cusip": "57636Q104",
+      "issuer": "MASTERCARD INCORPORATED",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 3986648,
+      "ticker": "MA",
+      "value": 2275897610
+    },
+    {
+      "cusip": "615369105",
+      "issuer": "MOODYS CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 24669778,
+      "ticker": "MCO",
+      "value": 12602556092
+    },
+    {
+      "cusip": "62944T105",
+      "issuer": "NVR INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11112,
+      "ticker": "NVR",
+      "value": 81037260
+    },
+    {
+      "cusip": "650111107",
+      "issuer": "NEW YORK TIMES CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 5065744,
+      "ticker": "NYT",
+      "value": 351663948
+    },
+    {
+      "cusip": "670346105",
+      "issuer": "NUCOR CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6407749,
+      "ticker": "NUE",
+      "value": 1045167939
+    },
+    {
+      "cusip": "674599105",
+      "issuer": "OCCIDENTAL PETE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 264941431,
+      "ticker": "OXY",
+      "value": 10894391643
+    },
+    {
+      "cusip": "73278L105",
+      "issuer": "POOL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3068885,
+      "ticker": "POOL",
+      "value": 702007444
+    },
+    {
+      "cusip": "829933100",
+      "issuer": "SIRIUS XM HOLDINGS INC",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 124807117,
+      "ticker": "SIRI",
+      "value": 2495518305
+    },
+    {
+      "cusip": "91324P102",
+      "issuer": "UNITEDHEALTH GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5039564,
+      "ticker": "UNH",
+      "value": 1663610472
+    },
+    {
+      "cusip": "92343E102",
+      "issuer": "VERISIGN INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 8989880,
+      "ticker": "VRSN",
+      "value": 2184091346
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 8297460,
+      "ticker": "V",
+      "value": 2910002197
+    },
+    {
+      "cusip": "G0176J109",
+      "issuer": "ALLEGION PLC",
+      "share_classes": [
+        "ORD SHS"
+      ],
+      "shares": 780133,
+      "ticker": "ALLE",
+      "value": 124212776
+    },
+    {
+      "cusip": "G0403H108",
+      "issuer": "AON PLC",
+      "share_classes": [
+        "SHS CL A"
+      ],
+      "shares": 3602995,
+      "ticker": "AON",
+      "value": 1271424876
+    },
+    {
+      "cusip": "G9001E102",
+      "issuer": "LIBERTY LATIN AMERICA LTD",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 2396665,
+      "ticker": "LILA",
+      "value": 17711354
+    },
+    {
+      "cusip": "G9001E128",
+      "issuer": "LIBERTY LATIN AMERICA LTD",
+      "share_classes": [
+        "COM CL C"
+      ],
+      "shares": 1284020,
+      "ticker": "LILAK",
+      "value": 9578789
+    },
+    {
+      "cusip": "H1467J104",
+      "issuer": "CHUBB LIMITED",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 34249183,
+      "ticker": "CB",
+      "value": 10689854998
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

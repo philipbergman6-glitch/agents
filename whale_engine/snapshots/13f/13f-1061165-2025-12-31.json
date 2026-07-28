@@ -1,0 +1,331 @@
+{
+  "accession_no": "0000902664-26-001084",
+  "cik": 1061165,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "00827B106",
+      "issuer": "AFFIRM HLDGS INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 3817170,
+      "ticker": "AFRM",
+      "value": 284111963
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2414520,
+      "ticker": "AMZN",
+      "value": 557319506
+    },
+    {
+      "cusip": "032095101",
+      "issuer": "AMPHENOL CORP NEW",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2809773,
+      "ticker": "APH",
+      "value": 379712723
+    },
+    {
+      "cusip": "03831W108",
+      "issuer": "APPLOVIN CORP",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 780530,
+      "ticker": "APP",
+      "value": 525936725
+    },
+    {
+      "cusip": "09857L108",
+      "issuer": "BOOKING HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4630,
+      "ticker": "BKNG",
+      "value": 24795178
+    },
+    {
+      "cusip": "101137107",
+      "issuer": "BOSTON SCIENTIFIC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 201703,
+      "ticker": "BSX",
+      "value": 19232381
+    },
+    {
+      "cusip": "11135F101",
+      "issuer": "BROADCOM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1730216,
+      "ticker": "AVGO",
+      "value": 598827758
+    },
+    {
+      "cusip": "11271J107",
+      "issuer": "BROOKFIELD CORP",
+      "share_classes": [
+        "CL A LTD VT SH"
+      ],
+      "shares": 15923360,
+      "ticker": "BN",
+      "value": 730722990
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2294891,
+      "ticker": "COF",
+      "value": 556189783
+    },
+    {
+      "cusip": "144285103",
+      "issuer": "CARPENTER TECHNOLOGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1312938,
+      "ticker": "CRS",
+      "value": 413365400
+    },
+    {
+      "cusip": "146869102",
+      "issuer": "CARVANA CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1779328,
+      "ticker": "CVNA",
+      "value": 750912003
+    },
+    {
+      "cusip": "184496107",
+      "issuer": "CLEAN HARBORS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1378125,
+      "ticker": "CLH",
+      "value": 323142750
+    },
+    {
+      "cusip": "25809K105",
+      "issuer": "DOORDASH INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2529879,
+      "ticker": "DASH",
+      "value": 572966996
+    },
+    {
+      "cusip": "29362U104",
+      "issuer": "ENTEGRIS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3054230,
+      "ticker": "ENTG",
+      "value": 257318878
+    },
+    {
+      "cusip": "43300A203",
+      "issuer": "HILTON WORLDWIDE HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 57817,
+      "ticker": "HLT",
+      "value": 16607933
+    },
+    {
+      "cusip": "48251W104",
+      "issuer": "KKR & CO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5001085,
+      "ticker": "KKR",
+      "value": 637538316
+    },
+    {
+      "cusip": "50212V100",
+      "issuer": "LPL FINL HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2074948,
+      "ticker": "LPLA",
+      "value": 741109177
+    },
+    {
+      "cusip": "57636Q104",
+      "issuer": "MASTERCARD INCORPORATED",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 96338,
+      "ticker": "MA",
+      "value": 54997437
+    },
+    {
+      "cusip": "58507V107",
+      "issuer": "MEDLINE INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 11716697,
+      "ticker": "MDLN",
+      "value": 492101274
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1234125,
+      "ticker": "MSFT",
+      "value": 596847533
+    },
+    {
+      "cusip": "718172109",
+      "issuer": "PHILIP MORRIS INTL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2643579,
+      "ticker": "PM",
+      "value": 424030072
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MFG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 3052400,
+      "ticker": "TSM",
+      "value": 927593836
+    },
+    {
+      "cusip": "87422Q109",
+      "issuer": "TALEN ENERGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1292516,
+      "ticker": "TLN",
+      "value": 484486697
+    },
+    {
+      "cusip": "88033G407",
+      "issuer": "TENET HEALTHCARE CORP",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 1787326,
+      "ticker": "THC",
+      "value": 355177423
+    },
+    {
+      "cusip": "893641100",
+      "issuer": "TRANSDIGM GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19228,
+      "ticker": "TDG",
+      "value": 25570356
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 15217,
+      "ticker": "V",
+      "value": 5336754
+    },
+    {
+      "cusip": "92840M102",
+      "issuer": "VISTRA CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5211885,
+      "ticker": "VST",
+      "value": 840833407
+    },
+    {
+      "cusip": "929160109",
+      "issuer": "VULCAN MATLS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1683932,
+      "ticker": "VMC",
+      "value": 480291085
+    },
+    {
+      "cusip": "974155103",
+      "issuer": "WINGSTOP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1595258,
+      "ticker": "WING",
+      "value": 380453080
+    },
+    {
+      "cusip": "G6683N103",
+      "issuer": "NU HLDGS LTD",
+      "share_classes": [
+        "ORD SHS CL A"
+      ],
+      "shares": 29630237,
+      "ticker": "NU",
+      "value": 496010167
+    },
+    {
+      "cusip": "L8681T102",
+      "issuer": "SPOTIFY TECHNOLOGY S A",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 17762,
+      "ticker": "SPOT",
+      "value": 10314571
+    },
+    {
+      "cusip": "N07059210",
+      "issuer": "ASML HOLDING N V",
+      "share_classes": [
+        "N Y REGISTRY SHS"
+      ],
+      "shares": 605017,
+      "ticker": "ASML",
+      "value": 647283488
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

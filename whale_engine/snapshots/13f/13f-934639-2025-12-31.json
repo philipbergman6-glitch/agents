@@ -1,0 +1,1791 @@
+{
+  "accession_no": "0000947871-26-000150",
+  "cik": 934639,
+  "filing_date": "2026-02-13",
+  "form": "13F-HR",
+  "option_rows": 1,
+  "positions": [
+    {
+      "cusip": "002896207",
+      "issuer": "ABERCROMBIE & FITCH CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 19463,
+      "ticker": "ANF",
+      "value": 2449808
+    },
+    {
+      "cusip": "00402L107",
+      "issuer": "ACADEMY SPORTS & OUTDOORS IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 89106,
+      "ticker": "ASO",
+      "value": 4451736
+    },
+    {
+      "cusip": "00404A109",
+      "issuer": "ACADIA HEALTHCARE COMPANY IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 905419,
+      "ticker": "ACHC",
+      "value": 12847896
+    },
+    {
+      "cusip": "00534A102",
+      "issuer": "INVIVYD INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 18970913,
+      "ticker": "IVVD",
+      "value": 46858155
+    },
+    {
+      "cusip": "00724F101",
+      "issuer": "ADOBE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 14103,
+      "ticker": "ADBE",
+      "value": 4935909
+    },
+    {
+      "cusip": "00827B106",
+      "issuer": "AFFIRM HLDGS INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 66024,
+      "ticker": "AFRM",
+      "value": 4914166
+    },
+    {
+      "cusip": "009066101",
+      "issuer": "AIRBNB INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 8531,
+      "ticker": "ABNB",
+      "value": 1157827
+    },
+    {
+      "cusip": "011659109",
+      "issuer": "ALASKA AIR GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 44862,
+      "ticker": "ALK",
+      "value": 2256559
+    },
+    {
+      "cusip": "020002101",
+      "issuer": "ALLSTATE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 23798,
+      "ticker": "ALL",
+      "value": 4953554
+    },
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 1141503,
+      "ticker": "GOOG",
+      "value": 358203641
+    },
+    {
+      "cusip": "02209S103",
+      "issuer": "ALTRIA GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 15423,
+      "ticker": "MO",
+      "value": 889290
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2382650,
+      "ticker": "AMZN",
+      "value": 549963273
+    },
+    {
+      "cusip": "023193105",
+      "issuer": "AMBIQ MICRO INC",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 59248,
+      "ticker": "AMBQ",
+      "value": 1688568
+    },
+    {
+      "cusip": "02376R102",
+      "issuer": "AMERICAN AIRLS GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 164825,
+      "ticker": "AAL",
+      "value": 2526767
+    },
+    {
+      "cusip": "02553E106",
+      "issuer": "AMERICAN EAGLE OUTFITTERS IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 94930,
+      "ticker": "AEO",
+      "value": 2503304
+    },
+    {
+      "cusip": "03524A108",
+      "issuer": "ANHEUSER BUSCH INBEV SA/NV",
+      "share_classes": [
+        "SPONSORED ADR"
+      ],
+      "shares": 35898,
+      "ticker": "BUD",
+      "value": 2298908
+    },
+    {
+      "cusip": "038222105",
+      "issuer": "APPLIED MATLS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1131276,
+      "ticker": "AMAT",
+      "value": 290726619
+    },
+    {
+      "cusip": "04010E109",
+      "issuer": "ARGAN INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 438858,
+      "ticker": "AGX",
+      "value": 137502989
+    },
+    {
+      "cusip": "04626A103",
+      "issuer": "ASTERA LABS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 975959,
+      "ticker": "ALAB",
+      "value": 162360539
+    },
+    {
+      "cusip": "05550J101",
+      "issuer": "BJS WHSL CLUB HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 26740,
+      "ticker": "BJ",
+      "value": 2407402
+    },
+    {
+      "cusip": "071705107",
+      "issuer": "BAUSCH PLUS LOMB CORP",
+      "share_classes": [
+        "COMMON SHARES"
+      ],
+      "shares": 152183,
+      "ticker": "BLCO",
+      "value": 2599286
+    },
+    {
+      "cusip": "086516101",
+      "issuer": "BEST BUY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 35479,
+      "ticker": "BBY",
+      "value": 2374609
+    },
+    {
+      "cusip": "09073M104",
+      "issuer": "BIO-TECHNE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3850923,
+      "ticker": "TECH",
+      "value": 226472782
+    },
+    {
+      "cusip": "093671105",
+      "issuer": "BLOCK H & R INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 114426,
+      "ticker": "HRB",
+      "value": 4986685
+    },
+    {
+      "cusip": "09857L108",
+      "issuer": "BOOKING HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1030,
+      "ticker": "BKNG",
+      "value": 5515990
+    },
+    {
+      "cusip": "099406100",
+      "issuer": "BOOT BARN HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 21432,
+      "ticker": "BOOT",
+      "value": 3782105
+    },
+    {
+      "cusip": "100557107",
+      "issuer": "BOSTON BEER INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 5234,
+      "ticker": "SAM",
+      "value": 1021310
+    },
+    {
+      "cusip": "101137107",
+      "issuer": "BOSTON SCIENTIFIC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2944254,
+      "ticker": "BSX",
+      "value": 280734619
+    },
+    {
+      "cusip": "110448107",
+      "issuer": "BRITISH AMERN TOB PLC",
+      "share_classes": [
+        "SPONSORED ADR"
+      ],
+      "shares": 30360,
+      "ticker": "BTI",
+      "value": 1718983
+    },
+    {
+      "cusip": "118440106",
+      "issuer": "BUCKLE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 61083,
+      "ticker": "BKE",
+      "value": 3263054
+    },
+    {
+      "cusip": "12448X201",
+      "issuer": "BYRNA TECHNOLOGIES INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 11715,
+      "ticker": "BYRN",
+      "value": 196695
+    },
+    {
+      "cusip": "12685J105",
+      "issuer": "CABLE ONE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19552,
+      "ticker": "CABO",
+      "value": 2206443
+    },
+    {
+      "cusip": "129500104",
+      "issuer": "CALERES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 353129,
+      "ticker": "CAL",
+      "value": 4297580
+    },
+    {
+      "cusip": "131193104",
+      "issuer": "TOPGOLF CALLAWAY BRANDS CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 258111,
+      "ticker": "CALY",
+      "value": 3012155
+    },
+    {
+      "cusip": "133131102",
+      "issuer": "CAMDEN PPTY TR",
+      "share_classes": [
+        "SH BEN INT"
+      ],
+      "shares": 1837790,
+      "ticker": "CPT",
+      "value": 202303923
+    },
+    {
+      "cusip": "134429109",
+      "issuer": "THE CAMPBELLS COMPANY",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 33206,
+      "ticker": "CPB",
+      "value": 925451
+    },
+    {
+      "cusip": "13462K109",
+      "issuer": "CAMPING WORLD HLDGS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 458424,
+      "ticker": "CWH",
+      "value": 4460466
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1296397,
+      "ticker": "COF",
+      "value": 314194777
+    },
+    {
+      "cusip": "142038108",
+      "issuer": "CARIBOU BIOSCIENCES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 652542,
+      "ticker": "CRBU",
+      "value": 1037542
+    },
+    {
+      "cusip": "146229109",
+      "issuer": "CARTERS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 148790,
+      "ticker": "CRI",
+      "value": 4825260
+    },
+    {
+      "cusip": "146869102",
+      "issuer": "CARVANA CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 461874,
+      "ticker": "CVNA",
+      "value": 194920065
+    },
+    {
+      "cusip": "148929102",
+      "issuer": "CAVA GROUP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 42161,
+      "ticker": "CAVA",
+      "value": 2474429
+    },
+    {
+      "cusip": "152309100",
+      "issuer": "CENTESSA PHARMACEUTICALS PLC",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 1643724,
+      "ticker": "CNTA",
+      "value": 41109537
+    },
+    {
+      "cusip": "155923105",
+      "issuer": "CENTURI HOLDINGS INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 1672863,
+      "ticker": "CTRI",
+      "value": 42239791
+    },
+    {
+      "cusip": "16119P108",
+      "issuer": "CHARTER COMMUNICATIONS INC N",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 23732,
+      "ticker": "CHTR",
+      "value": 4954055
+    },
+    {
+      "cusip": "16679L109",
+      "issuer": "CHEWY INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 74985,
+      "ticker": "CHWY",
+      "value": 2478254
+    },
+    {
+      "cusip": "171757206",
+      "issuer": "CIDARA THERAPEUTICS INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 455978,
+      "ticker": "CDTX",
+      "value": 100720980
+    },
+    {
+      "cusip": "18467V109",
+      "issuer": "CLEAR SECURE INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 140149,
+      "ticker": "YOU",
+      "value": 4916427
+    },
+    {
+      "cusip": "191216100",
+      "issuer": "COCA COLA CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1562287,
+      "ticker": "KO",
+      "value": 109219484
+    },
+    {
+      "cusip": "194162103",
+      "issuer": "COLGATE PALMOLIVE CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9670,
+      "ticker": "CL",
+      "value": 764123
+    },
+    {
+      "cusip": "20464U100",
+      "issuer": "COMPASS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 12637206,
+      "ticker": "COMP",
+      "value": 133575267
+    },
+    {
+      "cusip": "205887102",
+      "issuer": "CONAGRA BRANDS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 144402,
+      "ticker": "CAG",
+      "value": 2499599
+    },
+    {
+      "cusip": "219798105",
+      "issuer": "QUIDELORTHO CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 59783,
+      "ticker": "QDEL",
+      "value": 1707402
+    },
+    {
+      "cusip": "22160K105",
+      "issuer": "COSTCO WHSL CORP NEW",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2894,
+      "ticker": "COST",
+      "value": 2495612
+    },
+    {
+      "cusip": "22266T109",
+      "issuer": "COUPANG INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1368720,
+      "ticker": "CPNG",
+      "value": 32288105
+    },
+    {
+      "cusip": "231269309",
+      "issuer": "CURIS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 49554,
+      "ticker": "CRIS",
+      "value": 6194
+    },
+    {
+      "cusip": "23804L103",
+      "issuer": "DATADOG INC",
+      "share_classes": [
+        "CL A COM"
+      ],
+      "shares": 386254,
+      "ticker": "DDOG",
+      "value": 52526681
+    },
+    {
+      "cusip": "238337109",
+      "issuer": "DAVE & BUSTERS ENTMT INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 325487,
+      "ticker": "PLAY",
+      "value": 5276144
+    },
+    {
+      "cusip": "23834J201",
+      "issuer": "DAVE INC",
+      "share_classes": [
+        "CLASS A COM NEW"
+      ],
+      "shares": 16376,
+      "ticker": "DAVE",
+      "value": 3625810
+    },
+    {
+      "cusip": "243537107",
+      "issuer": "DECKERS OUTDOOR CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 24097,
+      "ticker": "DECK",
+      "value": 2498136
+    },
+    {
+      "cusip": "253393102",
+      "issuer": "DICKS SPORTING GOODS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 834249,
+      "ticker": "DKS",
+      "value": 165156275
+    },
+    {
+      "cusip": "254687106",
+      "issuer": "DISNEY WALT CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 706959,
+      "ticker": "DIS",
+      "value": 80430725
+    },
+    {
+      "cusip": "25809K105",
+      "issuer": "DOORDASH INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 359125,
+      "ticker": "DASH",
+      "value": 81334630
+    },
+    {
+      "cusip": "26701L100",
+      "issuer": "DUTCH BROS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 8123,
+      "ticker": "BROS",
+      "value": 497290
+    },
+    {
+      "cusip": "278642103",
+      "issuer": "EBAY INC.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 24057,
+      "ticker": "EBAY",
+      "value": 2095365
+    },
+    {
+      "cusip": "28414H103",
+      "issuer": "ELANCO ANIMAL HEALTH INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 106593,
+      "ticker": "ELAN",
+      "value": 2412200
+    },
+    {
+      "cusip": "29272W109",
+      "issuer": "ENERGIZER HLDGS INC NEW",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 49793,
+      "ticker": "ENR",
+      "value": 990383
+    },
+    {
+      "cusip": "294429105",
+      "issuer": "EQUIFAX INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 22896,
+      "ticker": "EFX",
+      "value": 4967974
+    },
+    {
+      "cusip": "29530P102",
+      "issuer": "ERIE INDTY CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 17317,
+      "ticker": "ERIE",
+      "value": 4963918
+    },
+    {
+      "cusip": "29786A106",
+      "issuer": "ETSY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 45034,
+      "ticker": "ETSY",
+      "value": 2496685
+    },
+    {
+      "cusip": "30050B101",
+      "issuer": "EVOLENT HEALTH INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2539930,
+      "ticker": "EVH",
+      "value": 10159720
+    },
+    {
+      "cusip": "30212P303",
+      "issuer": "EXPEDIA GROUP INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 17947,
+      "ticker": "EXPE",
+      "value": 5084565
+    },
+    {
+      "cusip": "31428X106",
+      "issuer": "FEDEX CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 25023,
+      "ticker": "FDX",
+      "value": 7228144
+    },
+    {
+      "cusip": "31488V107",
+      "issuer": "FERGUSON ENTERPRISES INC",
+      "share_classes": [
+        "COMMON STOCK NEW"
+      ],
+      "shares": 22114,
+      "ticker": "FERG",
+      "value": 4923240
+    },
+    {
+      "cusip": "339750101",
+      "issuer": "FLOOR & DECOR HLDGS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 15624,
+      "ticker": "FND",
+      "value": 951345
+    },
+    {
+      "cusip": "35168W103",
+      "issuer": "FRACTYL HEALTH INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4248492,
+      "ticker": "GUTS",
+      "value": 9346682
+    },
+    {
+      "cusip": "358039105",
+      "issuer": "FRESHPET INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7561,
+      "ticker": "FRPT",
+      "value": 460692
+    },
+    {
+      "cusip": "36168Q104",
+      "issuer": "GFL ENVIRONMENTAL INC",
+      "share_classes": [
+        "SUB VTG SHS"
+      ],
+      "shares": 5023417,
+      "ticker": "GFL",
+      "value": 215761342
+    },
+    {
+      "cusip": "364760108",
+      "issuer": "GAP INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 59454,
+      "ticker": "GAP",
+      "value": 1522022
+    },
+    {
+      "cusip": "380237107",
+      "issuer": "GODADDY INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 39923,
+      "ticker": "GDDY",
+      "value": 4953646
+    },
+    {
+      "cusip": "427866108",
+      "issuer": "HERSHEY CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 10500,
+      "ticker": "HSY",
+      "value": 1910790
+    },
+    {
+      "cusip": "45245E109",
+      "issuer": "IMAX CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 133358,
+      "ticker": "IMAX",
+      "value": 4928912
+    },
+    {
+      "cusip": "461202103",
+      "issuer": "INTUIT",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7491,
+      "ticker": "INTU",
+      "value": 4962188
+    },
+    {
+      "cusip": "49271V100",
+      "issuer": "KEURIG DR PEPPER INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 47454,
+      "ticker": "KDP",
+      "value": 1329187
+    },
+    {
+      "cusip": "500754106",
+      "issuer": "KRAFT HEINZ CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 87829,
+      "ticker": "KHC",
+      "value": 2129853
+    },
+    {
+      "cusip": "501270102",
+      "issuer": "KURA SUSHI USA INC",
+      "share_classes": [
+        "CL A COM"
+      ],
+      "shares": 101295,
+      "ticker": "KRUS",
+      "value": 5300767
+    },
+    {
+      "cusip": "504922105",
+      "issuer": "LABCORP HOLDINGS INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 17564,
+      "ticker": "LH",
+      "value": 4406456
+    },
+    {
+      "cusip": "512807306",
+      "issuer": "LAM RESEARCH CORP",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 633084,
+      "ticker": "LRCX",
+      "value": 108371319
+    },
+    {
+      "cusip": "513847103",
+      "issuer": "MARZETTI COMPANY",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9383,
+      "ticker": "MZTI",
+      "value": 1542753
+    },
+    {
+      "cusip": "518439104",
+      "issuer": "LAUDER ESTEE COS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 33440,
+      "ticker": "EL",
+      "value": 3501837
+    },
+    {
+      "cusip": "52466B103",
+      "issuer": "LEGALZOOM COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 496034,
+      "ticker": "LZ",
+      "value": 4925618
+    },
+    {
+      "cusip": "52567D107",
+      "issuer": "LEMONADE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 69864,
+      "ticker": "LMND",
+      "value": 4972920
+    },
+    {
+      "cusip": "53190C102",
+      "issuer": "LIFE TIME GROUP HOLDINGS INC",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 199413,
+      "ticker": "LTH",
+      "value": 5300398
+    },
+    {
+      "cusip": "548661107",
+      "issuer": "LOWES COS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 8316,
+      "ticker": "LOW",
+      "value": 2005487
+    },
+    {
+      "cusip": "550021109",
+      "issuer": "LULULEMON ATHLETICA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11933,
+      "ticker": "LULU",
+      "value": 2479797
+    },
+    {
+      "cusip": "565394103",
+      "issuer": "MAPLEBEAR INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1938835,
+      "ticker": "CART",
+      "value": 87208798
+    },
+    {
+      "cusip": "571903202",
+      "issuer": "MARRIOTT INTL INC NEW",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 6955,
+      "ticker": "MAR",
+      "value": 2157719
+    },
+    {
+      "cusip": "579780206",
+      "issuer": "MCCORMICK & CO INC",
+      "share_classes": [
+        "COM NON VTG"
+      ],
+      "shares": 44533,
+      "ticker": "MKC",
+      "value": 3033143
+    },
+    {
+      "cusip": "580135101",
+      "issuer": "MCDONALDS CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 12453,
+      "ticker": "MCD",
+      "value": 3806010
+    },
+    {
+      "cusip": "58507V107",
+      "issuer": "MEDLINE INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 796077,
+      "ticker": "MDLN",
+      "value": 33435234
+    },
+    {
+      "cusip": "58733R102",
+      "issuer": "MERCADOLIBRE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 26149,
+      "ticker": "MELI",
+      "value": 52670885
+    },
+    {
+      "cusip": "589889104",
+      "issuer": "MERIT MED SYS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 486166,
+      "ticker": "MMSI",
+      "value": 42850671
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1150498,
+      "ticker": "MSFT",
+      "value": 556403843
+    },
+    {
+      "cusip": "609207105",
+      "issuer": "MONDELEZ INTL INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 9989,
+      "ticker": "MDLZ",
+      "value": 537708
+    },
+    {
+      "cusip": "61174X109",
+      "issuer": "MONSTER BEVERAGE CORP NEW",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2693291,
+      "ticker": "MNST",
+      "value": 206494621
+    },
+    {
+      "cusip": "626755102",
+      "issuer": "MURPHY USA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11023,
+      "ticker": "MUSA",
+      "value": 4448001
+    },
+    {
+      "cusip": "632307104",
+      "issuer": "NATERA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 944028,
+      "ticker": "NTRA",
+      "value": 216267375
+    },
+    {
+      "cusip": "64110L106",
+      "issuer": "NETFLIX INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 50797,
+      "ticker": "NFLX",
+      "value": 4762727
+    },
+    {
+      "cusip": "64119N608",
+      "issuer": "NETSKOPE INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 465736,
+      "ticker": "NTSK",
+      "value": 8169009
+    },
+    {
+      "cusip": "650111107",
+      "issuer": "NEW YORK TIMES CO",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 21247,
+      "ticker": "NYT",
+      "value": 1474967
+    },
+    {
+      "cusip": "654106103",
+      "issuer": "NIKE INC",
+      "share_classes": [
+        "CL B"
+      ],
+      "shares": 37610,
+      "ticker": "NKE",
+      "value": 2396133
+    },
+    {
+      "cusip": "668771108",
+      "issuer": "GEN DIGITAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19460,
+      "ticker": "GEN",
+      "value": 529117
+    },
+    {
+      "cusip": "66987V109",
+      "issuer": "NOVARTIS AG",
+      "share_classes": [
+        "SPONSORED ADR"
+      ],
+      "shares": 11073,
+      "ticker": "NVS",
+      "value": 1526635
+    },
+    {
+      "cusip": "67066G104",
+      "issuer": "NVIDIA CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2986355,
+      "ticker": "NVDA",
+      "value": 556955208
+    },
+    {
+      "cusip": "681116109",
+      "issuer": "OLLIES BARGAIN OUTLET HLDGS",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 45061,
+      "ticker": "OLLI",
+      "value": 4939136
+    },
+    {
+      "cusip": "704551100",
+      "issuer": "PEABODY ENERGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4067173,
+      "ticker": "BTU",
+      "value": 120795038
+    },
+    {
+      "cusip": "713448108",
+      "issuer": "PEPSICO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3976,
+      "ticker": "PEP",
+      "value": 570636
+    },
+    {
+      "cusip": "718172109",
+      "issuer": "PHILIP MORRIS INTL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2177027,
+      "ticker": "PM",
+      "value": 349195131
+    },
+    {
+      "cusip": "741623102",
+      "issuer": "PRIMO BRANDS CORPORATION",
+      "share_classes": [
+        "CLASS A COM SHS"
+      ],
+      "shares": 44083,
+      "ticker": "PRMB",
+      "value": 720757
+    },
+    {
+      "cusip": "74834L100",
+      "issuer": "QUEST DIAGNOSTICS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 23895,
+      "ticker": "DGX",
+      "value": 4146499
+    },
+    {
+      "cusip": "74967X103",
+      "issuer": "RH",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 12436,
+      "ticker": "RH",
+      "value": 2227909
+    },
+    {
+      "cusip": "75513E101",
+      "issuer": "RTX CORPORATION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1368842,
+      "ticker": "RTX",
+      "value": 251045623
+    },
+    {
+      "cusip": "76156B107",
+      "issuer": "REVOLVE GROUP INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 147012,
+      "ticker": "RVLV",
+      "value": 4438292
+    },
+    {
+      "cusip": "76171L106",
+      "issuer": "REYNOLDS CONSUMER PRODS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 138396,
+      "ticker": "REYN",
+      "value": 3172036
+    },
+    {
+      "cusip": "771049103",
+      "issuer": "ROBLOX CORP",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 517798,
+      "ticker": "RBLX",
+      "value": 41957172
+    },
+    {
+      "cusip": "77313F106",
+      "issuer": "ROCKET PHARMACEUTICALS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2513110,
+      "ticker": "RCKT",
+      "value": 8821016
+    },
+    {
+      "cusip": "77543R102",
+      "issuer": "ROKU INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 45571,
+      "ticker": "ROKU",
+      "value": 4943998
+    },
+    {
+      "cusip": "775711104",
+      "issuer": "ROLLINS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 77450,
+      "ticker": "ROL",
+      "value": 4648549
+    },
+    {
+      "cusip": "77664L207",
+      "issuer": "ROOT INC",
+      "share_classes": [
+        "CL A NEW"
+      ],
+      "shares": 63234,
+      "ticker": "ROOT",
+      "value": 4567392
+    },
+    {
+      "cusip": "778296103",
+      "issuer": "ROSS STORES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9566,
+      "ticker": "ROST",
+      "value": 1723219
+    },
+    {
+      "cusip": "78781J109",
+      "issuer": "SAILPOINT INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 966050,
+      "ticker": "SAIL",
+      "value": 19543192
+    },
+    {
+      "cusip": "80517M109",
+      "issuer": "SAVERS VALUE VLG INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 119479,
+      "ticker": "SVV",
+      "value": 1115934
+    },
+    {
+      "cusip": "808513105",
+      "issuer": "SCHWAB CHARLES CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1253090,
+      "ticker": "SCHW",
+      "value": 125196222
+    },
+    {
+      "cusip": "811543107",
+      "issuer": "SEABOARD CORP DEL",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 693,
+      "ticker": "SEB",
+      "value": 3080260
+    },
+    {
+      "cusip": "824348106",
+      "issuer": "SHERWIN WILLIAMS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 284317,
+      "ticker": "SHW",
+      "value": 92127238
+    },
+    {
+      "cusip": "824596100",
+      "issuer": "SHINHAN FINANCIAL GROUP CO L",
+      "share_classes": [
+        "SPN ADR RESTRD"
+      ],
+      "shares": 14071,
+      "ticker": "SHG",
+      "value": 754628
+    },
+    {
+      "cusip": "82982L103",
+      "issuer": "SITEONE LANDSCAPE SUPPLY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 39632,
+      "ticker": "SITE",
+      "value": 4936562
+    },
+    {
+      "cusip": "829933100",
+      "issuer": "SIRIUSXM HOLDINGS INC",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 248591,
+      "ticker": "SIRI",
+      "value": 4970577
+    },
+    {
+      "cusip": "83192D402",
+      "issuer": "SMARTSTOP SELF STORAG REIT I",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 159563,
+      "ticker": "SMA",
+      "value": 4936879
+    },
+    {
+      "cusip": "832696405",
+      "issuer": "SMUCKER J M CO",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 27912,
+      "ticker": "SJM",
+      "value": 2730073
+    },
+    {
+      "cusip": "833445109",
+      "issuer": "SNOWFLAKE INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 225835,
+      "ticker": "SNOW",
+      "value": 49539166
+    },
+    {
+      "cusip": "844741108",
+      "issuer": "SOUTHWEST AIRLS CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 43518,
+      "ticker": "LUV",
+      "value": 1798599
+    },
+    {
+      "cusip": "844895102",
+      "issuer": "SOUTHWEST GAS HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2048053,
+      "ticker": "SWX",
+      "value": 163885201
+    },
+    {
+      "cusip": "84790A105",
+      "issuer": "SPECTRUM BRANDS HLDGS INC NE",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 51588,
+      "ticker": "SPB",
+      "value": 3047819
+    },
+    {
+      "cusip": "86384P109",
+      "issuer": "STUBHUB HLDGS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 931473,
+      "ticker": "STUB",
+      "value": 12602830
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MFG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 1658650,
+      "ticker": "TSM",
+      "value": 504047149
+    },
+    {
+      "cusip": "876030107",
+      "issuer": "TAPESTRY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19582,
+      "ticker": "TPR",
+      "value": 2501992
+    },
+    {
+      "cusip": "87612E106",
+      "issuer": "TARGET CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5067,
+      "ticker": "TGT",
+      "value": 495299
+    },
+    {
+      "cusip": "88023U101",
+      "issuer": "SOMNIGROUP INTERNATIONAL INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1141820,
+      "ticker": "SGI",
+      "value": 101941690
+    },
+    {
+      "cusip": "88556E102",
+      "issuer": "THREDUP INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 691689,
+      "ticker": "TDUP",
+      "value": 4419893
+    },
+    {
+      "cusip": "898202106",
+      "issuer": "TRUPANION INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 133873,
+      "ticker": "TRUP",
+      "value": 5002834
+    },
+    {
+      "cusip": "90041L105",
+      "issuer": "TURNING PT BRANDS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 21675,
+      "ticker": "TPB",
+      "value": 2349570
+    },
+    {
+      "cusip": "902494103",
+      "issuer": "TYSON FOODS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 35080,
+      "ticker": "TSN",
+      "value": 2056390
+    },
+    {
+      "cusip": "90384S303",
+      "issuer": "ULTA BEAUTY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 817,
+      "ticker": "ULTA",
+      "value": 494293
+    },
+    {
+      "cusip": "907818108",
+      "issuer": "UNION PAC CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1313207,
+      "ticker": "UNP",
+      "value": 303771043
+    },
+    {
+      "cusip": "910047109",
+      "issuer": "UNITED AIRLS HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 20942,
+      "ticker": "UAL",
+      "value": 2341734
+    },
+    {
+      "cusip": "911312106",
+      "issuer": "UNITED PARCEL SERVICE INC",
+      "share_classes": [
+        "CL B"
+      ],
+      "shares": 6750,
+      "ticker": "UPS",
+      "value": 669533
+    },
+    {
+      "cusip": "911684108",
+      "issuer": "ARRAY DIGITAL INFRASTRUCTURE",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 64594,
+      "ticker": "AD",
+      "value": 3463530
+    },
+    {
+      "cusip": "91913Y100",
+      "issuer": "VALERO ENERGY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 15081,
+      "ticker": "VLO",
+      "value": 2455036
+    },
+    {
+      "cusip": "92243G108",
+      "issuer": "VAXCYTE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1354237,
+      "ticker": "PCVX",
+      "value": 62484495
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 776863,
+      "ticker": "V",
+      "value": 272453623
+    },
+    {
+      "cusip": "92846Q107",
+      "issuer": "VITA COCO CO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 58561,
+      "ticker": "COCO",
+      "value": 3104319
+    },
+    {
+      "cusip": "92847W103",
+      "issuer": "VITAL FARMS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 35856,
+      "ticker": "VITL",
+      "value": 1145241
+    },
+    {
+      "cusip": "929236107",
+      "issuer": "WD 40 CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 10686,
+      "ticker": "WDFC",
+      "value": 2104073
+    },
+    {
+      "cusip": "931142103",
+      "issuer": "WALMART INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 17151,
+      "ticker": "WMT",
+      "value": 1910793
+    },
+    {
+      "cusip": "948849104",
+      "issuer": "WEIS MKTS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 49169,
+      "ticker": "WMK",
+      "value": 3151241
+    },
+    {
+      "cusip": "974250102",
+      "issuer": "WINMARK CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6935,
+      "ticker": "WINA",
+      "value": 2808259
+    },
+    {
+      "cusip": "988498101",
+      "issuer": "YUM BRANDS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 11017,
+      "ticker": "YUM",
+      "value": 1666652
+    },
+    {
+      "cusip": "98980L101",
+      "issuer": "ZOOM COMMUNICATIONS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 56027,
+      "ticker": "ZM",
+      "value": 4834570
+    },
+    {
+      "cusip": "G0260P102",
+      "issuer": "AMER SPORTS INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 67859,
+      "ticker": "AS",
+      "value": 2534534
+    },
+    {
+      "cusip": "G3643J108",
+      "issuer": "FLUTTER ENTMT PLC",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 187022,
+      "ticker": "FLUT",
+      "value": 40217211
+    },
+    {
+      "cusip": "G6683N103",
+      "issuer": "NU HLDGS LTD",
+      "share_classes": [
+        "ORD SHS CL A"
+      ],
+      "shares": 11714564,
+      "ticker": "NU",
+      "value": 196101801
+    },
+    {
+      "cusip": "G8068L108",
+      "issuer": "SHARKNINJA INC",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 22474,
+      "ticker": "SN",
+      "value": 2514841
+    },
+    {
+      "cusip": "M4R82T106",
+      "issuer": "FIVERR INTL LTD",
+      "share_classes": [
+        "ORD SHS"
+      ],
+      "shares": 202094,
+      "ticker": "FVRR",
+      "value": 3993377
+    },
+    {
+      "cusip": "N07059210",
+      "issuer": "ASML HOLDING N V",
+      "share_classes": [
+        "N Y REGISTRY SHS"
+      ],
+      "shares": 261003,
+      "ticker": "ASML",
+      "value": 279236670
+    },
+    {
+      "cusip": "N62509109",
+      "issuer": "NEWAMSTERDAM PHARMA COMPANY",
+      "share_classes": [
+        "ORDINARY SHARES"
+      ],
+      "shares": 1894226,
+      "ticker": "NAMS",
+      "value": 66449448
+    },
+    {
+      "cusip": "N90064101",
+      "issuer": "UNIQURE NV",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 661820,
+      "ticker": "QURE",
+      "value": 15837353
+    },
+    {
+      "cusip": "Y95308105",
+      "issuer": "WAVE LIFE SCIENCES LTD",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 9280237,
+      "ticker": "WVE",
+      "value": 157764029
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

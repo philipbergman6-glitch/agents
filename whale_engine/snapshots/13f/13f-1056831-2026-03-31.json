@@ -1,0 +1,111 @@
+{
+  "accession_no": "0000919574-26-003485",
+  "cik": 1056831,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "037833100",
+      "issuer": "APPLE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2400,
+      "ticker": "AAPL",
+      "value": 609096
+    },
+    {
+      "cusip": "06417N103",
+      "issuer": "BANK OZK",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 921252,
+      "ticker": "OZK",
+      "value": 42276263
+    },
+    {
+      "cusip": "084423102",
+      "issuer": "WR BERKLEY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 256350,
+      "ticker": "WRB",
+      "value": 16990878
+    },
+    {
+      "cusip": "084670108",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 2,
+      "ticker": "BRKA",
+      "value": 1436280
+    },
+    {
+      "cusip": "084670702",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL B NEW"
+      ],
+      "shares": 50452,
+      "ticker": "BRKB",
+      "value": 24176598
+    },
+    {
+      "cusip": "293792107",
+      "issuer": "ENTERPRISE PRODS PARTNERS L",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5455800,
+      "ticker": "EPD",
+      "value": 206447472
+    },
+    {
+      "cusip": "436893200",
+      "issuer": "HOME BANCSHARES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 12100,
+      "ticker": "HOMB",
+      "value": 325853
+    },
+    {
+      "cusip": "500754106",
+      "issuer": "KRAFT HEINZ CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 105300,
+      "ticker": "KHC",
+      "value": 2368197
+    },
+    {
+      "cusip": "743315103",
+      "issuer": "PROGRESSIVE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 66400,
+      "ticker": "PGR",
+      "value": 13163136
+    },
+    {
+      "cusip": "790148100",
+      "issuer": "ST JOE CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19210167,
+      "ticker": "JOE",
+      "value": 1206398488
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

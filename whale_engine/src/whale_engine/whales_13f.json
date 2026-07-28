@@ -1,0 +1,105 @@
+{
+  "_comment": "13F whale roster — CIKs verified against SEC EDGAR 2026-07-25 (research/13f-whale-holdings.md, ticket #22/#25). Roster is data: edit here, no code changes. sibling_ciks are OTHER active filers related to the same manager — tracked to avoid double-counting, never summed with the flagship.",
+  "whales": [
+    {
+      "name": "Berkshire Hathaway",
+      "cik": 1067983,
+      "filer": "BERKSHIRE HATHAWAY INC"
+    },
+    {
+      "name": "Pershing Square",
+      "cik": 1336528,
+      "filer": "Pershing Square Capital Management, L.P.",
+      "sibling_ciks": [
+        {
+          "cik": 2026053,
+          "filer": "PERSHING SQUARE INC.",
+          "note": "new entity, files since 2025; do not sum with the LP"
+        }
+      ]
+    },
+    {
+      "name": "Greenlight",
+      "cik": 1489933,
+      "filer": "DME Capital Management, LP",
+      "note": "successor filer for Einhorn's book; GREENLIGHT CAPITAL INC (CIK 1079114) stopped after Q4 2023"
+    },
+    {
+      "name": "Icahn",
+      "cik": 921669,
+      "filer": "ICAHN CARL C",
+      "note": "individual CIK is the live filer; five stale Icahn entities exist on EDGAR"
+    },
+    {
+      "name": "Third Point",
+      "cik": 1040273,
+      "filer": "Third Point LLC"
+    },
+    {
+      "name": "Appaloosa",
+      "cik": 1656456,
+      "filer": "Appaloosa LP",
+      "note": "APPALOOSA MANAGEMENT LP (CIK 1006438) stopped filing in 2015"
+    },
+    {
+      "name": "Fairholme",
+      "cik": 1056831,
+      "filer": "FAIRHOLME CAPITAL MANAGEMENT LLC"
+    },
+    {
+      "name": "Maverick",
+      "cik": 934639,
+      "filer": "MAVERICK CAPITAL LTD"
+    },
+    {
+      "name": "Viking",
+      "cik": 1103804,
+      "filer": "VIKING GLOBAL INVESTORS LP"
+    },
+    {
+      "name": "Lone Pine",
+      "cik": 1061165,
+      "filer": "LONE PINE CAPITAL LLC"
+    },
+    {
+      "name": "Tiger Global",
+      "cik": 1167483,
+      "filer": "TIGER GLOBAL MANAGEMENT LLC"
+    },
+    {
+      "name": "Fundsmith",
+      "cik": 1569205,
+      "filer": "Fundsmith LLP",
+      "sibling_ciks": [
+        {
+          "cik": 1868537,
+          "filer": "FUNDSMITH INVESTMENT SERVICES LTD.",
+          "note": "second active Fundsmith filer; do not sum with the LLP"
+        }
+      ]
+    },
+    {
+      "name": "Lindsell Train",
+      "cik": 1484150,
+      "filer": "Lindsell Train Ltd",
+      "note": "early filer — often a quarter ahead of the rest of the roster"
+    },
+    {
+      "name": "Giverny",
+      "cik": 1641864,
+      "filer": "Giverny Capital Inc.",
+      "note": "Rochon's Montreal firm — the only 'Giverny' actively filing. If the owner meant Poppe, swap in 11 Capital Partners LP (CIK 1801172)."
+    },
+    {
+      "name": "TCI",
+      "cik": 1647251,
+      "filer": "TCI Fund Management Ltd"
+    },
+    {
+      "name": "Leon Cooperman (Omega)",
+      "cik": 898382,
+      "filer": "COOPERMAN LEON G",
+      "note": "files personally since Omega's family-office conversion; Omega Advisors Inc (CIK 898202) stopped after Q4 2018"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "accession_no": "0001539497-26-001469",
+  "cik": 921669,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "025537101",
+      "issuer": "American Electric Power Company",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1205300,
+      "ticker": "AEP",
+      "value": 157990724
+    },
+    {
+      "cusip": "071705107",
+      "issuer": "Bausch Plus Lomb Corp.",
+      "share_classes": [
+        "COMMON SHARES"
+      ],
+      "shares": 3500000,
+      "ticker": "BLCO",
+      "value": 55650000
+    },
+    {
+      "cusip": "12662P108",
+      "issuer": "CVR Energy Inc",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 71201875,
+      "ticker": "CVI",
+      "value": 2395943093
+    },
+    {
+      "cusip": "126633205",
+      "issuer": "CVR Partners, LP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4164274,
+      "ticker": "UAN",
+      "value": 527488588
+    },
+    {
+      "cusip": "12769G100",
+      "issuer": "Caesars Entertainment, Inc.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2440109,
+      "ticker": "CZR",
+      "value": 64492081
+    },
+    {
+      "cusip": "155923105",
+      "issuer": "Centuri Holdings, Inc.",
+      "share_classes": [
+        "COM SHS"
+      ],
+      "shares": 14336044,
+      "ticker": "CTRI",
+      "value": 418755845
+    },
+    {
+      "cusip": "278768106",
+      "issuer": "EchoStar Corporation",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1404542,
+      "ticker": "SATS",
+      "value": 164429732
+    },
+    {
+      "cusip": "451100101",
+      "issuer": "Icahn Enterprises LP",
+      "share_classes": [
+        "DEPOSITARY UNIT"
+      ],
+      "shares": 549400539,
+      "ticker": "IEP",
+      "value": 4147974070
+    },
+    {
+      "cusip": "459506101",
+      "issuer": "International Flavors and Fragrances Inc.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4275000,
+      "ticker": "IFF",
+      "value": 310151250
+    },
+    {
+      "cusip": "477143101",
+      "issuer": "JetBlue Airways Corp.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 33621735,
+      "ticker": "JBLU",
+      "value": 148608069
+    },
+    {
+      "cusip": "610236101",
+      "issuer": "Monro, Inc.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5078573,
+      "ticker": "MNRO",
+      "value": 81460311
+    },
+    {
+      "cusip": "80007P869",
+      "issuer": "SandRidge Energy, Inc.",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 4947701,
+      "ticker": "SD",
+      "value": 80697003
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}

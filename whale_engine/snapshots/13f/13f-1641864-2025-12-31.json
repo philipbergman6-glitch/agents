@@ -1,0 +1,511 @@
+{
+  "accession_no": "0001641864-26-000002",
+  "cik": 1641864,
+  "filing_date": "2026-02-13",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K107",
+      "issuer": "ALPHABET INC C",
+      "share_classes": [
+        "CAP STK CL C"
+      ],
+      "shares": 639507,
+      "ticker": "GOOG",
+      "value": 200677297
+    },
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 361398,
+      "ticker": "GOOGL",
+      "value": 113117574
+    },
+    {
+      "cusip": "031100100",
+      "issuer": "AMETEK INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 979458,
+      "ticker": "AME",
+      "value": 201092522
+    },
+    {
+      "cusip": "032654105",
+      "issuer": "ANALOG DEVICES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 176747,
+      "ticker": "ADI",
+      "value": 47933786
+    },
+    {
+      "cusip": "037833100",
+      "issuer": "APPLE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 16518,
+      "ticker": "AAPL",
+      "value": 4490583
+    },
+    {
+      "cusip": "040413205",
+      "issuer": "ARISTA NETWORKS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 419158,
+      "ticker": "ANET",
+      "value": 54922273
+    },
+    {
+      "cusip": "06417N103",
+      "issuer": "BANK OZK LITTLE ROCK ARK",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1264042,
+      "ticker": "OZK",
+      "value": 58171213
+    },
+    {
+      "cusip": "084670108",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 11,
+      "ticker": "BRKA",
+      "value": 8302800
+    },
+    {
+      "cusip": "084670702",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL B NEW"
+      ],
+      "shares": 505984,
+      "ticker": "BRKB",
+      "value": 254332858
+    },
+    {
+      "cusip": "09857L108",
+      "issuer": "BOOKING HOLDINGS INC.",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 21445,
+      "ticker": "BKNG",
+      "value": 114845052
+    },
+    {
+      "cusip": "109194100",
+      "issuer": "BRIGHT HORIZONSFAMILY SOLUTION",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 410196,
+      "ticker": "BFAM",
+      "value": 41593874
+    },
+    {
+      "cusip": "115236101",
+      "issuer": "BROWN & BROWN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 772520,
+      "ticker": "BRO",
+      "value": 61569844
+    },
+    {
+      "cusip": "12008R107",
+      "issuer": "BUILDERS FIRSTSOURCE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 89984,
+      "ticker": "BLDR",
+      "value": 9258454
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 8274,
+      "ticker": "COF",
+      "value": 2005287
+    },
+    {
+      "cusip": "217204106",
+      "issuer": "COPART INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 27484,
+      "ticker": "CPRT",
+      "value": 1075999
+    },
+    {
+      "cusip": "22160K105",
+      "issuer": "COSTCO WHSL CORP NEW",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 240,
+      "ticker": "COST",
+      "value": 206962
+    },
+    {
+      "cusip": "254687106",
+      "issuer": "DISNEY WALT CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 544419,
+      "ticker": "DIS",
+      "value": 61938550
+    },
+    {
+      "cusip": "26154D100",
+      "issuer": "DREAM FINDERS HOMES",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 32202,
+      "ticker": "DFH",
+      "value": 550654
+    },
+    {
+      "cusip": "30303M102",
+      "issuer": "META PLATFORMS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 313449,
+      "ticker": "META",
+      "value": 206904550
+    },
+    {
+      "cusip": "31488V107",
+      "issuer": "FERGUSON ENTERPRISES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 36374,
+      "ticker": "FERG",
+      "value": 8097944
+    },
+    {
+      "cusip": "33829M101",
+      "issuer": "FIVE BELOW INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 637747,
+      "ticker": "FIVE",
+      "value": 120126025
+    },
+    {
+      "cusip": "339750101",
+      "issuer": "FLOOR & DECOR HLDGS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 235876,
+      "ticker": "FND",
+      "value": 14362490
+    },
+    {
+      "cusip": "422806208",
+      "issuer": "HEICO CORP NEW",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 754532,
+      "ticker": "HEIA",
+      "value": 190466513
+    },
+    {
+      "cusip": "45780R101",
+      "issuer": "INSTALLED BLDG PRODS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 519236,
+      "ticker": "IBP",
+      "value": 134684626
+    },
+    {
+      "cusip": "46120E602",
+      "issuer": "INTUITIVE SURGICAL INC",
+      "share_classes": [
+        "COM NEW"
+      ],
+      "shares": 405,
+      "ticker": "ISRG",
+      "value": 229376
+    },
+    {
+      "cusip": "464288752",
+      "issuer": "ISHARES TR",
+      "share_classes": [
+        "US HOME CONS ETF"
+      ],
+      "shares": 11698,
+      "ticker": "ITB",
+      "value": 1126517
+    },
+    {
+      "cusip": "46625H100",
+      "issuer": "JPMORGAN CHASE & CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 51838,
+      "ticker": "JPM",
+      "value": 16703240
+    },
+    {
+      "cusip": "49338L103",
+      "issuer": "KEYSIGHT TECHNOLOGIES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 334046,
+      "ticker": "KEYS",
+      "value": 67874807
+    },
+    {
+      "cusip": "49714P108",
+      "issuer": "KINSALE CAPITAL GROUP IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 214264,
+      "ticker": "KNSL",
+      "value": 83802936
+    },
+    {
+      "cusip": "537008104",
+      "issuer": "LITTELFUSE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 81585,
+      "ticker": "LFUS",
+      "value": 20634478
+    },
+    {
+      "cusip": "550021109",
+      "issuer": "LULULEMON ATHLETICA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 144237,
+      "ticker": "LULU",
+      "value": 29973891
+    },
+    {
+      "cusip": "55261F104",
+      "issuer": "M & T BK CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7540,
+      "ticker": "MTB",
+      "value": 1519159
+    },
+    {
+      "cusip": "570535104",
+      "issuer": "MARKEL CORP",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 43978,
+      "ticker": "MKL",
+      "value": 94537308
+    },
+    {
+      "cusip": "57636Q104",
+      "issuer": "MASTERCARD INCORPORATED",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 28759,
+      "ticker": "MA",
+      "value": 16417938
+    },
+    {
+      "cusip": "58506Q109",
+      "issuer": "MEDPACE HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 263320,
+      "ticker": "MEDP",
+      "value": 147893678
+    },
+    {
+      "cusip": "594918104",
+      "issuer": "MICROSOFT CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1704,
+      "ticker": "MSFT",
+      "value": 824088
+    },
+    {
+      "cusip": "62944T105",
+      "issuer": "NVR INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 14112,
+      "ticker": "NVR",
+      "value": 102915570
+    },
+    {
+      "cusip": "670100205",
+      "issuer": "NOVO-NORDISK A S",
+      "share_classes": [
+        "ADR"
+      ],
+      "shares": 12400,
+      "ticker": "NVO",
+      "value": 630912
+    },
+    {
+      "cusip": "679580100",
+      "issuer": "OLD DOMINION FREIGHT LINE IN",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5255,
+      "ticker": "ODFL",
+      "value": 823984
+    },
+    {
+      "cusip": "743315103",
+      "issuer": "PROGRESSIVE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 536832,
+      "ticker": "PGR",
+      "value": 122247383
+    },
+    {
+      "cusip": "761152107",
+      "issuer": "RESMED INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 235388,
+      "ticker": "RMD",
+      "value": 56697908
+    },
+    {
+      "cusip": "78462F103",
+      "issuer": "SPDR S&P 500 ETF",
+      "share_classes": [
+        "ETF"
+      ],
+      "shares": 2474,
+      "ticker": "SPY",
+      "value": 1687070
+    },
+    {
+      "cusip": "78463V107",
+      "issuer": "SPDR GOLD TR",
+      "share_classes": [
+        "GOLD SHS"
+      ],
+      "shares": 3876,
+      "ticker": "GLD",
+      "value": 1536098
+    },
+    {
+      "cusip": "808513105",
+      "issuer": "SCHWAB CHARLES CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1585661,
+      "ticker": "SCHW",
+      "value": 158423391
+    },
+    {
+      "cusip": "82982L103",
+      "issuer": "SITEONE LANDSCAPE SUPPLY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 3753,
+      "ticker": "SITE",
+      "value": 467474
+    },
+    {
+      "cusip": "87318A101",
+      "issuer": "TWFG INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 331511,
+      "ticker": "TWFG",
+      "value": 9537571
+    },
+    {
+      "cusip": "874039100",
+      "issuer": "TAIWAN SEMICONDUCTOR MFG LTD",
+      "share_classes": [
+        "SPONSORED ADS"
+      ],
+      "shares": 16069,
+      "ticker": "TSM",
+      "value": 4836769
+    },
+    {
+      "cusip": "92826C839",
+      "issuer": "VISA INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 407345,
+      "ticker": "V",
+      "value": 142859965
+    },
+    {
+      "cusip": "98850P109",
+      "issuer": "YUM CHINA HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 36036,
+      "ticker": "YUMC",
+      "value": 1720359
+    },
+    {
+      "cusip": "M2029K104",
+      "issuer": "BIRKENSTOCK HLDG PLC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 27392,
+      "ticker": "BIRK",
+      "value": 1120333
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

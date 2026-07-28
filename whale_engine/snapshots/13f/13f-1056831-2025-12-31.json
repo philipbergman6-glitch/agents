@@ -1,0 +1,161 @@
+{
+  "accession_no": "0000919574-26-001186",
+  "cik": 1056831,
+  "filing_date": "2026-02-17",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "037833100",
+      "issuer": "APPLE INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2400,
+      "ticker": "AAPL",
+      "value": 652464
+    },
+    {
+      "cusip": "06417N103",
+      "issuer": "BANK OZK",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 913652,
+      "ticker": "OZK",
+      "value": 42046274
+    },
+    {
+      "cusip": "084423102",
+      "issuer": "WR BERKLEY CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 260150,
+      "ticker": "WRB",
+      "value": 18241718
+    },
+    {
+      "cusip": "084670108",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1,
+      "ticker": "BRKA",
+      "value": 754800
+    },
+    {
+      "cusip": "084670702",
+      "issuer": "BERKSHIRE HATHAWAY INC DEL",
+      "share_classes": [
+        "CL B NEW"
+      ],
+      "shares": 48012,
+      "ticker": "BRKB",
+      "value": 24133232
+    },
+    {
+      "cusip": "125269100",
+      "issuer": "CF INDS HLDGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 54700,
+      "ticker": "CF",
+      "value": 4230498
+    },
+    {
+      "cusip": "25278X109",
+      "issuer": "DIAMONDBACK ENERGY INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4000,
+      "ticker": "FANG",
+      "value": 601320
+    },
+    {
+      "cusip": "26875P101",
+      "issuer": "EOG RES INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2000,
+      "ticker": "EOG",
+      "value": 210020
+    },
+    {
+      "cusip": "29273V100",
+      "issuer": "ENERGY TRANSFER L P",
+      "share_classes": [
+        "COM UT LTD PTN"
+      ],
+      "shares": 166600,
+      "ticker": "ET",
+      "value": 2747234
+    },
+    {
+      "cusip": "293792107",
+      "issuer": "ENTERPRISE PRODS PARTNERS L",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 5450400,
+      "ticker": "EPD",
+      "value": 174739824
+    },
+    {
+      "cusip": "63900P608",
+      "issuer": "NATURAL RESOURCE PARTNERS L",
+      "share_classes": [
+        "COM UNIT LTD PAR"
+      ],
+      "shares": 12000,
+      "ticker": "NRP",
+      "value": 1252800
+    },
+    {
+      "cusip": "674599105",
+      "issuer": "OCCIDENTAL PETE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 69100,
+      "ticker": "OXY",
+      "value": 2841392
+    },
+    {
+      "cusip": "743315103",
+      "issuer": "PROGRESSIVE CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 25600,
+      "ticker": "PGR",
+      "value": 5829632
+    },
+    {
+      "cusip": "790148100",
+      "issuer": "ST JOE CO",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 19422467,
+      "ticker": "JOE",
+      "value": 1153111866
+    },
+    {
+      "cusip": "87612E106",
+      "issuer": "TARGET CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 23000,
+      "ticker": "TGT",
+      "value": 2248250
+    }
+  ],
+  "report_period": "2025-12-31",
+  "schema": "13f-snapshot/v1"
+}

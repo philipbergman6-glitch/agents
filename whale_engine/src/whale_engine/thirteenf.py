@@ -61,6 +61,72 @@ class PortfolioSnapshot:
 
 
 # ---------------------------------------------------------------------------
+# Snapshot (de)serialization — pinned JSON files, whale-agnostic raw data
+# ---------------------------------------------------------------------------
+
+SNAPSHOT_SCHEMA = "13f-snapshot/v1"
+
+
+def snapshot_to_dict(snap: PortfolioSnapshot) -> dict:
+    return {
+        "schema": SNAPSHOT_SCHEMA,
+        "cik": snap.cik,
+        "form": snap.form,
+        "filing_date": snap.filing_date,
+        "report_period": snap.report_period,
+        "accession_no": snap.accession_no,
+        "option_rows": snap.option_rows,
+        "positions": [
+            {
+                "cusip": p.cusip,
+                "issuer": p.issuer,
+                "ticker": p.ticker,
+                "share_classes": p.share_classes,
+                "shares": p.shares,
+                "value": p.value,
+            }
+            for p in sorted(snap.positions.values(), key=lambda p: p.cusip)
+        ],
+    }
+
+
+def snapshot_from_dict(data: dict) -> PortfolioSnapshot:
+    if not isinstance(data, dict) or data.get("schema") != SNAPSHOT_SCHEMA:
+        raise ThirteenFError(
+            f"not a {SNAPSHOT_SCHEMA} snapshot (schema={data.get('schema')!r})"
+            if isinstance(data, dict) else "snapshot is not a JSON object"
+        )
+    required = {"cik", "form", "filing_date", "report_period", "accession_no",
+                "option_rows", "positions"}
+    missing = required - set(data)
+    if missing:
+        raise ThirteenFError(f"snapshot missing keys {sorted(missing)}")
+    snap = PortfolioSnapshot(
+        cik=int(data["cik"]),
+        form=str(data["form"]),
+        filing_date=str(data["filing_date"]),
+        report_period=str(data["report_period"]),
+        accession_no=str(data["accession_no"]),
+        option_rows=int(data["option_rows"]),
+    )
+    for p in data["positions"]:
+        cusip = str(p["cusip"])
+        if cusip in snap.positions:
+            raise ThirteenFError(f"duplicate CUSIP {cusip} in snapshot CIK {snap.cik}")
+        snap.positions[cusip] = Position(
+            cusip=cusip,
+            issuer=str(p["issuer"]),
+            ticker=str(p["ticker"]),
+            share_classes=list(p["share_classes"]),
+            shares=int(p["shares"]),
+            value=int(p["value"]),
+        )
+    if not snap.positions:
+        raise ThirteenFError(f"snapshot for CIK {snap.cik} has no positions")
+    return snap
+
+
+# ---------------------------------------------------------------------------
 # Parse / aggregate (pure: DataFrame -> PortfolioSnapshot)
 # ---------------------------------------------------------------------------
 

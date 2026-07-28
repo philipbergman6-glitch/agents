@@ -1,0 +1,421 @@
+{
+  "accession_no": "0000945621-26-000719",
+  "cik": 898382,
+  "filing_date": "2026-05-15",
+  "form": "13F-HR",
+  "option_rows": 0,
+  "positions": [
+    {
+      "cusip": "02079K305",
+      "issuer": "ALPHABET INC",
+      "share_classes": [
+        "CAP STK CL A"
+      ],
+      "shares": 75000,
+      "ticker": "GOOGL",
+      "value": 21567000
+    },
+    {
+      "cusip": "023135106",
+      "issuer": "AMAZON.COM INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 169500,
+      "ticker": "AMZN",
+      "value": 35301765
+    },
+    {
+      "cusip": "036752103",
+      "issuer": "ELEVANCE HEALTH INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 227900,
+      "ticker": "ELV",
+      "value": 66717725
+    },
+    {
+      "cusip": "03769M106",
+      "issuer": "APOLLO GLOBAL MANAGEMENT INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1337000,
+      "ticker": "APO",
+      "value": 148968540
+    },
+    {
+      "cusip": "038923108",
+      "issuer": "ARBOR REALTY TRUST INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1560000,
+      "ticker": "ABR",
+      "value": 12027600
+    },
+    {
+      "cusip": "044186104",
+      "issuer": "ASHLAND INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1700000,
+      "ticker": "ASH",
+      "value": 94537000
+    },
+    {
+      "cusip": "125523100",
+      "issuer": "THE CIGNA GROUP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 325000,
+      "ticker": "CI",
+      "value": 86693750
+    },
+    {
+      "cusip": "14040H105",
+      "issuer": "CAPITAL ONE FINANCIAL CORP",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 370000,
+      "ticker": "COF",
+      "value": 67499100
+    },
+    {
+      "cusip": "25253X207",
+      "issuer": "DIAMEDICA THERAPEUTICS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2020000,
+      "ticker": "DMAC",
+      "value": 13675400
+    },
+    {
+      "cusip": "29273V100",
+      "issuer": "ENERGY TRANSFER LP",
+      "share_classes": [
+        "COM UT LTD PTN"
+      ],
+      "shares": 13320100,
+      "ticker": "ET",
+      "value": 257077930
+    },
+    {
+      "cusip": "293792107",
+      "issuer": "ENTERPRISE PRODUCTS PARTNERS",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 1373755,
+      "ticker": "EPD",
+      "value": 51982889
+    },
+    {
+      "cusip": "31738L206",
+      "issuer": "FINANCE OF AMERICA COS INC",
+      "share_classes": [
+        "CL A"
+      ],
+      "shares": 1286068,
+      "ticker": "FOA",
+      "value": 21348729
+    },
+    {
+      "cusip": "35473P827",
+      "issuer": "FRANKLIN TEMPLETON ETF TR",
+      "share_classes": [
+        "FTSE CANADA"
+      ],
+      "shares": 5750,
+      "ticker": "FLCA",
+      "value": 281405
+    },
+    {
+      "cusip": "36266G107",
+      "issuer": "GE HEALTHCARE TECHNOLOGY",
+      "share_classes": [
+        "COMMON STOCK"
+      ],
+      "shares": 670000,
+      "ticker": "GEHC",
+      "value": 47690600
+    },
+    {
+      "cusip": "36472T109",
+      "issuer": "USA TODAY CO INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 6271961,
+      "ticker": "TDAY",
+      "value": 44217325
+    },
+    {
+      "cusip": "464286509",
+      "issuer": "ISHARES INC",
+      "share_classes": [
+        "MSCI CDA ETF"
+      ],
+      "shares": 12531,
+      "ticker": "EWC",
+      "value": 686573
+    },
+    {
+      "cusip": "464286665",
+      "issuer": "ISHARES INC",
+      "share_classes": [
+        "MSCI PAC JP ETF"
+      ],
+      "shares": 7610,
+      "ticker": "EPP",
+      "value": 404395
+    },
+    {
+      "cusip": "464287465",
+      "issuer": "ISHARES TR",
+      "share_classes": [
+        "MSCI EAFE ETF"
+      ],
+      "shares": 57453,
+      "ticker": "EFA",
+      "value": 5580410
+    },
+    {
+      "cusip": "46434G822",
+      "issuer": "ISHARES INC",
+      "share_classes": [
+        "MSCI JAPAN ETF"
+      ],
+      "shares": 20315,
+      "ticker": "EWJ",
+      "value": 1715399
+    },
+    {
+      "cusip": "46434V738",
+      "issuer": "ISHARES TR",
+      "share_classes": [
+        "CORE MSCI EURO"
+      ],
+      "shares": 38388,
+      "ticker": "IEUR",
+      "value": 2697525
+    },
+    {
+      "cusip": "48242W106",
+      "issuer": "KBR INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2125000,
+      "ticker": "KBR",
+      "value": 78327500
+    },
+    {
+      "cusip": "536797103",
+      "issuer": "LITHIA MOTORS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 340000,
+      "ticker": "LAD",
+      "value": 84904800
+    },
+    {
+      "cusip": "553368101",
+      "issuer": "MP MATERIALS CORP",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 3000000,
+      "ticker": "MP",
+      "value": 144780000
+    },
+    {
+      "cusip": "60471A101",
+      "issuer": "MIRION TECHNOLOGIES INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 8383441,
+      "ticker": "MIR",
+      "value": 155848168
+    },
+    {
+      "cusip": "620076307",
+      "issuer": "MOTOROLA SOLUTIONS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 135000,
+      "ticker": "MSI",
+      "value": 58585950
+    },
+    {
+      "cusip": "642045108",
+      "issuer": "ATLAS ENERGY SOLUTIONS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 4083175,
+      "ticker": "AESI",
+      "value": 53571256
+    },
+    {
+      "cusip": "68268W103",
+      "issuer": "ONEMAIN HOLDINGS INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 2005000,
+      "ticker": "OMF",
+      "value": 107247450
+    },
+    {
+      "cusip": "77311W101",
+      "issuer": "ROCKET COS INC",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 21016600,
+      "ticker": "RKT",
+      "value": 299486550
+    },
+    {
+      "cusip": "81141R100",
+      "issuer": "SEA LTD",
+      "share_classes": [
+        "SPONSORD ADS"
+      ],
+      "shares": 326058,
+      "ticker": "SE",
+      "value": 27000863
+    },
+    {
+      "cusip": "86765K109",
+      "issuer": "SUNOCO LP",
+      "share_classes": [
+        "COM UT REP LP"
+      ],
+      "shares": 1620000,
+      "ticker": "SUN",
+      "value": 105251400
+    },
+    {
+      "cusip": "8676EP108",
+      "issuer": "SUNOPTA INC",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 9300000,
+      "ticker": "STKL",
+      "value": 60264000
+    },
+    {
+      "cusip": "922042874",
+      "issuer": "VANGUARD INTL EQUITY INDEX F",
+      "share_classes": [
+        "FTSE EUROPE ETF"
+      ],
+      "shares": 24693,
+      "ticker": "VGK",
+      "value": 2035444
+    },
+    {
+      "cusip": "92206C706",
+      "issuer": "VANGUARD SCOTTSDALE FDS",
+      "share_classes": [
+        "INTER TERM TREAS"
+      ],
+      "shares": 25028,
+      "ticker": "VGIT",
+      "value": 1490417
+    },
+    {
+      "cusip": "922907746",
+      "issuer": "VANGUARD MUN BD FDS",
+      "share_classes": [
+        "TAX EXEMPT BD"
+      ],
+      "shares": 12876,
+      "ticker": "VTEB",
+      "value": 642384
+    },
+    {
+      "cusip": "922908363",
+      "issuer": "VANGUARD INDEX FDS",
+      "share_classes": [
+        "S&P 500 ETF SHS"
+      ],
+      "shares": 43593,
+      "ticker": "VOO",
+      "value": 26048997
+    },
+    {
+      "cusip": "92537N108",
+      "issuer": "VERTIV HOLDINGS CO",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 2157789,
+      "ticker": "VRT",
+      "value": 540698768
+    },
+    {
+      "cusip": "971378104",
+      "issuer": "WILLSCOT HOLDINGS CORP",
+      "share_classes": [
+        "COM CL A"
+      ],
+      "shares": 4031016,
+      "ticker": "WSC",
+      "value": 69978438
+    },
+    {
+      "cusip": "G3398L118",
+      "issuer": "FIDELIS INSURANCE HOLDINGS L",
+      "share_classes": [
+        "COM"
+      ],
+      "shares": 7984348,
+      "ticker": "PLGO",
+      "value": 152580890
+    },
+    {
+      "cusip": "G4627B103",
+      "issuer": "HORIZON SPACE ACQUISITION II",
+      "share_classes": [
+        "ORD SHS"
+      ],
+      "shares": 1100,
+      "ticker": "HSPT",
+      "value": 242
+    },
+    {
+      "cusip": "G5784H106",
+      "issuer": "MANCHESTER UNITED PLC",
+      "share_classes": [
+        "ORD CL A"
+      ],
+      "shares": 2932076,
+      "ticker": "MANU",
+      "value": 49317518
+    },
+    {
+      "cusip": "H2627K103",
+      "issuer": "AMRIZE LTD",
+      "share_classes": [
+        "SHS"
+      ],
+      "shares": 880000,
+      "ticker": "nan",
+      "value": 49297600
+    }
+  ],
+  "report_period": "2026-03-31",
+  "schema": "13f-snapshot/v1"
+}
