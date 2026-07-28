@@ -34,6 +34,20 @@ filter — the NVDA bug); fiscal years an 8-K Item 4.02 declared non-reliable
 are excluded from the history dimensions. Rides rubric v2 by owner decision —
 no separate rubric_version bump.
 
+Rubric v3 (ticket #56, owner-signed): four judgment changes from the #55
+BLDR audit. B1 — trend checks (moat margin trend, pricing-power gross-margin
+trend) compare adjacent recent-vs-prior windows (3y each when history allows)
+instead of decade endpoints, and any trend award is capped at +1 when the
+last two annual steps decline monotonically (window averages can hide a
+fresh peak-and-decline), so recent down years read as contraction. B2 —
+confidence subtracts 5 per scored dimension fed by WARN-flagged or absent
+data (floor 50); threshold-distance alone overstated certainty on dirty
+snapshots. B3 — when no debt tag resolves, debt/equity falls back to
+total_liabilities/equity with a looser bar (+2 below 1.0), labeled as a
+fallback; the debt_unresolved WARN stays. B4 — a negative stage-1 growth
+carries through stage 2 unhalved: the old cap formula was designed for
+positive growth and turned decline into implied mean-reversion.
+
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
 no clocks, no randomness in this module.
 """
@@ -46,7 +60,7 @@ from .. import validation
 from ..errors import MissingDataError
 
 MAX_SCORE = 27
-RUBRIC_VERSION = 2
+RUBRIC_VERSION = 3
 TAX_RATE = 0.21
 
 BULLISH_SCORE = 0.70
@@ -186,6 +200,26 @@ def _ratio(num, den):
     return num / den
 
 
+def _trend_windows(values: list) -> tuple[float, float, int]:
+    """Adjacent recent-vs-prior window averages (rubric v3, ticket #56 B1).
+
+    Values are most-recent-first. Window width is 3 years when history allows,
+    shrinking to len//2 for short histories so the windows never overlap —
+    the trend always measures the current business against the years just
+    before it, never against the decade-ago baseline."""
+    w = min(3, len(values) // 2)
+    recent = sum(values[:w]) / w
+    prior = sum(values[w : 2 * w]) / w
+    return recent, prior, w
+
+
+def _rolling_over(values: list) -> bool:
+    """Window averages can hide a fresh peak-and-decline (ticket #56 B1
+    guard): true when the last two annual steps decline monotonically, which
+    caps any trend award at +1 (values are most-recent-first)."""
+    return len(values) >= 3 and values[0] < values[1] < values[2]
+
+
 def _gate_stale_present(periods: list, annual: list, flags: list) -> list:
     """No point from a stale-flagged value (ticket #55 A2).
 
@@ -275,6 +309,9 @@ def compute_metrics(period: dict) -> dict:
     return {
         "return_on_equity": _ratio(ttm.get("net_income"), bal.get("shareholders_equity")),
         "debt_to_equity": _ratio(debt, bal.get("shareholders_equity")),
+        "liabilities_to_equity": _ratio(
+            bal.get("total_liabilities"), bal.get("shareholders_equity")
+        ),
         "operating_margin": _ratio(op, ttm.get("revenue")),
         "current_ratio": _ratio(bal.get("current_assets"), bal.get("current_liabilities")),
         "gross_margin": _ratio(ttm.get("gross_profit"), ttm.get("revenue")),
@@ -300,11 +337,26 @@ def analyze_fundamentals(m: dict, flags: list) -> dict:
         flags.append("fundamentals: return_on_equity missing, scored 0")
 
     dte = m["debt_to_equity"]
+    lte = m.get("liabilities_to_equity")
     if dte is not None and dte < 0.5:
         score += 2
         details.append(f"Debt/equity {dte:.2f} < 0.5 ✓ (+2)")
     elif dte is not None:
         details.append(f"Debt/equity {dte:.2f} >= 0.5 ✗ (+0)")
+    elif lte is not None:
+        # Rubric v3 (ticket #56 B3): when no debt tag resolves, score total
+        # liabilities/equity against a ~2x looser bar — liabilities include
+        # payables and deferred revenue, so 1.0 here approximates the 0.5 D/E
+        # standard. The debt_unresolved WARN still rides data_quality.
+        if lte < 1.0:
+            score += 2
+            details.append(f"Liabilities/equity {lte:.2f} < 1.0 ✓ (+2, fallback: no debt tag resolved)")
+        else:
+            details.append(f"Liabilities/equity {lte:.2f} >= 1.0 ✗ (+0, fallback: no debt tag resolved)")
+        flags.append(
+            "fundamentals: debt_to_equity unresolved; scored total_liabilities/equity "
+            "fallback at the 1.0 bar"
+        )
     else:
         details.append("Debt/equity unavailable (+0)")
         flags.append("fundamentals: debt_to_equity missing, scored 0")
@@ -395,13 +447,24 @@ def analyze_moat(metrics: list, flags: list) -> dict:
     margins = [m["operating_margin"] for m in metrics if m["operating_margin"] is not None]
     if len(margins) >= 5:
         avg = sum(margins) / len(margins)
-        recent = sum(margins[:3]) / 3
-        older = sum(margins[-3:]) / 3
-        if avg > 0.2 and recent >= older:
+        recent, older, w = _trend_windows(margins)
+        if avg > 0.2 and recent >= older and not _rolling_over(margins):
             score += 1
-            details.append(f"Operating margins avg {avg:.1%} > 20% and stable/improving ✓ (+1)")
+            details.append(
+                f"Operating margins avg {avg:.1%} > 20% and stable/improving "
+                f"(recent {w}y {recent:.1%} >= prior {w}y {older:.1%}) ✓ (+1)"
+            )
+        elif avg > 0.2 and recent >= older:
+            details.append(
+                f"Operating margins avg {avg:.1%} > 20% and recent {w}y "
+                f"{recent:.1%} >= prior {w}y {older:.1%}, but the last 2 annual "
+                "steps decline — rolling over ✗ (+0)"
+            )
         else:
-            details.append(f"Operating margins avg {avg:.1%} (recent {recent:.1%} vs older {older:.1%}) ✗ (+0)")
+            details.append(
+                f"Operating margins avg {avg:.1%} "
+                f"(recent {w}y {recent:.1%} vs prior {w}y {older:.1%}) ✗ (+0)"
+            )
     else:
         details.append("Insufficient operating-margin history (+0)")
         flags.append("moat: fewer than 5 operating-margin periods, margin check scored 0")
@@ -475,19 +538,24 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
         flags.append("pricing_power: fewer than 3 gross-margin periods, excluded from denominator")
         return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient gross margin history (excluded)"]}
 
-    recent = sum(margins[:2]) / 2
-    older = sum(margins[-2:]) / 2
-    if recent > older + 0.02:
+    recent, older, w = _trend_windows(margins)
+    if recent > older + 0.02 and not _rolling_over(margins):
         score += 3
-        details.append(f"Gross margin expanding: {older:.1%} -> {recent:.1%} ✓ (+3)")
-    elif recent > older:
+        details.append(f"Gross margin expanding (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✓ (+3)")
+    elif recent > older and not _rolling_over(margins):
         score += 2
-        details.append(f"Gross margin improving: {older:.1%} -> {recent:.1%} ✓ (+2)")
+        details.append(f"Gross margin improving (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✓ (+2)")
+    elif recent > older:
+        score += 1
+        details.append(
+            f"Gross margin recent {w}y {recent:.1%} above prior {w}y {older:.1%}, "
+            "but the last 2 annual steps decline — rolling over, capped ✓ (+1)"
+        )
     elif abs(recent - older) < 0.01:
         score += 1
-        details.append(f"Gross margin stable near {recent:.1%} ✓ (+1)")
+        details.append(f"Gross margin stable near {recent:.1%} (recent {w}y vs prior {w}y) ✓ (+1)")
     else:
-        details.append(f"Gross margin declining: {older:.1%} -> {recent:.1%} ✗ (+0)")
+        details.append(f"Gross margin declining (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✗ (+0)")
 
     avg = sum(margins) / len(margins)
     if avg > 0.5:
@@ -676,7 +744,10 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
         growth = 0.03
 
     stage1_growth = min(growth, 0.08)
-    stage2_growth = min(growth * 0.5, 0.04)
+    # Rubric v3 (ticket #56 B4): the half-and-cap was designed for positive
+    # growth; halving a decline modeled unearned mean reversion. A declining
+    # stage 1 carries its full rate through stage 2.
+    stage2_growth = growth if growth < 0 else min(growth * 0.5, 0.04)
     terminal_growth = 0.025
     discount = 0.10
     stage1_years = stage2_years = 5
@@ -735,6 +806,27 @@ def compute_confidence(score_pct: float, mos: float) -> int:
     mos_dist = min(abs(mos - 0.0), abs(mos - BEARISH_MOS))
     mos_dist = min(mos_dist, 0.50)
     return round(50 + 50 * min(1.0, 0.6 * score_dist / 0.25 + 0.4 * mos_dist / 0.50))
+
+
+def _affected_dimensions(dimensions: dict, dq_warnings: list, flags: list) -> list[str]:
+    """Scored dimensions (plus valuation) fed by WARN-flagged or absent data
+    (rubric v3, ticket #56 B2). Sources: dimensions_affected on data_quality
+    warnings, and engine flags that mark a missing/absent input or a stale
+    value. Bookkeeping flags (split renormalization, denominator exclusions)
+    are not data degradation and do not count."""
+    scored = {n for n, d in dimensions.items() if not d.get("excluded")}
+    scored.add("valuation")
+    affected: set[str] = set()
+    for w in dq_warnings:
+        affected |= set(w.get("dimensions_affected", [])) & scored
+    for fl in flags:
+        prefix, _, rest = fl.partition(": ")
+        if prefix in scored and ("missing" in rest or "absent" in rest):
+            affected.add(prefix)
+        elif prefix == "stale_data":
+            field = rest.split(" ", 1)[0]
+            affected |= set(_PRESENT_FIELD_DIMENSIONS.get(field, [])) & scored
+    return sorted(affected)
 
 
 def diagnose(snapshot: dict) -> dict:
@@ -804,11 +896,23 @@ def diagnose(snapshot: dict) -> dict:
     market_cap = snapshot["market_cap"]
     mos = (valuation["intrinsic_value"] - market_cap) / market_cap
 
+    # Quality-aware confidence (rubric v3, ticket #56 B2): -5 per scored
+    # dimension fed by WARN-flagged or absent data, floor 50.
+    data_quality = _link_data_quality(validation.data_quality(findings, checks_run))
+    affected = _affected_dimensions(dimensions, data_quality["warnings"], flags)
+    base_confidence = compute_confidence(score_pct, mos)
+    confidence = max(50, base_confidence - 5 * len(affected))
+
     result = {
         "ticker": snapshot["ticker"],
         "rubric_version": RUBRIC_VERSION,
         "signal": compute_signal(score_pct, mos),
-        "confidence": compute_confidence(score_pct, mos),
+        "confidence": confidence,
+        "confidence_detail": {
+            "base": base_confidence,
+            "data_quality_penalty": 5 * len(affected),
+            "affected_dimensions": affected,
+        },
         "score": {"total": total, "max": max_effective, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
         "dimensions": dimensions,
         "valuation": {
@@ -822,9 +926,7 @@ def diagnose(snapshot: dict) -> dict:
         },
         "recent_trajectory": recent_trajectory(raw_periods),
         "flags": flags,
-        "data_quality": _link_data_quality(
-            validation.data_quality(findings, checks_run)
-        ),
+        "data_quality": data_quality,
         "provenance": {
             "snapshot_fetched_at": snapshot["fetched_at"],
             "market_cap_source": snapshot["market_cap_source"],
