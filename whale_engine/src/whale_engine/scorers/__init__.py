@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from importlib import import_module
 
-WHALES = ("buffett", "graham")
+WHALES = ("buffett", "graham", "lynch")
 
 
 def get_diagnose(whale: str):
