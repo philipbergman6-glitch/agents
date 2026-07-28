@@ -28,14 +28,14 @@ WARN = "WARN"
 INFO = "INFO"
 
 # --- market-cap bounds (check 2) -------------------------------------------
-# Loose order-of-magnitude bounds on market_cap / outstanding_shares: with no
-# independent price source yet, this only catches unit-scale corruption (cap
-# reported in thousands, share-count basis mismatch, ...). Ticket #50 replaces
-# the price source; once a snapshot carries an independent share price, tighten
-# this to |market_cap / (shares * price) - 1| <= MARKET_CAP_RELATIVE_TOLERANCE.
+# Loose order-of-magnitude bounds on market_cap / outstanding_shares catch
+# unit-scale corruption (cap reported in thousands, share-count basis
+# mismatch, ...). Snapshots that pin a price_reference (Cboe close x filed
+# shares, ticket #50) additionally get the tight cross-check:
+# |market_cap / (shares * price) - 1| <= MARKET_CAP_RELATIVE_TOLERANCE.
 IMPLIED_PRICE_MIN = 0.10  # USD per share
 IMPLIED_PRICE_MAX = 1_000_000.0  # BRK.A trades ~$7e5; anything above is corrupt
-MARKET_CAP_RELATIVE_TOLERANCE = 0.10  # for the future shares*price cross-check
+MARKET_CAP_RELATIVE_TOLERANCE = 0.10
 
 # --- split-aware share renormalization (check 3) ---------------------------
 # An adjacent-period share-count ratio at or beyond SPLIT_DETECT_RATIO is a
@@ -293,6 +293,28 @@ def _check_market_cap(snapshot: dict, arrays) -> list[dict]:
                 implied_price=implied,
             )
         ]
+    # Tightened cross-check (#50 follow-up): when the snapshot pins its own
+    # price_reference (Cboe close x filed shares), the stored market_cap must
+    # re-derive to within MARKET_CAP_RELATIVE_TOLERANCE — anything wider means
+    # the snapshot was edited or corrupted after fetch.
+    ref = snapshot.get("price_reference") or {}
+    ref_price, ref_shares = ref.get("price"), ref.get("shares")
+    if ref_price and ref_shares:
+        reference_cap = ref_price * ref_shares
+        if reference_cap > 0 and abs(mc / reference_cap - 1) > MARKET_CAP_RELATIVE_TOLERANCE:
+            return [
+                finding(
+                    ERROR,
+                    "market_cap_reference_mismatch",
+                    f"market_cap {mc:.4g} deviates "
+                    f"{abs(mc / reference_cap - 1):.1%} from its own pinned "
+                    f"price_reference derivation {reference_cap:.4g} "
+                    f"(tolerance {MARKET_CAP_RELATIVE_TOLERANCE:.0%}); the "
+                    "snapshot is internally inconsistent",
+                    market_cap=mc,
+                    reference_cap=reference_cap,
+                )
+            ]
     return []
 
 

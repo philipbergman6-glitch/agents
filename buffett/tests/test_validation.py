@@ -96,6 +96,32 @@ def test_market_cap_in_bounds_passes():
     assert not any(f["code"] == "market_cap_bounds" for f in findings)
 
 
+def test_market_cap_matching_price_reference_passes():
+    snapshot = copy.deepcopy(load_snapshot("KO"))
+    shares = 4_000_000_000.0
+    snapshot["price_reference"] = {"price": 60.0, "shares": shares}
+    snapshot["market_cap"] = 60.0 * shares * 1.05  # within 10%
+    findings, _ = validation.run_checks(snapshot)
+    assert not any(
+        f["code"] == "market_cap_reference_mismatch" for f in findings
+    )
+
+
+def test_market_cap_deviating_from_price_reference_hard_fails():
+    snapshot = copy.deepcopy(load_snapshot("KO"))
+    shares = 4_000_000_000.0
+    snapshot["price_reference"] = {"price": 60.0, "shares": shares}
+    snapshot["market_cap"] = 60.0 * shares * 1.25  # 25% off its own derivation
+    findings, _ = validation.run_checks(snapshot)
+    assert any(
+        f["code"] == "market_cap_reference_mismatch"
+        and f["severity"] == validation.ERROR
+        for f in findings
+    )
+    with pytest.raises(MissingDataError, match="validation failed"):
+        buffett.diagnose(snapshot)
+
+
 # ---------------------------------------------------------------------------
 # check 3: split-aware renormalization (unit level; scorer level lives in
 # test_score_units / test_graham_units)
