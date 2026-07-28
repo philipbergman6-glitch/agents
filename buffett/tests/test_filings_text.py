@@ -190,7 +190,7 @@ def test_cli_fetch_writes_sidecar_and_records_path(tmp_path, monkeypatch, capsys
 
     monkeypatch.setattr(
         "whale_engine.fetch.fetch_snapshot",
-        lambda ticker, today=None: _fake_snapshot(True, False),
+        lambda ticker, today=None, **kwargs: _fake_snapshot(True, False),
     )
     rc = cli.main(["fetch", "AAPL", "--snapshots-dir", str(tmp_path)])
     assert rc == 0
@@ -210,7 +210,7 @@ def test_cli_fetch_without_sidecar_still_succeeds(tmp_path, monkeypatch):
 
     monkeypatch.setattr(
         "whale_engine.fetch.fetch_snapshot",
-        lambda ticker, today=None: _fake_snapshot(False, True),
+        lambda ticker, today=None, **kwargs: _fake_snapshot(False, True),
     )
     rc = cli.main(["fetch", "AAPL", "--snapshots-dir", str(tmp_path)])
     assert rc == 0
