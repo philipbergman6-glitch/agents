@@ -1,6 +1,6 @@
 """Two-phase CLI, one engine, many whales.
 
-  <prog> fetch TICKER      networked: EDGAR + yfinance -> snapshots/TICKER-DATE.json
+  <prog> fetch TICKER      networked: EDGAR + Cboe quote -> snapshots/TICKER-DATE.json
   <prog> diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
 
 Entry points:
@@ -37,7 +37,7 @@ def cmd_fetch(args) -> int:
     from .fetch import fetch_snapshot
     from .filings_text import sidecar_filename
 
-    snapshot = fetch_snapshot(args.ticker)
+    snapshot = fetch_snapshot(args.ticker, market_cap_override=args.market_cap)
     out_dir = _snapshots_dir(args.snapshots_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -91,6 +91,13 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
     p_fetch = sub.add_parser("fetch", help="fetch EDGAR + market data into a snapshot (networked)")
     p_fetch.add_argument("ticker")
     p_fetch.add_argument("--snapshots-dir")
+    p_fetch.add_argument(
+        "--market-cap",
+        type=float,
+        dest="market_cap",
+        help="manual market-cap override in dollars (skips the Cboe quote; "
+        "provenance 'manual:owner-supplied')",
+    )
     p_fetch.set_defaults(func=cmd_fetch, prog=prog)
 
     p_diag = sub.add_parser("diagnose", help="score a snapshot (offline, deterministic)")
