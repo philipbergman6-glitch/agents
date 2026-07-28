@@ -35,10 +35,22 @@ def _dump(payload: dict) -> str:
 
 def cmd_fetch(args) -> int:
     from .fetch import fetch_snapshot
+    from .filings_text import sidecar_filename
 
     snapshot = fetch_snapshot(args.ticker)
     out_dir = _snapshots_dir(args.snapshots_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Filings-text sidecar (ticket #49): written next to the snapshot; the
+    # snapshot records only the filename, resolved relative to its own
+    # directory so the pair stays portable as a unit.
+    sidecar = snapshot.get("filings_sidecar")
+    if sidecar is not None:
+        markdown = sidecar.pop("markdown")
+        name = sidecar_filename(snapshot["ticker"], snapshot["fetched_at"])
+        (out_dir / name).write_text(markdown, encoding="utf-8")
+        sidecar["path"] = name
+
     path = out_dir / f"{snapshot['ticker']}-{snapshot['fetched_at']}.json"
     path.write_text(_dump(snapshot) + "\n", encoding="utf-8")
     print(str(path))

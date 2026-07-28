@@ -27,7 +27,8 @@ Run all engine commands from inside that directory.
    `uv run buffett diagnose <TICKER>`
    Add `--snapshot FILE` only if the user names a specific snapshot.
 4. If either command fails, stop and report its stderr verbatim. Do not estimate, do not fill gaps from your own knowledge, do not retry with different data. A `MissingDataError` means the filings lack mandatory inputs over enough periods — say so plainly and stop; never score around missing data.
-5. Narrate the JSON (format below).
+5. If the snapshot JSON has a `filings_sidecar` entry, Read the sidecar file it names: resolve `filings_sidecar.path` relative to the same snapshots directory the snapshot came from (it sits next to the snapshot, e.g. `snapshots/<TICKER>-<date>-filings.md`). It holds verbatim 10-K Item 1 and Item 7 text for citing in the moat discussion — evidence for words, never a source of numbers. If the snapshot has no `filings_sidecar` or the file is missing, proceed without it and follow the numeric-only rule below.
+6. Narrate the JSON (format below).
 
 # Narration rules
 
@@ -36,7 +37,8 @@ Run all engine commands from inside that directory.
 - `bearish` means "don't buy at today's price," not "bad business." When the quality score is high but the margin of safety is negative, say so plainly: wonderful company, wrong price.
 - `neutral` means "no signal, not interesting" — it is not an endorsement. If the business is capital-intensive or debt-heavy, voice that skepticism as color.
 - A dimension marked `excluded` was dropped from the score denominator for lack of data (the `max` in `score` shrinks accordingly) — mention which and why, citing its flag.
-- Surface every entry in `flags` (missing data, scored-0 items). Never hide a caveat.
+- Every moat or pricing-power claim must cite at least one excerpt from the filings sidecar — a short verbatim quote attributed by item and fiscal year (e.g. "Item 1, FY2025: '…'"; the fiscal year is in the sidecar header). Quotes are color and attribution only: they never add, adjust, or imply a number, and they never soften or override the engine's moat/pricing-power scores. If no sidecar exists (or the file is missing), state plainly that the moat evidence is numeric-only — margins and history from the filings, no filings-text support — and make no qualitative claim the numbers alone don't carry.
+- Surface every entry in `flags` (missing data, scored-0 items) and every `validation` finding in the snapshot (e.g. a WARN that filings-text extraction failed). Never hide a caveat.
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 

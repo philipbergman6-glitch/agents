@@ -790,6 +790,13 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
 
     market_cap, market_cap_source = _fetch_market_cap(ticker)
 
+    # Filings-text moat sidecar (ticket #49): cited narration evidence, never
+    # a scoring input. Extraction failure must not fail the fetch — it lands
+    # as a WARN finding on the snapshot instead.
+    from .filings_text import extract_filings_text
+
+    filings_sidecar, filings_warnings = extract_filings_text(company, ticker)
+
     import edgar as _edgar_mod
 
     snapshot = {
@@ -807,4 +814,12 @@ def fetch_snapshot(ticker: str, today: date | None = None) -> dict:
     }
     if share_count_check is not None:
         snapshot["share_count_check"] = share_count_check
+    if filings_sidecar is not None:
+        # Carries a transient "markdown" key; the CLI pops it, writes the
+        # sidecar file next to the snapshot, and records "path".
+        snapshot["filings_sidecar"] = filings_sidecar
+    if filings_warnings:
+        # Minimal findings list; ticket #48 owns the full validation/
+        # data_quality structure and merges these dicts into it.
+        snapshot.setdefault("validation", []).extend(filings_warnings)
     return snapshot
