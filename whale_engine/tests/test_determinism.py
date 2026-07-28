@@ -10,13 +10,23 @@ from conftest import SNAPSHOT_DATE, SNAPSHOTS, load_snapshot
 
 ALL_SCORABLE = ["AAPL", "KO", "MA", "GM", "F", "AAL", "CCL"]
 
+# GM and F resolve no debt tags in any period: Buffett/Graham degrade (D/E
+# scored 0 as a data gap), but Lynch hard-fails by rubric (#63 crash-over-
+# silent), so they are not scorable for him.
+SCORABLE = {
+    "buffett": ALL_SCORABLE,
+    "graham": ALL_SCORABLE,
+    "lynch": ["AAPL", "KO", "MA", "AAL", "CCL"],
+}
+
 
 def _dump(payload: dict) -> str:
     return json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False)
 
 
-@pytest.mark.parametrize("whale", WHALES)
-@pytest.mark.parametrize("ticker", ALL_SCORABLE)
+@pytest.mark.parametrize(
+    "whale,ticker", [(w, t) for w in WHALES for t in SCORABLE[w]]
+)
 def test_diagnose_is_deterministic(ticker, whale):
     diagnose = get_diagnose(whale)
     first = diagnose(load_snapshot(ticker))
@@ -36,12 +46,13 @@ def test_cli_output_is_byte_identical(capsys):
     assert first == second
 
 
-def test_whale_cli_graham_output_is_byte_identical(capsys):
+@pytest.mark.parametrize("whale", ["graham", "lynch"])
+def test_whale_cli_output_is_byte_identical(capsys, whale):
     from whale_engine.cli import main
 
     args = [
         "diagnose", "AAPL",
-        "--whale", "graham",
+        "--whale", whale,
         "--snapshot", str(SNAPSHOTS / f"AAPL-{SNAPSHOT_DATE}.json"),
     ]
     assert main(args) == 0

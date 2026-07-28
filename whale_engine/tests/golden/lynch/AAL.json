@@ -1,0 +1,112 @@
+{
+  "confidence": 100,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "growth",
+          "valuation",
+          "fundamentals"
+        ],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
+  "dimensions": {
+    "fundamentals": {
+      "details": [
+        "D/E not meaningful (shareholders' equity -3,972,000,000 <= 0) (+0)",
+        "TTM operating margin 1.7% < 10% ✗ (+0)",
+        "Derived TTM FCF $-2,516,000,000 <= 0 ✗ (+0)"
+      ],
+      "max": 4,
+      "score": 0
+    },
+    "growth": {
+      "details": [
+        "Revenue 5y CAGR 16.3% ✓ (+2)",
+        "EPS CAGR not meaningful (endpoint <= 0: oldest -3.08, latest 0.17) (+0)"
+      ],
+      "max": 6,
+      "score": 2
+    },
+    "valuation": {
+      "details": [
+        "P/E not meaningful (TTM net income -326,000,000 <= 0) (+0)",
+        "PEG unavailable: no positive TTM earnings for a P/E (+0)"
+      ],
+      "max": 5,
+      "score": 0
+    }
+  },
+  "flags": [],
+  "growth_band": {
+    "eps_cagr_5y": null,
+    "label": "not_meaningful"
+  },
+  "provenance": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31"
+    ],
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "quarterly_period": "2026-06-30",
+    "snapshot_fetched_at": "2026-07-27",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "rubric_version": 2,
+  "score": {
+    "max": 15,
+    "max_possible": 15,
+    "pct": 0.1333,
+    "total": 2
+  },
+  "signal": "bearish",
+  "ticker": "AAL",
+  "valuation": {
+    "debt_to_equity": null,
+    "eps_cagr_5y": null,
+    "fcf_ttm": -2516000000.0,
+    "market_cap": 9582015040.725,
+    "operating_margin_ttm": 0.0173,
+    "pe_ttm": null,
+    "peg": null,
+    "revenue_cagr_5y": 0.1628
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "confidence": 78,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-04-26",
+            "2026-01-25",
+            "2025-10-26",
+            "2025-07-27",
+            "2025-04-27",
+            "2025-01-26",
+            "2024-10-27",
+            "2024-07-28",
+            "2024-04-28",
+            "2024-01-28"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "growth",
+          "valuation",
+          "fundamentals"
+        ],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
+  "dimensions": {
+    "fundamentals": {
+      "details": [
+        "Debt/equity 0.04 < 0.50 ✓ (+2)",
+        "TTM operating margin 64.0% >= 10% ✓ (+1)",
+        "Derived TTM FCF $156,270,000,000 > 0 ✓ (+1)"
+      ],
+      "max": 4,
+      "score": 4
+    },
+    "growth": {
+      "details": [
+        "Revenue 5y CAGR 68.3% ✓ (+3)",
+        "EPS 5y CAGR 88.8% ✓ (+3)"
+      ],
+      "max": 6,
+      "score": 6
+    },
+    "valuation": {
+      "details": [
+        "P/E 31.39 >= 25 ✗ (+0)",
+        "PEG 0.35 < 1 (growth outruns the multiple) ✓ (+3)"
+      ],
+      "max": 5,
+      "score": 3
+    }
+  },
+  "flags": [
+    "growth: annual share counts at and before 2023-01-29 renormalized onto the current basis (split factor x10 at this boundary; observed jump x9.99)"
+  ],
+  "growth_band": {
+    "eps_cagr_5y": 0.8876,
+    "label": "fast_grower"
+  },
+  "provenance": {
+    "annual_periods": [
+      "2026-01-25",
+      "2025-01-26",
+      "2024-01-28",
+      "2023-01-29",
+      "2022-01-30"
+    ],
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "quarterly_period": "2026-04-26",
+    "snapshot_fetched_at": "2026-07-27",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "rubric_version": 2,
+  "score": {
+    "max": 15,
+    "max_possible": 15,
+    "pct": 0.8667,
+    "total": 13
+  },
+  "signal": "bullish",
+  "ticker": "NVDA",
+  "valuation": {
+    "debt_to_equity": 0.0433,
+    "eps_cagr_5y": 0.8876,
+    "fcf_ttm": 156270000000.0,
+    "market_cap": 5009871640000.0,
+    "operating_margin_ttm": 0.6402,
+    "pe_ttm": 31.3876,
+    "peg": 0.3536,
+    "revenue_cagr_5y": 0.683
+  }
+}

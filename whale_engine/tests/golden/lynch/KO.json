@@ -1,0 +1,126 @@
+{
+  "confidence": 58,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-04-03",
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "growth",
+          "valuation",
+          "fundamentals"
+        ],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-07-27",
+          "lag_days": 115,
+          "period_end": "2026-04-03"
+        },
+        "dimensions_affected": [
+          "valuation",
+          "fundamentals"
+        ],
+        "message": "latest fundamentals period ends 2026-04-03, 115 days before the snapshot date 2026-07-27 — the price is 115 days fresher than the books it is being compared against",
+        "severity": "WARN"
+      }
+    ]
+  },
+  "dimensions": {
+    "fundamentals": {
+      "details": [
+        "Debt/equity 0.01 < 0.50 ✓ (+2)",
+        "TTM operating margin 29.3% >= 10% ✓ (+1)",
+        "Derived TTM FCF $12,679,000,000 > 0 ✓ (+1)"
+      ],
+      "max": 4,
+      "score": 4
+    },
+    "growth": {
+      "details": [
+        "Revenue 5y CAGR 5.5% ✓ (+1)",
+        "EPS 5y CAGR 7.7% ✓ (+1)"
+      ],
+      "max": 6,
+      "score": 2
+    },
+    "valuation": {
+      "details": [
+        "P/E 25.83 >= 25 ✗ (+0)",
+        "PEG 3.34 >= 3 ✗ (+0)"
+      ],
+      "max": 5,
+      "score": 0
+    }
+  },
+  "flags": [],
+  "growth_band": {
+    "eps_cagr_5y": 0.0773,
+    "label": "slow_grower"
+  },
+  "provenance": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31"
+    ],
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "quarterly_period": "2026-04-03",
+    "snapshot_fetched_at": "2026-07-27",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    }
+  },
+  "rubric_version": 2,
+  "score": {
+    "max": 15,
+    "max_possible": 15,
+    "pct": 0.4,
+    "total": 6
+  },
+  "signal": "bearish",
+  "ticker": "KO",
+  "valuation": {
+    "debt_to_equity": 0.0074,
+    "eps_cagr_5y": 0.0773,
+    "fcf_ttm": 12679000000.0,
+    "market_cap": 353879178880.5,
+    "operating_margin_ttm": 0.2934,
+    "pe_ttm": 25.8287,
+    "peg": 3.341,
+    "revenue_cagr_5y": 0.0553
+  }
+}
