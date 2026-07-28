@@ -328,7 +328,7 @@ def diagnose(snapshot: dict) -> dict:
             " vs Graham Number forces bearish — price alone rules the name out"
         )
 
-    return {
+    result = {
         "ticker": snapshot["ticker"],
         "signal": signal,
         "confidence": compute_confidence(score_pct, mos),
@@ -351,3 +351,9 @@ def diagnose(snapshot: dict) -> dict:
             "periods": [p["period_end"] for p in periods],
         },
     }
+    # Unscored context (ticket #52): the insider_activity snapshot section is
+    # whale-agnostic; pass it through verbatim when present so any whale's
+    # subagent can cite it. Never scored.
+    if "insider_activity" in snapshot:
+        result["insider_activity"] = snapshot["insider_activity"]
+    return result

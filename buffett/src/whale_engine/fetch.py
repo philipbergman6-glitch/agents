@@ -1058,4 +1058,17 @@ def fetch_snapshot(
         # {severity, code, message} entries; #48's validation layer merges into
         # the same list (bare list, created only when non-empty).
         snapshot.setdefault("validation", []).extend(warnings)
+
+    # Form 4 insider buy-cluster context (ticket #52, per #47): whale-agnostic
+    # unscored section. Fetch failure = WARN in the validation list, never a
+    # failed fetch; section omitted on failure so "no cluster" stays
+    # distinguishable from "not checked".
+    from .insider import collect_insider_activity
+
+    insider_section, insider_warning = collect_insider_activity(company, today)
+    if insider_section is not None:
+        snapshot["insider_activity"] = insider_section
+    if insider_warning is not None:
+        snapshot.setdefault("validation", []).append(insider_warning)
+
     return snapshot

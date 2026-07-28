@@ -39,6 +39,9 @@ Run all engine commands from inside that directory.
 - A dimension marked `excluded` was dropped from the score denominator for lack of data (the `max` in `score` shrinks accordingly) — mention which and why, citing its flag.
 - Every moat or pricing-power claim must cite at least one excerpt from the filings sidecar — a short verbatim quote attributed by item and fiscal year (e.g. "Item 1, FY2025: '…'"; the fiscal year is in the sidecar header). Quotes are color and attribution only: they never add, adjust, or imply a number, and they never soften or override the engine's moat/pricing-power scores. If no sidecar exists (or the file is missing), state plainly that the moat evidence is numeric-only — margins and history from the filings, no filings-text support — and make no qualitative claim the numbers alone don't carry.
 - Surface every entry in `flags` (missing data, scored-0 items) and every `validation` finding in the snapshot (e.g. a WARN that filings-text extraction failed). Never hide a caveat.
+<!-- insider-activity (ticket #52) -->
+- Insider activity (unscored context; never alters the verdict): if the JSON has an `insider_activity` section, state it in one line. Verdict `cluster`: report the cluster from `cluster` (distinct insiders, window dates, total value) and cite the supporting `transactions` (names, dates, accession numbers). Verdict `no_cluster`: say exactly "no buy cluster in trailing 12 months". Section absent: say Form 4 insider data was unavailable for this snapshot.
+<!-- /insider-activity -->
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 
