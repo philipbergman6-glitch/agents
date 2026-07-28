@@ -1,9 +1,44 @@
 {
   "confidence": 83,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-04-26",
+            "2026-01-25",
+            "2025-10-26",
+            "2025-07-27",
+            "2025-04-27",
+            "2025-01-26",
+            "2024-10-27",
+            "2024-07-28",
+            "2024-04-28",
+            "2024-01-28"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
   "dimensions": {
     "earnings_stability": {
       "details": [
-        "EPS positive in all 9 periods ✓ (+3)",
+        "EPS positive in all 10 periods ✓ (+3)",
         "EPS grew oldest-to-latest (1.21 -> 6.57) ✓ (+1)"
       ],
       "max": 4,
@@ -31,7 +66,7 @@
     }
   },
   "flags": [
-    "earnings_stability: 2024-07-28 share count 2.46e+09 is >3x off the median 2.448e+10 (split artifact or mis-tagged fact), period excluded"
+    "earnings_stability: 2024-07-28 share count is stale by x10 vs its neighbors (cover-page fact lagging a split); repaired onto the surrounding basis"
   ],
   "provenance": {
     "market_cap_source": "yfinance:fast_info.market_cap",

@@ -1,5 +1,40 @@
 {
   "confidence": 69,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      }
+    ]
+  },
   "dimensions": {
     "book_value": {
       "details": [
@@ -104,7 +139,7 @@
       "stage1_pv": 82690052872.53859,
       "stage1_years": 5,
       "stage2_growth": 0.04,
-      "stage2_pv": 67554849831.95534,
+      "stage2_pv": 67554849831.95533,
       "stage2_years": 5,
       "terminal_growth": 0.025,
       "terminal_pv": 164537565168.0284

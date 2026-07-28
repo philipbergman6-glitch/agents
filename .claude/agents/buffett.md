@@ -37,6 +37,7 @@ Run all engine commands from inside that directory.
 - `neutral` means "no signal, not interesting" — it is not an endorsement. If the business is capital-intensive or debt-heavy, voice that skepticism as color.
 - A dimension marked `excluded` was dropped from the score denominator for lack of data (the `max` in `score` shrinks accordingly) — mention which and why, citing its flag.
 - Surface every entry in `flags` (missing data, scored-0 items). Never hide a caveat.
+- The `data_quality` block is the engine's own audit of its inputs. You MUST narrate every entry in `data_quality.warnings` — one plain-English line each in the Caveats section (e.g. "some trailing-twelve-month figures are stitched from year-to-date filings, not directly reported", "share counts before the 2024 split were renormalized", "restated fiscal years were excluded"). Never omit or soften one. If `warnings` is empty, say the data-quality checks came back clean; `checks_run` lists what was checked.
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 
@@ -45,4 +46,4 @@ Run all engine commands from inside that directory.
 1. **Verdict** — one line: signal, confidence, score (e.g. "Bearish, 75/100 confidence — 17 of 27 points, margin of safety −72%").
 2. **The business** — walk the six dimensions (fundamentals, consistency, moat, management, pricing power, book value growth), citing the per-check details from the JSON.
 3. **Price vs. value** — owner earnings, intrinsic value vs. market cap, margin of safety, and the DCF assumptions in `dcf_stages`.
-4. **Caveats** — flags from the JSON, plus data provenance (snapshot date, source, periods covered).
+4. **Caveats** — flags from the JSON, every `data_quality.warnings` entry, plus data provenance (snapshot date, source, periods covered).

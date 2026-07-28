@@ -25,6 +25,15 @@ latest quarterly TTM, which is fresher than any fiscal-year figure. Snapshots
 without annual_periods (schema v1) hard-fail: refetch rather than silently
 diagnose from the shallow window. Every diagnosis carries rubric_version.
 
+Validation layer (ticket #48, per the #44 decision): diagnose runs the shared
+snapshot checks first — any ERROR finding hard-fails with its message (sector
+guard, market-cap bounds, sign/identity invariants); WARN findings ride the
+output in a top-level `data_quality` block the subagent must narrate. Share
+histories are split-aware renormalized (replacing the majority-cohort outlier
+filter — the NVDA bug); fiscal years an 8-K Item 4.02 declared non-reliable
+are excluded from the history dimensions. Rides rubric v2 by owner decision —
+no separate rubric_version bump.
+
 Determinism contract: same snapshot dict -> identical output dict. No I/O,
 no clocks, no randomness in this module.
 """
@@ -33,12 +42,12 @@ from __future__ import annotations
 
 from datetime import date
 
+from .. import validation
 from ..errors import MissingDataError
 
 MAX_SCORE = 27
 RUBRIC_VERSION = 2
 TAX_RATE = 0.21
-SHARES_OUTLIER_RATIO = 3.0
 
 BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.45
@@ -343,29 +352,37 @@ def analyze_book_value(periods: list, flags: list) -> dict:
         for p in periods
         if p["balance"].get("shareholders_equity") and p["balance"].get("outstanding_shares")
     ]
-    # Cover-page share facts lag one quarter, so a split between filings leaves
-    # one period on the pre-split count — off by the split ratio, not by drift.
-    # Buybacks move counts a few percent a year; >3x off the median is a split
-    # artifact or a mis-tagged fact, never a real capital change.
-    if usable:
-        counts = sorted(p["balance"]["outstanding_shares"] for p in usable)
-        median = counts[len(counts) // 2]
-        kept = []
-        for p in usable:
-            shares = p["balance"]["outstanding_shares"]
-            if shares > median * SHARES_OUTLIER_RATIO or shares < median / SHARES_OUTLIER_RATIO:
-                flags.append(
-                    f"book_value: {p['period_end']} share count {shares:.4g} is >"
-                    f"{SHARES_OUTLIER_RATIO:g}x off the median {median:.4g} "
-                    "(split artifact or mis-tagged fact), period excluded"
-                )
-            else:
-                kept.append(p)
-        usable = kept
-
-    book_values = [
-        p["balance"]["shareholders_equity"] / p["balance"]["outstanding_shares"] for p in usable
-    ]
+    # Split-aware renormalization (ticket #48, replacing the majority-cohort
+    # outlier filter that excluded NVDA's *correct* post-split years): jumps
+    # consistent with a split rebase older counts onto the current share basis,
+    # so BVPS is comparable across the whole decade; jumps no split explains
+    # exclude the older segment with a flag.
+    adjusted, events = validation.renormalize_share_series(
+        [(p["period_end"], p["balance"]["outstanding_shares"]) for p in usable]
+    )
+    for ev in events:
+        if ev["type"] == "repair":
+            flags.append(
+                f"book_value: {ev['period_end']} share count is stale by "
+                f"x{ev['factor']:g} vs its neighbors (cover-page fact lagging a "
+                "split); repaired onto the surrounding basis"
+            )
+        elif ev["type"] == "split":
+            flags.append(
+                f"book_value: share counts at and before {ev['older_period_end']} "
+                "renormalized onto the current basis (split factor "
+                f"x{ev['factor']:g} at this boundary; observed jump "
+                f"x{ev['observed_ratio']:.3g})"
+            )
+        else:
+            flags.append(
+                f"book_value: share count jumps x{ev['observed_ratio']:.3g} into "
+                f"{ev['newer_period_end']} with no plausible split factor; periods "
+                f"{', '.join(ev['excluded_period_ends'])} excluded"
+            )
+    pairs = [(p, adj) for p, adj in zip(usable, adjusted) if adj is not None]
+    usable = [p for p, _ in pairs]
+    book_values = [p["balance"]["shareholders_equity"] / adj for p, adj in pairs]
     if len(book_values) < 3:
         flags.append("book_value: fewer than 3 BVPS periods, excluded from denominator")
         return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient book value history (excluded)"]}
@@ -546,10 +563,39 @@ def compute_confidence(score_pct: float, mos: float) -> int:
 
 
 def diagnose(snapshot: dict) -> dict:
+    # Validation layer first: an ERROR finding (sector inapplicability,
+    # market-cap out of bounds, invariant violations) is a better message than
+    # the generic missing-data gap report, and hard-fails by standing rule.
+    findings, checks_run = validation.run_checks(snapshot)
+    errors = [f for f in findings if f["severity"] == validation.ERROR]
+    if errors:
+        raise MissingDataError(
+            f"{snapshot.get('ticker')}: validation failed -- "
+            + "; ".join(f["message"] for f in errors)
+        )
+
     validate(snapshot)
     periods = snapshot["periods"]
     annual = snapshot["annual_periods"]
     flags: list[str] = []
+
+    # 8-K Item 4.02 restatement guard (fetch-time finding): fiscal years
+    # declared non-reliable are excluded from every annual consumer — history
+    # dimensions and the DCF growth window (standard renormalization path).
+    excluded_years = validation.restatement_excluded_years(findings)
+    if excluded_years:
+        annual = [p for p in annual if p["period_end"] not in excluded_years]
+        flags.append(
+            "restatement: fiscal years "
+            + ", ".join(excluded_years)
+            + " excluded from history dimensions (8-K Item 4.02 non-reliance)"
+        )
+        if len([p for p in annual if _is_complete(p)]) < MIN_COMPLETE_ANNUAL:
+            raise MissingDataError(
+                f"{snapshot.get('ticker')}: fewer than {MIN_COMPLETE_ANNUAL} "
+                "complete annual periods remain after excluding restated fiscal "
+                "years " + ", ".join(excluded_years)
+            )
 
     metrics = [compute_metrics(p) for p in periods]
     annual_metrics = [compute_metrics(p) for p in annual]
@@ -594,6 +640,7 @@ def diagnose(snapshot: dict) -> dict:
             "dcf_stages": valuation["dcf_stages"],
         },
         "flags": flags,
+        "data_quality": validation.data_quality(findings, checks_run),
         "provenance": {
             "snapshot_fetched_at": snapshot["fetched_at"],
             "market_cap_source": snapshot["market_cap_source"],
