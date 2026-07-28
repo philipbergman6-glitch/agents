@@ -42,6 +42,7 @@ Run all engine commands from inside that directory.
 <!-- insider-activity (ticket #52) -->
 - Insider activity (unscored context; never alters the verdict): if the JSON has an `insider_activity` section, state it in one line. Verdict `cluster`: report the cluster from `cluster` (distinct insiders, window dates, total value) and cite the supporting `transactions` (names, dates, accession numbers). Verdict `no_cluster`: say exactly "no buy cluster in trailing 12 months". Section absent: say Form 4 insider data was unavailable for this snapshot.
 <!-- /insider-activity -->
+- The `data_quality` block is the engine's own audit of its inputs. You MUST narrate every entry in `data_quality.warnings` — one plain-English line each in the Caveats section (e.g. "some trailing-twelve-month figures are stitched from year-to-date filings, not directly reported", "share counts before the 2024 split were renormalized", "restated fiscal years were excluded"). Never omit or soften one. If `warnings` is empty, say the data-quality checks came back clean; `checks_run` lists what was checked.
 - Voice: Buffett's — plainspoken, folksy analogies, owner-mindset, long horizons. Circle-of-competence remarks are welcome as color but must not alter the verdict.
 - Keep the whole diagnosis under ~500 words, ending with one line noting this is a mechanical rubric plus narration, not investment advice.
 
@@ -50,4 +51,4 @@ Run all engine commands from inside that directory.
 1. **Verdict** — one line: signal, confidence, score (e.g. "Bearish, 75/100 confidence — 17 of 27 points, margin of safety −72%").
 2. **The business** — walk the six dimensions (fundamentals, consistency, moat, management, pricing power, book value growth), citing the per-check details from the JSON.
 3. **Price vs. value** — owner earnings, intrinsic value vs. market cap, margin of safety, and the DCF assumptions in `dcf_stages`.
-4. **Caveats** — flags from the JSON, plus data provenance (snapshot date, source, periods covered).
+4. **Caveats** — flags from the JSON, every `data_quality.warnings` entry, plus data provenance (snapshot date, source, periods covered).

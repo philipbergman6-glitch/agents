@@ -146,6 +146,16 @@ CBOE_QUOTE_URL = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{ticker}
 QUOTE_STALENESS_DAYS = 5
 MARKET_CAP_MANUAL_SOURCE = "manual:owner-supplied"
 
+# --- 8-K Item 4.02 restatement guard (validation check 7, ticket #48) ------
+# A 4.02 8-K declares previously issued financial statements non-reliable.
+# Which fiscal years it covers is stated in prose, not metadata, so without
+# parsing the filing text we conservatively treat the fiscal years ending in
+# the RESTATEMENT_AFFECTED_YEARS before the 8-K filing date as affected;
+# scorers exclude them from history dimensions (standard renormalization path).
+RESTATEMENT_ITEM = "4.02"
+RESTATEMENT_WINDOW_YEARS = 10
+RESTATEMENT_AFFECTED_YEARS = 3
+
 
 class FetchError(RuntimeError):
     pass
@@ -560,6 +570,93 @@ def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
     return None
 
 
+# Value keys are renamed before the snapshot is written (reference naming);
+# tags_used provenance must follow, or a field->provenance join silently
+# reports the renamed fields as unattributed (audit b-6, validation check 5a).
+_TAG_RENAMES = {"dividends_paid": "dividends_and_other_cash_distributions"}
+_TAG_COMBINES = {
+    "issuance_or_purchase_of_equity_shares": ["share_issuance", "share_repurchase"]
+}
+
+
+def _realign_tags(tags_used: dict) -> None:
+    """Rename provenance (and *_warning) keys to match the stored value keys."""
+    for old, new in _TAG_RENAMES.items():
+        if old in tags_used:
+            tags_used[new] = tags_used.pop(old)
+        if f"{old}_warning" in tags_used:
+            tags_used[f"{new}_warning"] = tags_used.pop(f"{old}_warning")
+    for new, olds in _TAG_COMBINES.items():
+        tags = [tags_used.pop(old) for old in olds if old in tags_used]
+        if tags:
+            tags_used[new] = "+".join(tags)
+        warnings = [
+            tags_used.pop(f"{old}_warning")
+            for old in olds
+            if f"{old}_warning" in tags_used
+        ]
+        if warnings:
+            tags_used[f"{new}_warning"] = " | ".join(dict.fromkeys(warnings))
+
+
+def _check_restatements(company, annual_periods: list, today: date) -> list[dict]:
+    """8-K Item 4.02 non-reliance filings in the lookback window -> findings.
+
+    Networked and fetch-time only. Failure to read the item metadata is
+    reported as an explicit WARN finding, never swallowed.
+    """
+    from . import validation
+
+    try:
+        filings = company.get_filings(form="8-K")
+        hits = []
+        for filing in filings or []:
+            filed = _to_plain_date(getattr(filing, "filing_date", None))
+            if filed is None or (today - filed).days > RESTATEMENT_WINDOW_YEARS * 365.25:
+                continue
+            items = getattr(filing, "items", None)
+            if items is None:
+                continue
+            item_list = items if isinstance(items, (list, tuple)) else [
+                s.strip() for s in str(items).replace(";", ",").split(",")
+            ]
+            if any(RESTATEMENT_ITEM in str(item) for item in item_list):
+                hits.append(filed)
+    except Exception as e:  # explicit degradation, not a silent skip
+        return [
+            validation.finding(
+                validation.WARN,
+                "restatement_guard_unavailable",
+                f"could not read 8-K item metadata ({type(e).__name__}: {e}); "
+                "the Item 4.02 restatement guard did not run",
+            )
+        ]
+
+    findings = []
+    for filed in sorted(hits):
+        affected = [
+            p["period_end"]
+            for p in annual_periods
+            if p.get("period_end")
+            and 0
+            <= (filed - date.fromisoformat(p["period_end"])).days
+            <= RESTATEMENT_AFFECTED_YEARS * 365.25
+        ]
+        findings.append(
+            validation.finding(
+                validation.WARN,
+                "restatement_402",
+                f"8-K Item {RESTATEMENT_ITEM} (non-reliance on previously issued "
+                f"financial statements) filed {filed.isoformat()}; fiscal years "
+                f"{', '.join(affected) if affected else '(none in window)'} are "
+                "excluded from history dimensions",
+                filing_date=filed.isoformat(),
+                affected_period_ends=affected,
+            )
+        )
+    return findings
+
+
 def _freshest_instant(history) -> tuple[float, str] | None:
     """Latest instant fact in a concept history, regardless of period matching.
 
@@ -750,6 +847,7 @@ def _fetch_annual_periods(
                 repurchase or 0.0
             )
         ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
+        _realign_tags(tags_used)
 
         balance, balance_tags = _build_balance(
             fy_end,
@@ -840,10 +938,13 @@ def fetch_snapshot(
             value = -float(m.value) if field in NEGATE_FLOWS else float(m.value)
             ttm[field] = value
             tags_used[field] = tag
+            # Stitched-TTM warnings for every field, not just net_income
+            # (audit a-3/b-1, validation check 1): the diagnosis must be able
+            # to surface that these are edgartools arithmetic, not filed data.
+            if m.has_gaps or m.warning:
+                tags_used[f"{field}_warning"] = str(m.warning or "has_gaps")
             if field == "net_income":
                 window_end = m.as_of_date
-                if m.has_gaps or m.warning:
-                    tags_used["net_income_warning"] = str(m.warning or "has_gaps")
 
         if window_end is None:
             raise FetchError(f"{ticker} {q}: net income TTM vanished mid-fetch.")
@@ -858,6 +959,7 @@ def fetch_snapshot(
                 repurchase or 0.0
             )
         ttm["dividends_and_other_cash_distributions"] = ttm.pop("dividends_paid", None)
+        _realign_tags(tags_used)
 
         balance, balance_tags = _build_balance(
             window_end,
@@ -1050,25 +1152,47 @@ def fetch_snapshot(
         # Carries a transient "markdown" key; the CLI pops it, writes the
         # sidecar file next to the snapshot, and records "path".
         snapshot["filings_sidecar"] = filings_sidecar
-    if filings_warnings:
-        # Minimal findings list; ticket #48 owns the full validation/
-        # data_quality structure and merges these dicts into it.
-        snapshot.setdefault("validation", []).extend(filings_warnings)
-    if warnings:
-        # {severity, code, message} entries; #48's validation layer merges into
-        # the same list (bare list, created only when non-empty).
-        snapshot.setdefault("validation", []).extend(warnings)
 
     # Form 4 insider buy-cluster context (ticket #52, per #47): whale-agnostic
-    # unscored section. Fetch failure = WARN in the validation list, never a
-    # failed fetch; section omitted on failure so "no cluster" stays
+    # unscored section. Fetch failure = WARN in the validation findings, never
+    # a failed fetch; section omitted on failure so "no cluster" stays
     # distinguishable from "not checked".
     from .insider import collect_insider_activity
 
     insider_section, insider_warning = collect_insider_activity(company, today)
     if insider_section is not None:
         snapshot["insider_activity"] = insider_section
-    if insider_warning is not None:
-        snapshot.setdefault("validation", []).append(insider_warning)
 
+    # Fetch-only findings from the sidecar (#49), market-cap cross-check (#50)
+    # and Form 4 (#52) paths merge into the validation section (#48); their
+    # codes are registered in validation.FETCH_ONLY_CODES so diagnoses carry
+    # them forward from stored snapshots.
+    extra_findings = list(filings_warnings) + list(warnings)
+    if insider_warning is not None:
+        extra_findings.append(insider_warning)
+    _attach_validation(snapshot, company, today, extra_findings)
     return snapshot
+
+
+def _attach_validation(
+    snapshot: dict, company, today: date, extra_findings: list[dict] | None = None
+) -> None:
+    """Write the snapshot's validation section (ticket #48).
+
+    The pure checks over the snapshot, plus the fetch-only 8-K 4.02
+    restatement guard. INFO findings live here only; diagnose recomputes the
+    pure checks and carries the fetch-only findings forward.
+    """
+    from . import validation
+
+    findings, checks_run = validation.run_checks(snapshot)
+    restatement_findings = _check_restatements(
+        company, snapshot["annual_periods"], today
+    )
+    guard_ran = not any(
+        f["code"] == "restatement_guard_unavailable" for f in restatement_findings
+    )
+    snapshot["validation"] = {
+        "findings": (extra_findings or []) + findings + restatement_findings,
+        "checks_run": checks_run + (["restatement_402"] if guard_ran else []),
+    }
