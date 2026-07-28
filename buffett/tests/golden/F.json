@@ -1,5 +1,14 @@
 {
-  "confidence": 100,
+  "confidence": 85,
+  "confidence_detail": {
+    "affected_dimensions": [
+      "fundamentals",
+      "management",
+      "valuation"
+    ],
+    "base": 100,
+    "data_quality_penalty": 15
+  },
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -76,7 +85,7 @@
     "fundamentals": {
       "details": [
         "ROE -16.2% <= 15% ✗ (+0)",
-        "Debt/equity unavailable (+0)",
+        "Liabilities/equity 6.54 >= 1.0 ✗ (+0, fallback: no debt tag resolved)",
         "Operating margin -3.8% <= 15% ✗ (+0)",
         "Current ratio 1.09 <= 1.5 ✗ (+0)"
       ],
@@ -94,7 +103,7 @@
     "moat": {
       "details": [
         "ROE > 15% in only 3/10 periods ✗ (+0)",
-        "Operating margins avg 1.1% (recent 0.3% vs older 1.8%) ✗ (+0)",
+        "Operating margins avg 1.1% (recent 3y 0.3% vs prior 3y 1.3%) ✗ (+0)",
         "Asset turnover never above 1.0 ✗ (+0)",
         "Performance stability -133.2% <= 70% ✗ (+0)"
       ],
@@ -111,7 +120,7 @@
     }
   },
   "flags": [
-    "fundamentals: debt_to_equity missing, scored 0",
+    "fundamentals: debt_to_equity unresolved; scored total_liabilities/equity fallback at the 1.0 bar",
     "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
   ],
   "provenance": {
@@ -175,7 +184,7 @@
       }
     ]
   },
-  "rubric_version": 2,
+  "rubric_version": 3,
   "score": {
     "max": 22,
     "max_possible": 27,

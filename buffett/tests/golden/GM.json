@@ -1,5 +1,13 @@
 {
-  "confidence": 78,
+  "confidence": 70,
+  "confidence_detail": {
+    "affected_dimensions": [
+      "fundamentals",
+      "valuation"
+    ],
+    "base": 80,
+    "data_quality_penalty": 10
+  },
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -75,7 +83,7 @@
     "fundamentals": {
       "details": [
         "ROE 3.1% <= 15% ✗ (+0)",
-        "Debt/equity unavailable (+0)",
+        "Liabilities/equity 3.53 >= 1.0 ✗ (+0, fallback: no debt tag resolved)",
         "Operating margin 1.1% <= 15% ✗ (+0)",
         "Current ratio 1.14 <= 1.5 ✗ (+0)"
       ],
@@ -93,7 +101,7 @@
     "moat": {
       "details": [
         "ROE > 15% in only 5/10 periods ✗ (+0)",
-        "Operating margins avg 5.6% (recent 5.0% vs older 5.0%) ✗ (+0)",
+        "Operating margins avg 5.6% (recent 3y 5.0% vs prior 3y 7.2%) ✗ (+0)",
         "Asset turnover never above 1.0 ✗ (+0)",
         "Performance stability 46.3% <= 70% ✗ (+0)"
       ],
@@ -110,7 +118,7 @@
     }
   },
   "flags": [
-    "fundamentals: debt_to_equity missing, scored 0",
+    "fundamentals: debt_to_equity unresolved; scored total_liabilities/equity fallback at the 1.0 bar",
     "pricing_power: fewer than 3 gross-margin periods, excluded from denominator"
   ],
   "provenance": {
@@ -174,7 +182,7 @@
       }
     ]
   },
-  "rubric_version": 2,
+  "rubric_version": 3,
   "score": {
     "max": 22,
     "max_possible": 27,
@@ -192,14 +200,14 @@
       "stage1_growth": -0.034999999999999996,
       "stage1_pv": 21197184564.1978,
       "stage1_years": 5,
-      "stage2_growth": -0.017499999999999998,
-      "stage2_pv": 11573789148.748907,
+      "stage2_growth": -0.034999999999999996,
+      "stage2_pv": 11014158505.87842,
       "stage2_years": 5,
       "terminal_growth": 0.025,
-      "terminal_pv": 24918452893.359116
+      "terminal_pv": 22776912130.173664
     },
-    "intrinsic_value": 49036012615.35995,
-    "margin_of_safety": -0.3439,
+    "intrinsic_value": 46740016920.212395,
+    "margin_of_safety": -0.3747,
     "market_cap": 74743875348.24,
     "owner_earnings": 6172853393.396305,
     "owner_earnings_components": {
@@ -210,6 +218,6 @@
       "total_capex": 8804000000.0,
       "working_capital_change": -1227000000.0
     },
-    "raw_intrinsic_value": 57689426606.305824
+    "raw_intrinsic_value": 54988255200.24988
   }
 }

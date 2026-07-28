@@ -1,5 +1,14 @@
 {
-  "confidence": 69,
+  "confidence": 54,
+  "confidence_detail": {
+    "affected_dimensions": [
+      "fundamentals",
+      "management",
+      "valuation"
+    ],
+    "base": 69,
+    "data_quality_penalty": 15
+  },
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -94,7 +103,7 @@
     "moat": {
       "details": [
         "ROE > 15% in 10/10 periods (avg 132.0%) ✓ (+2)",
-        "Operating margins avg 47.0% > 20% and stable/improving ✓ (+1)",
+        "Operating margins avg 47.0% > 20% and stable/improving (recent 3y 56.3% >= prior 3y 41.1%) ✓ (+1)",
         "Asset turnover never above 1.0 ✗ (+0)",
         "Performance stability 73.0% > 70% ✓ (+1)"
       ],
@@ -174,7 +183,7 @@
       }
     ]
   },
-  "rubric_version": 2,
+  "rubric_version": 3,
   "score": {
     "max": 22,
     "max_possible": 27,

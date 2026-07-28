@@ -58,4 +58,4 @@ def test_buffett_v2_requires_min_complete_annual():
 
 def test_buffett_output_carries_rubric_version():
     result = buffett.diagnose(load_snapshot("KO"))
-    assert result["rubric_version"] == 2
+    assert result["rubric_version"] == 3
