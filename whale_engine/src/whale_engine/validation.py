@@ -43,6 +43,13 @@ MARKET_CAP_RELATIVE_TOLERANCE = 0.10
 # reverse). A manual cap has no price_reference, so the ±10% cross-check above
 # can never fire on it — the WARN keeps that bypass honest (ticket #55 A8).
 _MANUAL_MARKET_CAP_SOURCE = "manual:owner-supplied"
+# When a snapshot carries a market_cap_check (yfinance witness, recorded at
+# fetch), a wide disagreement means the derived cap's share basis is corrupt —
+# MA's 2010 pre-split dei fact produced a −86% deviation that was recorded but
+# never gated (#77). Cboe-vs-yfinance timing noise is low single digits; 25%
+# only fires on structural corruption. Fetch imports this same constant to
+# hard-fail at fetch time; witness *absence* stays WARN-only.
+MARKET_CAP_WITNESS_TOLERANCE = 0.25
 
 # --- stale TTM windows (ticket #55 A1/A2) ----------------------------------
 # edgartools clamps get_ttm to the latest window a tag can build, so an
@@ -410,6 +417,27 @@ def _check_market_cap(snapshot: dict, arrays) -> list[dict]:
                     reference_cap=reference_cap,
                 )
             ]
+    # Witness gate (#77): the fetch records the yfinance cross-check when the
+    # witness is reachable; a deviation past MARKET_CAP_WITNESS_TOLERANCE means
+    # the derived cap's share basis is corrupt (stale pre-split dei fact, wrong
+    # share class). ERROR — scorers must walk away, not price off it.
+    check = snapshot.get("market_cap_check") or {}
+    deviation_pct = check.get("deviation_pct")
+    if deviation_pct is not None and abs(deviation_pct) / 100.0 > MARKET_CAP_WITNESS_TOLERANCE:
+        return [
+            finding(
+                ERROR,
+                "market_cap_witness_mismatch",
+                f"market_cap {mc:.4g} deviates {deviation_pct:.1f}% from the "
+                f"{check.get('reference_source', 'reference')} witness "
+                f"{check.get('reference', 0):.4g} (tolerance "
+                f"{MARKET_CAP_WITNESS_TOLERANCE:.0%}); the derived share basis "
+                "is corrupt — refetch, or pass --market-cap to override",
+                market_cap=mc,
+                reference_cap=check.get("reference"),
+                deviation_pct=deviation_pct,
+            )
+        ]
     return []
 
 

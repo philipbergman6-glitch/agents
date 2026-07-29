@@ -5,12 +5,16 @@ recorded verbatim with the XBRL tag it came from, so any number in a diagnosis
 can be traced back to a filing.
 
 Market cap (issue #45 decision): derived as Cboe delayed close x the freshest
-*filed* EDGAR dei cover-page share count — never sourced from yfinance. A Cboe
-miss or a stale quote (last trade > QUOTE_STALENESS_DAYS calendar days) is a
-hard FetchError; the only alternative path is the explicit --market-cap manual
-override (provenance "manual:owner-supplied"). yfinance is an optional
-cross-check witness: if importable it contributes a market_cap_check block, if
-not the snapshot carries a WARN entry — it is never load-bearing. The fetched
+*filed* EDGAR share count (freshest across dei cover page, filing cover sums,
+us-gaap counts, and the weighted-average proxy — #77) — never sourced from
+yfinance. A Cboe miss or a stale quote (last trade > QUOTE_STALENESS_DAYS
+calendar days) is a hard FetchError; the only alternative path is the explicit
+--market-cap manual override (provenance "manual:owner-supplied"). yfinance is
+an optional cross-check witness: if importable it contributes a
+market_cap_check block, if not the snapshot carries a WARN entry — its absence
+is never load-bearing, but when it IS present and disagrees past
+validation.MARKET_CAP_WITNESS_TOLERANCE the fetch hard-fails (#77): a
+disagreement that wide means the derived share basis is corrupt. The fetched
 price + quote timestamp are pinned in the snapshot (price_reference) like all
 other raw data, so diagnose stays deterministic.
 
@@ -435,8 +439,10 @@ def _yfinance_reference_cap(ticker: str) -> tuple[float, str]:
 def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dict | None:
     """Compare the derived cap to yfinance if it happens to work.
 
-    Never load-bearing: any failure appends a WARN entry and returns None.
-    (#48's validation layer consumes market_cap_check when present.)
+    Witness absence is never load-bearing: any failure appends a WARN entry
+    and returns None. When the witness IS available, the caller gates on the
+    recorded deviation (#77), and validation re-checks it offline on every
+    stored snapshot.
     """
     try:
         reference, source = _yfinance_reference_cap(ticker)
@@ -459,6 +465,29 @@ def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dic
         "reference_source": source,
         "deviation_pct": (derived_cap - reference) / reference * 100.0,
     }
+
+
+def _gate_market_cap_witness(
+    ticker: str, market_cap: float, market_cap_source: str, check: dict | None
+) -> None:
+    """Witness gate (#77): refuse a derived cap the yfinance witness contradicts.
+
+    A deviation past MARKET_CAP_WITNESS_TOLERANCE means the filed share basis
+    is corrupt (e.g. a pre-split dei fact). No check (witness unreachable) is
+    not gated — absence stays WARN-only.
+    """
+    if check is None:
+        return
+    if abs(check["deviation_pct"]) / 100.0 <= validation.MARKET_CAP_WITNESS_TOLERANCE:
+        return
+    raise FetchError(
+        f"{ticker}: derived market cap {market_cap:.4g} ({market_cap_source}) "
+        f"deviates {check['deviation_pct']:.1f}% from the "
+        f"{check['reference_source']} witness {check['reference']:.4g} "
+        f"(tolerance {validation.MARKET_CAP_WITNESS_TOLERANCE:.0%}) — the "
+        "filed share basis looks corrupt. Pass --market-cap VALUE to "
+        "override manually."
+    )
 
 
 def _to_plain_date(v) -> date | None:
@@ -713,37 +742,58 @@ def _freshest_share_count(
     shares_proxy_history,
     latest_window_end: date,
 ) -> tuple[float, str]:
-    """Freshest filed share count for market cap, dei cover page first.
+    """Freshest filed share count for market cap, across every source.
 
-    Order: (1) undimensioned dei EntityCommonStockSharesOutstanding from
-    companyfacts (freshest filed cover page); (2) per-filing multi-class cover
-    sums (V-type filers, where companyfacts drops the dimensioned counts);
-    (3) freshest us-gaap point-in-time count; (4) weighted-average-basic
-    proxy. Hard-fail if none exists — market cap needs a share count.
+    Candidates: (1) undimensioned dei EntityCommonStockSharesOutstanding from
+    companyfacts; (2) per-filing multi-class cover sums (V-type filers, where
+    companyfacts drops the dimensioned counts); (3) freshest us-gaap
+    point-in-time count; (4) weighted-average-basic proxy. The freshest
+    instant wins; source order above breaks date ties, so the dei cover page
+    still leads whenever it is current. Strict source priority is what let a
+    2010 dei fact (pre-split) outrank a current proxy count and poison MA's
+    market cap by −86% (#77). Hard-fail if no source exists — market cap
+    needs a share count.
     """
+    candidates: list[tuple[date, int, float, str]] = []
     for tag, history in share_histories:
         if tag != COVER_SHARES_TAG or history is None:
             continue
         hit = _freshest_instant(history)
         if hit is not None:
-            return hit[0], f"dei:{COVER_SHARES_TAG}@{hit[1]}"
+            candidates.append(
+                (date.fromisoformat(hit[1]), 0, hit[0], f"dei:{COVER_SHARES_TAG}@{hit[1]}")
+            )
     if cover_rows:
         latest = max(cover_rows, key=lambda r: r[0])
-        return (
-            latest[1],
-            f"filing-cover-sum:dei:{COVER_SHARES_TAG}@{latest[0].isoformat()}"
-            f"(sum of {latest[2]} classes)",
+        candidates.append(
+            (
+                latest[0],
+                1,
+                latest[1],
+                f"filing-cover-sum:dei:{COVER_SHARES_TAG}@{latest[0].isoformat()}"
+                f"(sum of {latest[2]} classes)",
+            )
         )
     for tag, history in share_histories:
         if tag == COVER_SHARES_TAG or history is None:
             continue
         hit = _freshest_instant(history)
         if hit is not None:
-            return hit[0], f"{tag}@{hit[1]}"
+            candidates.append((date.fromisoformat(hit[1]), 2, hit[0], f"{tag}@{hit[1]}"))
     if shares_proxy_history is not None:
         hit = _duration_at(shares_proxy_history, latest_window_end)
         if hit is not None:
-            return hit[0], f"proxy:{SHARES_PROXY_TAG}@{hit[1]}"
+            candidates.append(
+                (
+                    date.fromisoformat(str(hit[1])[:10]),
+                    3,
+                    hit[0],
+                    f"proxy:{SHARES_PROXY_TAG}@{str(hit[1])[:10]}",
+                )
+            )
+    if candidates:
+        best = min(candidates, key=lambda c: (-c[0].toordinal(), c[1]))
+        return best[2], best[3]
     raise FetchError(
         f"{ticker}: no share count on EDGAR under any known tag — cannot "
         "derive market cap. Pass --market-cap VALUE to override manually."
@@ -1178,6 +1228,7 @@ def fetch_snapshot(
             "shares_source": shares_source,
         }
         market_cap_check = _yfinance_crosscheck(ticker, market_cap, warnings)
+        _gate_market_cap_witness(ticker, market_cap, market_cap_source, market_cap_check)
 
     # Filings-text moat sidecar (ticket #49): cited narration evidence, never
     # a scoring input. Extraction failure must not fail the fetch — it lands
