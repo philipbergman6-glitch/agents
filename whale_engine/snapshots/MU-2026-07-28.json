@@ -1,0 +1,1362 @@
+{
+  "annual_periods": [
+    {
+      "balance": {
+        "cash_and_equivalents": 9642000000.0,
+        "current_assets": 28841000000.0,
+        "current_liabilities": 11454000000.0,
+        "long_term_debt": 11533000000.0,
+        "outstanding_shares": 1122000000.0,
+        "shareholders_equity": 54165000000.0,
+        "short_term_debt": 560000000.0,
+        "total_assets": 82798000000.0,
+        "total_liabilities": 28633000000.0
+      },
+      "period_end": "2025-08-28",
+      "period_start": "2024-08-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2024-08-30..2025-08-28",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-08-28",
+        "current_assets": "AssetsCurrent@2025-08-28",
+        "current_liabilities": "LiabilitiesCurrent@2025-08-28",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2024-08-30..2025-08-28",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2024-08-30..2025-08-28",
+        "gross_profit": "GrossProfit@2024-08-30..2025-08-28",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock@2024-08-30..2025-08-28",
+        "long_term_debt": "LongTermDebt@2025-08-28",
+        "net_income": "NetIncomeLoss@2024-08-30..2025-08-28",
+        "operating_income": "OperatingIncomeLoss@2024-08-30..2025-08-28",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-08-28",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2024-08-30..2025-08-28",
+        "shareholders_equity": "StockholdersEquity@2025-08-28",
+        "short_term_debt": "DebtCurrent@2025-08-28",
+        "total_assets": "Assets@2025-08-28",
+        "total_liabilities": "Liabilities@2025-08-28"
+      },
+      "ttm": {
+        "capital_expenditure": -15857000000.0,
+        "depreciation_and_amortization": 8352000000.0,
+        "dividends_and_other_cash_distributions": -522000000.0,
+        "gross_profit": 14873000000.0,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": 8539000000.0,
+        "operating_income": 9770000000.0,
+        "revenue": 37378000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 7041000000.0,
+        "current_assets": 24372000000.0,
+        "current_liabilities": 9248000000.0,
+        "long_term_debt": 11343000000.0,
+        "outstanding_shares": 1109000000.0,
+        "shareholders_equity": 45131000000.0,
+        "short_term_debt": 431000000.0,
+        "total_assets": 69416000000.0,
+        "total_liabilities": 24285000000.0
+      },
+      "period_end": "2024-08-29",
+      "period_start": "2023-09-01",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2023-09-01..2024-08-29",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-08-29",
+        "current_assets": "AssetsCurrent@2024-08-29",
+        "current_liabilities": "LiabilitiesCurrent@2024-08-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2023-09-01..2024-08-29",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2023-09-01..2024-08-29",
+        "gross_profit": "GrossProfit@2023-09-01..2024-08-29",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock@2023-09-01..2024-08-29",
+        "long_term_debt": "LongTermDebt@2024-08-29",
+        "net_income": "NetIncomeLoss@2023-09-01..2024-08-29",
+        "operating_income": "OperatingIncomeLoss@2023-09-01..2024-08-29",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-08-29",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2023-09-01..2024-08-29",
+        "shareholders_equity": "StockholdersEquity@2024-08-29",
+        "short_term_debt": "DebtCurrent@2024-08-29",
+        "total_assets": "Assets@2024-08-29",
+        "total_liabilities": "Liabilities@2024-08-29"
+      },
+      "ttm": {
+        "capital_expenditure": -8386000000.0,
+        "depreciation_and_amortization": 7780000000.0,
+        "dividends_and_other_cash_distributions": -513000000.0,
+        "gross_profit": 5613000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 778000000.0,
+        "operating_income": 1304000000.0,
+        "revenue": 25111000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 8577000000.0,
+        "current_assets": 21244000000.0,
+        "current_liabilities": 4765000000.0,
+        "long_term_debt": 12049000000.0,
+        "outstanding_shares": 1098000000.0,
+        "shareholders_equity": 44120000000.0,
+        "short_term_debt": 278000000.0,
+        "total_assets": 64254000000.0,
+        "total_liabilities": 20134000000.0
+      },
+      "period_end": "2023-08-31",
+      "period_start": "2022-09-02",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2022-09-02..2023-08-31",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-08-31",
+        "current_assets": "AssetsCurrent@2023-08-31",
+        "current_liabilities": "LiabilitiesCurrent@2023-08-31",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2022-09-02..2023-08-31",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2022-09-02..2023-08-31",
+        "gross_profit": "GrossProfit@2022-09-02..2023-08-31",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock@2022-09-02..2023-08-31",
+        "long_term_debt": "LongTermDebt@2023-08-31",
+        "net_income": "NetIncomeLoss@2022-09-02..2023-08-31",
+        "operating_income": "OperatingIncomeLoss@2022-09-02..2023-08-31",
+        "outstanding_shares": "CommonStockSharesOutstanding@2023-08-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2022-09-02..2023-08-31",
+        "shareholders_equity": "StockholdersEquity@2023-08-31",
+        "short_term_debt": "DebtCurrent@2023-08-31",
+        "total_assets": "Assets@2023-08-31",
+        "total_liabilities": "Liabilities@2023-08-31"
+      },
+      "ttm": {
+        "capital_expenditure": -7676000000.0,
+        "depreciation_and_amortization": 7756000000.0,
+        "dividends_and_other_cash_distributions": -504000000.0,
+        "gross_profit": -1416000000.0,
+        "issuance_or_purchase_of_equity_shares": -425000000.0,
+        "net_income": -5833000000.0,
+        "operating_income": -5745000000.0,
+        "revenue": 15540000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 8262000000.0,
+        "current_assets": 21781000000.0,
+        "current_liabilities": 7539000000.0,
+        "long_term_debt": 6020000000.0,
+        "outstanding_shares": 1094000000.0,
+        "shareholders_equity": 49907000000.0,
+        "short_term_debt": 103000000.0,
+        "total_assets": 66283000000.0,
+        "total_liabilities": 16376000000.0
+      },
+      "period_end": "2022-09-01",
+      "period_start": "2021-09-03",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2021-09-03..2022-09-01",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2022-09-01",
+        "current_assets": "AssetsCurrent@2022-09-01",
+        "current_liabilities": "LiabilitiesCurrent@2022-09-01",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2021-09-03..2022-09-01",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2021-09-03..2022-09-01",
+        "gross_profit": "GrossProfit@2021-09-03..2022-09-01",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock@2021-09-03..2022-09-01",
+        "long_term_debt": "LongTermDebt@2022-09-01",
+        "net_income": "NetIncomeLoss@2021-09-03..2022-09-01",
+        "operating_income": "OperatingIncomeLoss@2021-09-03..2022-09-01",
+        "outstanding_shares": "CommonStockSharesOutstanding@2022-09-01",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2021-09-03..2022-09-01",
+        "shareholders_equity": "StockholdersEquity@2022-09-01",
+        "short_term_debt": "DebtCurrent@2022-09-01",
+        "total_assets": "Assets@2022-09-01",
+        "total_liabilities": "Liabilities@2022-09-01"
+      },
+      "ttm": {
+        "capital_expenditure": -12067000000.0,
+        "depreciation_and_amortization": 7116000000.0,
+        "dividends_and_other_cash_distributions": -461000000.0,
+        "gross_profit": 13898000000.0,
+        "issuance_or_purchase_of_equity_shares": -2432000000.0,
+        "net_income": 8687000000.0,
+        "operating_income": 9702000000.0,
+        "revenue": 30758000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 7763000000.0,
+        "current_assets": 19907000000.0,
+        "current_liabilities": 6424000000.0,
+        "long_term_debt": 5968000000.0,
+        "outstanding_shares": 1119000000.0,
+        "shareholders_equity": 43933000000.0,
+        "short_term_debt": 155000000.0,
+        "total_assets": 58849000000.0,
+        "total_liabilities": 14916000000.0
+      },
+      "period_end": "2021-09-02",
+      "period_start": "2020-09-04",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2020-09-04..2021-09-02",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2021-09-02",
+        "current_assets": "AssetsCurrent@2021-09-02",
+        "current_liabilities": "LiabilitiesCurrent@2021-09-02",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2020-09-04..2021-09-02",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2020-09-04..2021-09-02",
+        "gross_profit": "GrossProfit@2020-09-04..2021-09-02",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock@2020-09-04..2021-09-02",
+        "long_term_debt": "LongTermDebt@2021-09-02",
+        "net_income": "NetIncomeLoss@2020-09-04..2021-09-02",
+        "operating_income": "OperatingIncomeLoss@2020-09-04..2021-09-02",
+        "outstanding_shares": "CommonStockSharesOutstanding@2021-09-02",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2020-09-04..2021-09-02",
+        "shareholders_equity": "StockholdersEquity@2021-09-02",
+        "short_term_debt": "DebtCurrent@2021-09-02",
+        "total_assets": "Assets@2021-09-02",
+        "total_liabilities": "Liabilities@2021-09-02"
+      },
+      "ttm": {
+        "capital_expenditure": -10030000000.0,
+        "depreciation_and_amortization": 6214000000.0,
+        "dividends_and_other_cash_distributions": -0.0,
+        "gross_profit": 10423000000.0,
+        "issuance_or_purchase_of_equity_shares": -1200000000.0,
+        "net_income": 5861000000.0,
+        "operating_income": 6283000000.0,
+        "revenue": 27705000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 7624000000.0,
+        "current_assets": 17965000000.0,
+        "current_liabilities": 6635000000.0,
+        "long_term_debt": 6157000000.0,
+        "outstanding_shares": 1113000000.0,
+        "shareholders_equity": 38996000000.0,
+        "short_term_debt": 270000000.0,
+        "total_assets": 53678000000.0,
+        "total_liabilities": 14682000000.0
+      },
+      "period_end": "2020-09-03",
+      "period_start": "2019-08-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2019-08-30..2020-09-03",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2020-09-03",
+        "current_assets": "AssetsCurrent@2020-09-03",
+        "current_liabilities": "LiabilitiesCurrent@2020-09-03",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2019-08-30..2020-09-03",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock@2019-08-30..2020-09-03",
+        "gross_profit": "GrossProfit@2019-08-30..2020-09-03",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOrSaleOfEquity@2019-08-30..2020-09-03+PaymentsForRepurchaseOfCommonStock@2019-08-30..2020-09-03",
+        "long_term_debt": "LongTermDebt@2020-09-03",
+        "net_income": "NetIncomeLoss@2019-08-30..2020-09-03",
+        "operating_income": "OperatingIncomeLoss@2019-08-30..2020-09-03",
+        "outstanding_shares": "CommonStockSharesOutstanding@2020-09-03",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2019-08-30..2020-09-03",
+        "shareholders_equity": "StockholdersEquity@2020-09-03",
+        "short_term_debt": "DebtCurrent@2020-09-03",
+        "total_assets": "Assets@2020-09-03",
+        "total_liabilities": "Liabilities@2020-09-03"
+      },
+      "ttm": {
+        "capital_expenditure": -8223000000.0,
+        "depreciation_and_amortization": 5650000000.0,
+        "dividends_and_other_cash_distributions": -0.0,
+        "gross_profit": 6552000000.0,
+        "issuance_or_purchase_of_equity_shares": 49000000.0,
+        "net_income": 2687000000.0,
+        "operating_income": 3003000000.0,
+        "revenue": 21435000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 7152000000.0,
+        "current_assets": 16503000000.0,
+        "current_liabilities": 6390000000.0,
+        "long_term_debt": 4541000000.0,
+        "outstanding_shares": 1106000000.0,
+        "shareholders_equity": 35881000000.0,
+        "short_term_debt": 1310000000.0,
+        "total_assets": 48887000000.0,
+        "total_liabilities": 12019000000.0
+      },
+      "period_end": "2019-08-29",
+      "period_start": "2018-08-31",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2018-08-31..2019-08-29",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2019-08-29",
+        "current_assets": "AssetsCurrent@2019-08-29",
+        "current_liabilities": "LiabilitiesCurrent@2019-08-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2018-08-31..2019-08-29",
+        "gross_profit": "GrossProfit@2018-08-31..2019-08-29",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOrSaleOfEquity@2018-08-31..2019-08-29+PaymentsForRepurchaseOfCommonStock@2018-08-31..2019-08-29",
+        "long_term_debt": "LongTermDebtAndCapitalLeaseObligations@2019-08-29",
+        "net_income": "NetIncomeLoss@2018-08-31..2019-08-29",
+        "operating_income": "OperatingIncomeLoss@2018-08-31..2019-08-29",
+        "outstanding_shares": "CommonStockSharesOutstanding@2019-08-29",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2018-08-31..2019-08-29",
+        "shareholders_equity": "StockholdersEquity@2019-08-29",
+        "short_term_debt": "DebtCurrent@2019-08-29",
+        "total_assets": "Assets@2019-08-29",
+        "total_liabilities": "Liabilities@2019-08-29"
+      },
+      "ttm": {
+        "capital_expenditure": -9780000000.0,
+        "depreciation_and_amortization": 5424000000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": 10702000000.0,
+        "issuance_or_purchase_of_equity_shares": -2550000000.0,
+        "net_income": 6313000000.0,
+        "operating_income": 7376000000.0,
+        "revenue": 23406000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 6506000000.0,
+        "current_assets": 16039000000.0,
+        "current_liabilities": 5754000000.0,
+        "long_term_debt": 3777000000.0,
+        "outstanding_shares": 1161000000.0,
+        "shareholders_equity": 32294000000.0,
+        "short_term_debt": 859000000.0,
+        "total_assets": 43376000000.0,
+        "total_liabilities": 10112000000.0
+      },
+      "period_end": "2018-08-30",
+      "period_start": "2017-09-01",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2017-09-01..2018-08-30",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2018-08-30",
+        "current_assets": "AssetsCurrent@2018-08-30",
+        "current_liabilities": "LiabilitiesCurrent@2018-08-30",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2017-09-01..2018-08-30",
+        "gross_profit": "GrossProfit@2017-09-01..2018-08-30",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOfCommonStock@2017-09-01..2018-08-30+PaymentsForRepurchaseOfCommonStock@2017-09-01..2018-08-30",
+        "long_term_debt": "LongTermDebtAndCapitalLeaseObligations@2018-08-30",
+        "net_income": "NetIncomeLoss@2017-09-01..2018-08-30",
+        "operating_income": "OperatingIncomeLoss@2017-09-01..2018-08-30",
+        "outstanding_shares": "CommonStockSharesOutstanding@2018-08-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2017-09-01..2018-08-30",
+        "shareholders_equity": "StockholdersEquity@2018-08-30",
+        "short_term_debt": "DebtCurrent@2018-08-30",
+        "total_assets": "Assets@2018-08-30",
+        "total_liabilities": "Liabilities@2018-08-30"
+      },
+      "ttm": {
+        "capital_expenditure": -8879000000.0,
+        "depreciation_and_amortization": 4759000000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": 17891000000.0,
+        "issuance_or_purchase_of_equity_shares": 1289000000.0,
+        "net_income": 14135000000.0,
+        "operating_income": 14994000000.0,
+        "revenue": 30391000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 5109000000.0,
+        "current_assets": 12457000000.0,
+        "current_liabilities": 5334000000.0,
+        "long_term_debt": 9872000000.0,
+        "outstanding_shares": 1112000000.0,
+        "shareholders_equity": 18621000000.0,
+        "short_term_debt": 1262000000.0,
+        "total_assets": 35336000000.0,
+        "total_liabilities": 15845000000.0
+      },
+      "period_end": "2017-08-31",
+      "period_start": "2016-09-02",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2016-09-02..2017-08-31",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2017-08-31",
+        "current_assets": "AssetsCurrent@2017-08-31",
+        "current_liabilities": "LiabilitiesCurrent@2017-08-31",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2016-09-02..2017-08-31",
+        "gross_profit": "GrossProfit@2016-09-02..2017-08-31",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOrSaleOfEquity@2016-09-02..2017-08-31+PaymentsForRepurchaseOfCommonStock@2016-09-02..2017-08-31",
+        "long_term_debt": "LongTermDebtAndCapitalLeaseObligations@2017-08-31",
+        "net_income": "NetIncomeLoss@2016-09-02..2017-08-31",
+        "operating_income": "OperatingIncomeLoss@2016-09-02..2017-08-31",
+        "outstanding_shares": "CommonStockSharesOutstanding@2017-08-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2016-09-02..2017-08-31",
+        "shareholders_equity": "StockholdersEquity@2017-08-31",
+        "short_term_debt": "DebtCurrent@2017-08-31",
+        "total_assets": "Assets@2017-08-31",
+        "total_liabilities": "Liabilities@2017-08-31"
+      },
+      "ttm": {
+        "capital_expenditure": -4734000000.0,
+        "depreciation_and_amortization": 3861000000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": 8436000000.0,
+        "issuance_or_purchase_of_equity_shares": 106000000.0,
+        "net_income": 5089000000.0,
+        "operating_income": 5868000000.0,
+        "revenue": 20322000000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 4140000000.0,
+        "current_assets": 9495000000.0,
+        "current_liabilities": 4835000000.0,
+        "long_term_debt": 9154000000.0,
+        "outstanding_shares": 1040000000.0,
+        "shareholders_equity": 12080000000.0,
+        "short_term_debt": 756000000.0,
+        "total_assets": 27540000000.0,
+        "total_liabilities": 14612000000.0
+      },
+      "period_end": "2016-09-01",
+      "period_start": "2015-09-04",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment@2015-09-04..2016-09-01",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2016-09-01",
+        "current_assets": "AssetsCurrent@2016-09-01",
+        "current_liabilities": "LiabilitiesCurrent@2016-09-01",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization@2015-09-04..2016-09-01",
+        "gross_profit": "GrossProfit@2015-09-04..2016-09-01",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOrSaleOfEquity@2015-09-04..2016-09-01+PaymentsForRepurchaseOfCommonStock@2015-09-04..2016-09-01",
+        "long_term_debt": "LongTermDebtAndCapitalLeaseObligations@2016-09-01",
+        "net_income": "NetIncomeLoss@2015-09-04..2016-09-01",
+        "operating_income": "OperatingIncomeLoss@2015-09-04..2016-09-01",
+        "outstanding_shares": "CommonStockSharesOutstanding@2016-09-01",
+        "revenue": "Revenues@2015-09-04..2016-09-01",
+        "shareholders_equity": "StockholdersEquity@2016-09-01",
+        "short_term_debt": "DebtCurrent@2016-09-01",
+        "total_assets": "Assets@2016-09-01",
+        "total_liabilities": "Liabilities@2016-09-01"
+      },
+      "ttm": {
+        "capital_expenditure": -5817000000.0,
+        "depreciation_and_amortization": 2980000000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": 2505000000.0,
+        "issuance_or_purchase_of_equity_shares": -100000000.0,
+        "net_income": -276000000.0,
+        "operating_income": 168000000.0,
+        "revenue": 12399000000.0
+      }
+    }
+  ],
+  "fetched_at": "2026-07-28",
+  "filings_sidecar": {
+    "accession_number": "0000723125-25-000028",
+    "filing_date": "2025-10-03",
+    "fiscal_year": "FY2025",
+    "form": "10-K",
+    "items": [
+      "Item 1",
+      "Item 7"
+    ],
+    "path": "MU-2026-07-28-filings.md",
+    "period_of_report": "2025-08-28"
+  },
+  "insider_activity": {
+    "cluster": null,
+    "cluster_rule": ">=3 code-P purchases by >=3 distinct insiders within any rolling 90-day window",
+    "lookback_end": "2026-07-28",
+    "lookback_start": "2025-07-28",
+    "source": "SEC Form 4 non-derivative open-market purchases (code P), via edgartools",
+    "transactions": [
+      {
+        "accession_number": "0002058769-26-000002",
+        "date": "2026-01-13",
+        "insider": "Teyin M Liu",
+        "role": "Director",
+        "shares": 11600.0,
+        "value": 3910012.0
+      },
+      {
+        "accession_number": "0002058769-26-000002",
+        "date": "2026-01-14",
+        "insider": "Teyin M Liu",
+        "role": "Director",
+        "shares": 3780.0,
+        "value": 1272461.4
+      },
+      {
+        "accession_number": "0002058769-26-000002",
+        "date": "2026-01-14",
+        "insider": "Teyin M Liu",
+        "role": "Director",
+        "shares": 7820.0,
+        "value": 2639250.0
+      }
+    ],
+    "verdict": "no_cluster"
+  },
+  "market_cap": 1016679714530.2001,
+  "market_cap_check": {
+    "derived": 1016679714530.2001,
+    "deviation_pct": 6.958199147982253,
+    "reference": 950539297247.8628,
+    "reference_source": "yfinance:fast_info.market_cap"
+  },
+  "market_cap_source": "derived:cboe.close@2026-07-27T15:59:59xdei:EntityCommonStockSharesOutstanding@2026-06-17",
+  "periods": [
+    {
+      "as_of_quarter": "2026-Q2",
+      "balance": {
+        "cash_and_equivalents": 24995000000.0,
+        "current_assets": 66737000000.0,
+        "current_liabilities": 19488000000.0,
+        "long_term_debt": 5140000000.0,
+        "outstanding_shares": 1129000000.0,
+        "shareholders_equity": 100724000000.0,
+        "short_term_debt": 582000000.0,
+        "total_assets": 134112000000.0,
+        "total_liabilities": 33388000000.0
+      },
+      "period_end": "2026-05-28",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2026-05-28",
+        "current_assets": "AssetsCurrent@2026-05-28",
+        "current_liabilities": "LiabilitiesCurrent@2026-05-28",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-05-28 by 2093 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtAndCapitalLeaseObligations@2026-05-28",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2026-05-28",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2026-05-28",
+        "short_term_debt": "DebtCurrent@2026-05-28",
+        "total_assets": "Assets@2026-05-28",
+        "total_liabilities": "Liabilities@2026-05-28"
+      },
+      "ttm": {
+        "capital_expenditure": -25260000000.0,
+        "depreciation_and_amortization": 9011000000.0,
+        "dividends_and_other_cash_distributions": -567000000.0,
+        "gross_profit": 65511000000.0,
+        "issuance_or_purchase_of_equity_shares": -650000000.0,
+        "net_income": 50469000000.0,
+        "operating_income": 59243000000.0,
+        "revenue": 90274000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2026-Q1",
+      "balance": {
+        "cash_and_equivalents": 13908000000.0,
+        "current_assets": 41413000000.0,
+        "current_liabilities": 14296000000.0,
+        "long_term_debt": 8844000000.0,
+        "outstanding_shares": 1128000000.0,
+        "shareholders_equity": 72459000000.0,
+        "short_term_debt": 585000000.0,
+        "total_assets": 101509000000.0,
+        "total_liabilities": 29050000000.0
+      },
+      "period_end": "2026-02-26",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2026-02-26",
+        "current_assets": "AssetsCurrent@2026-02-26",
+        "current_liabilities": "LiabilitiesCurrent@2026-02-26",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-02-26 by 2002 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2025-11-27",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2026-02-26",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2026-02-26",
+        "short_term_debt": "DebtCurrent@2026-02-26",
+        "total_assets": "Assets@2026-02-26",
+        "total_liabilities": "Liabilities@2026-02-26"
+      },
+      "ttm": {
+        "capital_expenditure": -20372000000.0,
+        "depreciation_and_amortization": 8741000000.0,
+        "dividends_and_other_cash_distributions": -527000000.0,
+        "gross_profit": 33963000000.0,
+        "issuance_or_purchase_of_equity_shares": -650000000.0,
+        "net_income": 24111000000.0,
+        "operating_income": 28094000000.0,
+        "revenue": 58119000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q4",
+      "balance": {
+        "cash_and_equivalents": 9731000000.0,
+        "current_assets": 29665000000.0,
+        "current_liabilities": 12060000000.0,
+        "long_term_debt": 8844000000.0,
+        "outstanding_shares": 1126000000.0,
+        "shareholders_equity": 58806000000.0,
+        "short_term_debt": 569000000.0,
+        "total_assets": 85971000000.0,
+        "total_liabilities": 27165000000.0
+      },
+      "period_end": "2025-11-27",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-11-27",
+        "current_assets": "AssetsCurrent@2025-11-27",
+        "current_liabilities": "LiabilitiesCurrent@2025-11-27",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-11-27 by 1911 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2025-11-27",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-11-27",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-11-27",
+        "short_term_debt": "DebtCurrent@2025-11-27",
+        "total_assets": "Assets@2025-11-27",
+        "total_liabilities": "Liabilities@2025-11-27"
+      },
+      "ttm": {
+        "capital_expenditure": -18040000000.0,
+        "depreciation_and_amortization": 8534000000.0,
+        "dividends_and_other_cash_distributions": -525000000.0,
+        "gross_profit": 19171000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 11909000000.0,
+        "operating_income": 13732000000.0,
+        "revenue": 42312000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q3",
+      "balance": {
+        "cash_and_equivalents": 9642000000.0,
+        "current_assets": 28841000000.0,
+        "current_liabilities": 11454000000.0,
+        "long_term_debt": 11533000000.0,
+        "outstanding_shares": 1122000000.0,
+        "shareholders_equity": 54165000000.0,
+        "short_term_debt": 560000000.0,
+        "total_assets": 82798000000.0,
+        "total_liabilities": 28633000000.0
+      },
+      "period_end": "2025-08-28",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-08-28",
+        "current_assets": "AssetsCurrent@2025-08-28",
+        "current_liabilities": "LiabilitiesCurrent@2025-08-28",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-08-28 by 1820 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2025-08-28",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-08-28",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-08-28",
+        "short_term_debt": "DebtCurrent@2025-08-28",
+        "total_assets": "Assets@2025-08-28",
+        "total_liabilities": "Liabilities@2025-08-28"
+      },
+      "ttm": {
+        "capital_expenditure": -15857000000.0,
+        "depreciation_and_amortization": 8352000000.0,
+        "dividends_and_other_cash_distributions": -522000000.0,
+        "gross_profit": 14873000000.0,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": 8539000000.0,
+        "operating_income": 9770000000.0,
+        "revenue": 37378000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q2",
+      "balance": {
+        "cash_and_equivalents": 10163000000.0,
+        "current_assets": 27919000000.0,
+        "current_liabilities": 10135000000.0,
+        "long_term_debt": 12434000000.0,
+        "outstanding_shares": 1119000000.0,
+        "shareholders_equity": 50748000000.0,
+        "short_term_debt": 538000000.0,
+        "total_assets": 78397000000.0,
+        "total_liabilities": 27649000000.0
+      },
+      "period_end": "2025-05-29",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-05-29",
+        "current_assets": "AssetsCurrent@2025-05-29",
+        "current_liabilities": "LiabilitiesCurrent@2025-05-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-05-29 by 1729 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2025-05-29",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-05-29",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-05-29",
+        "short_term_debt": "DebtCurrent@2025-05-29",
+        "total_assets": "Assets@2025-05-29",
+        "total_liabilities": "Liabilities@2025-05-29"
+      },
+      "ttm": {
+        "capital_expenditure": -13319000000.0,
+        "depreciation_and_amortization": 8189000000.0,
+        "dividends_and_other_cash_distributions": -521000000.0,
+        "gross_profit": 12556000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 6225000000.0,
+        "operating_income": 7638000000.0,
+        "revenue": 33813000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q1",
+      "balance": {
+        "cash_and_equivalents": 7552000000.0,
+        "current_assets": 24689000000.0,
+        "current_liabilities": 7877000000.0,
+        "long_term_debt": 11541000000.0,
+        "outstanding_shares": 1118000000.0,
+        "shareholders_equity": 48633000000.0,
+        "short_term_debt": 504000000.0,
+        "total_assets": 73053000000.0,
+        "total_liabilities": 24420000000.0
+      },
+      "period_end": "2025-02-27",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-02-27",
+        "current_assets": "AssetsCurrent@2025-02-27",
+        "current_liabilities": "LiabilitiesCurrent@2025-02-27",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-02-27 by 1638 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2025-02-27",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-02-27",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-02-27",
+        "short_term_debt": "DebtCurrent@2025-02-27",
+        "total_assets": "Assets@2025-02-27",
+        "total_liabilities": "Liabilities@2025-02-27"
+      },
+      "ttm": {
+        "capital_expenditure": -12467000000.0,
+        "depreciation_and_amortization": 8050000000.0,
+        "dividends_and_other_cash_distributions": -518000000.0,
+        "gross_profit": 10880000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 4672000000.0,
+        "operating_income": 6188000000.0,
+        "revenue": 31323000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q4",
+      "balance": {
+        "cash_and_equivalents": 6693000000.0,
+        "current_assets": 24493000000.0,
+        "current_liabilities": 9015000000.0,
+        "long_term_debt": 11306000000.0,
+        "outstanding_shares": 1114000000.0,
+        "shareholders_equity": 46797000000.0,
+        "short_term_debt": 533000000.0,
+        "total_assets": 71461000000.0,
+        "total_liabilities": 24664000000.0
+      },
+      "period_end": "2024-11-28",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-11-28",
+        "current_assets": "AssetsCurrent@2024-11-28",
+        "current_liabilities": "LiabilitiesCurrent@2024-11-28",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-11-28 by 1547 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2024-11-28",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-11-28",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2024-11-28",
+        "short_term_debt": "DebtCurrent@2024-11-28",
+        "total_assets": "Assets@2024-11-28",
+        "total_liabilities": "Liabilities@2024-11-28"
+      },
+      "ttm": {
+        "capital_expenditure": -9796000000.0,
+        "depreciation_and_amortization": 7895000000.0,
+        "dividends_and_other_cash_distributions": -515000000.0,
+        "gross_profit": 8996000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 3882000000.0,
+        "operating_income": 4606000000.0,
+        "revenue": 29094000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q3",
+      "balance": {
+        "cash_and_equivalents": 7041000000.0,
+        "current_assets": 24372000000.0,
+        "current_liabilities": 9248000000.0,
+        "long_term_debt": 11343000000.0,
+        "outstanding_shares": 1109000000.0,
+        "shareholders_equity": 45131000000.0,
+        "short_term_debt": 431000000.0,
+        "total_assets": 69416000000.0,
+        "total_liabilities": 24285000000.0
+      },
+      "period_end": "2024-08-29",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-08-29",
+        "current_assets": "AssetsCurrent@2024-08-29",
+        "current_liabilities": "LiabilitiesCurrent@2024-08-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-08-29 by 1456 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2024-08-29",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-08-29",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2024-08-29",
+        "short_term_debt": "DebtCurrent@2024-08-29",
+        "total_assets": "Assets@2024-08-29",
+        "total_liabilities": "Liabilities@2024-08-29"
+      },
+      "ttm": {
+        "capital_expenditure": -8386000000.0,
+        "depreciation_and_amortization": 7780000000.0,
+        "dividends_and_other_cash_distributions": -513000000.0,
+        "gross_profit": 5613000000.0,
+        "issuance_or_purchase_of_equity_shares": -300000000.0,
+        "net_income": 778000000.0,
+        "operating_income": 1304000000.0,
+        "revenue": 25111000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q2",
+      "balance": {
+        "cash_and_equivalents": 7594000000.0,
+        "current_assets": 23319000000.0,
+        "current_liabilities": 6840000000.0,
+        "long_term_debt": 11332000000.0,
+        "outstanding_shares": 1109000000.0,
+        "shareholders_equity": 44225000000.0,
+        "short_term_debt": 398000000.0,
+        "total_assets": 66255000000.0,
+        "total_liabilities": 22030000000.0
+      },
+      "period_end": "2024-05-30",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-05-30",
+        "current_assets": "AssetsCurrent@2024-05-30",
+        "current_liabilities": "LiabilitiesCurrent@2024-05-30",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-05-30 by 1365 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2024-05-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-05-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2024-05-30",
+        "short_term_debt": "DebtCurrent@2024-05-30",
+        "total_assets": "Assets@2024-05-30",
+        "total_liabilities": "Liabilities@2024-05-30"
+      },
+      "ttm": {
+        "capital_expenditure": -6727000000.0,
+        "depreciation_and_amortization": 7731000000.0,
+        "dividends_and_other_cash_distributions": -510000000.0,
+        "gross_profit": 2441000000.0,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": -1539000000.0,
+        "operating_income": -1690000000.0,
+        "revenue": 21371000000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q1",
+      "balance": {
+        "cash_and_equivalents": 8016000000.0,
+        "current_assets": 23435000000.0,
+        "current_liabilities": 6259000000.0,
+        "long_term_debt": 12018000000.0,
+        "outstanding_shares": 1107000000.0,
+        "shareholders_equity": 43870000000.0,
+        "short_term_debt": 344000000.0,
+        "total_assets": 65718000000.0,
+        "total_liabilities": 21848000000.0
+      },
+      "period_end": "2024-02-29",
+      "tags_used": {
+        "capital_expenditure": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "capital_expenditure_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-02-29",
+        "current_assets": "AssetsCurrent@2024-02-29",
+        "current_liabilities": "LiabilitiesCurrent@2024-02-29",
+        "depreciation_and_amortization": "DepreciationDepletionAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "dividends_and_other_cash_distributions": "PaymentsOfDividendsCommonStock",
+        "dividends_and_other_cash_distributions_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "gross_profit": "GrossProfit",
+        "gross_profit_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "issuance_or_purchase_of_equity_shares": "PaymentsForRepurchaseOfCommonStock",
+        "issuance_or_purchase_of_equity_shares_dropped": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-02-29 by 1274 days (> 185); stale leg dropped from the combine",
+        "issuance_or_purchase_of_equity_shares_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebt@2024-02-29",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-02-29",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2024-02-29",
+        "short_term_debt": "DebtCurrent@2024-02-29",
+        "total_assets": "Assets@2024-02-29",
+        "total_liabilities": "Liabilities@2024-02-29"
+      },
+      "ttm": {
+        "capital_expenditure": -6202000000.0,
+        "depreciation_and_amortization": 7732000000.0,
+        "dividends_and_other_cash_distributions": -508000000.0,
+        "gross_profit": -59000000.0,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": -3767000000.0,
+        "operating_income": -4170000000.0,
+        "revenue": 18312000000.0
+      }
+    }
+  ],
+  "price_reference": {
+    "last_trade_time": "2026-07-27T15:59:59",
+    "price": 900.2,
+    "price_field": "close",
+    "shares": 1129393151.0,
+    "shares_source": "dei:EntityCommonStockSharesOutstanding@2026-06-17",
+    "source": "cboe:delayed_quotes"
+  },
+  "schema_version": 2,
+  "source": {
+    "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+    "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
+  },
+  "ticker": "MU",
+  "validation": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap",
+      "restatement_402"
+    ],
+    "findings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "capital_expenditure",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "capital_expenditure TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "depreciation_and_amortization",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "dividends_and_other_cash_distributions",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "dividends_and_other_cash_distributions TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "gross_profit",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "gross_profit TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "issuance_or_purchase_of_equity_shares TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "operating_income",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "operating_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2026-05-28",
+            "2026-02-26",
+            "2025-11-27",
+            "2025-08-28",
+            "2025-05-29",
+            "2025-02-27",
+            "2024-11-28",
+            "2024-08-29",
+            "2024-05-30",
+            "2024-02-29"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-02-29 by 1274 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-02-29"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-02-29 by 1274 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-05-30 by 1365 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-05-30"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-05-30 by 1365 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-08-29 by 1456 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-08-29"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-08-29 by 1456 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-11-28 by 1547 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-11-28"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2024-11-28 by 1547 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-02-27 by 1638 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-02-27"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-02-27 by 1638 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-05-29 by 1729 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-05-29"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-05-29 by 1729 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-08-28 by 1820 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-08-28"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-08-28 by 1820 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-11-27 by 1911 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-11-27"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2025-11-27 by 1911 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-02-26 by 2002 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2026-02-26"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-02-26 by 2002 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-05-28 by 2093 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2026-05-28"
+          ]
+        },
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOrSaleOfEquity: TTM window ends 2020-09-03, lagging the period end 2026-05-28 by 2093 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      }
+    ]
+  }
+}
