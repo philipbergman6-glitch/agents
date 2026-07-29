@@ -153,9 +153,9 @@ def test_freshest_instant_picks_latest_filed():
     assert end == "2026-06-30"
 
 
-def test_freshest_share_count_prefers_dei_cover_page():
+def test_freshest_share_count_prefers_dei_on_date_tie():
     dei = _history([("2026-06-30", 1_000.0, "2026-07-15")])
-    gaap = _history([("2026-07-10", 999.0, "2026-07-20")])
+    gaap = _history([("2026-06-30", 999.0, "2026-07-20")])
     shares, source = fetch._freshest_share_count(
         "TST",
         [("CommonStockSharesOutstanding", gaap), (fetch.COVER_SHARES_TAG, dei)],
@@ -165,6 +165,44 @@ def test_freshest_share_count_prefers_dei_cover_page():
     )
     assert shares == 1_000.0
     assert source == "dei:EntityCommonStockSharesOutstanding@2026-06-30"
+
+
+def test_freshest_share_count_fresher_gaap_beats_dei():
+    dei = _history([("2026-06-30", 1_000.0, "2026-07-15")])
+    gaap = _history([("2026-07-10", 999.0, "2026-07-20")])
+    shares, source = fetch._freshest_share_count(
+        "TST",
+        [("CommonStockSharesOutstanding", gaap), (fetch.COVER_SHARES_TAG, dei)],
+        cover_rows=[],
+        shares_proxy_history=None,
+        latest_window_end=date(2026, 6, 30),
+    )
+    assert shares == 999.0
+    assert source == "CommonStockSharesOutstanding@2026-07-10"
+
+
+def test_freshest_share_count_stale_dei_loses_to_current_proxy():
+    # The #77 shape: MA's dei companyfacts history topped out at a 2010
+    # pre-split fact while the weighted-average proxy was current.
+    dei = _history([("2010-10-27", 122_530_193.0, "2010-11-02")])
+    proxy = _history([])
+    proxy = pd.DataFrame(
+        {
+            "period_type": "duration",
+            "period_end": ["2026-03-31"],
+            "numeric_value": [891_000_000.0],
+            "filing_date": ["2026-04-29"],
+        }
+    )
+    shares, source = fetch._freshest_share_count(
+        "MA",
+        [(fetch.COVER_SHARES_TAG, dei)],
+        cover_rows=[],
+        shares_proxy_history=proxy,
+        latest_window_end=date(2026, 3, 31),
+    )
+    assert shares == 891_000_000.0
+    assert source == f"proxy:{fetch.SHARES_PROXY_TAG}@2026-03-31"
 
 
 def test_freshest_share_count_uses_cover_rows_for_multiclass():
@@ -216,3 +254,31 @@ def test_crosscheck_available_records_deviation(monkeypatch):
     assert check["reference"] == 3.5e11
     assert check["derived"] == 3.6e11
     assert check["deviation_pct"] == pytest.approx((3.6e11 - 3.5e11) / 3.5e11 * 100)
+
+
+# --- witness gate (#77) -----------------------------------------------------
+
+
+def test_witness_gate_hard_fails_past_tolerance():
+    check = {
+        "derived": 6.891e10,
+        "reference": 4.986e11,
+        "reference_source": "yfinance:fast_info.market_cap",
+        "deviation_pct": -86.2,
+    }
+    with pytest.raises(FetchError, match=r"-86\.2%.*--market-cap"):
+        fetch._gate_market_cap_witness("MA", 6.891e10, "derived:cboe...", check)
+
+
+def test_witness_gate_passes_within_tolerance():
+    check = {
+        "derived": 3.6e11,
+        "reference": 3.5e11,
+        "reference_source": "yfinance:fast_info.market_cap",
+        "deviation_pct": 2.9,
+    }
+    fetch._gate_market_cap_witness("KO", 3.6e11, "derived:cboe...", check)
+
+
+def test_witness_gate_skips_when_witness_unavailable():
+    fetch._gate_market_cap_witness("KO", 3.6e11, "derived:cboe...", None)

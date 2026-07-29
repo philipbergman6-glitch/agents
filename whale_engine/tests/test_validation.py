@@ -122,6 +122,52 @@ def test_market_cap_deviating_from_price_reference_hard_fails():
         buffett.diagnose(snapshot)
 
 
+def test_market_cap_witness_within_tolerance_passes():
+    snapshot = copy.deepcopy(load_snapshot("KO"))
+    mc = snapshot["market_cap"]
+    snapshot["market_cap_check"] = {
+        "derived": mc,
+        "reference": mc / 1.05,
+        "reference_source": "yfinance:fast_info.market_cap",
+        "deviation_pct": 5.0,
+    }
+    findings, _ = validation.run_checks(snapshot)
+    assert not any(f["code"] == "market_cap_witness_mismatch" for f in findings)
+
+
+def test_market_cap_witness_mismatch_hard_fails():
+    snapshot = copy.deepcopy(load_snapshot("KO"))
+    mc = snapshot["market_cap"]
+    snapshot["market_cap_check"] = {
+        "derived": mc,
+        "reference": mc * 7.2,
+        "reference_source": "yfinance:fast_info.market_cap",
+        "deviation_pct": -86.2,
+    }
+    findings, _ = validation.run_checks(snapshot)
+    assert any(
+        f["code"] == "market_cap_witness_mismatch"
+        and f["severity"] == validation.ERROR
+        for f in findings
+    )
+    with pytest.raises(MissingDataError, match="validation failed"):
+        buffett.diagnose(snapshot)
+
+
+def test_poisoned_ma_snapshot_hard_fails_all_whales():
+    # Regression fixture for #77: the real 2026-07-29 MA snapshot whose market
+    # cap was derived from a 2010 pre-split dei share fact (deviation −86.2%
+    # vs the recorded yfinance witness). Kept committed deliberately.
+    from whale_engine.scorers import lynch
+
+    snapshot = load_snapshot_dated("MA", "2026-07-29")
+    findings, _ = validation.run_checks(snapshot)
+    assert any(f["code"] == "market_cap_witness_mismatch" for f in findings)
+    for scorer in (buffett, graham, lynch):
+        with pytest.raises(MissingDataError):
+            scorer.diagnose(snapshot)
+
+
 # ---------------------------------------------------------------------------
 # check 3: split-aware renormalization (unit level; scorer level lives in
 # test_score_units / test_graham_units)
