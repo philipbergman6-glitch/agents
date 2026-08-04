@@ -1,0 +1,196 @@
+{
+  "fetched_at": "2026-08-04",
+  "last_complete_week": "2026-07-31",
+  "last_complete_week_start": "2026-07-27",
+  "last_refreshed": "2026-08-03",
+  "observations": 45,
+  "partial_bars_dropped": [
+    "2026-08-03"
+  ],
+  "schema_version": 1,
+  "series": "TIME_SERIES_WEEKLY_ADJUSTED",
+  "ticker": "STUB",
+  "vendor": "Alpha Vantage",
+  "weekly_adjusted_close": [
+    {
+      "adjusted_close": 16.86,
+      "date": "2025-09-26"
+    },
+    {
+      "adjusted_close": 16.95,
+      "date": "2025-10-03"
+    },
+    {
+      "adjusted_close": 18.89,
+      "date": "2025-10-10"
+    },
+    {
+      "adjusted_close": 17.15,
+      "date": "2025-10-17"
+    },
+    {
+      "adjusted_close": 20.13,
+      "date": "2025-10-24"
+    },
+    {
+      "adjusted_close": 19.15,
+      "date": "2025-10-31"
+    },
+    {
+      "adjusted_close": 19.44,
+      "date": "2025-11-07"
+    },
+    {
+      "adjusted_close": 14.87,
+      "date": "2025-11-14"
+    },
+    {
+      "adjusted_close": 10.83,
+      "date": "2025-11-21"
+    },
+    {
+      "adjusted_close": 11.73,
+      "date": "2025-11-28"
+    },
+    {
+      "adjusted_close": 12.42,
+      "date": "2025-12-05"
+    },
+    {
+      "adjusted_close": 13.95,
+      "date": "2025-12-12"
+    },
+    {
+      "adjusted_close": 13.77,
+      "date": "2025-12-19"
+    },
+    {
+      "adjusted_close": 13.28,
+      "date": "2025-12-26"
+    },
+    {
+      "adjusted_close": 14.29,
+      "date": "2026-01-02"
+    },
+    {
+      "adjusted_close": 12.77,
+      "date": "2026-01-09"
+    },
+    {
+      "adjusted_close": 16.0,
+      "date": "2026-01-16"
+    },
+    {
+      "adjusted_close": 14.7,
+      "date": "2026-01-23"
+    },
+    {
+      "adjusted_close": 14.12,
+      "date": "2026-01-30"
+    },
+    {
+      "adjusted_close": 9.92,
+      "date": "2026-02-06"
+    },
+    {
+      "adjusted_close": 9.23,
+      "date": "2026-02-13"
+    },
+    {
+      "adjusted_close": 9.36,
+      "date": "2026-02-20"
+    },
+    {
+      "adjusted_close": 9.57,
+      "date": "2026-02-27"
+    },
+    {
+      "adjusted_close": 8.35,
+      "date": "2026-03-06"
+    },
+    {
+      "adjusted_close": 7.52,
+      "date": "2026-03-13"
+    },
+    {
+      "adjusted_close": 6.68,
+      "date": "2026-03-20"
+    },
+    {
+      "adjusted_close": 6.41,
+      "date": "2026-03-27"
+    },
+    {
+      "adjusted_close": 6.44,
+      "date": "2026-04-02"
+    },
+    {
+      "adjusted_close": 6.27,
+      "date": "2026-04-10"
+    },
+    {
+      "adjusted_close": 6.92,
+      "date": "2026-04-17"
+    },
+    {
+      "adjusted_close": 7.15,
+      "date": "2026-04-24"
+    },
+    {
+      "adjusted_close": 7.63,
+      "date": "2026-05-01"
+    },
+    {
+      "adjusted_close": 7.71,
+      "date": "2026-05-08"
+    },
+    {
+      "adjusted_close": 8.82,
+      "date": "2026-05-15"
+    },
+    {
+      "adjusted_close": 9.98,
+      "date": "2026-05-22"
+    },
+    {
+      "adjusted_close": 9.86,
+      "date": "2026-05-29"
+    },
+    {
+      "adjusted_close": 9.29,
+      "date": "2026-06-05"
+    },
+    {
+      "adjusted_close": 11.46,
+      "date": "2026-06-12"
+    },
+    {
+      "adjusted_close": 11.68,
+      "date": "2026-06-18"
+    },
+    {
+      "adjusted_close": 12.4,
+      "date": "2026-06-26"
+    },
+    {
+      "adjusted_close": 12.86,
+      "date": "2026-07-02"
+    },
+    {
+      "adjusted_close": 11.1,
+      "date": "2026-07-10"
+    },
+    {
+      "adjusted_close": 9.25,
+      "date": "2026-07-17"
+    },
+    {
+      "adjusted_close": 8.25,
+      "date": "2026-07-24"
+    },
+    {
+      "adjusted_close": 8.44,
+      "date": "2026-07-31"
+    }
+  ]
+}

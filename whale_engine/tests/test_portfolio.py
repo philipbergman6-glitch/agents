@@ -305,7 +305,7 @@ def test_missing_price_history_hard_fails_with_the_command_that_fixes_it():
 
 
 def test_missing_edgar_snapshot_hard_fails():
-    with pytest.raises(PortfolioError, match="no EDGAR snapshot"):
+    with pytest.raises(PortfolioError, match="no EDGAR sector source"):
         build_report(
             ["AAA", "BBB"],
             {t: price_snapshot(t, wiggle(200)) for t in ("AAA", "BBB")},

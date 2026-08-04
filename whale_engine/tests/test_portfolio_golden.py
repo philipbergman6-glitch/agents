@@ -22,6 +22,10 @@ GOLDEN_BASKETS = {
     "payments-bank-beverage": ["V", "MA", "JPM", "KO"],
     # a young restaurant chain against the same card networks
     "payments-restaurant": ["V", "MA", "CAVA"],
+    # a 2025 IPO with under a year of trading history, alongside two old names:
+    # the #82/#83 insufficient-history path on a real name, reachable only via
+    # the sector-only EDGAR route (#94)
+    "beverage-bank-ipo": ["KO", "JPM", "STUB"],
 }
 
 
@@ -77,3 +81,30 @@ def test_provenance_pins_the_vendor_series_and_snapshot_vintages():
     assert provenance["vendor"] == "Alpha Vantage"
     assert provenance["series"] == "TIME_SERIES_WEEKLY_ADJUSTED"
     assert all(s["last_complete_week"] == "2026-07-31" for s in provenance["snapshots"])
+
+
+def test_a_real_ipo_lands_in_insufficient_history_rather_than_killing_the_report():
+    """StubHub listed in 2025, so it has under a year of weekly returns — the
+    #82/#83 path on a name a client could actually own (#94). Before the
+    sector-only route existed this basket produced no report at all: the SIC
+    lookup demanded a full fundamentals snapshot STUB cannot support."""
+    result = report("beverage-bank-ipo")
+    warning = next(w for w in result["warnings"] if w["code"] == "insufficient_history")
+    assert warning["ticker"] == "STUB"
+    assert result["correlation"]["matrix"] == {
+        "JPM|KO": 0.133,
+        "JPM|STUB": None,
+        "KO|STUB": None,
+    }
+    # Weighted like any other name, and its sector still counted.
+    assert [b["weight"] for b in result["basket"]] == [1 / 3] * 3
+    groups = {g["sic2"]: g for g in result["sectors"]["groups"]}
+    assert groups["79"]["tickers"] == ["STUB"]
+
+
+def test_provenance_marks_the_ipo_as_a_sector_only_lookup():
+    sources = {
+        entry["ticker"]: entry["source"]
+        for entry in report("beverage-bank-ipo")["provenance"]["edgar_snapshots"]
+    }
+    assert sources == {"KO": "fetch", "JPM": "fetch", "STUB": "sector-only"}
