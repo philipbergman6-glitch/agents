@@ -2,6 +2,8 @@
 
   <prog> fetch TICKER      networked: EDGAR + Cboe quote -> snapshots/TICKER-DATE.json
   <prog> diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
+  <prog> prices TICKER...  networked: Alpha Vantage weekly adjusted closes ->
+                           snapshots/prices/TICKER-DATE.json (weekly freshness gate)
 
 Entry points:
   buffett ...              Buffett-only prog; behavior identical to the original CLI
@@ -27,6 +29,11 @@ from .scorers import WHALES, get_diagnose
 
 def _snapshots_dir(arg: str | None) -> Path:
     return Path(arg or os.environ.get("BUFFETT_SNAPSHOTS") or "snapshots")
+
+
+def _prices_dir(arg: str | None) -> Path:
+    """Price snapshots live beside the EDGAR ones, in their own subdirectory."""
+    return _snapshots_dir(arg) / "prices"
 
 
 def _dump(payload: dict) -> str:
@@ -84,6 +91,28 @@ def cmd_diagnose(args) -> int:
     return 0
 
 
+def cmd_prices(args) -> int:
+    """Pin weekly-adjusted price history for a basket (ticket #84).
+
+    One vendor request per ticker that needs one: a snapshot already holding
+    the most recently completed weekly bar is reused at zero request cost
+    (weekly freshness gate, #83). Fails fast on the first bad ticker — a
+    rate-cap `Information` body means the rest would fail too.
+    """
+    from .prices import ensure_price_snapshot, format_snapshot_line
+
+    out_dir = _prices_dir(args.snapshots_dir)
+    for ticker in args.tickers:
+        path, snapshot, action = ensure_price_snapshot(
+            ticker,
+            out_dir,
+            force=args.force,
+            allow_stale=args.stale_ok,
+        )
+        print(format_snapshot_line(snapshot, path, action))
+    return 0
+
+
 def cmd_fetch_13f(args) -> int:
     from .holdings import fetch_roster
 
@@ -126,6 +155,27 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
     if whale is None:
         p_diag.add_argument("--whale", required=True, choices=WHALES, help="scorer to apply")
     p_diag.set_defaults(func=cmd_diagnose, prog=prog, **({} if whale is None else {"whale": whale}))
+
+    p_prices = sub.add_parser(
+        "prices",
+        help="pin weekly adjusted price history for one or more tickers "
+        "(networked; needs ALPHAVANTAGE_API_KEY)",
+    )
+    p_prices.add_argument("tickers", nargs="+", metavar="TICKER")
+    p_prices.add_argument("--snapshots-dir")
+    p_prices.add_argument(
+        "--force",
+        action="store_true",
+        help="refetch even when the pinned snapshot is still fresh",
+    )
+    p_prices.add_argument(
+        "--stale-ok",
+        action="store_true",
+        dest="stale_ok",
+        help="reuse a snapshot that predates the last weekly close instead of "
+        "refetching (explicit staleness, as with EDGAR snapshots)",
+    )
+    p_prices.set_defaults(func=cmd_prices, prog=prog)
 
     p_f13 = sub.add_parser(
         "fetch-13f",

@@ -146,6 +146,9 @@ FETCH_ONLY_CODES = {
     "filings_sidecar_extraction_failed",
     "yfinance-crosscheck-unavailable",
     "form4_fetch_failed",
+    # Additive SIC fields from the submissions API (#84): only observable at
+    # fetch time, and the portfolio layer's sector check depends on them.
+    "sic_unavailable",
 }
 
 DEFAULT_ARRAYS = ("periods", "annual_periods")

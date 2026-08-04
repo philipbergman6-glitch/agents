@@ -39,6 +39,7 @@ import os
 from datetime import date, timedelta
 
 from . import validation
+from .errors import FetchError
 
 # TTM flow concepts: engine field -> ordered XBRL tag fallbacks.
 FLOW_TAGS: dict[str, list[str]] = {
@@ -181,10 +182,6 @@ RESTATEMENT_WINDOW_YEARS = 10
 RESTATEMENT_AFFECTED_YEARS = 3
 
 
-class FetchError(RuntimeError):
-    pass
-
-
 def _require_identity() -> str:
     identity = os.environ.get("EDGAR_IDENTITY", "").strip()
     if not identity:
@@ -193,6 +190,35 @@ def _require_identity() -> str:
             'e.g. export EDGAR_IDENTITY="Jane Doe jane@example.com"'
         )
     return identity
+
+
+def _company_sic(company) -> tuple[str | None, str | None, dict | None]:
+    """EDGAR submissions SIC code + description: (sic, sic_description, warning).
+
+    Additive field for the portfolio layer's sector check (ticket #84, per
+    methodology #82, which groups by 2-digit SIC major group). No scorer reads
+    it, so an absent or unusable code is a WARN finding, never a failed fetch —
+    the sector rule downstream decides what to do without one.
+    """
+    def _warn(reason: str) -> dict:
+        return validation.finding(
+            validation.WARN,
+            "sic_unavailable",
+            f"EDGAR submissions SIC unavailable ({reason}); sector grouping "
+            "has no source for this snapshot.",
+        )
+
+    try:
+        raw_sic = company.sic
+        raw_desc = company.industry
+    except Exception as e:
+        return None, None, _warn(f"{type(e).__name__}: {e}")
+
+    sic = str(raw_sic).strip() if raw_sic is not None else ""
+    if not sic.isdigit():
+        return None, None, _warn(f"code {raw_sic!r} is not numeric")
+    desc = str(raw_desc).strip() if raw_desc is not None else ""
+    return sic, (desc or None), None
 
 
 def _candidate_quarters(today: date, count: int) -> list[str]:
@@ -1239,10 +1265,21 @@ def fetch_snapshot(
 
     import edgar as _edgar_mod
 
+    # Additive sector fields (#84): EDGAR submissions SIC, for the portfolio
+    # layer's 2-digit major-group concentration check. Never scored, so no
+    # schema_version bump — a pre-#84 snapshot is still a valid v2 and is
+    # distinguishable by the keys being absent entirely, where a post-#84
+    # snapshot with no SIC carries them as null plus a sic_unavailable WARN.
+    sic, sic_description, sic_warning = _company_sic(company)
+    if sic_warning is not None:
+        warnings.append(sic_warning)
+
     snapshot = {
         "schema_version": 2,
         "ticker": ticker.upper(),
         "fetched_at": today.isoformat(),
+        "sic": sic,
+        "sic_description": sic_description,
         "market_cap": market_cap,
         "market_cap_source": market_cap_source,
         "source": {
