@@ -1,6 +1,8 @@
 """Two-phase CLI, one engine, many whales.
 
   <prog> fetch TICKER      networked: EDGAR + Cboe quote -> snapshots/TICKER-DATE.json
+    ... --sector-only      networked: EDGAR SIC code only -> snapshots/sectors/
+                           TICKER-DATE.json (portfolio sector grouping; unscorable)
   <prog> diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
   <prog> prices TICKER...  networked: Alpha Vantage weekly adjusted closes ->
                            snapshots/prices/TICKER-DATE.json (weekly freshness gate)
@@ -38,6 +40,12 @@ def _prices_dir(arg: str | None) -> Path:
     return _snapshots_dir(arg) / "prices"
 
 
+def _sectors_dir(arg: str | None) -> Path:
+    """Sector-only snapshots (#94) get their own subdirectory too — never the
+    snapshots root, where a scorer would find them."""
+    return _snapshots_dir(arg) / "sectors"
+
+
 def _dump(payload: dict) -> str:
     return json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False)
 
@@ -45,6 +53,9 @@ def _dump(payload: dict) -> str:
 def cmd_fetch(args) -> int:
     from .fetch import fetch_snapshot
     from .filings_text import sidecar_filename
+
+    if args.sector_only:
+        return _fetch_sector_only(args)
 
     snapshot = fetch_snapshot(args.ticker, market_cap_override=args.market_cap)
     out_dir = _snapshots_dir(args.snapshots_dir)
@@ -60,6 +71,33 @@ def cmd_fetch(args) -> int:
         (out_dir / name).write_text(markdown, encoding="utf-8")
         sidecar["path"] = name
 
+    path = out_dir / f"{snapshot['ticker']}-{snapshot['fetched_at']}.json"
+    path.write_text(_dump(snapshot) + "\n", encoding="utf-8")
+    print(str(path))
+    return 0
+
+
+def _fetch_sector_only(args) -> int:
+    """`fetch TICKER --sector-only` (#94): EDGAR's SIC code and nothing else.
+
+    For a name the portfolio layer must place in a sector group but that has
+    no fundamentals depth for a full snapshot — a recent IPO. Written to
+    snapshots/sectors/, never the snapshots root: it is not a snapshot, no
+    scorer may read it, and `diagnose` refuses one outright.
+    """
+    from .fetch import fetch_sector_snapshot
+
+    if args.market_cap is not None:
+        print(
+            "error: --market-cap has no meaning with --sector-only "
+            "(no market cap is fetched)",
+            file=sys.stderr,
+        )
+        return 2
+
+    snapshot = fetch_sector_snapshot(args.ticker)
+    out_dir = _sectors_dir(args.snapshots_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{snapshot['ticker']}-{snapshot['fetched_at']}.json"
     path.write_text(_dump(snapshot) + "\n", encoding="utf-8")
     print(str(path))
@@ -87,6 +125,20 @@ def cmd_diagnose(args) -> int:
         path = candidates[-1]  # ISO dates in names sort chronologically
 
     snapshot = json.loads(path.read_text(encoding="utf-8"))
+    # A sector-only file (#94) carries one EDGAR field and no fundamentals at
+    # all. It can only reach here by being copied out of snapshots/sectors/,
+    # and scoring it would be scoring nothing — refuse it by name.
+    from .fetch import SECTOR_SNAPSHOT_KIND
+
+    if snapshot.get("kind") == SECTOR_SNAPSHOT_KIND:
+        print(
+            f"error: {path} is a sector-only snapshot (SIC code only, for the "
+            f"portfolio layer) — there is nothing here to score. Run "
+            f"`{args.prog} fetch {snapshot.get('ticker', 'TICKER')}` for a full "
+            f"snapshot.",
+            file=sys.stderr,
+        )
+        return 2
     result = diagnose(snapshot)
     result["provenance"]["snapshot"] = str(path)
     print(_dump(result))
@@ -170,6 +222,15 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
         dest="market_cap",
         help="manual market-cap override in dollars (skips the Cboe quote; "
         "provenance 'manual:owner-supplied')",
+    )
+    p_fetch.add_argument(
+        "--sector-only",
+        action="store_true",
+        dest="sector_only",
+        help="fetch only EDGAR's SIC code, into snapshots/sectors/ — for a name "
+        "too young for the fundamentals depth a full snapshot needs but that "
+        "the portfolio layer must still place in a sector group. Not a "
+        "snapshot: no whale can be diagnosed from it",
     )
     p_fetch.set_defaults(func=cmd_fetch, prog=prog)
 

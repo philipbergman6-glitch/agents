@@ -1,50 +1,32 @@
 {
   "basket": [
     {
-      "ticker": "V",
-      "weight": 0.25
-    },
-    {
-      "ticker": "MA",
-      "weight": 0.25
+      "ticker": "KO",
+      "weight": 0.3333333333333333
     },
     {
       "ticker": "JPM",
-      "weight": 0.25
+      "weight": 0.3333333333333333
     },
     {
-      "ticker": "KO",
-      "weight": 0.25
+      "ticker": "STUB",
+      "weight": 0.3333333333333333
     }
   ],
   "caveats": [
     "Equal weighting and low pairwise correlation spread company-specific risk. They do not remove market risk: in a broad decline these positions can fall together regardless of anything in this report. Correlations are measured on past weekly returns and change without warning — they describe what has happened, not what will. This report sizes a basket you chose and is not investment advice; the whales whose verdicts picked these names endorse neither this method nor the resulting mix."
   ],
   "correlation": {
-    "flagged_pairs": [
-      {
-        "pair": [
-          "MA",
-          "V"
-        ],
-        "rho": 0.8525
-      }
-    ],
+    "flagged_pairs": [],
     "matrix": {
       "JPM|KO": 0.133,
-      "JPM|MA": 0.5269,
-      "JPM|V": 0.5185,
-      "KO|MA": 0.2436,
-      "KO|V": 0.2486,
-      "MA|V": 0.8525
+      "JPM|STUB": null,
+      "KO|STUB": null
     },
     "observations": {
       "JPM|KO": 156,
-      "JPM|MA": 156,
-      "JPM|V": 156,
-      "KO|MA": 156,
-      "KO|V": 156,
-      "MA|V": 156
+      "JPM|STUB": 0,
+      "KO|STUB": 0
     },
     "window": {
       "end": "2026-07-27",
@@ -58,12 +40,7 @@
       {
         "snapshot_date": "2026-08-04",
         "source": "fetch",
-        "ticker": "V"
-      },
-      {
-        "snapshot_date": "2026-08-04",
-        "source": "fetch",
-        "ticker": "MA"
+        "ticker": "KO"
       },
       {
         "snapshot_date": "2026-08-04",
@@ -72,8 +49,8 @@
       },
       {
         "snapshot_date": "2026-08-04",
-        "source": "fetch",
-        "ticker": "KO"
+        "source": "sector-only",
+        "ticker": "STUB"
       }
     ],
     "series": "TIME_SERIES_WEEKLY_ADJUSTED",
@@ -81,12 +58,7 @@
       {
         "last_complete_week": "2026-07-31",
         "snapshot_date": "2026-08-04",
-        "ticker": "V"
-      },
-      {
-        "last_complete_week": "2026-07-31",
-        "snapshot_date": "2026-08-04",
-        "ticker": "MA"
+        "ticker": "KO"
       },
       {
         "last_complete_week": "2026-07-31",
@@ -96,30 +68,18 @@
       {
         "last_complete_week": "2026-07-31",
         "snapshot_date": "2026-08-04",
-        "ticker": "KO"
+        "ticker": "STUB"
       }
     ],
     "vendor": "Alpha Vantage"
   },
   "sectors": {
-    "flagged_groups": [
-      "73"
-    ],
+    "flagged_groups": [],
     "groups": [
-      {
-        "desc": "Business Services",
-        "flagged": true,
-        "share": 0.5,
-        "sic2": "73",
-        "tickers": [
-          "MA",
-          "V"
-        ]
-      },
       {
         "desc": "Food And Kindred Products",
         "flagged": false,
-        "share": 0.25,
+        "share": 0.3333,
         "sic2": "20",
         "tickers": [
           "KO"
@@ -128,13 +88,28 @@
       {
         "desc": "Depository Institutions",
         "flagged": false,
-        "share": 0.25,
+        "share": 0.3333,
         "sic2": "60",
         "tickers": [
           "JPM"
         ]
+      },
+      {
+        "desc": "Amusement And Recreation Services",
+        "flagged": false,
+        "share": 0.3333,
+        "sic2": "79",
+        "tickers": [
+          "STUB"
+        ]
       }
     ]
   },
-  "warnings": []
+  "warnings": [
+    {
+      "code": "insufficient_history",
+      "message": "STUB has 44 weekly return(s) inside the 156-week window, below the 52-week floor. It is weighted normally, but every correlation involving it is reported as null rather than measured over a shortened window.",
+      "ticker": "STUB"
+    }
+  ]
 }

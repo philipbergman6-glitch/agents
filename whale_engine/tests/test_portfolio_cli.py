@@ -91,7 +91,10 @@ def test_missing_edgar_snapshot_exits_non_zero(pinned, capsys, tmp_path):
     snapshot = price_snapshot("CCC", wiggle(200))
     (tmp / "prices" / "CCC-2026-08-01.json").write_text(json.dumps(snapshot), encoding="utf-8")
     assert run(tmp, "AAA", "CCC") == 1
-    assert "no EDGAR snapshot" in capsys.readouterr().err
+    err = capsys.readouterr().err
+    # Both routes named (#94): a young name is a `--sector-only` fetch away,
+    # not a dead end.
+    assert "no EDGAR sector source" in err and "--sector-only" in err
 
 
 def test_single_ticker_basket_exits_non_zero(pinned, capsys):

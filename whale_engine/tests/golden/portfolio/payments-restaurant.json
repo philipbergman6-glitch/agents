@@ -47,14 +47,17 @@
     "edgar_snapshots": [
       {
         "snapshot_date": "2026-08-04",
+        "source": "fetch",
         "ticker": "V"
       },
       {
         "snapshot_date": "2026-08-04",
+        "source": "fetch",
         "ticker": "MA"
       },
       {
         "snapshot_date": "2026-08-04",
+        "source": "fetch",
         "ticker": "CAVA"
       }
     ],

@@ -43,12 +43,13 @@ def load_portfolio_inputs(basket: list[str]) -> tuple[dict, dict]:
         )
         for ticker in basket
     }
-    edgar = {
-        ticker: json.loads(
-            (SNAPSHOTS / f"{ticker}-{PORTFOLIO_SNAPSHOT_DATE}.json").read_text()
-        )
-        for ticker in basket
-    }
+    # Sector source per name, full snapshot first (#94): a name too young for
+    # the fundamentals depth a full fetch needs has only the sector-only file.
+    edgar = {}
+    for ticker in basket:
+        full = SNAPSHOTS / f"{ticker}-{PORTFOLIO_SNAPSHOT_DATE}.json"
+        sector = SNAPSHOTS / "sectors" / f"{ticker}-{PORTFOLIO_SNAPSHOT_DATE}.json"
+        edgar[ticker] = json.loads((full if full.exists() else sector).read_text())
     return prices, edgar
 
 

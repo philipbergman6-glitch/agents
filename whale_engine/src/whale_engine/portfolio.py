@@ -24,6 +24,13 @@ review, precedent #40, and a version bump):
   a first-class warning names it (#82 §4, #83 §4)
 - basket of 2-15 tickers inclusive; outside that, hard fail (#82 §5)
 
+Sector source per name (#94): the full EDGAR snapshot when one exists, else
+the sector-only snapshot in `snapshots/sectors/` — the same SIC field, fetched
+alone, for a name too young for the fundamentals depth `whale fetch` demands.
+`provenance.edgar_snapshots[].source` records which. Without that route a
+recent IPO killed the whole report, and the insufficient-history path below
+could not fire on any real name.
+
 Dates in `correlation.window` are **week-start Mondays**, the keys weeks are
 compared by — a bar filed on Friday 2026-07-31 belongs to the week starting
 2026-07-27. Bar dates themselves are always read from the vendor, never
@@ -37,6 +44,7 @@ import math
 from datetime import date, timedelta
 from pathlib import Path
 
+from .fetch import SECTOR_SCHEMA_VERSION, SECTOR_SNAPSHOT_KIND
 from .prices import SERIES, VENDOR, load_price_snapshot
 from .sic_groups import major_group_title
 
@@ -353,8 +361,10 @@ def build_report(
     missing_edgar = [t for t in basket if t not in edgar_snapshots]
     if missing_edgar:
         raise PortfolioError(
-            f"no EDGAR snapshot for {', '.join(missing_edgar)} — run "
-            f"`whale fetch TICKER` for each; the sector check reads its SIC code."
+            f"no EDGAR sector source for {', '.join(missing_edgar)} — run "
+            f"`whale fetch TICKER`, or `whale fetch TICKER --sector-only` for a "
+            f"name too young for a full fundamentals snapshot; the sector check "
+            f"reads its SIC code."
         )
 
     weight = 1 / len(basket)
@@ -380,8 +390,21 @@ def build_report(
                 }
                 for t in basket
             ],
+            # `source` (#94) says which artifact the SIC came from: a full
+            # `whale fetch` snapshot, or the sector-only lookup a name too
+            # young for one gets. The code itself is the same EDGAR
+            # submissions field either way — the field records that a
+            # sector-only name has no pinned fundamentals behind it.
             "edgar_snapshots": [
-                {"ticker": t, "snapshot_date": edgar_snapshots[t].get("fetched_at")}
+                {
+                    "ticker": t,
+                    "snapshot_date": edgar_snapshots[t].get("fetched_at"),
+                    "source": (
+                        SECTOR_SNAPSHOT_KIND
+                        if edgar_snapshots[t].get("kind") == SECTOR_SNAPSHOT_KIND
+                        else "fetch"
+                    ),
+                }
                 for t in basket
             ],
         },
@@ -397,12 +420,51 @@ def latest_edgar_snapshot_path(ticker: str, snapshots_dir: Path) -> Path | None:
     return candidates[-1] if candidates else None
 
 
+def latest_sector_snapshot_path(ticker: str, sectors_dir: Path) -> Path | None:
+    """Newest sector-only snapshot for `ticker`, or None (#94)."""
+    candidates = sorted(Path(sectors_dir).glob(f"{ticker.upper()}-*.json"))
+    return candidates[-1] if candidates else None
+
+
+def load_sector_snapshot(path: Path) -> dict:
+    """Read a sector-only snapshot, hard-failing on anything else (#94).
+
+    The checks exist because this file sits one directory away from the real
+    snapshots: a stray copy in either direction must say so, not be scored or
+    read as a sector source by accident.
+    """
+    import json
+
+    path = Path(path)
+    snapshot = json.loads(path.read_text(encoding="utf-8"))
+    if snapshot.get("kind") != SECTOR_SNAPSHOT_KIND:
+        raise PortfolioError(
+            f"{path}: not a sector-only snapshot (kind={snapshot.get('kind')!r}) — "
+            f"sectors/ holds only `whale fetch --sector-only` output."
+        )
+    version = snapshot.get("schema_version")
+    if version != SECTOR_SCHEMA_VERSION:
+        raise PortfolioError(
+            f"{path}: sector snapshot schema_version {version!r}, expected "
+            f"{SECTOR_SCHEMA_VERSION} — refetch with `whale fetch "
+            f"{snapshot.get('ticker', 'TICKER')} --sector-only`."
+        )
+    return snapshot
+
+
 def load_basket_snapshots(
     basket: list[str], snapshots_dir: Path
 ) -> tuple[dict[str, dict], dict[str, dict]]:
-    """Load the pinned price and EDGAR snapshots a basket needs, or hard-fail."""
+    """Load the pinned price and EDGAR snapshots a basket needs, or hard-fail.
+
+    Sector source per ticker: the full snapshot when one exists, else the
+    sector-only snapshot (#94). Full always wins — it is the same SIC field
+    plus everything else, so a name that has been properly fetched never
+    silently reads from the lightweight file.
+    """
     snapshots_dir = Path(snapshots_dir)
     prices_dir = snapshots_dir / "prices"
+    sectors_dir = snapshots_dir / "sectors"
 
     from .prices import latest_price_snapshot_path
 
@@ -418,12 +480,24 @@ def load_basket_snapshots(
             price_snapshots[ticker] = load_price_snapshot(price_path)
 
         edgar_path = latest_edgar_snapshot_path(ticker, snapshots_dir)
-        if edgar_path is None:
-            missing_edgar.append(ticker)
-        else:
+        if edgar_path is not None:
             import json
 
-            edgar_snapshots[ticker] = json.loads(edgar_path.read_text(encoding="utf-8"))
+            snapshot = json.loads(edgar_path.read_text(encoding="utf-8"))
+            if snapshot.get("kind") == SECTOR_SNAPSHOT_KIND:
+                raise PortfolioError(
+                    f"{edgar_path}: a sector-only snapshot is sitting in "
+                    f"{snapshots_dir}/, where scorers look for fundamentals. "
+                    f"Move it to {sectors_dir}/."
+                )
+            edgar_snapshots[ticker] = snapshot
+            continue
+
+        sector_path = latest_sector_snapshot_path(ticker, sectors_dir)
+        if sector_path is None:
+            missing_edgar.append(ticker)
+        else:
+            edgar_snapshots[ticker] = load_sector_snapshot(sector_path)
 
     if missing_prices:
         raise PortfolioError(
@@ -433,7 +507,10 @@ def load_basket_snapshots(
         )
     if missing_edgar:
         raise PortfolioError(
-            f"no EDGAR snapshot in {snapshots_dir}/ for {', '.join(missing_edgar)} — "
-            f"run `whale fetch TICKER` for each; the sector check reads its SIC code."
+            f"no EDGAR sector source in {snapshots_dir}/ or {sectors_dir}/ for "
+            f"{', '.join(missing_edgar)} — run `whale fetch TICKER` for each, or "
+            f"`whale fetch TICKER --sector-only` for a name too young to have "
+            f"the fundamentals depth a full snapshot needs; the sector check "
+            f"reads only its SIC code."
         )
     return price_snapshots, edgar_snapshots

@@ -1,0 +1,14 @@
+{
+  "cik": "1337634",
+  "company_name": "StubHub Holdings, Inc.",
+  "fetched_at": "2026-08-04",
+  "kind": "sector-only",
+  "schema_version": 1,
+  "sic": "7990",
+  "sic_description": "Services-Miscellaneous Amusement & Recreation",
+  "source": {
+    "sector": "SEC EDGAR submissions via edgartools 5.43.0"
+  },
+  "ticker": "STUB",
+  "warnings": []
+}

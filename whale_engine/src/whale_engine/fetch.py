@@ -181,6 +181,13 @@ RESTATEMENT_ITEM = "4.02"
 RESTATEMENT_WINDOW_YEARS = 10
 RESTATEMENT_AFFECTED_YEARS = 3
 
+# --- sector-only snapshot (ticket #94) -------------------------------------
+# A separate, deliberately tiny artifact carrying the one EDGAR field the
+# portfolio layer needs. It is never a snapshot: `kind` marks it, it lives in
+# its own directory, and no scorer may read it. See fetch_sector_snapshot.
+SECTOR_SCHEMA_VERSION = 1
+SECTOR_SNAPSHOT_KIND = "sector-only"
+
 
 def _require_identity() -> str:
     identity = os.environ.get("EDGAR_IDENTITY", "").strip()
@@ -190,6 +197,20 @@ def _require_identity() -> str:
             'e.g. export EDGAR_IDENTITY="Jane Doe jane@example.com"'
         )
     return identity
+
+
+def _edgar_company(ticker: str):
+    """Identified EDGAR company lookup. Network seam for tests."""
+    import edgar
+
+    edgar.set_identity(_require_identity())
+    return edgar.Company(ticker)
+
+
+def _edgartools_version() -> str:
+    import edgar
+
+    return str(getattr(edgar, "__version__", "unknown"))
 
 
 def _company_sic(company) -> tuple[str | None, str | None, dict | None]:
@@ -1319,6 +1340,61 @@ def fetch_snapshot(
         extra_findings.append(insider_warning)
     _attach_validation(snapshot, company, today, extra_findings)
     return snapshot
+
+
+def fetch_sector_snapshot(ticker: str, today: date | None = None) -> dict:
+    """EDGAR submissions -> a sector-only snapshot: the SIC code, nothing else.
+
+    Ticket #94. The portfolio layer reads exactly one EDGAR field — the SIC
+    code, for the 2-digit major-group concentration check (#82 §3) — but the
+    only route to a snapshot was `fetch`, which hard-fails any company without
+    N_PERIODS distinct TTM windows. A recent IPO in a client's basket
+    therefore killed the entire report with an error about fundamentals depth
+    (a whale-scoring concern the portfolio layer never asked about), and the
+    insufficient-history path designed in #82/#83 could not fire on any real
+    young name.
+
+    This is a separate artifact, not a degraded snapshot: it carries `kind`
+    SECTOR_SNAPSHOT_KIND, is written to its own directory (snapshots/sectors/,
+    beside snapshots/prices/), and no scorer ever reads it. Whale scoring, the
+    fetch depth requirement, and the 10-TTM-window rule are untouched (#40).
+
+    An absent or unusable SIC stays a WARN rather than a failure, exactly as
+    on a full fetch, so the portfolio layer's `sector_unavailable` path
+    behaves identically whichever route produced the file.
+    """
+    ticker = ticker.upper()
+    _require_identity()
+    today = today or date.today()
+
+    try:
+        company = _edgar_company(ticker)
+    except Exception as e:
+        raise FetchError(
+            f"{ticker}: EDGAR company lookup failed ({type(e).__name__}: {e}). "
+            "Check the ticker symbol."
+        ) from e
+    cik = getattr(company, "cik", None)
+    if not cik:
+        raise FetchError(
+            f"{ticker}: EDGAR knows no company under this ticker — nothing to "
+            "look a sector up from."
+        )
+
+    sic, sic_description, sic_warning = _company_sic(company)
+
+    return {
+        "schema_version": SECTOR_SCHEMA_VERSION,
+        "kind": SECTOR_SNAPSHOT_KIND,
+        "ticker": ticker,
+        "fetched_at": today.isoformat(),
+        "cik": str(cik),
+        "company_name": str(getattr(company, "name", "") or "") or None,
+        "sic": sic,
+        "sic_description": sic_description,
+        "source": {"sector": f"SEC EDGAR submissions via edgartools {_edgartools_version()}"},
+        "warnings": [sic_warning] if sic_warning is not None else [],
+    }
 
 
 def _attach_validation(
