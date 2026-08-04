@@ -1,0 +1,4228 @@
+{
+  "fetched_at": "2026-08-04",
+  "last_complete_week": "2026-07-31",
+  "last_complete_week_start": "2026-07-27",
+  "last_refreshed": "2026-08-03",
+  "observations": 1053,
+  "partial_bars_dropped": [
+    "2026-08-03"
+  ],
+  "schema_version": 1,
+  "series": "TIME_SERIES_WEEKLY_ADJUSTED",
+  "ticker": "MA",
+  "vendor": "Alpha Vantage",
+  "weekly_adjusted_close": [
+    {
+      "adjusted_close": 4.2505,
+      "date": "2006-06-02"
+    },
+    {
+      "adjusted_close": 4.3338,
+      "date": "2006-06-09"
+    },
+    {
+      "adjusted_close": 4.0723,
+      "date": "2006-06-16"
+    },
+    {
+      "adjusted_close": 4.2469,
+      "date": "2006-06-23"
+    },
+    {
+      "adjusted_close": 4.3419,
+      "date": "2006-06-30"
+    },
+    {
+      "adjusted_close": 4.1718,
+      "date": "2006-07-07"
+    },
+    {
+      "adjusted_close": 3.9755,
+      "date": "2006-07-14"
+    },
+    {
+      "adjusted_close": 4.0959,
+      "date": "2006-07-21"
+    },
+    {
+      "adjusted_close": 4.1881,
+      "date": "2006-07-28"
+    },
+    {
+      "adjusted_close": 4.5273,
+      "date": "2006-08-04"
+    },
+    {
+      "adjusted_close": 4.8557,
+      "date": "2006-08-11"
+    },
+    {
+      "adjusted_close": 4.8349,
+      "date": "2006-08-18"
+    },
+    {
+      "adjusted_close": 4.9751,
+      "date": "2006-08-25"
+    },
+    {
+      "adjusted_close": 5.1153,
+      "date": "2006-09-01"
+    },
+    {
+      "adjusted_close": 5.4048,
+      "date": "2006-09-08"
+    },
+    {
+      "adjusted_close": 5.8769,
+      "date": "2006-09-15"
+    },
+    {
+      "adjusted_close": 5.9638,
+      "date": "2006-09-22"
+    },
+    {
+      "adjusted_close": 6.3636,
+      "date": "2006-09-29"
+    },
+    {
+      "adjusted_close": 6.8062,
+      "date": "2006-10-06"
+    },
+    {
+      "adjusted_close": 6.3479,
+      "date": "2006-10-13"
+    },
+    {
+      "adjusted_close": 6.4503,
+      "date": "2006-10-20"
+    },
+    {
+      "adjusted_close": 6.5789,
+      "date": "2006-10-27"
+    },
+    {
+      "adjusted_close": 8.1068,
+      "date": "2006-11-03"
+    },
+    {
+      "adjusted_close": 8.0787,
+      "date": "2006-11-10"
+    },
+    {
+      "adjusted_close": 8.585,
+      "date": "2006-11-17"
+    },
+    {
+      "adjusted_close": 9.5531,
+      "date": "2006-11-24"
+    },
+    {
+      "adjusted_close": 9.1628,
+      "date": "2006-12-01"
+    },
+    {
+      "adjusted_close": 9.0659,
+      "date": "2006-12-08"
+    },
+    {
+      "adjusted_close": 8.7118,
+      "date": "2006-12-15"
+    },
+    {
+      "adjusted_close": 8.7263,
+      "date": "2006-12-22"
+    },
+    {
+      "adjusted_close": 8.9201,
+      "date": "2006-12-29"
+    },
+    {
+      "adjusted_close": 9.1528,
+      "date": "2007-01-05"
+    },
+    {
+      "adjusted_close": 9.5405,
+      "date": "2007-01-12"
+    },
+    {
+      "adjusted_close": 9.5206,
+      "date": "2007-01-19"
+    },
+    {
+      "adjusted_close": 9.8369,
+      "date": "2007-01-26"
+    },
+    {
+      "adjusted_close": 10.0581,
+      "date": "2007-02-02"
+    },
+    {
+      "adjusted_close": 9.3909,
+      "date": "2007-02-09"
+    },
+    {
+      "adjusted_close": 9.8188,
+      "date": "2007-02-16"
+    },
+    {
+      "adjusted_close": 9.4789,
+      "date": "2007-02-23"
+    },
+    {
+      "adjusted_close": 9.342,
+      "date": "2007-03-02"
+    },
+    {
+      "adjusted_close": 9.2785,
+      "date": "2007-03-09"
+    },
+    {
+      "adjusted_close": 9.5423,
+      "date": "2007-03-16"
+    },
+    {
+      "adjusted_close": 9.9584,
+      "date": "2007-03-23"
+    },
+    {
+      "adjusted_close": 9.6302,
+      "date": "2007-03-30"
+    },
+    {
+      "adjusted_close": 9.8044,
+      "date": "2007-04-05"
+    },
+    {
+      "adjusted_close": 9.9306,
+      "date": "2007-04-13"
+    },
+    {
+      "adjusted_close": 9.9941,
+      "date": "2007-04-20"
+    },
+    {
+      "adjusted_close": 10.3572,
+      "date": "2007-04-27"
+    },
+    {
+      "adjusted_close": 12.2235,
+      "date": "2007-05-04"
+    },
+    {
+      "adjusted_close": 12.602,
+      "date": "2007-05-11"
+    },
+    {
+      "adjusted_close": 12.5312,
+      "date": "2007-05-18"
+    },
+    {
+      "adjusted_close": 12.6238,
+      "date": "2007-05-25"
+    },
+    {
+      "adjusted_close": 13.7158,
+      "date": "2007-06-01"
+    },
+    {
+      "adjusted_close": 13.0332,
+      "date": "2007-06-08"
+    },
+    {
+      "adjusted_close": 14.3104,
+      "date": "2007-06-15"
+    },
+    {
+      "adjusted_close": 15.2889,
+      "date": "2007-06-22"
+    },
+    {
+      "adjusted_close": 15.0701,
+      "date": "2007-06-29"
+    },
+    {
+      "adjusted_close": 14.7094,
+      "date": "2007-07-06"
+    },
+    {
+      "adjusted_close": 15.3736,
+      "date": "2007-07-13"
+    },
+    {
+      "adjusted_close": 15.0165,
+      "date": "2007-07-20"
+    },
+    {
+      "adjusted_close": 13.9944,
+      "date": "2007-07-27"
+    },
+    {
+      "adjusted_close": 11.9256,
+      "date": "2007-08-03"
+    },
+    {
+      "adjusted_close": 12.5743,
+      "date": "2007-08-10"
+    },
+    {
+      "adjusted_close": 12.4471,
+      "date": "2007-08-17"
+    },
+    {
+      "adjusted_close": 12.7043,
+      "date": "2007-08-24"
+    },
+    {
+      "adjusted_close": 12.4462,
+      "date": "2007-08-31"
+    },
+    {
+      "adjusted_close": 11.8302,
+      "date": "2007-09-07"
+    },
+    {
+      "adjusted_close": 12.5244,
+      "date": "2007-09-14"
+    },
+    {
+      "adjusted_close": 13.3157,
+      "date": "2007-09-21"
+    },
+    {
+      "adjusted_close": 13.4438,
+      "date": "2007-09-28"
+    },
+    {
+      "adjusted_close": 14.7603,
+      "date": "2007-10-05"
+    },
+    {
+      "adjusted_close": 14.8284,
+      "date": "2007-10-12"
+    },
+    {
+      "adjusted_close": 13.787,
+      "date": "2007-10-19"
+    },
+    {
+      "adjusted_close": 14.2808,
+      "date": "2007-10-26"
+    },
+    {
+      "adjusted_close": 17.2828,
+      "date": "2007-11-02"
+    },
+    {
+      "adjusted_close": 17.552,
+      "date": "2007-11-09"
+    },
+    {
+      "adjusted_close": 16.8127,
+      "date": "2007-11-16"
+    },
+    {
+      "adjusted_close": 16.4698,
+      "date": "2007-11-23"
+    },
+    {
+      "adjusted_close": 18.2477,
+      "date": "2007-11-30"
+    },
+    {
+      "adjusted_close": 19.0617,
+      "date": "2007-12-07"
+    },
+    {
+      "adjusted_close": 19.6947,
+      "date": "2007-12-14"
+    },
+    {
+      "adjusted_close": 19.3118,
+      "date": "2007-12-21"
+    },
+    {
+      "adjusted_close": 19.0981,
+      "date": "2007-12-28"
+    },
+    {
+      "adjusted_close": 18.2969,
+      "date": "2008-01-04"
+    },
+    {
+      "adjusted_close": 16.3067,
+      "date": "2008-01-11"
+    },
+    {
+      "adjusted_close": 15.8926,
+      "date": "2008-01-18"
+    },
+    {
+      "adjusted_close": 17.6046,
+      "date": "2008-01-25"
+    },
+    {
+      "adjusted_close": 19.6059,
+      "date": "2008-02-01"
+    },
+    {
+      "adjusted_close": 18.7131,
+      "date": "2008-02-08"
+    },
+    {
+      "adjusted_close": 18.7486,
+      "date": "2008-02-15"
+    },
+    {
+      "adjusted_close": 18.5192,
+      "date": "2008-02-22"
+    },
+    {
+      "adjusted_close": 17.2924,
+      "date": "2008-02-29"
+    },
+    {
+      "adjusted_close": 17.5208,
+      "date": "2008-03-07"
+    },
+    {
+      "adjusted_close": 18.9898,
+      "date": "2008-03-14"
+    },
+    {
+      "adjusted_close": 20.0573,
+      "date": "2008-03-20"
+    },
+    {
+      "adjusted_close": 19.8043,
+      "date": "2008-03-28"
+    },
+    {
+      "adjusted_close": 20.6207,
+      "date": "2008-04-04"
+    },
+    {
+      "adjusted_close": 20.8193,
+      "date": "2008-04-11"
+    },
+    {
+      "adjusted_close": 21.2846,
+      "date": "2008-04-18"
+    },
+    {
+      "adjusted_close": 21.6198,
+      "date": "2008-04-25"
+    },
+    {
+      "adjusted_close": 25.9594,
+      "date": "2008-05-02"
+    },
+    {
+      "adjusted_close": 26.1243,
+      "date": "2008-05-09"
+    },
+    {
+      "adjusted_close": 25.8101,
+      "date": "2008-05-16"
+    },
+    {
+      "adjusted_close": 24.8829,
+      "date": "2008-05-23"
+    },
+    {
+      "adjusted_close": 28.1097,
+      "date": "2008-05-30"
+    },
+    {
+      "adjusted_close": 26.933,
+      "date": "2008-06-06"
+    },
+    {
+      "adjusted_close": 26.6352,
+      "date": "2008-06-13"
+    },
+    {
+      "adjusted_close": 25.8656,
+      "date": "2008-06-20"
+    },
+    {
+      "adjusted_close": 24.7463,
+      "date": "2008-06-27"
+    },
+    {
+      "adjusted_close": 23.1088,
+      "date": "2008-07-03"
+    },
+    {
+      "adjusted_close": 23.4516,
+      "date": "2008-07-11"
+    },
+    {
+      "adjusted_close": 25.594,
+      "date": "2008-07-18"
+    },
+    {
+      "adjusted_close": 24.0166,
+      "date": "2008-07-25"
+    },
+    {
+      "adjusted_close": 21.6218,
+      "date": "2008-08-01"
+    },
+    {
+      "adjusted_close": 21.1534,
+      "date": "2008-08-08"
+    },
+    {
+      "adjusted_close": 21.7749,
+      "date": "2008-08-15"
+    },
+    {
+      "adjusted_close": 22.02,
+      "date": "2008-08-22"
+    },
+    {
+      "adjusted_close": 22.1029,
+      "date": "2008-08-29"
+    },
+    {
+      "adjusted_close": 20.1792,
+      "date": "2008-09-05"
+    },
+    {
+      "adjusted_close": 20.3961,
+      "date": "2008-09-12"
+    },
+    {
+      "adjusted_close": 20.52,
+      "date": "2008-09-19"
+    },
+    {
+      "adjusted_close": 16.8649,
+      "date": "2008-09-26"
+    },
+    {
+      "adjusted_close": 14.5986,
+      "date": "2008-10-03"
+    },
+    {
+      "adjusted_close": 13.8376,
+      "date": "2008-10-10"
+    },
+    {
+      "adjusted_close": 14.2973,
+      "date": "2008-10-17"
+    },
+    {
+      "adjusted_close": 11.914,
+      "date": "2008-10-24"
+    },
+    {
+      "adjusted_close": 13.4828,
+      "date": "2008-10-31"
+    },
+    {
+      "adjusted_close": 13.4746,
+      "date": "2008-11-07"
+    },
+    {
+      "adjusted_close": 13.1052,
+      "date": "2008-11-14"
+    },
+    {
+      "adjusted_close": 11.5418,
+      "date": "2008-11-21"
+    },
+    {
+      "adjusted_close": 13.2529,
+      "date": "2008-11-28"
+    },
+    {
+      "adjusted_close": 12.7805,
+      "date": "2008-12-05"
+    },
+    {
+      "adjusted_close": 12.661,
+      "date": "2008-12-12"
+    },
+    {
+      "adjusted_close": 13.8951,
+      "date": "2008-12-19"
+    },
+    {
+      "adjusted_close": 12.8543,
+      "date": "2008-12-26"
+    },
+    {
+      "adjusted_close": 13.6616,
+      "date": "2009-01-02"
+    },
+    {
+      "adjusted_close": 13.6988,
+      "date": "2009-01-09"
+    },
+    {
+      "adjusted_close": 11.7066,
+      "date": "2009-01-16"
+    },
+    {
+      "adjusted_close": 11.4537,
+      "date": "2009-01-23"
+    },
+    {
+      "adjusted_close": 12.3968,
+      "date": "2009-01-30"
+    },
+    {
+      "adjusted_close": 14.8364,
+      "date": "2009-02-06"
+    },
+    {
+      "adjusted_close": 14.7816,
+      "date": "2009-02-13"
+    },
+    {
+      "adjusted_close": 14.4264,
+      "date": "2009-02-20"
+    },
+    {
+      "adjusted_close": 14.4283,
+      "date": "2009-02-27"
+    },
+    {
+      "adjusted_close": 13.0049,
+      "date": "2009-03-06"
+    },
+    {
+      "adjusted_close": 14.4538,
+      "date": "2009-03-13"
+    },
+    {
+      "adjusted_close": 14.2,
+      "date": "2009-03-20"
+    },
+    {
+      "adjusted_close": 15.2901,
+      "date": "2009-03-27"
+    },
+    {
+      "adjusted_close": 15.8909,
+      "date": "2009-04-03"
+    },
+    {
+      "adjusted_close": 15.7599,
+      "date": "2009-04-09"
+    },
+    {
+      "adjusted_close": 14.9009,
+      "date": "2009-04-17"
+    },
+    {
+      "adjusted_close": 15.8174,
+      "date": "2009-04-24"
+    },
+    {
+      "adjusted_close": 15.8001,
+      "date": "2009-05-01"
+    },
+    {
+      "adjusted_close": 16.9131,
+      "date": "2009-05-08"
+    },
+    {
+      "adjusted_close": 15.8211,
+      "date": "2009-05-15"
+    },
+    {
+      "adjusted_close": 15.3852,
+      "date": "2009-05-22"
+    },
+    {
+      "adjusted_close": 16.1135,
+      "date": "2009-05-29"
+    },
+    {
+      "adjusted_close": 15.323,
+      "date": "2009-06-05"
+    },
+    {
+      "adjusted_close": 15.2664,
+      "date": "2009-06-12"
+    },
+    {
+      "adjusted_close": 14.7446,
+      "date": "2009-06-19"
+    },
+    {
+      "adjusted_close": 15.4354,
+      "date": "2009-06-26"
+    },
+    {
+      "adjusted_close": 15.1924,
+      "date": "2009-07-02"
+    },
+    {
+      "adjusted_close": 14.6861,
+      "date": "2009-07-10"
+    },
+    {
+      "adjusted_close": 16.4496,
+      "date": "2009-07-17"
+    },
+    {
+      "adjusted_close": 16.9646,
+      "date": "2009-07-24"
+    },
+    {
+      "adjusted_close": 17.7475,
+      "date": "2009-07-31"
+    },
+    {
+      "adjusted_close": 18.6906,
+      "date": "2009-08-07"
+    },
+    {
+      "adjusted_close": 18.5323,
+      "date": "2009-08-14"
+    },
+    {
+      "adjusted_close": 18.9567,
+      "date": "2009-08-21"
+    },
+    {
+      "adjusted_close": 18.6201,
+      "date": "2009-08-28"
+    },
+    {
+      "adjusted_close": 18.847,
+      "date": "2009-09-04"
+    },
+    {
+      "adjusted_close": 19.0994,
+      "date": "2009-09-11"
+    },
+    {
+      "adjusted_close": 20.4495,
+      "date": "2009-09-18"
+    },
+    {
+      "adjusted_close": 18.7235,
+      "date": "2009-09-25"
+    },
+    {
+      "adjusted_close": 18.2652,
+      "date": "2009-10-02"
+    },
+    {
+      "adjusted_close": 19.6265,
+      "date": "2009-10-09"
+    },
+    {
+      "adjusted_close": 20.4915,
+      "date": "2009-10-16"
+    },
+    {
+      "adjusted_close": 21.0489,
+      "date": "2009-10-23"
+    },
+    {
+      "adjusted_close": 20.0476,
+      "date": "2009-10-30"
+    },
+    {
+      "adjusted_close": 21.6842,
+      "date": "2009-11-06"
+    },
+    {
+      "adjusted_close": 21.4846,
+      "date": "2009-11-13"
+    },
+    {
+      "adjusted_close": 21.1588,
+      "date": "2009-11-20"
+    },
+    {
+      "adjusted_close": 21.5643,
+      "date": "2009-11-27"
+    },
+    {
+      "adjusted_close": 22.0897,
+      "date": "2009-12-04"
+    },
+    {
+      "adjusted_close": 22.3286,
+      "date": "2009-12-11"
+    },
+    {
+      "adjusted_close": 23.3263,
+      "date": "2009-12-18"
+    },
+    {
+      "adjusted_close": 23.3794,
+      "date": "2009-12-24"
+    },
+    {
+      "adjusted_close": 23.4306,
+      "date": "2009-12-31"
+    },
+    {
+      "adjusted_close": 23.2612,
+      "date": "2010-01-08"
+    },
+    {
+      "adjusted_close": 24.0553,
+      "date": "2010-01-15"
+    },
+    {
+      "adjusted_close": 23.0625,
+      "date": "2010-01-22"
+    },
+    {
+      "adjusted_close": 22.8875,
+      "date": "2010-01-29"
+    },
+    {
+      "adjusted_close": 20.2169,
+      "date": "2010-02-05"
+    },
+    {
+      "adjusted_close": 20.651,
+      "date": "2010-02-12"
+    },
+    {
+      "adjusted_close": 20.39,
+      "date": "2010-02-19"
+    },
+    {
+      "adjusted_close": 20.5493,
+      "date": "2010-02-26"
+    },
+    {
+      "adjusted_close": 21.9387,
+      "date": "2010-03-05"
+    },
+    {
+      "adjusted_close": 22.8939,
+      "date": "2010-03-12"
+    },
+    {
+      "adjusted_close": 22.3801,
+      "date": "2010-03-19"
+    },
+    {
+      "adjusted_close": 22.5523,
+      "date": "2010-03-26"
+    },
+    {
+      "adjusted_close": 23.2575,
+      "date": "2010-04-01"
+    },
+    {
+      "adjusted_close": 23.7239,
+      "date": "2010-04-09"
+    },
+    {
+      "adjusted_close": 23.7807,
+      "date": "2010-04-16"
+    },
+    {
+      "adjusted_close": 24.4882,
+      "date": "2010-04-23"
+    },
+    {
+      "adjusted_close": 22.7305,
+      "date": "2010-04-30"
+    },
+    {
+      "adjusted_close": 20.4441,
+      "date": "2010-05-07"
+    },
+    {
+      "adjusted_close": 19.469,
+      "date": "2010-05-14"
+    },
+    {
+      "adjusted_close": 19.5973,
+      "date": "2010-05-21"
+    },
+    {
+      "adjusted_close": 18.4903,
+      "date": "2010-05-28"
+    },
+    {
+      "adjusted_close": 18.0229,
+      "date": "2010-06-04"
+    },
+    {
+      "adjusted_close": 18.7753,
+      "date": "2010-06-11"
+    },
+    {
+      "adjusted_close": 19.6349,
+      "date": "2010-06-18"
+    },
+    {
+      "adjusted_close": 20.0134,
+      "date": "2010-06-25"
+    },
+    {
+      "adjusted_close": 18.5957,
+      "date": "2010-07-02"
+    },
+    {
+      "adjusted_close": 19.765,
+      "date": "2010-07-09"
+    },
+    {
+      "adjusted_close": 18.0867,
+      "date": "2010-07-16"
+    },
+    {
+      "adjusted_close": 19.5284,
+      "date": "2010-07-23"
+    },
+    {
+      "adjusted_close": 19.2624,
+      "date": "2010-07-30"
+    },
+    {
+      "adjusted_close": 19.0221,
+      "date": "2010-08-06"
+    },
+    {
+      "adjusted_close": 19.3174,
+      "date": "2010-08-13"
+    },
+    {
+      "adjusted_close": 18.9258,
+      "date": "2010-08-20"
+    },
+    {
+      "adjusted_close": 18.9488,
+      "date": "2010-08-27"
+    },
+    {
+      "adjusted_close": 18.9818,
+      "date": "2010-09-03"
+    },
+    {
+      "adjusted_close": 18.1711,
+      "date": "2010-09-10"
+    },
+    {
+      "adjusted_close": 19.5953,
+      "date": "2010-09-17"
+    },
+    {
+      "adjusted_close": 20.3198,
+      "date": "2010-09-24"
+    },
+    {
+      "adjusted_close": 20.6142,
+      "date": "2010-10-01"
+    },
+    {
+      "adjusted_close": 20.4272,
+      "date": "2010-10-08"
+    },
+    {
+      "adjusted_close": 21.4468,
+      "date": "2010-10-15"
+    },
+    {
+      "adjusted_close": 22.2672,
+      "date": "2010-10-22"
+    },
+    {
+      "adjusted_close": 22.0304,
+      "date": "2010-10-29"
+    },
+    {
+      "adjusted_close": 23.5199,
+      "date": "2010-11-05"
+    },
+    {
+      "adjusted_close": 22.3159,
+      "date": "2010-11-12"
+    },
+    {
+      "adjusted_close": 22.381,
+      "date": "2010-11-19"
+    },
+    {
+      "adjusted_close": 21.5799,
+      "date": "2010-11-26"
+    },
+    {
+      "adjusted_close": 22.8582,
+      "date": "2010-12-03"
+    },
+    {
+      "adjusted_close": 23.3795,
+      "date": "2010-12-10"
+    },
+    {
+      "adjusted_close": 20.3052,
+      "date": "2010-12-17"
+    },
+    {
+      "adjusted_close": 20.0335,
+      "date": "2010-12-23"
+    },
+    {
+      "adjusted_close": 20.5667,
+      "date": "2010-12-31"
+    },
+    {
+      "adjusted_close": 21.221,
+      "date": "2011-01-07"
+    },
+    {
+      "adjusted_close": 21.7555,
+      "date": "2011-01-14"
+    },
+    {
+      "adjusted_close": 21.4451,
+      "date": "2011-01-21"
+    },
+    {
+      "adjusted_close": 21.5681,
+      "date": "2011-01-28"
+    },
+    {
+      "adjusted_close": 22.7041,
+      "date": "2011-02-04"
+    },
+    {
+      "adjusted_close": 23.278,
+      "date": "2011-02-11"
+    },
+    {
+      "adjusted_close": 23.0255,
+      "date": "2011-02-18"
+    },
+    {
+      "adjusted_close": 22.6554,
+      "date": "2011-02-25"
+    },
+    {
+      "adjusted_close": 22.9346,
+      "date": "2011-03-04"
+    },
+    {
+      "adjusted_close": 22.8124,
+      "date": "2011-03-11"
+    },
+    {
+      "adjusted_close": 22.1935,
+      "date": "2011-03-18"
+    },
+    {
+      "adjusted_close": 22.7463,
+      "date": "2011-03-25"
+    },
+    {
+      "adjusted_close": 23.2835,
+      "date": "2011-04-01"
+    },
+    {
+      "adjusted_close": 24.1705,
+      "date": "2011-04-08"
+    },
+    {
+      "adjusted_close": 24.5858,
+      "date": "2011-04-15"
+    },
+    {
+      "adjusted_close": 25.1095,
+      "date": "2011-04-21"
+    },
+    {
+      "adjusted_close": 25.3493,
+      "date": "2011-04-29"
+    },
+    {
+      "adjusted_close": 25.1986,
+      "date": "2011-05-06"
+    },
+    {
+      "adjusted_close": 25.727,
+      "date": "2011-05-13"
+    },
+    {
+      "adjusted_close": 25.5037,
+      "date": "2011-05-20"
+    },
+    {
+      "adjusted_close": 26.2084,
+      "date": "2011-05-27"
+    },
+    {
+      "adjusted_close": 25.4568,
+      "date": "2011-06-03"
+    },
+    {
+      "adjusted_close": 24.5353,
+      "date": "2011-06-10"
+    },
+    {
+      "adjusted_close": 24.4489,
+      "date": "2011-06-17"
+    },
+    {
+      "adjusted_close": 25.1941,
+      "date": "2011-06-24"
+    },
+    {
+      "adjusted_close": 28.8941,
+      "date": "2011-07-01"
+    },
+    {
+      "adjusted_close": 28.9834,
+      "date": "2011-07-08"
+    },
+    {
+      "adjusted_close": 28.2719,
+      "date": "2011-07-15"
+    },
+    {
+      "adjusted_close": 28.8777,
+      "date": "2011-07-22"
+    },
+    {
+      "adjusted_close": 27.8766,
+      "date": "2011-07-29"
+    },
+    {
+      "adjusted_close": 30.0175,
+      "date": "2011-08-05"
+    },
+    {
+      "adjusted_close": 30.1582,
+      "date": "2011-08-12"
+    },
+    {
+      "adjusted_close": 27.5925,
+      "date": "2011-08-19"
+    },
+    {
+      "adjusted_close": 29.9063,
+      "date": "2011-08-26"
+    },
+    {
+      "adjusted_close": 29.4789,
+      "date": "2011-09-02"
+    },
+    {
+      "adjusted_close": 29.602,
+      "date": "2011-09-09"
+    },
+    {
+      "adjusted_close": 31.8938,
+      "date": "2011-09-16"
+    },
+    {
+      "adjusted_close": 30.9818,
+      "date": "2011-09-23"
+    },
+    {
+      "adjusted_close": 29.1553,
+      "date": "2011-09-30"
+    },
+    {
+      "adjusted_close": 28.645,
+      "date": "2011-10-07"
+    },
+    {
+      "adjusted_close": 31.4151,
+      "date": "2011-10-14"
+    },
+    {
+      "adjusted_close": 30.6628,
+      "date": "2011-10-21"
+    },
+    {
+      "adjusted_close": 32.6108,
+      "date": "2011-10-28"
+    },
+    {
+      "adjusted_close": 33.1175,
+      "date": "2011-11-04"
+    },
+    {
+      "adjusted_close": 34.0427,
+      "date": "2011-11-11"
+    },
+    {
+      "adjusted_close": 33.1479,
+      "date": "2011-11-18"
+    },
+    {
+      "adjusted_close": 31.84,
+      "date": "2011-11-25"
+    },
+    {
+      "adjusted_close": 34.7996,
+      "date": "2011-12-02"
+    },
+    {
+      "adjusted_close": 34.7114,
+      "date": "2011-12-09"
+    },
+    {
+      "adjusted_close": 33.3079,
+      "date": "2011-12-16"
+    },
+    {
+      "adjusted_close": 34.7785,
+      "date": "2011-12-23"
+    },
+    {
+      "adjusted_close": 34.2883,
+      "date": "2011-12-30"
+    },
+    {
+      "adjusted_close": 31.5518,
+      "date": "2012-01-06"
+    },
+    {
+      "adjusted_close": 31.1985,
+      "date": "2012-01-13"
+    },
+    {
+      "adjusted_close": 31.3439,
+      "date": "2012-01-20"
+    },
+    {
+      "adjusted_close": 32.0919,
+      "date": "2012-01-27"
+    },
+    {
+      "adjusted_close": 35.913,
+      "date": "2012-02-03"
+    },
+    {
+      "adjusted_close": 36.4485,
+      "date": "2012-02-10"
+    },
+    {
+      "adjusted_close": 36.4357,
+      "date": "2012-02-17"
+    },
+    {
+      "adjusted_close": 38.24,
+      "date": "2012-02-24"
+    },
+    {
+      "adjusted_close": 37.9796,
+      "date": "2012-03-02"
+    },
+    {
+      "adjusted_close": 38.5997,
+      "date": "2012-03-09"
+    },
+    {
+      "adjusted_close": 38.6595,
+      "date": "2012-03-16"
+    },
+    {
+      "adjusted_close": 39.0128,
+      "date": "2012-03-23"
+    },
+    {
+      "adjusted_close": 38.6936,
+      "date": "2012-03-30"
+    },
+    {
+      "adjusted_close": 40.4984,
+      "date": "2012-04-05"
+    },
+    {
+      "adjusted_close": 40.5546,
+      "date": "2012-04-13"
+    },
+    {
+      "adjusted_close": 40.5528,
+      "date": "2012-04-20"
+    },
+    {
+      "adjusted_close": 42.1309,
+      "date": "2012-04-27"
+    },
+    {
+      "adjusted_close": 40.4837,
+      "date": "2012-05-04"
+    },
+    {
+      "adjusted_close": 38.8918,
+      "date": "2012-05-11"
+    },
+    {
+      "adjusted_close": 36.3284,
+      "date": "2012-05-18"
+    },
+    {
+      "adjusted_close": 38.1147,
+      "date": "2012-05-25"
+    },
+    {
+      "adjusted_close": 36.0725,
+      "date": "2012-06-01"
+    },
+    {
+      "adjusted_close": 38.3531,
+      "date": "2012-06-08"
+    },
+    {
+      "adjusted_close": 39.2868,
+      "date": "2012-06-15"
+    },
+    {
+      "adjusted_close": 40.0592,
+      "date": "2012-06-22"
+    },
+    {
+      "adjusted_close": 39.6016,
+      "date": "2012-06-29"
+    },
+    {
+      "adjusted_close": 40.6898,
+      "date": "2012-07-06"
+    },
+    {
+      "adjusted_close": 39.5814,
+      "date": "2012-07-13"
+    },
+    {
+      "adjusted_close": 38.9871,
+      "date": "2012-07-20"
+    },
+    {
+      "adjusted_close": 40.2402,
+      "date": "2012-07-27"
+    },
+    {
+      "adjusted_close": 39.0774,
+      "date": "2012-08-03"
+    },
+    {
+      "adjusted_close": 39.2525,
+      "date": "2012-08-10"
+    },
+    {
+      "adjusted_close": 39.3243,
+      "date": "2012-08-17"
+    },
+    {
+      "adjusted_close": 38.9226,
+      "date": "2012-08-24"
+    },
+    {
+      "adjusted_close": 38.9641,
+      "date": "2012-08-31"
+    },
+    {
+      "adjusted_close": 40.1895,
+      "date": "2012-09-07"
+    },
+    {
+      "adjusted_close": 41.8461,
+      "date": "2012-09-14"
+    },
+    {
+      "adjusted_close": 42.3381,
+      "date": "2012-09-21"
+    },
+    {
+      "adjusted_close": 41.5973,
+      "date": "2012-09-28"
+    },
+    {
+      "adjusted_close": 43.8169,
+      "date": "2012-10-05"
+    },
+    {
+      "adjusted_close": 43.6408,
+      "date": "2012-10-12"
+    },
+    {
+      "adjusted_close": 43.3365,
+      "date": "2012-10-19"
+    },
+    {
+      "adjusted_close": 41.7619,
+      "date": "2012-10-26"
+    },
+    {
+      "adjusted_close": 43.2803,
+      "date": "2012-11-02"
+    },
+    {
+      "adjusted_close": 42.8387,
+      "date": "2012-11-09"
+    },
+    {
+      "adjusted_close": 42.8322,
+      "date": "2012-11-16"
+    },
+    {
+      "adjusted_close": 44.3673,
+      "date": "2012-11-23"
+    },
+    {
+      "adjusted_close": 45.0532,
+      "date": "2012-11-30"
+    },
+    {
+      "adjusted_close": 43.8925,
+      "date": "2012-12-07"
+    },
+    {
+      "adjusted_close": 44.465,
+      "date": "2012-12-14"
+    },
+    {
+      "adjusted_close": 45.504,
+      "date": "2012-12-21"
+    },
+    {
+      "adjusted_close": 44.5369,
+      "date": "2012-12-28"
+    },
+    {
+      "adjusted_close": 47.1091,
+      "date": "2013-01-04"
+    },
+    {
+      "adjusted_close": 48.7691,
+      "date": "2013-01-11"
+    },
+    {
+      "adjusted_close": 48.0606,
+      "date": "2013-01-18"
+    },
+    {
+      "adjusted_close": 47.9149,
+      "date": "2013-01-25"
+    },
+    {
+      "adjusted_close": 47.8494,
+      "date": "2013-02-01"
+    },
+    {
+      "adjusted_close": 48.3807,
+      "date": "2013-02-08"
+    },
+    {
+      "adjusted_close": 48.2571,
+      "date": "2013-02-15"
+    },
+    {
+      "adjusted_close": 48.3217,
+      "date": "2013-02-22"
+    },
+    {
+      "adjusted_close": 47.8116,
+      "date": "2013-03-01"
+    },
+    {
+      "adjusted_close": 48.8198,
+      "date": "2013-03-08"
+    },
+    {
+      "adjusted_close": 47.9103,
+      "date": "2013-03-15"
+    },
+    {
+      "adjusted_close": 47.7378,
+      "date": "2013-03-22"
+    },
+    {
+      "adjusted_close": 49.9176,
+      "date": "2013-03-28"
+    },
+    {
+      "adjusted_close": 49.0938,
+      "date": "2013-04-05"
+    },
+    {
+      "adjusted_close": 49.2222,
+      "date": "2013-04-12"
+    },
+    {
+      "adjusted_close": 48.2035,
+      "date": "2013-04-19"
+    },
+    {
+      "adjusted_close": 49.4383,
+      "date": "2013-04-26"
+    },
+    {
+      "adjusted_close": 51.1209,
+      "date": "2013-05-03"
+    },
+    {
+      "adjusted_close": 51.2668,
+      "date": "2013-05-10"
+    },
+    {
+      "adjusted_close": 54.005,
+      "date": "2013-05-17"
+    },
+    {
+      "adjusted_close": 52.7749,
+      "date": "2013-05-24"
+    },
+    {
+      "adjusted_close": 52.6632,
+      "date": "2013-05-31"
+    },
+    {
+      "adjusted_close": 52.2938,
+      "date": "2013-06-07"
+    },
+    {
+      "adjusted_close": 52.7472,
+      "date": "2013-06-14"
+    },
+    {
+      "adjusted_close": 52.9439,
+      "date": "2013-06-21"
+    },
+    {
+      "adjusted_close": 53.0557,
+      "date": "2013-06-28"
+    },
+    {
+      "adjusted_close": 55.007,
+      "date": "2013-07-05"
+    },
+    {
+      "adjusted_close": 55.3611,
+      "date": "2013-07-12"
+    },
+    {
+      "adjusted_close": 54.8499,
+      "date": "2013-07-19"
+    },
+    {
+      "adjusted_close": 55.2955,
+      "date": "2013-07-26"
+    },
+    {
+      "adjusted_close": 59.6792,
+      "date": "2013-08-02"
+    },
+    {
+      "adjusted_close": 58.9757,
+      "date": "2013-08-09"
+    },
+    {
+      "adjusted_close": 57.1499,
+      "date": "2013-08-16"
+    },
+    {
+      "adjusted_close": 57.8802,
+      "date": "2013-08-23"
+    },
+    {
+      "adjusted_close": 56.0285,
+      "date": "2013-08-30"
+    },
+    {
+      "adjusted_close": 58.8518,
+      "date": "2013-09-06"
+    },
+    {
+      "adjusted_close": 61.6057,
+      "date": "2013-09-13"
+    },
+    {
+      "adjusted_close": 63.3926,
+      "date": "2013-09-20"
+    },
+    {
+      "adjusted_close": 63.033,
+      "date": "2013-09-27"
+    },
+    {
+      "adjusted_close": 62.2454,
+      "date": "2013-10-04"
+    },
+    {
+      "adjusted_close": 63.3054,
+      "date": "2013-10-11"
+    },
+    {
+      "adjusted_close": 66.1747,
+      "date": "2013-10-18"
+    },
+    {
+      "adjusted_close": 66.9695,
+      "date": "2013-10-25"
+    },
+    {
+      "adjusted_close": 68.2371,
+      "date": "2013-11-01"
+    },
+    {
+      "adjusted_close": 67.9586,
+      "date": "2013-11-08"
+    },
+    {
+      "adjusted_close": 69.6047,
+      "date": "2013-11-15"
+    },
+    {
+      "adjusted_close": 69.8073,
+      "date": "2013-11-22"
+    },
+    {
+      "adjusted_close": 70.3958,
+      "date": "2013-11-29"
+    },
+    {
+      "adjusted_close": 70.1793,
+      "date": "2013-12-06"
+    },
+    {
+      "adjusted_close": 72.9088,
+      "date": "2013-12-13"
+    },
+    {
+      "adjusted_close": 75.5995,
+      "date": "2013-12-20"
+    },
+    {
+      "adjusted_close": 76.6007,
+      "date": "2013-12-27"
+    },
+    {
+      "adjusted_close": 76.8727,
+      "date": "2014-01-03"
+    },
+    {
+      "adjusted_close": 77.3397,
+      "date": "2014-01-10"
+    },
+    {
+      "adjusted_close": 75.8258,
+      "date": "2014-01-17"
+    },
+    {
+      "adjusted_close": 72.7387,
+      "date": "2014-01-24"
+    },
+    {
+      "adjusted_close": 70.1168,
+      "date": "2014-01-31"
+    },
+    {
+      "adjusted_close": 70.7004,
+      "date": "2014-02-07"
+    },
+    {
+      "adjusted_close": 71.7011,
+      "date": "2014-02-14"
+    },
+    {
+      "adjusted_close": 70.1353,
+      "date": "2014-02-21"
+    },
+    {
+      "adjusted_close": 72.0068,
+      "date": "2014-02-28"
+    },
+    {
+      "adjusted_close": 72.2106,
+      "date": "2014-03-07"
+    },
+    {
+      "adjusted_close": 70.7282,
+      "date": "2014-03-14"
+    },
+    {
+      "adjusted_close": 70.404,
+      "date": "2014-03-21"
+    },
+    {
+      "adjusted_close": 67.8376,
+      "date": "2014-03-28"
+    },
+    {
+      "adjusted_close": 66.874,
+      "date": "2014-04-04"
+    },
+    {
+      "adjusted_close": 63.7295,
+      "date": "2014-04-11"
+    },
+    {
+      "adjusted_close": 68.7866,
+      "date": "2014-04-17"
+    },
+    {
+      "adjusted_close": 65.5667,
+      "date": "2014-04-25"
+    },
+    {
+      "adjusted_close": 68.4618,
+      "date": "2014-05-02"
+    },
+    {
+      "adjusted_close": 69.0186,
+      "date": "2014-05-09"
+    },
+    {
+      "adjusted_close": 68.434,
+      "date": "2014-05-16"
+    },
+    {
+      "adjusted_close": 70.9394,
+      "date": "2014-05-23"
+    },
+    {
+      "adjusted_close": 70.9394,
+      "date": "2014-05-30"
+    },
+    {
+      "adjusted_close": 71.8859,
+      "date": "2014-06-06"
+    },
+    {
+      "adjusted_close": 70.4661,
+      "date": "2014-06-13"
+    },
+    {
+      "adjusted_close": 68.4897,
+      "date": "2014-06-20"
+    },
+    {
+      "adjusted_close": 68.1092,
+      "date": "2014-06-27"
+    },
+    {
+      "adjusted_close": 71.1064,
+      "date": "2014-07-03"
+    },
+    {
+      "adjusted_close": 70.4657,
+      "date": "2014-07-11"
+    },
+    {
+      "adjusted_close": 72.0175,
+      "date": "2014-07-18"
+    },
+    {
+      "adjusted_close": 70.3913,
+      "date": "2014-07-25"
+    },
+    {
+      "adjusted_close": 69.6758,
+      "date": "2014-08-01"
+    },
+    {
+      "adjusted_close": 69.8524,
+      "date": "2014-08-08"
+    },
+    {
+      "adjusted_close": 69.8895,
+      "date": "2014-08-15"
+    },
+    {
+      "adjusted_close": 71.0697,
+      "date": "2014-08-22"
+    },
+    {
+      "adjusted_close": 70.4471,
+      "date": "2014-08-29"
+    },
+    {
+      "adjusted_close": 71.4228,
+      "date": "2014-09-05"
+    },
+    {
+      "adjusted_close": 70.1311,
+      "date": "2014-09-12"
+    },
+    {
+      "adjusted_close": 71.8131,
+      "date": "2014-09-19"
+    },
+    {
+      "adjusted_close": 69.7501,
+      "date": "2014-09-26"
+    },
+    {
+      "adjusted_close": 69.0718,
+      "date": "2014-10-03"
+    },
+    {
+      "adjusted_close": 65.6115,
+      "date": "2014-10-10"
+    },
+    {
+      "adjusted_close": 66.598,
+      "date": "2014-10-17"
+    },
+    {
+      "adjusted_close": 68.8688,
+      "date": "2014-10-24"
+    },
+    {
+      "adjusted_close": 77.9428,
+      "date": "2014-10-31"
+    },
+    {
+      "adjusted_close": 78.92,
+      "date": "2014-11-07"
+    },
+    {
+      "adjusted_close": 78.222,
+      "date": "2014-11-14"
+    },
+    {
+      "adjusted_close": 78.8455,
+      "date": "2014-11-21"
+    },
+    {
+      "adjusted_close": 81.2373,
+      "date": "2014-11-28"
+    },
+    {
+      "adjusted_close": 82.9032,
+      "date": "2014-12-05"
+    },
+    {
+      "adjusted_close": 78.2964,
+      "date": "2014-12-12"
+    },
+    {
+      "adjusted_close": 80.4462,
+      "date": "2014-12-19"
+    },
+    {
+      "adjusted_close": 81.684,
+      "date": "2014-12-26"
+    },
+    {
+      "adjusted_close": 79.7389,
+      "date": "2015-01-02"
+    },
+    {
+      "adjusted_close": 78.7342,
+      "date": "2015-01-09"
+    },
+    {
+      "adjusted_close": 78.1375,
+      "date": "2015-01-16"
+    },
+    {
+      "adjusted_close": 78.6876,
+      "date": "2015-01-23"
+    },
+    {
+      "adjusted_close": 76.4871,
+      "date": "2015-01-30"
+    },
+    {
+      "adjusted_close": 78.4731,
+      "date": "2015-02-06"
+    },
+    {
+      "adjusted_close": 81.2518,
+      "date": "2015-02-13"
+    },
+    {
+      "adjusted_close": 84.6551,
+      "date": "2015-02-20"
+    },
+    {
+      "adjusted_close": 84.0397,
+      "date": "2015-02-27"
+    },
+    {
+      "adjusted_close": 84.6551,
+      "date": "2015-03-06"
+    },
+    {
+      "adjusted_close": 81.8206,
+      "date": "2015-03-13"
+    },
+    {
+      "adjusted_close": 83.7507,
+      "date": "2015-03-20"
+    },
+    {
+      "adjusted_close": 81.3543,
+      "date": "2015-03-27"
+    },
+    {
+      "adjusted_close": 81.1492,
+      "date": "2015-04-02"
+    },
+    {
+      "adjusted_close": 82.7354,
+      "date": "2015-04-10"
+    },
+    {
+      "adjusted_close": 81.2035,
+      "date": "2015-04-17"
+    },
+    {
+      "adjusted_close": 84.7438,
+      "date": "2015-04-24"
+    },
+    {
+      "adjusted_close": 85.2389,
+      "date": "2015-05-01"
+    },
+    {
+      "adjusted_close": 87.35,
+      "date": "2015-05-08"
+    },
+    {
+      "adjusted_close": 87.0791,
+      "date": "2015-05-15"
+    },
+    {
+      "adjusted_close": 86.584,
+      "date": "2015-05-22"
+    },
+    {
+      "adjusted_close": 86.1824,
+      "date": "2015-05-29"
+    },
+    {
+      "adjusted_close": 86.5186,
+      "date": "2015-06-05"
+    },
+    {
+      "adjusted_close": 87.5929,
+      "date": "2015-06-12"
+    },
+    {
+      "adjusted_close": 88.5644,
+      "date": "2015-06-19"
+    },
+    {
+      "adjusted_close": 88.2841,
+      "date": "2015-06-26"
+    },
+    {
+      "adjusted_close": 88.0319,
+      "date": "2015-07-02"
+    },
+    {
+      "adjusted_close": 88.5375,
+      "date": "2015-07-10"
+    },
+    {
+      "adjusted_close": 89.9037,
+      "date": "2015-07-17"
+    },
+    {
+      "adjusted_close": 89.6697,
+      "date": "2015-07-24"
+    },
+    {
+      "adjusted_close": 91.1388,
+      "date": "2015-07-31"
+    },
+    {
+      "adjusted_close": 91.485,
+      "date": "2015-08-07"
+    },
+    {
+      "adjusted_close": 91.5973,
+      "date": "2015-08-14"
+    },
+    {
+      "adjusted_close": 84.8508,
+      "date": "2015-08-21"
+    },
+    {
+      "adjusted_close": 88.0322,
+      "date": "2015-08-28"
+    },
+    {
+      "adjusted_close": 84.7104,
+      "date": "2015-09-04"
+    },
+    {
+      "adjusted_close": 85.4777,
+      "date": "2015-09-11"
+    },
+    {
+      "adjusted_close": 86.2263,
+      "date": "2015-09-18"
+    },
+    {
+      "adjusted_close": 85.4309,
+      "date": "2015-09-25"
+    },
+    {
+      "adjusted_close": 86.1514,
+      "date": "2015-10-02"
+    },
+    {
+      "adjusted_close": 89.8111,
+      "date": "2015-10-09"
+    },
+    {
+      "adjusted_close": 91.517,
+      "date": "2015-10-16"
+    },
+    {
+      "adjusted_close": 93.5321,
+      "date": "2015-10-23"
+    },
+    {
+      "adjusted_close": 92.7823,
+      "date": "2015-10-30"
+    },
+    {
+      "adjusted_close": 95.1349,
+      "date": "2015-11-06"
+    },
+    {
+      "adjusted_close": 90.7859,
+      "date": "2015-11-13"
+    },
+    {
+      "adjusted_close": 93.2603,
+      "date": "2015-11-20"
+    },
+    {
+      "adjusted_close": 92.4824,
+      "date": "2015-11-27"
+    },
+    {
+      "adjusted_close": 92.5105,
+      "date": "2015-12-04"
+    },
+    {
+      "adjusted_close": 88.8832,
+      "date": "2015-12-11"
+    },
+    {
+      "adjusted_close": 90.2516,
+      "date": "2015-12-18"
+    },
+    {
+      "adjusted_close": 92.4074,
+      "date": "2015-12-24"
+    },
+    {
+      "adjusted_close": 91.2545,
+      "date": "2015-12-31"
+    },
+    {
+      "adjusted_close": 84.4245,
+      "date": "2016-01-08"
+    },
+    {
+      "adjusted_close": 83.3162,
+      "date": "2016-01-15"
+    },
+    {
+      "adjusted_close": 82.6494,
+      "date": "2016-01-22"
+    },
+    {
+      "adjusted_close": 83.6167,
+      "date": "2016-01-29"
+    },
+    {
+      "adjusted_close": 77.728,
+      "date": "2016-02-05"
+    },
+    {
+      "adjusted_close": 79.7285,
+      "date": "2016-02-12"
+    },
+    {
+      "adjusted_close": 81.5129,
+      "date": "2016-02-19"
+    },
+    {
+      "adjusted_close": 82.2455,
+      "date": "2016-02-26"
+    },
+    {
+      "adjusted_close": 84.5747,
+      "date": "2016-03-04"
+    },
+    {
+      "adjusted_close": 83.1941,
+      "date": "2016-03-11"
+    },
+    {
+      "adjusted_close": 86.6973,
+      "date": "2016-03-18"
+    },
+    {
+      "adjusted_close": 86.3216,
+      "date": "2016-03-24"
+    },
+    {
+      "adjusted_close": 90.0409,
+      "date": "2016-04-01"
+    },
+    {
+      "adjusted_close": 88.264,
+      "date": "2016-04-08"
+    },
+    {
+      "adjusted_close": 90.9837,
+      "date": "2016-04-15"
+    },
+    {
+      "adjusted_close": 91.7083,
+      "date": "2016-04-22"
+    },
+    {
+      "adjusted_close": 91.2754,
+      "date": "2016-04-29"
+    },
+    {
+      "adjusted_close": 90.9837,
+      "date": "2016-05-06"
+    },
+    {
+      "adjusted_close": 89.7415,
+      "date": "2016-05-13"
+    },
+    {
+      "adjusted_close": 89.845,
+      "date": "2016-05-20"
+    },
+    {
+      "adjusted_close": 91.4542,
+      "date": "2016-05-27"
+    },
+    {
+      "adjusted_close": 90.372,
+      "date": "2016-06-03"
+    },
+    {
+      "adjusted_close": 89.6003,
+      "date": "2016-06-10"
+    },
+    {
+      "adjusted_close": 87.7934,
+      "date": "2016-06-17"
+    },
+    {
+      "adjusted_close": 86.0807,
+      "date": "2016-06-24"
+    },
+    {
+      "adjusted_close": 83.615,
+      "date": "2016-07-01"
+    },
+    {
+      "adjusted_close": 83.5245,
+      "date": "2016-07-08"
+    },
+    {
+      "adjusted_close": 85.7597,
+      "date": "2016-07-15"
+    },
+    {
+      "adjusted_close": 88.3345,
+      "date": "2016-07-22"
+    },
+    {
+      "adjusted_close": 89.8247,
+      "date": "2016-07-29"
+    },
+    {
+      "adjusted_close": 91.3714,
+      "date": "2016-08-05"
+    },
+    {
+      "adjusted_close": 90.6546,
+      "date": "2016-08-12"
+    },
+    {
+      "adjusted_close": 89.8058,
+      "date": "2016-08-19"
+    },
+    {
+      "adjusted_close": 90.9847,
+      "date": "2016-08-26"
+    },
+    {
+      "adjusted_close": 92.324,
+      "date": "2016-09-02"
+    },
+    {
+      "adjusted_close": 92.5692,
+      "date": "2016-09-09"
+    },
+    {
+      "adjusted_close": 93.7104,
+      "date": "2016-09-16"
+    },
+    {
+      "adjusted_close": 95.8796,
+      "date": "2016-09-23"
+    },
+    {
+      "adjusted_close": 95.9834,
+      "date": "2016-09-30"
+    },
+    {
+      "adjusted_close": 96.615,
+      "date": "2016-10-07"
+    },
+    {
+      "adjusted_close": 95.3205,
+      "date": "2016-10-14"
+    },
+    {
+      "adjusted_close": 97.1819,
+      "date": "2016-10-21"
+    },
+    {
+      "adjusted_close": 101.0087,
+      "date": "2016-10-28"
+    },
+    {
+      "adjusted_close": 97.352,
+      "date": "2016-11-04"
+    },
+    {
+      "adjusted_close": 98.8544,
+      "date": "2016-11-11"
+    },
+    {
+      "adjusted_close": 99.0056,
+      "date": "2016-11-18"
+    },
+    {
+      "adjusted_close": 99.9032,
+      "date": "2016-11-25"
+    },
+    {
+      "adjusted_close": 95.5284,
+      "date": "2016-12-02"
+    },
+    {
+      "adjusted_close": 98.656,
+      "date": "2016-12-09"
+    },
+    {
+      "adjusted_close": 97.73,
+      "date": "2016-12-16"
+    },
+    {
+      "adjusted_close": 98.9394,
+      "date": "2016-12-23"
+    },
+    {
+      "adjusted_close": 97.5599,
+      "date": "2016-12-30"
+    },
+    {
+      "adjusted_close": 102.0307,
+      "date": "2017-01-06"
+    },
+    {
+      "adjusted_close": 102.9207,
+      "date": "2017-01-13"
+    },
+    {
+      "adjusted_close": 104.1137,
+      "date": "2017-01-20"
+    },
+    {
+      "adjusted_close": 104.0001,
+      "date": "2017-01-27"
+    },
+    {
+      "adjusted_close": 100.9134,
+      "date": "2017-02-03"
+    },
+    {
+      "adjusted_close": 101.5668,
+      "date": "2017-02-10"
+    },
+    {
+      "adjusted_close": 103.6025,
+      "date": "2017-02-17"
+    },
+    {
+      "adjusted_close": 105.0985,
+      "date": "2017-02-24"
+    },
+    {
+      "adjusted_close": 105.7991,
+      "date": "2017-03-03"
+    },
+    {
+      "adjusted_close": 105.2973,
+      "date": "2017-03-10"
+    },
+    {
+      "adjusted_close": 106.8312,
+      "date": "2017-03-17"
+    },
+    {
+      "adjusted_close": 106.0263,
+      "date": "2017-03-24"
+    },
+    {
+      "adjusted_close": 106.4903,
+      "date": "2017-03-31"
+    },
+    {
+      "adjusted_close": 106.4811,
+      "date": "2017-04-07"
+    },
+    {
+      "adjusted_close": 105.5135,
+      "date": "2017-04-13"
+    },
+    {
+      "adjusted_close": 108.407,
+      "date": "2017-04-21"
+    },
+    {
+      "adjusted_close": 110.3518,
+      "date": "2017-04-28"
+    },
+    {
+      "adjusted_close": 111.4713,
+      "date": "2017-05-05"
+    },
+    {
+      "adjusted_close": 111.1202,
+      "date": "2017-05-12"
+    },
+    {
+      "adjusted_close": 111.5472,
+      "date": "2017-05-19"
+    },
+    {
+      "adjusted_close": 115.3894,
+      "date": "2017-05-26"
+    },
+    {
+      "adjusted_close": 118.7762,
+      "date": "2017-06-02"
+    },
+    {
+      "adjusted_close": 116.727,
+      "date": "2017-06-09"
+    },
+    {
+      "adjusted_close": 115.7024,
+      "date": "2017-06-16"
+    },
+    {
+      "adjusted_close": 117.6472,
+      "date": "2017-06-23"
+    },
+    {
+      "adjusted_close": 115.2186,
+      "date": "2017-06-30"
+    },
+    {
+      "adjusted_close": 116.1392,
+      "date": "2017-07-07"
+    },
+    {
+      "adjusted_close": 120.7106,
+      "date": "2017-07-14"
+    },
+    {
+      "adjusted_close": 122.8585,
+      "date": "2017-07-21"
+    },
+    {
+      "adjusted_close": 121.566,
+      "date": "2017-07-28"
+    },
+    {
+      "adjusted_close": 123.3813,
+      "date": "2017-08-04"
+    },
+    {
+      "adjusted_close": 122.1743,
+      "date": "2017-08-11"
+    },
+    {
+      "adjusted_close": 124.6358,
+      "date": "2017-08-18"
+    },
+    {
+      "adjusted_close": 126.1659,
+      "date": "2017-08-25"
+    },
+    {
+      "adjusted_close": 126.6316,
+      "date": "2017-09-01"
+    },
+    {
+      "adjusted_close": 130.4142,
+      "date": "2017-09-08"
+    },
+    {
+      "adjusted_close": 134.558,
+      "date": "2017-09-15"
+    },
+    {
+      "adjusted_close": 134.8526,
+      "date": "2017-09-22"
+    },
+    {
+      "adjusted_close": 134.1968,
+      "date": "2017-09-29"
+    },
+    {
+      "adjusted_close": 136.6105,
+      "date": "2017-10-06"
+    },
+    {
+      "adjusted_close": 140.2466,
+      "date": "2017-10-13"
+    },
+    {
+      "adjusted_close": 138.381,
+      "date": "2017-10-20"
+    },
+    {
+      "adjusted_close": 141.3698,
+      "date": "2017-10-27"
+    },
+    {
+      "adjusted_close": 142.1028,
+      "date": "2017-11-03"
+    },
+    {
+      "adjusted_close": 142.3407,
+      "date": "2017-11-10"
+    },
+    {
+      "adjusted_close": 141.8458,
+      "date": "2017-11-17"
+    },
+    {
+      "adjusted_close": 145.3867,
+      "date": "2017-11-24"
+    },
+    {
+      "adjusted_close": 142.4835,
+      "date": "2017-12-01"
+    },
+    {
+      "adjusted_close": 142.6739,
+      "date": "2017-12-08"
+    },
+    {
+      "adjusted_close": 146.0149,
+      "date": "2017-12-15"
+    },
+    {
+      "adjusted_close": 143.5876,
+      "date": "2017-12-22"
+    },
+    {
+      "adjusted_close": 144.0731,
+      "date": "2017-12-29"
+    },
+    {
+      "adjusted_close": 151.3834,
+      "date": "2018-01-05"
+    },
+    {
+      "adjusted_close": 154.7575,
+      "date": "2018-01-12"
+    },
+    {
+      "adjusted_close": 159.0476,
+      "date": "2018-01-19"
+    },
+    {
+      "adjusted_close": 162.3938,
+      "date": "2018-01-26"
+    },
+    {
+      "adjusted_close": 162.5941,
+      "date": "2018-02-02"
+    },
+    {
+      "adjusted_close": 157.4936,
+      "date": "2018-02-09"
+    },
+    {
+      "adjusted_close": 167.4561,
+      "date": "2018-02-16"
+    },
+    {
+      "adjusted_close": 167.561,
+      "date": "2018-02-23"
+    },
+    {
+      "adjusted_close": 166.8555,
+      "date": "2018-03-02"
+    },
+    {
+      "adjusted_close": 174.6921,
+      "date": "2018-03-09"
+    },
+    {
+      "adjusted_close": 174.0343,
+      "date": "2018-03-16"
+    },
+    {
+      "adjusted_close": 163.8143,
+      "date": "2018-03-23"
+    },
+    {
+      "adjusted_close": 166.989,
+      "date": "2018-03-29"
+    },
+    {
+      "adjusted_close": 162.022,
+      "date": "2018-04-06"
+    },
+    {
+      "adjusted_close": 166.3853,
+      "date": "2018-04-13"
+    },
+    {
+      "adjusted_close": 169.0681,
+      "date": "2018-04-20"
+    },
+    {
+      "adjusted_close": 167.9797,
+      "date": "2018-04-27"
+    },
+    {
+      "adjusted_close": 179.6564,
+      "date": "2018-05-04"
+    },
+    {
+      "adjusted_close": 184.602,
+      "date": "2018-05-11"
+    },
+    {
+      "adjusted_close": 181.7855,
+      "date": "2018-05-18"
+    },
+    {
+      "adjusted_close": 182.5206,
+      "date": "2018-05-25"
+    },
+    {
+      "adjusted_close": 186.5306,
+      "date": "2018-06-01"
+    },
+    {
+      "adjusted_close": 190.9893,
+      "date": "2018-06-08"
+    },
+    {
+      "adjusted_close": 190.5024,
+      "date": "2018-06-15"
+    },
+    {
+      "adjusted_close": 192.3642,
+      "date": "2018-06-22"
+    },
+    {
+      "adjusted_close": 187.6286,
+      "date": "2018-06-29"
+    },
+    {
+      "adjusted_close": 190.7315,
+      "date": "2018-07-06"
+    },
+    {
+      "adjusted_close": 196.8401,
+      "date": "2018-07-13"
+    },
+    {
+      "adjusted_close": 197.6048,
+      "date": "2018-07-20"
+    },
+    {
+      "adjusted_close": 194.0009,
+      "date": "2018-07-27"
+    },
+    {
+      "adjusted_close": 192.3375,
+      "date": "2018-08-03"
+    },
+    {
+      "adjusted_close": 193.7237,
+      "date": "2018-08-10"
+    },
+    {
+      "adjusted_close": 194.259,
+      "date": "2018-08-17"
+    },
+    {
+      "adjusted_close": 200.1764,
+      "date": "2018-08-24"
+    },
+    {
+      "adjusted_close": 206.065,
+      "date": "2018-08-31"
+    },
+    {
+      "adjusted_close": 201.7919,
+      "date": "2018-09-07"
+    },
+    {
+      "adjusted_close": 208.3593,
+      "date": "2018-09-14"
+    },
+    {
+      "adjusted_close": 212.1258,
+      "date": "2018-09-21"
+    },
+    {
+      "adjusted_close": 212.8045,
+      "date": "2018-09-28"
+    },
+    {
+      "adjusted_close": 204.1053,
+      "date": "2018-10-05"
+    },
+    {
+      "adjusted_close": 195.4534,
+      "date": "2018-10-12"
+    },
+    {
+      "adjusted_close": 194.3432,
+      "date": "2018-10-19"
+    },
+    {
+      "adjusted_close": 189.0123,
+      "date": "2018-10-26"
+    },
+    {
+      "adjusted_close": 189.2324,
+      "date": "2018-11-02"
+    },
+    {
+      "adjusted_close": 196.7933,
+      "date": "2018-11-09"
+    },
+    {
+      "adjusted_close": 190.4957,
+      "date": "2018-11-16"
+    },
+    {
+      "adjusted_close": 174.7615,
+      "date": "2018-11-23"
+    },
+    {
+      "adjusted_close": 192.4386,
+      "date": "2018-11-30"
+    },
+    {
+      "adjusted_close": 188.0648,
+      "date": "2018-12-07"
+    },
+    {
+      "adjusted_close": 186.945,
+      "date": "2018-12-14"
+    },
+    {
+      "adjusted_close": 167.6696,
+      "date": "2018-12-21"
+    },
+    {
+      "adjusted_close": 178.1686,
+      "date": "2018-12-28"
+    },
+    {
+      "adjusted_close": 181.6141,
+      "date": "2019-01-04"
+    },
+    {
+      "adjusted_close": 187.8123,
+      "date": "2019-01-11"
+    },
+    {
+      "adjusted_close": 193.6605,
+      "date": "2019-01-18"
+    },
+    {
+      "adjusted_close": 194.5617,
+      "date": "2019-01-25"
+    },
+    {
+      "adjusted_close": 204.9446,
+      "date": "2019-02-01"
+    },
+    {
+      "adjusted_close": 207.6385,
+      "date": "2019-02-08"
+    },
+    {
+      "adjusted_close": 212.9402,
+      "date": "2019-02-15"
+    },
+    {
+      "adjusted_close": 214.1003,
+      "date": "2019-02-22"
+    },
+    {
+      "adjusted_close": 217.868,
+      "date": "2019-03-01"
+    },
+    {
+      "adjusted_close": 212.7101,
+      "date": "2019-03-08"
+    },
+    {
+      "adjusted_close": 221.6262,
+      "date": "2019-03-15"
+    },
+    {
+      "adjusted_close": 221.2331,
+      "date": "2019-03-22"
+    },
+    {
+      "adjusted_close": 225.7295,
+      "date": "2019-03-29"
+    },
+    {
+      "adjusted_close": 226.8608,
+      "date": "2019-04-05"
+    },
+    {
+      "adjusted_close": 229.2898,
+      "date": "2019-04-12"
+    },
+    {
+      "adjusted_close": 231.2675,
+      "date": "2019-04-18"
+    },
+    {
+      "adjusted_close": 236.8262,
+      "date": "2019-04-26"
+    },
+    {
+      "adjusted_close": 238.0455,
+      "date": "2019-05-03"
+    },
+    {
+      "adjusted_close": 237.5462,
+      "date": "2019-05-10"
+    },
+    {
+      "adjusted_close": 242.4617,
+      "date": "2019-05-17"
+    },
+    {
+      "adjusted_close": 241.4344,
+      "date": "2019-05-24"
+    },
+    {
+      "adjusted_close": 241.444,
+      "date": "2019-05-31"
+    },
+    {
+      "adjusted_close": 255.1824,
+      "date": "2019-06-07"
+    },
+    {
+      "adjusted_close": 249.7101,
+      "date": "2019-06-14"
+    },
+    {
+      "adjusted_close": 253.9056,
+      "date": "2019-06-21"
+    },
+    {
+      "adjusted_close": 253.9632,
+      "date": "2019-06-28"
+    },
+    {
+      "adjusted_close": 261.2692,
+      "date": "2019-07-05"
+    },
+    {
+      "adjusted_close": 268.7001,
+      "date": "2019-07-12"
+    },
+    {
+      "adjusted_close": 264.9129,
+      "date": "2019-07-19"
+    },
+    {
+      "adjusted_close": 271.132,
+      "date": "2019-07-26"
+    },
+    {
+      "adjusted_close": 259.0014,
+      "date": "2019-08-02"
+    },
+    {
+      "adjusted_close": 264.2881,
+      "date": "2019-08-09"
+    },
+    {
+      "adjusted_close": 263.721,
+      "date": "2019-08-16"
+    },
+    {
+      "adjusted_close": 261.3467,
+      "date": "2019-08-23"
+    },
+    {
+      "adjusted_close": 270.4591,
+      "date": "2019-08-30"
+    },
+    {
+      "adjusted_close": 280.081,
+      "date": "2019-09-06"
+    },
+    {
+      "adjusted_close": 265.605,
+      "date": "2019-09-13"
+    },
+    {
+      "adjusted_close": 260.6547,
+      "date": "2019-09-20"
+    },
+    {
+      "adjusted_close": 258.6938,
+      "date": "2019-09-27"
+    },
+    {
+      "adjusted_close": 263.4326,
+      "date": "2019-10-04"
+    },
+    {
+      "adjusted_close": 265.5386,
+      "date": "2019-10-11"
+    },
+    {
+      "adjusted_close": 260.457,
+      "date": "2019-10-18"
+    },
+    {
+      "adjusted_close": 260.0336,
+      "date": "2019-10-25"
+    },
+    {
+      "adjusted_close": 268.5605,
+      "date": "2019-11-01"
+    },
+    {
+      "adjusted_close": 264.5569,
+      "date": "2019-11-08"
+    },
+    {
+      "adjusted_close": 270.2255,
+      "date": "2019-11-15"
+    },
+    {
+      "adjusted_close": 271.9482,
+      "date": "2019-11-22"
+    },
+    {
+      "adjusted_close": 281.2451,
+      "date": "2019-11-29"
+    },
+    {
+      "adjusted_close": 279.4839,
+      "date": "2019-12-06"
+    },
+    {
+      "adjusted_close": 284.96,
+      "date": "2019-12-13"
+    },
+    {
+      "adjusted_close": 287.3468,
+      "date": "2019-12-20"
+    },
+    {
+      "adjusted_close": 289.4352,
+      "date": "2019-12-27"
+    },
+    {
+      "adjusted_close": 289.1369,
+      "date": "2020-01-03"
+    },
+    {
+      "adjusted_close": 299.8658,
+      "date": "2020-01-10"
+    },
+    {
+      "adjusted_close": 311.902,
+      "date": "2020-01-17"
+    },
+    {
+      "adjusted_close": 311.9117,
+      "date": "2020-01-24"
+    },
+    {
+      "adjusted_close": 304.4625,
+      "date": "2020-01-31"
+    },
+    {
+      "adjusted_close": 315.1207,
+      "date": "2020-02-07"
+    },
+    {
+      "adjusted_close": 328.5639,
+      "date": "2020-02-14"
+    },
+    {
+      "adjusted_close": 327.3593,
+      "date": "2020-02-21"
+    },
+    {
+      "adjusted_close": 279.7057,
+      "date": "2020-02-28"
+    },
+    {
+      "adjusted_close": 276.5835,
+      "date": "2020-03-06"
+    },
+    {
+      "adjusted_close": 260.201,
+      "date": "2020-03-13"
+    },
+    {
+      "adjusted_close": 203.7395,
+      "date": "2020-03-20"
+    },
+    {
+      "adjusted_close": 238.6533,
+      "date": "2020-03-27"
+    },
+    {
+      "adjusted_close": 228.4191,
+      "date": "2020-04-03"
+    },
+    {
+      "adjusted_close": 259.9965,
+      "date": "2020-04-09"
+    },
+    {
+      "adjusted_close": 250.8956,
+      "date": "2020-04-17"
+    },
+    {
+      "adjusted_close": 249.7278,
+      "date": "2020-04-24"
+    },
+    {
+      "adjusted_close": 259.3595,
+      "date": "2020-05-01"
+    },
+    {
+      "adjusted_close": 272.5813,
+      "date": "2020-05-08"
+    },
+    {
+      "adjusted_close": 269.2035,
+      "date": "2020-05-15"
+    },
+    {
+      "adjusted_close": 284.616,
+      "date": "2020-05-22"
+    },
+    {
+      "adjusted_close": 290.3873,
+      "date": "2020-05-29"
+    },
+    {
+      "adjusted_close": 300.9937,
+      "date": "2020-06-05"
+    },
+    {
+      "adjusted_close": 287.3955,
+      "date": "2020-06-12"
+    },
+    {
+      "adjusted_close": 286.1505,
+      "date": "2020-06-19"
+    },
+    {
+      "adjusted_close": 279.2404,
+      "date": "2020-06-26"
+    },
+    {
+      "adjusted_close": 291.8639,
+      "date": "2020-07-02"
+    },
+    {
+      "adjusted_close": 285.7394,
+      "date": "2020-07-10"
+    },
+    {
+      "adjusted_close": 293.8377,
+      "date": "2020-07-17"
+    },
+    {
+      "adjusted_close": 296.6015,
+      "date": "2020-07-24"
+    },
+    {
+      "adjusted_close": 298.1574,
+      "date": "2020-07-31"
+    },
+    {
+      "adjusted_close": 316.9922,
+      "date": "2020-08-07"
+    },
+    {
+      "adjusted_close": 315.8132,
+      "date": "2020-08-14"
+    },
+    {
+      "adjusted_close": 325.7669,
+      "date": "2020-08-21"
+    },
+    {
+      "adjusted_close": 353.8113,
+      "date": "2020-08-28"
+    },
+    {
+      "adjusted_close": 323.7472,
+      "date": "2020-09-04"
+    },
+    {
+      "adjusted_close": 319.0506,
+      "date": "2020-09-11"
+    },
+    {
+      "adjusted_close": 323.9888,
+      "date": "2020-09-18"
+    },
+    {
+      "adjusted_close": 320.6258,
+      "date": "2020-09-25"
+    },
+    {
+      "adjusted_close": 327.4388,
+      "date": "2020-10-02"
+    },
+    {
+      "adjusted_close": 340.9375,
+      "date": "2020-10-09"
+    },
+    {
+      "adjusted_close": 328.3697,
+      "date": "2020-10-16"
+    },
+    {
+      "adjusted_close": 318.8979,
+      "date": "2020-10-23"
+    },
+    {
+      "adjusted_close": 279.2594,
+      "date": "2020-10-30"
+    },
+    {
+      "adjusted_close": 303.4469,
+      "date": "2020-11-06"
+    },
+    {
+      "adjusted_close": 324.1417,
+      "date": "2020-11-13"
+    },
+    {
+      "adjusted_close": 312.5027,
+      "date": "2020-11-20"
+    },
+    {
+      "adjusted_close": 328.0504,
+      "date": "2020-11-27"
+    },
+    {
+      "adjusted_close": 333.1588,
+      "date": "2020-12-04"
+    },
+    {
+      "adjusted_close": 316.779,
+      "date": "2020-12-11"
+    },
+    {
+      "adjusted_close": 329.2695,
+      "date": "2020-12-18"
+    },
+    {
+      "adjusted_close": 325.0802,
+      "date": "2020-12-24"
+    },
+    {
+      "adjusted_close": 345.3397,
+      "date": "2020-12-31"
+    },
+    {
+      "adjusted_close": 342.7806,
+      "date": "2021-01-08"
+    },
+    {
+      "adjusted_close": 313.1476,
+      "date": "2021-01-15"
+    },
+    {
+      "adjusted_close": 318.6983,
+      "date": "2021-01-22"
+    },
+    {
+      "adjusted_close": 306.3956,
+      "date": "2021-01-29"
+    },
+    {
+      "adjusted_close": 328.153,
+      "date": "2021-02-05"
+    },
+    {
+      "adjusted_close": 330.3326,
+      "date": "2021-02-12"
+    },
+    {
+      "adjusted_close": 322.7476,
+      "date": "2021-02-19"
+    },
+    {
+      "adjusted_close": 342.7806,
+      "date": "2021-02-26"
+    },
+    {
+      "adjusted_close": 349.5907,
+      "date": "2021-03-05"
+    },
+    {
+      "adjusted_close": 370.7378,
+      "date": "2021-03-12"
+    },
+    {
+      "adjusted_close": 345.3574,
+      "date": "2021-03-19"
+    },
+    {
+      "adjusted_close": 354.6862,
+      "date": "2021-03-26"
+    },
+    {
+      "adjusted_close": 351.935,
+      "date": "2021-04-01"
+    },
+    {
+      "adjusted_close": 368.619,
+      "date": "2021-04-09"
+    },
+    {
+      "adjusted_close": 374.5253,
+      "date": "2021-04-16"
+    },
+    {
+      "adjusted_close": 375.3885,
+      "date": "2021-04-23"
+    },
+    {
+      "adjusted_close": 370.5393,
+      "date": "2021-04-30"
+    },
+    {
+      "adjusted_close": 364.0801,
+      "date": "2021-05-07"
+    },
+    {
+      "adjusted_close": 352.9366,
+      "date": "2021-05-14"
+    },
+    {
+      "adjusted_close": 356.5153,
+      "date": "2021-05-21"
+    },
+    {
+      "adjusted_close": 349.707,
+      "date": "2021-05-28"
+    },
+    {
+      "adjusted_close": 354.9829,
+      "date": "2021-06-04"
+    },
+    {
+      "adjusted_close": 354.4786,
+      "date": "2021-06-11"
+    },
+    {
+      "adjusted_close": 356.3407,
+      "date": "2021-06-18"
+    },
+    {
+      "adjusted_close": 368.1631,
+      "date": "2021-06-25"
+    },
+    {
+      "adjusted_close": 363.7213,
+      "date": "2021-07-02"
+    },
+    {
+      "adjusted_close": 362.1242,
+      "date": "2021-07-09"
+    },
+    {
+      "adjusted_close": 375.8929,
+      "date": "2021-07-16"
+    },
+    {
+      "adjusted_close": 381.8549,
+      "date": "2021-07-23"
+    },
+    {
+      "adjusted_close": 374.7472,
+      "date": "2021-07-30"
+    },
+    {
+      "adjusted_close": 363.6681,
+      "date": "2021-08-06"
+    },
+    {
+      "adjusted_close": 352.2297,
+      "date": "2021-08-13"
+    },
+    {
+      "adjusted_close": 344.6948,
+      "date": "2021-08-20"
+    },
+    {
+      "adjusted_close": 345.4133,
+      "date": "2021-08-27"
+    },
+    {
+      "adjusted_close": 330.3628,
+      "date": "2021-09-03"
+    },
+    {
+      "adjusted_close": 337.3152,
+      "date": "2021-09-10"
+    },
+    {
+      "adjusted_close": 333.0913,
+      "date": "2021-09-17"
+    },
+    {
+      "adjusted_close": 347.7728,
+      "date": "2021-09-24"
+    },
+    {
+      "adjusted_close": 349.7342,
+      "date": "2021-10-01"
+    },
+    {
+      "adjusted_close": 345.0941,
+      "date": "2021-10-08"
+    },
+    {
+      "adjusted_close": 346.1052,
+      "date": "2021-10-15"
+    },
+    {
+      "adjusted_close": 348.701,
+      "date": "2021-10-22"
+    },
+    {
+      "adjusted_close": 326.1945,
+      "date": "2021-10-29"
+    },
+    {
+      "adjusted_close": 339.0956,
+      "date": "2021-11-05"
+    },
+    {
+      "adjusted_close": 353.3968,
+      "date": "2021-11-12"
+    },
+    {
+      "adjusted_close": 330.2777,
+      "date": "2021-11-19"
+    },
+    {
+      "adjusted_close": 315.1599,
+      "date": "2021-11-26"
+    },
+    {
+      "adjusted_close": 313.1572,
+      "date": "2021-12-03"
+    },
+    {
+      "adjusted_close": 340.1942,
+      "date": "2021-12-10"
+    },
+    {
+      "adjusted_close": 339.6012,
+      "date": "2021-12-17"
+    },
+    {
+      "adjusted_close": 350.5579,
+      "date": "2021-12-23"
+    },
+    {
+      "adjusted_close": 349.3329,
+      "date": "2021-12-31"
+    },
+    {
+      "adjusted_close": 359.8518,
+      "date": "2022-01-07"
+    },
+    {
+      "adjusted_close": 362.2758,
+      "date": "2022-01-14"
+    },
+    {
+      "adjusted_close": 345.668,
+      "date": "2022-01-21"
+    },
+    {
+      "adjusted_close": 372.3709,
+      "date": "2022-01-28"
+    },
+    {
+      "adjusted_close": 372.0691,
+      "date": "2022-02-04"
+    },
+    {
+      "adjusted_close": 359.9686,
+      "date": "2022-02-11"
+    },
+    {
+      "adjusted_close": 360.1438,
+      "date": "2022-02-18"
+    },
+    {
+      "adjusted_close": 359.3066,
+      "date": "2022-02-25"
+    },
+    {
+      "adjusted_close": 321.9926,
+      "date": "2022-03-04"
+    },
+    {
+      "adjusted_close": 316.1809,
+      "date": "2022-03-11"
+    },
+    {
+      "adjusted_close": 340.8102,
+      "date": "2022-03-18"
+    },
+    {
+      "adjusted_close": 339.7686,
+      "date": "2022-03-25"
+    },
+    {
+      "adjusted_close": 354.3223,
+      "date": "2022-04-01"
+    },
+    {
+      "adjusted_close": 343.4132,
+      "date": "2022-04-08"
+    },
+    {
+      "adjusted_close": 348.8236,
+      "date": "2022-04-14"
+    },
+    {
+      "adjusted_close": 342.3506,
+      "date": "2022-04-22"
+    },
+    {
+      "adjusted_close": 354.2438,
+      "date": "2022-04-29"
+    },
+    {
+      "adjusted_close": 338.3927,
+      "date": "2022-05-06"
+    },
+    {
+      "adjusted_close": 324.4327,
+      "date": "2022-05-13"
+    },
+    {
+      "adjusted_close": 327.7277,
+      "date": "2022-05-20"
+    },
+    {
+      "adjusted_close": 348.7846,
+      "date": "2022-05-27"
+    },
+    {
+      "adjusted_close": 348.8236,
+      "date": "2022-06-03"
+    },
+    {
+      "adjusted_close": 326.3337,
+      "date": "2022-06-10"
+    },
+    {
+      "adjusted_close": 302.8786,
+      "date": "2022-06-17"
+    },
+    {
+      "adjusted_close": 322.1905,
+      "date": "2022-06-24"
+    },
+    {
+      "adjusted_close": 310.2388,
+      "date": "2022-07-01"
+    },
+    {
+      "adjusted_close": 315.4138,
+      "date": "2022-07-08"
+    },
+    {
+      "adjusted_close": 324.6987,
+      "date": "2022-07-15"
+    },
+    {
+      "adjusted_close": 335.741,
+      "date": "2022-07-22"
+    },
+    {
+      "adjusted_close": 345.4164,
+      "date": "2022-07-29"
+    },
+    {
+      "adjusted_close": 349.0484,
+      "date": "2022-08-05"
+    },
+    {
+      "adjusted_close": 345.8851,
+      "date": "2022-08-12"
+    },
+    {
+      "adjusted_close": 345.8948,
+      "date": "2022-08-19"
+    },
+    {
+      "adjusted_close": 324.1031,
+      "date": "2022-08-26"
+    },
+    {
+      "adjusted_close": 314.9256,
+      "date": "2022-09-02"
+    },
+    {
+      "adjusted_close": 327.9011,
+      "date": "2022-09-09"
+    },
+    {
+      "adjusted_close": 307.6715,
+      "date": "2022-09-16"
+    },
+    {
+      "adjusted_close": 286.6315,
+      "date": "2022-09-23"
+    },
+    {
+      "adjusted_close": 277.6102,
+      "date": "2022-09-30"
+    },
+    {
+      "adjusted_close": 288.4602,
+      "date": "2022-10-07"
+    },
+    {
+      "adjusted_close": 282.3188,
+      "date": "2022-10-14"
+    },
+    {
+      "adjusted_close": 295.6969,
+      "date": "2022-10-21"
+    },
+    {
+      "adjusted_close": 322.1988,
+      "date": "2022-10-28"
+    },
+    {
+      "adjusted_close": 311.3438,
+      "date": "2022-11-04"
+    },
+    {
+      "adjusted_close": 331.8021,
+      "date": "2022-11-11"
+    },
+    {
+      "adjusted_close": 336.105,
+      "date": "2022-11-18"
+    },
+    {
+      "adjusted_close": 343.5372,
+      "date": "2022-11-25"
+    },
+    {
+      "adjusted_close": 352.1137,
+      "date": "2022-12-02"
+    },
+    {
+      "adjusted_close": 341.1315,
+      "date": "2022-12-09"
+    },
+    {
+      "adjusted_close": 338.2075,
+      "date": "2022-12-16"
+    },
+    {
+      "adjusted_close": 336.017,
+      "date": "2022-12-23"
+    },
+    {
+      "adjusted_close": 340.0558,
+      "date": "2022-12-30"
+    },
+    {
+      "adjusted_close": 360.1132,
+      "date": "2023-01-06"
+    },
+    {
+      "adjusted_close": 367.8018,
+      "date": "2023-01-13"
+    },
+    {
+      "adjusted_close": 368.5462,
+      "date": "2023-01-20"
+    },
+    {
+      "adjusted_close": 366.3425,
+      "date": "2023-01-27"
+    },
+    {
+      "adjusted_close": 366.2249,
+      "date": "2023-02-03"
+    },
+    {
+      "adjusted_close": 359.2904,
+      "date": "2023-02-10"
+    },
+    {
+      "adjusted_close": 353.7076,
+      "date": "2023-02-17"
+    },
+    {
+      "adjusted_close": 345.8622,
+      "date": "2023-02-24"
+    },
+    {
+      "adjusted_close": 354.07,
+      "date": "2023-03-03"
+    },
+    {
+      "adjusted_close": 339.9757,
+      "date": "2023-03-10"
+    },
+    {
+      "adjusted_close": 342.4733,
+      "date": "2023-03-17"
+    },
+    {
+      "adjusted_close": 344.4028,
+      "date": "2023-03-24"
+    },
+    {
+      "adjusted_close": 355.9407,
+      "date": "2023-03-31"
+    },
+    {
+      "adjusted_close": 354.5953,
+      "date": "2023-04-06"
+    },
+    {
+      "adjusted_close": 365.3469,
+      "date": "2023-04-14"
+    },
+    {
+      "adjusted_close": 368.1034,
+      "date": "2023-04-21"
+    },
+    {
+      "adjusted_close": 372.8023,
+      "date": "2023-04-28"
+    },
+    {
+      "adjusted_close": 377.3443,
+      "date": "2023-05-05"
+    },
+    {
+      "adjusted_close": 374.6564,
+      "date": "2023-05-12"
+    },
+    {
+      "adjusted_close": 378.237,
+      "date": "2023-05-19"
+    },
+    {
+      "adjusted_close": 367.25,
+      "date": "2023-05-26"
+    },
+    {
+      "adjusted_close": 366.6222,
+      "date": "2023-06-02"
+    },
+    {
+      "adjusted_close": 362.1979,
+      "date": "2023-06-09"
+    },
+    {
+      "adjusted_close": 369.3689,
+      "date": "2023-06-16"
+    },
+    {
+      "adjusted_close": 372.5865,
+      "date": "2023-06-23"
+    },
+    {
+      "adjusted_close": 385.82,
+      "date": "2023-06-30"
+    },
+    {
+      "adjusted_close": 381.8406,
+      "date": "2023-07-07"
+    },
+    {
+      "adjusted_close": 395.4273,
+      "date": "2023-07-14"
+    },
+    {
+      "adjusted_close": 390.4956,
+      "date": "2023-07-21"
+    },
+    {
+      "adjusted_close": 386.0453,
+      "date": "2023-07-28"
+    },
+    {
+      "adjusted_close": 384.4637,
+      "date": "2023-08-04"
+    },
+    {
+      "adjusted_close": 388.0298,
+      "date": "2023-08-11"
+    },
+    {
+      "adjusted_close": 385.2692,
+      "date": "2023-08-18"
+    },
+    {
+      "adjusted_close": 395.8006,
+      "date": "2023-08-25"
+    },
+    {
+      "adjusted_close": 408.2575,
+      "date": "2023-09-01"
+    },
+    {
+      "adjusted_close": 407.5403,
+      "date": "2023-09-08"
+    },
+    {
+      "adjusted_close": 407.0197,
+      "date": "2023-09-15"
+    },
+    {
+      "adjusted_close": 395.1424,
+      "date": "2023-09-22"
+    },
+    {
+      "adjusted_close": 388.9434,
+      "date": "2023-09-29"
+    },
+    {
+      "adjusted_close": 391.5325,
+      "date": "2023-10-06"
+    },
+    {
+      "adjusted_close": 391.5915,
+      "date": "2023-10-13"
+    },
+    {
+      "adjusted_close": 378.1918,
+      "date": "2023-10-20"
+    },
+    {
+      "adjusted_close": 358.1907,
+      "date": "2023-10-27"
+    },
+    {
+      "adjusted_close": 379.8053,
+      "date": "2023-11-03"
+    },
+    {
+      "adjusted_close": 388.0006,
+      "date": "2023-11-10"
+    },
+    {
+      "adjusted_close": 393.8248,
+      "date": "2023-11-17"
+    },
+    {
+      "adjusted_close": 405.8275,
+      "date": "2023-11-24"
+    },
+    {
+      "adjusted_close": 407.6574,
+      "date": "2023-12-01"
+    },
+    {
+      "adjusted_close": 405.493,
+      "date": "2023-12-08"
+    },
+    {
+      "adjusted_close": 411.7993,
+      "date": "2023-12-15"
+    },
+    {
+      "adjusted_close": 417.2398,
+      "date": "2023-12-22"
+    },
+    {
+      "adjusted_close": 419.6108,
+      "date": "2023-12-29"
+    },
+    {
+      "adjusted_close": 412.6355,
+      "date": "2024-01-05"
+    },
+    {
+      "adjusted_close": 422.8192,
+      "date": "2024-01-12"
+    },
+    {
+      "adjusted_close": 430.3868,
+      "date": "2024-01-19"
+    },
+    {
+      "adjusted_close": 432.1112,
+      "date": "2024-01-26"
+    },
+    {
+      "adjusted_close": 453.8385,
+      "date": "2024-02-02"
+    },
+    {
+      "adjusted_close": 451.178,
+      "date": "2024-02-09"
+    },
+    {
+      "adjusted_close": 461.2779,
+      "date": "2024-02-16"
+    },
+    {
+      "adjusted_close": 466.4905,
+      "date": "2024-02-23"
+    },
+    {
+      "adjusted_close": 469.6535,
+      "date": "2024-03-01"
+    },
+    {
+      "adjusted_close": 462.3914,
+      "date": "2024-03-08"
+    },
+    {
+      "adjusted_close": 468.8652,
+      "date": "2024-03-15"
+    },
+    {
+      "adjusted_close": 474.6198,
+      "date": "2024-03-22"
+    },
+    {
+      "adjusted_close": 474.5212,
+      "date": "2024-03-28"
+    },
+    {
+      "adjusted_close": 470.1659,
+      "date": "2024-04-05"
+    },
+    {
+      "adjusted_close": 459.2002,
+      "date": "2024-04-12"
+    },
+    {
+      "adjusted_close": 449.3429,
+      "date": "2024-04-19"
+    },
+    {
+      "adjusted_close": 456.2795,
+      "date": "2024-04-26"
+    },
+    {
+      "adjusted_close": 437.6897,
+      "date": "2024-05-03"
+    },
+    {
+      "adjusted_close": 450.9118,
+      "date": "2024-05-10"
+    },
+    {
+      "adjusted_close": 454.1581,
+      "date": "2024-05-17"
+    },
+    {
+      "adjusted_close": 445.1888,
+      "date": "2024-05-24"
+    },
+    {
+      "adjusted_close": 441.1334,
+      "date": "2024-05-31"
+    },
+    {
+      "adjusted_close": 443.8173,
+      "date": "2024-06-07"
+    },
+    {
+      "adjusted_close": 438.7258,
+      "date": "2024-06-14"
+    },
+    {
+      "adjusted_close": 448.8101,
+      "date": "2024-06-21"
+    },
+    {
+      "adjusted_close": 435.3019,
+      "date": "2024-06-28"
+    },
+    {
+      "adjusted_close": 443.5212,
+      "date": "2024-07-05"
+    },
+    {
+      "adjusted_close": 434.9103,
+      "date": "2024-07-12"
+    },
+    {
+      "adjusted_close": 438.448,
+      "date": "2024-07-19"
+    },
+    {
+      "adjusted_close": 433.0031,
+      "date": "2024-07-26"
+    },
+    {
+      "adjusted_close": 456.5615,
+      "date": "2024-08-02"
+    },
+    {
+      "adjusted_close": 451.3834,
+      "date": "2024-08-09"
+    },
+    {
+      "adjusted_close": 463.3404,
+      "date": "2024-08-16"
+    },
+    {
+      "adjusted_close": 460.9292,
+      "date": "2024-08-23"
+    },
+    {
+      "adjusted_close": 477.6296,
+      "date": "2024-08-30"
+    },
+    {
+      "adjusted_close": 470.4949,
+      "date": "2024-09-06"
+    },
+    {
+      "adjusted_close": 487.5312,
+      "date": "2024-09-13"
+    },
+    {
+      "adjusted_close": 486.9185,
+      "date": "2024-09-20"
+    },
+    {
+      "adjusted_close": 487.8079,
+      "date": "2024-09-27"
+    },
+    {
+      "adjusted_close": 491.8199,
+      "date": "2024-10-04"
+    },
+    {
+      "adjusted_close": 496.9813,
+      "date": "2024-10-11"
+    },
+    {
+      "adjusted_close": 510.9133,
+      "date": "2024-10-18"
+    },
+    {
+      "adjusted_close": 502.0277,
+      "date": "2024-10-25"
+    },
+    {
+      "adjusted_close": 502.7401,
+      "date": "2024-11-01"
+    },
+    {
+      "adjusted_close": 519.2448,
+      "date": "2024-11-08"
+    },
+    {
+      "adjusted_close": 516.4049,
+      "date": "2024-11-15"
+    },
+    {
+      "adjusted_close": 515.3858,
+      "date": "2024-11-22"
+    },
+    {
+      "adjusted_close": 527.3388,
+      "date": "2024-11-29"
+    },
+    {
+      "adjusted_close": 523.0147,
+      "date": "2024-12-06"
+    },
+    {
+      "adjusted_close": 523.4402,
+      "date": "2024-12-13"
+    },
+    {
+      "adjusted_close": 522.4804,
+      "date": "2024-12-20"
+    },
+    {
+      "adjusted_close": 526.6066,
+      "date": "2024-12-27"
+    },
+    {
+      "adjusted_close": 515.8805,
+      "date": "2025-01-03"
+    },
+    {
+      "adjusted_close": 500.1179,
+      "date": "2025-01-10"
+    },
+    {
+      "adjusted_close": 519.9673,
+      "date": "2025-01-17"
+    },
+    {
+      "adjusted_close": 528.678,
+      "date": "2025-01-24"
+    },
+    {
+      "adjusted_close": 550.4201,
+      "date": "2025-01-31"
+    },
+    {
+      "adjusted_close": 557.6741,
+      "date": "2025-02-07"
+    },
+    {
+      "adjusted_close": 559.6659,
+      "date": "2025-02-14"
+    },
+    {
+      "adjusted_close": 552.4813,
+      "date": "2025-02-21"
+    },
+    {
+      "adjusted_close": 571.1118,
+      "date": "2025-02-28"
+    },
+    {
+      "adjusted_close": 541.8382,
+      "date": "2025-03-07"
+    },
+    {
+      "adjusted_close": 522.8808,
+      "date": "2025-03-14"
+    },
+    {
+      "adjusted_close": 530.8581,
+      "date": "2025-03-21"
+    },
+    {
+      "adjusted_close": 535.7338,
+      "date": "2025-03-28"
+    },
+    {
+      "adjusted_close": 485.3523,
+      "date": "2025-04-04"
+    },
+    {
+      "adjusted_close": 505.897,
+      "date": "2025-04-11"
+    },
+    {
+      "adjusted_close": 513.4197,
+      "date": "2025-04-17"
+    },
+    {
+      "adjusted_close": 529.4476,
+      "date": "2025-04-25"
+    },
+    {
+      "adjusted_close": 555.1618,
+      "date": "2025-05-02"
+    },
+    {
+      "adjusted_close": 564.3418,
+      "date": "2025-05-09"
+    },
+    {
+      "adjusted_close": 578.8712,
+      "date": "2025-05-16"
+    },
+    {
+      "adjusted_close": 559.3201,
+      "date": "2025-05-23"
+    },
+    {
+      "adjusted_close": 581.1736,
+      "date": "2025-05-30"
+    },
+    {
+      "adjusted_close": 585.6595,
+      "date": "2025-06-06"
+    },
+    {
+      "adjusted_close": 557.7818,
+      "date": "2025-06-13"
+    },
+    {
+      "adjusted_close": 528.9415,
+      "date": "2025-06-20"
+    },
+    {
+      "adjusted_close": 546.1603,
+      "date": "2025-06-27"
+    },
+    {
+      "adjusted_close": 564.9373,
+      "date": "2025-07-03"
+    },
+    {
+      "adjusted_close": 546.7557,
+      "date": "2025-07-11"
+    },
+    {
+      "adjusted_close": 549.2203,
+      "date": "2025-07-18"
+    },
+    {
+      "adjusted_close": 564.6834,
+      "date": "2025-07-25"
+    },
+    {
+      "adjusted_close": 556.4053,
+      "date": "2025-08-01"
+    },
+    {
+      "adjusted_close": 570.7454,
+      "date": "2025-08-08"
+    },
+    {
+      "adjusted_close": 578.0795,
+      "date": "2025-08-15"
+    },
+    {
+      "adjusted_close": 595.2321,
+      "date": "2025-08-22"
+    },
+    {
+      "adjusted_close": 591.5849,
+      "date": "2025-08-29"
+    },
+    {
+      "adjusted_close": 580.5838,
+      "date": "2025-09-05"
+    },
+    {
+      "adjusted_close": 576.7975,
+      "date": "2025-09-12"
+    },
+    {
+      "adjusted_close": 580.5242,
+      "date": "2025-09-19"
+    },
+    {
+      "adjusted_close": 561.6126,
+      "date": "2025-09-26"
+    },
+    {
+      "adjusted_close": 576.8373,
+      "date": "2025-10-03"
+    },
+    {
+      "adjusted_close": 554.7561,
+      "date": "2025-10-10"
+    },
+    {
+      "adjusted_close": 558.229,
+      "date": "2025-10-17"
+    },
+    {
+      "adjusted_close": 570.867,
+      "date": "2025-10-24"
+    },
+    {
+      "adjusted_close": 549.2929,
+      "date": "2025-10-31"
+    },
+    {
+      "adjusted_close": 549.273,
+      "date": "2025-11-07"
+    },
+    {
+      "adjusted_close": 543.0635,
+      "date": "2025-11-14"
+    },
+    {
+      "adjusted_close": 537.7595,
+      "date": "2025-11-21"
+    },
+    {
+      "adjusted_close": 547.84,
+      "date": "2025-11-28"
+    },
+    {
+      "adjusted_close": 542.8545,
+      "date": "2025-12-05"
+    },
+    {
+      "adjusted_close": 569.1355,
+      "date": "2025-12-12"
+    },
+    {
+      "adjusted_close": 569.434,
+      "date": "2025-12-19"
+    },
+    {
+      "adjusted_close": 576.768,
+      "date": "2025-12-26"
+    },
+    {
+      "adjusted_close": 560.3785,
+      "date": "2026-01-02"
+    },
+    {
+      "adjusted_close": 573.5936,
+      "date": "2026-01-09"
+    },
+    {
+      "adjusted_close": 537.6655,
+      "date": "2026-01-16"
+    },
+    {
+      "adjusted_close": 522.9654,
+      "date": "2026-01-23"
+    },
+    {
+      "adjusted_close": 536.9679,
+      "date": "2026-01-30"
+    },
+    {
+      "adjusted_close": 546.8842,
+      "date": "2026-02-06"
+    },
+    {
+      "adjusted_close": 516.607,
+      "date": "2026-02-13"
+    },
+    {
+      "adjusted_close": 524.6297,
+      "date": "2026-02-20"
+    },
+    {
+      "adjusted_close": 515.4608,
+      "date": "2026-02-27"
+    },
+    {
+      "adjusted_close": 520.5735,
+      "date": "2026-03-06"
+    },
+    {
+      "adjusted_close": 496.3058,
+      "date": "2026-03-13"
+    },
+    {
+      "adjusted_close": 494.6415,
+      "date": "2026-03-20"
+    },
+    {
+      "adjusted_close": 482.6023,
+      "date": "2026-03-27"
+    },
+    {
+      "adjusted_close": 491.7712,
+      "date": "2026-04-02"
+    },
+    {
+      "adjusted_close": 497.8322,
+      "date": "2026-04-10"
+    },
+    {
+      "adjusted_close": 520.4346,
+      "date": "2026-04-17"
+    },
+    {
+      "adjusted_close": 503.333,
+      "date": "2026-04-24"
+    },
+    {
+      "adjusted_close": 494.6375,
+      "date": "2026-05-01"
+    },
+    {
+      "adjusted_close": 494.6575,
+      "date": "2026-05-08"
+    },
+    {
+      "adjusted_close": 493.3796,
+      "date": "2026-05-15"
+    },
+    {
+      "adjusted_close": 497.7124,
+      "date": "2026-05-22"
+    },
+    {
+      "adjusted_close": 493.16,
+      "date": "2026-05-29"
+    },
+    {
+      "adjusted_close": 490.2648,
+      "date": "2026-06-05"
+    },
+    {
+      "adjusted_close": 489.1666,
+      "date": "2026-06-12"
+    },
+    {
+      "adjusted_close": 488.9769,
+      "date": "2026-06-18"
+    },
+    {
+      "adjusted_close": 498.1916,
+      "date": "2026-06-26"
+    },
+    {
+      "adjusted_close": 538.4946,
+      "date": "2026-07-02"
+    },
+    {
+      "adjusted_close": 526.74,
+      "date": "2026-07-10"
+    },
+    {
+      "adjusted_close": 543.6,
+      "date": "2026-07-17"
+    },
+    {
+      "adjusted_close": 539.66,
+      "date": "2026-07-24"
+    },
+    {
+      "adjusted_close": 573.1,
+      "date": "2026-07-31"
+    }
+  ]
+}

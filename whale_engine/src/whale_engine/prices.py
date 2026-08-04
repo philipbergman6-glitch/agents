@@ -51,6 +51,10 @@ TIME_SERIES_KEY = "Weekly Adjusted Time Series"
 ADJUSTED_CLOSE_FIELD = "5. adjusted close"
 PRICE_SCHEMA_VERSION = 1
 
+# Free tier caps burst rate as well as daily volume ("1 request per second"):
+# a basket fetched back-to-back fails on the second ticker. Paced with margin.
+BURST_PAUSE_SECONDS = 2.0
+
 # Vendor keys that carry a human-readable failure reason on a 200 response.
 _MESSAGE_KEYS = ("Information", "Note", "Error Message")
 
@@ -76,6 +80,13 @@ def _require_api_key() -> str:
 def _today() -> date:
     """Clock seam: pinned by tests so snapshot names stay deterministic."""
     return date.today()
+
+
+def _pause(seconds: float) -> None:
+    """Sleep seam: stubbed by tests so pacing costs no wall-clock time."""
+    import time
+
+    time.sleep(seconds)
 
 
 def week_start(day: date) -> date:
@@ -238,7 +249,7 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
 
 
 def fetch_price_snapshot(
-    ticker: str, today: date | None = None, *, allow_stale: bool = False
+    ticker: str, today: date | None = None, *, allow_stale: bool = False, pace: bool = False
 ) -> dict:
     """One vendor request -> a validated price snapshot for `ticker`.
 
@@ -247,10 +258,18 @@ def fetch_price_snapshot(
     stale snapshot) — otherwise a lagging vendor is a hard failure, because
     silently pinning last week's data would refetch on every later run and
     burn the 25-requests/day cap without ever saying why.
+
+    `pace` waits out the free tier's ~1-request/second burst limit before the
+    call: a basket fetched back-to-back otherwise gets an `Information` body
+    ("spread out your free API requests more sparingly") on the second ticker
+    and fails the whole run.
     """
     ticker = ticker.upper()
     today = today or _today()
     key = _require_api_key()
+
+    if pace:
+        _pause(BURST_PAUSE_SECONDS)
 
     try:
         payload = _av_get_json(ticker, key)
@@ -331,11 +350,15 @@ def ensure_price_snapshot(
     *,
     force: bool = False,
     allow_stale: bool = False,
+    pace: bool = False,
 ) -> tuple[Path, dict, str]:
     """Fresh snapshot for `ticker` on disk. Returns (path, snapshot, action).
 
     action is "reused" (fresh on disk, no request), "reused-stale" (explicit
     `allow_stale` over a stale snapshot), or "fetched".
+
+    `pace` waits out the vendor's burst limit, but only if a request is
+    actually needed: reusing a pinned snapshot stays instant.
     """
     ticker = ticker.upper()
     today = today or _today()
@@ -349,7 +372,7 @@ def ensure_price_snapshot(
         if allow_stale:
             return existing, snapshot, "reused-stale"
 
-    snapshot = fetch_price_snapshot(ticker, today, allow_stale=allow_stale)
+    snapshot = fetch_price_snapshot(ticker, today, allow_stale=allow_stale, pace=pace)
     prices_dir.mkdir(parents=True, exist_ok=True)
     path = prices_dir / snapshot_filename(ticker, snapshot["fetched_at"])
     path.write_text(dump_price_snapshot(snapshot), encoding="utf-8")

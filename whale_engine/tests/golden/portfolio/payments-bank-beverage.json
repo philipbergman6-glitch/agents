@@ -1,0 +1,136 @@
+{
+  "basket": [
+    {
+      "ticker": "V",
+      "weight": 0.25
+    },
+    {
+      "ticker": "MA",
+      "weight": 0.25
+    },
+    {
+      "ticker": "JPM",
+      "weight": 0.25
+    },
+    {
+      "ticker": "KO",
+      "weight": 0.25
+    }
+  ],
+  "caveats": [
+    "Equal weighting and low pairwise correlation spread company-specific risk. They do not remove market risk: in a broad decline these positions can fall together regardless of anything in this report. Correlations are measured on past weekly returns and change without warning — they describe what has happened, not what will. This report sizes a basket you chose and is not investment advice; the whales whose verdicts picked these names endorse neither this method nor the resulting mix."
+  ],
+  "correlation": {
+    "flagged_pairs": [
+      {
+        "pair": [
+          "MA",
+          "V"
+        ],
+        "rho": 0.8525
+      }
+    ],
+    "matrix": {
+      "JPM|KO": 0.133,
+      "JPM|MA": 0.5269,
+      "JPM|V": 0.5185,
+      "KO|MA": 0.2436,
+      "KO|V": 0.2486,
+      "MA|V": 0.8525
+    },
+    "observations": {
+      "JPM|KO": 156,
+      "JPM|MA": 156,
+      "JPM|V": 156,
+      "KO|MA": 156,
+      "KO|V": 156,
+      "MA|V": 156
+    },
+    "window": {
+      "end": "2026-07-27",
+      "observations": 156,
+      "start": "2023-07-31"
+    }
+  },
+  "portfolio_methodology_version": "1.0",
+  "provenance": {
+    "edgar_snapshots": [
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "V"
+      },
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "MA"
+      },
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "JPM"
+      },
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "KO"
+      }
+    ],
+    "series": "TIME_SERIES_WEEKLY_ADJUSTED",
+    "snapshots": [
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "V"
+      },
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "MA"
+      },
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "JPM"
+      },
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "KO"
+      }
+    ],
+    "vendor": "Alpha Vantage"
+  },
+  "sectors": {
+    "flagged_groups": [
+      "73"
+    ],
+    "groups": [
+      {
+        "desc": "Business Services",
+        "flagged": true,
+        "share": 0.5,
+        "sic2": "73",
+        "tickers": [
+          "MA",
+          "V"
+        ]
+      },
+      {
+        "desc": "Food And Kindred Products",
+        "flagged": false,
+        "share": 0.25,
+        "sic2": "20",
+        "tickers": [
+          "KO"
+        ]
+      },
+      {
+        "desc": "Depository Institutions",
+        "flagged": false,
+        "share": 0.25,
+        "sic2": "60",
+        "tickers": [
+          "JPM"
+        ]
+      }
+    ]
+  },
+  "warnings": []
+}

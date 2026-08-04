@@ -1,0 +1,108 @@
+{
+  "basket": [
+    {
+      "ticker": "V",
+      "weight": 0.3333333333333333
+    },
+    {
+      "ticker": "MA",
+      "weight": 0.3333333333333333
+    },
+    {
+      "ticker": "CAVA",
+      "weight": 0.3333333333333333
+    }
+  ],
+  "caveats": [
+    "Equal weighting and low pairwise correlation spread company-specific risk. They do not remove market risk: in a broad decline these positions can fall together regardless of anything in this report. Correlations are measured on past weekly returns and change without warning — they describe what has happened, not what will. This report sizes a basket you chose and is not investment advice; the whales whose verdicts picked these names endorse neither this method nor the resulting mix."
+  ],
+  "correlation": {
+    "flagged_pairs": [
+      {
+        "pair": [
+          "MA",
+          "V"
+        ],
+        "rho": 0.8525
+      }
+    ],
+    "matrix": {
+      "CAVA|MA": 0.3008,
+      "CAVA|V": 0.3015,
+      "MA|V": 0.8525
+    },
+    "observations": {
+      "CAVA|MA": 156,
+      "CAVA|V": 156,
+      "MA|V": 156
+    },
+    "window": {
+      "end": "2026-07-27",
+      "observations": 156,
+      "start": "2023-07-31"
+    }
+  },
+  "portfolio_methodology_version": "1.0",
+  "provenance": {
+    "edgar_snapshots": [
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "V"
+      },
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "MA"
+      },
+      {
+        "snapshot_date": "2026-08-04",
+        "ticker": "CAVA"
+      }
+    ],
+    "series": "TIME_SERIES_WEEKLY_ADJUSTED",
+    "snapshots": [
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "V"
+      },
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "MA"
+      },
+      {
+        "last_complete_week": "2026-07-31",
+        "snapshot_date": "2026-08-04",
+        "ticker": "CAVA"
+      }
+    ],
+    "vendor": "Alpha Vantage"
+  },
+  "sectors": {
+    "flagged_groups": [
+      "73"
+    ],
+    "groups": [
+      {
+        "desc": "Business Services",
+        "flagged": true,
+        "share": 0.6667,
+        "sic2": "73",
+        "tickers": [
+          "MA",
+          "V"
+        ]
+      },
+      {
+        "desc": "Eating And Drinking Places",
+        "flagged": false,
+        "share": 0.3333,
+        "sic2": "58",
+        "tickers": [
+          "CAVA"
+        ]
+      }
+    ]
+  },
+  "warnings": []
+}
