@@ -99,7 +99,7 @@ def cmd_prices(args) -> int:
     (weekly freshness gate, #83). Fails fast on the first bad ticker — a
     rate-cap `Information` body means the rest would fail too.
     """
-    from .prices import ensure_price_snapshot
+    from .prices import ensure_price_snapshot, format_snapshot_line
 
     out_dir = _prices_dir(args.snapshots_dir)
     for ticker in args.tickers:
@@ -109,10 +109,7 @@ def cmd_prices(args) -> int:
             force=args.force,
             allow_stale=args.stale_ok,
         )
-        print(
-            f"{snapshot['ticker']}\t{action}\tweek of "
-            f"{snapshot['last_complete_week']}\t{snapshot['observations']} bars\t{path}"
-        )
+        print(format_snapshot_line(snapshot, path, action))
     return 0
 
 

@@ -41,6 +41,8 @@ import os
 from datetime import date, timedelta
 from pathlib import Path
 
+from .errors import FetchError
+
 VENDOR = "Alpha Vantage"
 SERIES = "TIME_SERIES_WEEKLY_ADJUSTED"
 API_URL = "https://www.alphavantage.co/query"
@@ -53,8 +55,8 @@ PRICE_SCHEMA_VERSION = 1
 _MESSAGE_KEYS = ("Information", "Note", "Error Message")
 
 
-class PriceFetchError(RuntimeError):
-    pass
+class PriceFetchError(FetchError):
+    """Alpha Vantage price history could not be fetched or trusted."""
 
 
 def _require_api_key() -> str:
@@ -82,12 +84,23 @@ def week_start(day: date) -> date:
 
 
 def last_completed_week_start(today: date) -> date:
-    """Monday of the most recently *completed* week.
+    """Monday of the most recently *completed* trading week.
+
+    A week has completed once its Friday has passed, so from Saturday onward
+    the current calendar week counts as complete; Monday through Friday the
+    most recent completed week is the previous one. (A Friday-evening fetch is
+    therefore treated conservatively as still in progress: the engine has no
+    way to know from a date alone whether the session has closed, and pinning
+    a bar that can still move would break determinism.)
 
     Calendar arithmetic on week boundaries only — never on bar dates, which
-    are read verbatim (47 of IBM's 1396 bars are Thursdays).
+    are read verbatim (47 of IBM's 1396 bars are Thursdays, and a
+    holiday-shortened week's final bar is simply dated earlier).
     """
-    return week_start(today) - timedelta(days=7)
+    this_week = week_start(today)
+    if today.weekday() >= 5:  # Saturday or Sunday: Friday has passed
+        return this_week
+    return this_week - timedelta(days=7)
 
 
 # --- network seam -----------------------------------------------------------
@@ -158,7 +171,10 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
             f"series that does not belong to {ticker}."
         )
 
-    cutoff = week_start(today)  # bars dated on/after this are the in-progress week
+    # Bars belonging to a week that has not finished yet are in progress: the
+    # newest one keeps moving until its week closes, so it can never enter a
+    # correlation.
+    cutoff = last_completed_week_start(today)
     complete: list[dict] = []
     partial: list[str] = []
     for raw_date, row in series.items():
@@ -168,7 +184,7 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
             raise PriceFetchError(
                 f"{ticker}: {VENDOR} bar has an unparseable date {raw_date!r}."
             ) from None
-        if bar_date >= cutoff:
+        if week_start(bar_date) > cutoff:
             partial.append(bar_date.isoformat())
             continue
         if not isinstance(row, dict) or ADJUSTED_CLOSE_FIELD not in row:
@@ -193,8 +209,8 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
     if not complete:
         raise PriceFetchError(
             f"{ticker}: {VENDOR} returned no completed weekly bars "
-            f"(all {len(partial)} bar(s) fall in the in-progress week starting "
-            f"{cutoff.isoformat()})."
+            f"(all {len(partial)} bar(s) fall after the last completed week, "
+            f"which starts {cutoff.isoformat()})."
         )
 
     complete.sort(key=lambda row: row["date"])
@@ -211,8 +227,8 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
         "last_complete_week": last_bar.isoformat(),
         # What the weekly freshness gate compares against (#83).
         "last_complete_week_start": week_start(last_bar).isoformat(),
-        # The in-progress bar, recorded so its exclusion is auditable.
-        "partial_bar_dropped": max(partial) if partial else None,
+        # In-progress bars, recorded so their exclusion is auditable.
+        "partial_bars_dropped": sorted(partial),
         "observations": len(complete),
         "weekly_adjusted_close": complete,  # oldest first
     }
@@ -221,8 +237,17 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
 # --- fetch ------------------------------------------------------------------
 
 
-def fetch_price_snapshot(ticker: str, today: date | None = None) -> dict:
-    """One vendor request -> a validated price snapshot for `ticker`."""
+def fetch_price_snapshot(
+    ticker: str, today: date | None = None, *, allow_stale: bool = False
+) -> dict:
+    """One vendor request -> a validated price snapshot for `ticker`.
+
+    `allow_stale` accepts a vendor series that has not yet published the most
+    recently completed week (the same explicit-say-so hatch that reuses a
+    stale snapshot) — otherwise a lagging vendor is a hard failure, because
+    silently pinning last week's data would refetch on every later run and
+    burn the 25-requests/day cap without ever saying why.
+    """
     ticker = ticker.upper()
     today = today or _today()
     key = _require_api_key()
@@ -241,7 +266,7 @@ def fetch_price_snapshot(ticker: str, today: date | None = None) -> dict:
 
     expected = last_completed_week_start(today)
     actual = date.fromisoformat(snapshot["last_complete_week_start"])
-    if actual < expected:
+    if actual < expected and not allow_stale:
         raise PriceFetchError(
             f"{ticker}: {VENDOR} series is stale — newest completed bar is "
             f"{snapshot['last_complete_week']} (week of {actual.isoformat()}), "
@@ -251,6 +276,15 @@ def fetch_price_snapshot(ticker: str, today: date | None = None) -> dict:
 
 
 # --- snapshot store ---------------------------------------------------------
+
+
+def format_snapshot_line(snapshot: dict, path: Path, action: str) -> str:
+    """One tab-separated CLI line per ticker (cf. holdings' markdown formatter):
+    the display shape of a price snapshot belongs with the snapshot."""
+    return (
+        f"{snapshot['ticker']}\t{action}\tweek of {snapshot['last_complete_week']}"
+        f"\t{snapshot['observations']} bars\t{path}"
+    )
 
 
 def dump_price_snapshot(snapshot: dict) -> str:
@@ -315,7 +349,7 @@ def ensure_price_snapshot(
         if allow_stale:
             return existing, snapshot, "reused-stale"
 
-    snapshot = fetch_price_snapshot(ticker, today)
+    snapshot = fetch_price_snapshot(ticker, today, allow_stale=allow_stale)
     prices_dir.mkdir(parents=True, exist_ok=True)
     path = prices_dir / snapshot_filename(ticker, snapshot["fetched_at"])
     path.write_text(dump_price_snapshot(snapshot), encoding="utf-8")

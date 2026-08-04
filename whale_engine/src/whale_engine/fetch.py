@@ -39,6 +39,7 @@ import os
 from datetime import date, timedelta
 
 from . import validation
+from .errors import FetchError
 
 # TTM flow concepts: engine field -> ordered XBRL tag fallbacks.
 FLOW_TAGS: dict[str, list[str]] = {
@@ -179,10 +180,6 @@ MARKET_CAP_MANUAL_SOURCE = "manual:owner-supplied"
 RESTATEMENT_ITEM = "4.02"
 RESTATEMENT_WINDOW_YEARS = 10
 RESTATEMENT_AFFECTED_YEARS = 3
-
-
-class FetchError(RuntimeError):
-    pass
 
 
 def _require_identity() -> str:
@@ -1269,7 +1266,10 @@ def fetch_snapshot(
     import edgar as _edgar_mod
 
     # Additive sector fields (#84): EDGAR submissions SIC, for the portfolio
-    # layer's 2-digit major-group concentration check. Never scored.
+    # layer's 2-digit major-group concentration check. Never scored, so no
+    # schema_version bump — a pre-#84 snapshot is still a valid v2 and is
+    # distinguishable by the keys being absent entirely, where a post-#84
+    # snapshot with no SIC carries them as null plus a sic_unavailable WARN.
     sic, sic_description, sic_warning = _company_sic(company)
     if sic_warning is not None:
         warnings.append(sic_warning)

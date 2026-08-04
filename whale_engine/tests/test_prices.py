@@ -53,8 +53,30 @@ def test_week_start_is_monday(day, expected):
     assert prices.week_start(day) == expected
 
 
-def test_last_completed_week_start_is_the_prior_monday():
-    assert prices.last_completed_week_start(TODAY) == date(2026, 7, 27)
+@pytest.mark.parametrize(
+    "day,expected",
+    [
+        (date(2026, 8, 3), date(2026, 7, 27)),  # Monday: this week is in progress
+        (date(2026, 8, 4), date(2026, 7, 27)),  # Tuesday
+        (date(2026, 8, 7), date(2026, 7, 27)),  # Friday: session may still be open
+        (date(2026, 8, 8), date(2026, 8, 3)),  # Saturday: this week has closed
+        (date(2026, 8, 9), date(2026, 8, 3)),  # Sunday
+    ],
+)
+def test_last_completed_week_start(day, expected):
+    assert prices.last_completed_week_start(day) == expected
+
+
+def test_weekend_fetch_keeps_the_week_that_just_closed():
+    # Saturday 2026-08-08: the 08-03 week's Friday bar is final, so a fetch
+    # that day must pin it rather than discard it as in progress.
+    body = payload()
+    body["Weekly Adjusted Time Series"]["2026-08-07"] = dict(
+        body["Weekly Adjusted Time Series"].pop("2026-08-03")
+    )
+    snap = prices.parse_weekly_adjusted(body, "IBM", date(2026, 8, 8))
+    assert snap["last_complete_week"] == "2026-08-07"
+    assert snap["partial_bars_dropped"] == []
 
 
 # --- parser -----------------------------------------------------------------
@@ -65,7 +87,7 @@ def test_parse_drops_the_in_progress_bar():
     dates = [row["date"] for row in snap["weekly_adjusted_close"]]
     assert "2026-08-03" not in dates
     assert dates[-1] == "2026-07-31"
-    assert snap["partial_bar_dropped"] == "2026-08-03"
+    assert snap["partial_bars_dropped"] == ["2026-08-03"]
     assert snap["observations"] == 199 == len(dates)
 
 
@@ -77,7 +99,7 @@ def test_parse_records_the_weekly_close_the_gate_compares_against():
 
 def test_parse_keeps_a_completed_trailing_bar():
     snap = prices.parse_weekly_adjusted(payload_without_partial(), "IBM", TODAY)
-    assert snap["partial_bar_dropped"] is None
+    assert snap["partial_bars_dropped"] == []
     assert snap["weekly_adjusted_close"][-1]["date"] == "2026-07-31"
     assert snap["observations"] == 199
 
@@ -241,20 +263,38 @@ def test_fetch_rejects_a_vendor_series_missing_the_last_completed_week(monkeypat
         prices.fetch_price_snapshot("IBM", today=TODAY)
 
 
+def test_allow_stale_accepts_a_lagging_vendor_series(monkeypatch):
+    # Without the hatch a vendor that has not yet published the completed week
+    # would leave a first-time ticker unpinnable and fail the whole basket.
+    monkeypatch.setenv("ALPHAVANTAGE_API_KEY", "K")
+    body = payload()
+    for lagging in ("2026-08-03", "2026-07-31"):
+        del body["Weekly Adjusted Time Series"][lagging]
+    monkeypatch.setattr(prices, "_av_get_json", lambda symbol, api_key: body)
+    snap = prices.fetch_price_snapshot("IBM", today=TODAY, allow_stale=True)
+    assert snap["last_complete_week"] == "2026-07-24"
+
+
+def test_price_failures_are_catchable_as_fetch_failures():
+    from whale_engine.errors import FetchError
+
+    assert issubclass(PriceFetchError, FetchError)
+
+
 # --- weekly freshness gate --------------------------------------------------
 
 
-def test_snapshot_is_fresh_within_the_same_week(monkeypatch):
+def test_snapshot_is_fresh_until_the_next_week_closes():
     snap = prices.parse_weekly_adjusted(payload(), "IBM", TODAY)
-    # Fetched Tuesday; still fresh Friday and over the weekend.
+    # Fetched Tuesday; no new weekly close lands before Friday, so no refetch.
     assert prices.is_fresh(snap, date(2026, 8, 4))
     assert prices.is_fresh(snap, date(2026, 8, 7))
-    assert prices.is_fresh(snap, date(2026, 8, 9))
 
 
 def test_snapshot_goes_stale_once_a_new_week_completes():
     snap = prices.parse_weekly_adjusted(payload(), "IBM", TODAY)
-    # Monday 2026-08-10: the week of 08-03 has now completed.
+    # Saturday 2026-08-08 onward: the week of 08-03 has closed.
+    assert not prices.is_fresh(snap, date(2026, 8, 8))
     assert not prices.is_fresh(snap, date(2026, 8, 10))
 
 
