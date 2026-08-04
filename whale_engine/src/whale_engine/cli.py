@@ -4,6 +4,8 @@
   <prog> diagnose TICKER   offline: latest (or --snapshot) snapshot -> diagnostic JSON
   <prog> prices TICKER...  networked: Alpha Vantage weekly adjusted closes ->
                            snapshots/prices/TICKER-DATE.json (weekly freshness gate)
+  <prog> portfolio T...    offline: pinned price + EDGAR snapshots -> equal-weight
+                           basket report (correlation + sector concentration)
 
 Entry points:
   buffett ...              Buffett-only prog; behavior identical to the original CLI
@@ -102,14 +104,37 @@ def cmd_prices(args) -> int:
     from .prices import ensure_price_snapshot, format_snapshot_line
 
     out_dir = _prices_dir(args.snapshots_dir)
-    for ticker in args.tickers:
+    for i, ticker in enumerate(args.tickers):
         path, snapshot, action = ensure_price_snapshot(
             ticker,
             out_dir,
             force=args.force,
             allow_stale=args.stale_ok,
+            # The free tier caps burst rate as well as daily volume: pinning a
+            # basket back-to-back trips an `Information` body and fails the
+            # run. Only actual requests are paced (reuse costs nothing), and
+            # never before the first one.
+            pace=i > 0,
         )
         print(format_snapshot_line(snapshot, path, action))
+    return 0
+
+
+def cmd_portfolio(args) -> int:
+    """Report on a client-chosen basket (ticket #85, contract #83).
+
+    Offline and deterministic like `diagnose`: it reads pinned snapshots and
+    never fetches. Freshness belongs to `whale prices` (weekly gate, #83 §7),
+    so the report states the vintages it read and reproduces byte-for-byte
+    from them on any later day.
+    """
+    from .portfolio import build_report, load_basket_snapshots, normalize_basket
+
+    basket = normalize_basket(args.tickers)
+    price_snapshots, edgar_snapshots = load_basket_snapshots(
+        basket, _snapshots_dir(args.snapshots_dir)
+    )
+    print(_dump(build_report(basket, price_snapshots, edgar_snapshots)))
     return 0
 
 
@@ -176,6 +201,15 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
         "refetching (explicit staleness, as with EDGAR snapshots)",
     )
     p_prices.set_defaults(func=cmd_prices, prog=prog)
+
+    p_port = sub.add_parser(
+        "portfolio",
+        help="equal-weight a client-chosen basket and sanity-check it "
+        "(offline, deterministic; needs pinned `prices` + `fetch` snapshots)",
+    )
+    p_port.add_argument("tickers", nargs="+", metavar="TICKER")
+    p_port.add_argument("--snapshots-dir")
+    p_port.set_defaults(func=cmd_portfolio, prog=prog)
 
     p_f13 = sub.add_parser(
         "fetch-13f",

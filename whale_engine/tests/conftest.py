@@ -8,6 +8,11 @@ SNAPSHOTS = Path(__file__).parent.parent / "snapshots"
 GOLDEN = Path(__file__).parent / "golden"
 GOLDEN_GRAHAM = GOLDEN / "graham"
 GOLDEN_LYNCH = GOLDEN / "lynch"
+GOLDEN_PORTFOLIO = GOLDEN / "portfolio"
+
+# The portfolio layer needs price snapshots and the SIC fields (#84), so its
+# goldens read a later, explicitly pinned snapshot date than the scorers'.
+PORTFOLIO_SNAPSHOT_DATE = "2026-08-04"
 
 
 def load_snapshot(ticker: str) -> dict:
@@ -24,6 +29,31 @@ def load_golden_graham(ticker: str) -> dict:
 
 def load_golden_lynch(ticker: str) -> dict:
     return json.loads((GOLDEN_LYNCH / f"{ticker}.json").read_text())
+
+
+def load_portfolio_inputs(basket: list[str]) -> tuple[dict, dict]:
+    """Pinned price + EDGAR snapshots for a golden basket.
+
+    Dates are explicit rather than latest-wins: a golden must not change
+    because someone refetched a ticker.
+    """
+    prices = {
+        ticker: json.loads(
+            (SNAPSHOTS / "prices" / f"{ticker}-{PORTFOLIO_SNAPSHOT_DATE}.json").read_text()
+        )
+        for ticker in basket
+    }
+    edgar = {
+        ticker: json.loads(
+            (SNAPSHOTS / f"{ticker}-{PORTFOLIO_SNAPSHOT_DATE}.json").read_text()
+        )
+        for ticker in basket
+    }
+    return prices, edgar
+
+
+def load_golden_portfolio(name: str) -> dict:
+    return json.loads((GOLDEN_PORTFOLIO / f"{name}.json").read_text())
 
 
 @pytest.fixture

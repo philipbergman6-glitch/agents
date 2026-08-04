@@ -14,6 +14,14 @@ TODAY = date(2026, 8, 4)
 FAKE_KEY = "NOT-A-REAL-KEY-JUST-A-TEST"
 
 
+@pytest.fixture(autouse=True)
+def paused(monkeypatch):
+    """Record burst-limit pauses instead of sleeping through them."""
+    waits = []
+    monkeypatch.setattr(prices, "_pause", waits.append)
+    return waits
+
+
 @pytest.fixture
 def seam(monkeypatch):
     """Vendor seam + a pinned `today`, so the CLI never touches the network."""
@@ -63,6 +71,29 @@ def test_prices_accepts_a_multi_ticker_basket(seam, tmp_path, monkeypatch):
     assert (tmp_path / "prices" / "IBM-2026-08-04.json").exists()
     assert (tmp_path / "prices" / "MSFT-2026-08-04.json").exists()
     assert seam == ["IBM", "MSFT"]
+
+
+def test_a_basket_is_paced_under_the_one_request_per_second_burst_limit(
+    seam, tmp_path, monkeypatch, paused
+):
+    """Back-to-back requests earn an `Information` body from the free tier."""
+
+    def per_symbol(symbol, api_key):
+        body = json.loads((FIXTURES / "av_weekly_adjusted_IBM.json").read_text())
+        body["Meta Data"]["2. Symbol"] = symbol
+        seam.append(symbol)
+        return body
+
+    monkeypatch.setattr(prices, "_av_get_json", per_symbol)
+    main(["prices", "IBM", "MSFT", "KO", "--snapshots-dir", str(tmp_path)])
+    assert paused == [prices.BURST_PAUSE_SECONDS] * 2  # never before the first request
+
+
+def test_reused_snapshots_cost_no_pause(seam, tmp_path, monkeypatch, paused):
+    main(["prices", "IBM", "--snapshots-dir", str(tmp_path)])
+    paused.clear()
+    main(["prices", "IBM", "IBM", "--snapshots-dir", str(tmp_path)])
+    assert paused == []
 
 
 def test_prices_hard_fails_on_an_information_body(monkeypatch, tmp_path, capsys):
