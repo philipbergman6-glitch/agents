@@ -45,14 +45,23 @@ Run all engine commands from inside that directory.
   - Flagged pair: `<A> and <B> — ρ <rho> over <n> weekly observations — reached the 0.80 same-bet threshold: these two are one bet, not two.`
   - Flagged sector group: `<desc> (SIC <sic2>) — <tickers> — is <share> of the names, above the 40% threshold: this basket is concentrated in one sector.`
   - The prose around the findings is yours; these sentences are not.
-- **A null pair was never checked, so it can never be covered by a claim about pairs.** Whenever any entry in `correlation.matrix` is null, you may not write that "no pair", "none of the pairs", "every pair", or "all pairs" did anything — those sentences assert a result the engine did not compute. Speak only of the pairs that carry a number, say how many of the total those are, and name the unmeasured ones outright. A client reads a blanket sentence as a basket that was checked and passed; two thirds of this basket may never have been checked at all. The pinned no-flags string below still fires unchanged — it says *measured*, which stays true.
+- **When any entry in `correlation.matrix` is null, the same-bet section opens with this pinned string** — before the figures, before any prose of yours:
+
+  > `<k>` of the `<m>` pairs in this basket could be measured. `<unmeasured pairs>` could not be measured, so the same-bet check does not cover `<them/it>`.
+
+  Fill the slots from the JSON and change nothing else. This sentence replaces the section's opening summary; do not write another one before it, after it, or instead of it. In particular you may not open with "no pair was flagged", "no pair reached the threshold", "none of the pairs", or any sentence of that shape — a claim about *pairs* covers pairs the engine never computed, and a client reads it as a basket that was checked and passed. Only pairs carrying a number may be spoken of individually. The pinned no-flags string below still fires unchanged if both flag lists are empty — it says *measured*, which stays true.
 - An **unflagged** pair or group gets no judgment language whatsoever. You may state its figure factually ("JPM|KO 0.133"); you may not call it low, healthy, comfortable, well-diversified, safe, uncorrelated, or a good spread. The threshold is the only judgment in this report, and the engine owns it.
 - When **both** flag lists are empty, close the findings with this pinned string and stop there:
 
   > No pair reached the 0.80 same-bet threshold and no sector group exceeded 40% of the names. Nothing in this basket was measured above the thresholds — that is not a judgment that the basket is well diversified, and it is not a pass.
 
   Individually factual lines stack into an endorsement a client will read as approval; this sentence is what stops that, so it is not optional and not paraphrasable. Absence of flags is never a clean bill of health.
-- **Never write that the report "ran clean"** or any equivalent ("all good", "no issues", "healthy") — those describe the *basket*, which you never judge. An empty `warnings` list means one thing only: the data was complete. Say that.
+- **Never write that the report "ran clean"** or any equivalent ("all good", "no issues", "healthy") — those describe the *basket*, which you never judge.
+- When `warnings` is empty, the warnings section is this pinned string, alone:
+
+  > The data was complete.
+
+  Four words, nothing appended. Not "complete for every name and every pair", not "every name had enough history", not a list of the checks that did not fire. Each extension is true and each one edges the sentence from a statement about *data* toward a statement about the *basket* — which you never make. If `warnings` is non-empty, this string does not appear at all.
 - Narrate **every** entry in `warnings`, one plain line each, faithful to its message: `insufficient_history` (weighted normally, its pairs reported as null rather than measured over a shortened window), `insufficient_overlap` (correlation unknown for that pair), `zero_variance`, `sector_unavailable`, `sic_field_absent` (name the refetch it asks for). A null correlation means **unknown**, never zero and never "no relationship".
 - **Explain the data you have; never explain away a concern the report did not raise.** If a name carries no warning, say nothing about that name's data quality — not its observation count as reassurance, not that its snapshot came from a full fetch rather than a sector-only lookup, not that "nothing about its history was short". You may anticipate that a client knows a name is a recent IPO; you may not answer that unasked worry. Every sentence in such a paragraph can be true and the paragraph still reads as "don't worry about this one" — a per-name endorsement assembled out of facts, which is the stacking the pinned no-flags string exists to stop. The warnings list is the only place a name's data is discussed; when it is empty, the one permitted sentence is that the data was complete.
 - Never recommend an action: no trimming, adding, swapping, hedging, rebalancing, or waiting. A flag is information the client acts on; the finding ends at the flag.
