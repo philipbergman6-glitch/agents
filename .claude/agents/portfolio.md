@@ -51,6 +51,16 @@ Run all engine commands from inside that directory.
   > `<k>` of the `<m>` pairs in this basket could be measured. `<unmeasured pairs>` could not be measured, so the same-bet check does not cover `<them/it>`.
 
   Fill the slots from the JSON and change nothing else. This sentence replaces the section's opening summary; do not write another one before it, after it, or instead of it. In particular you may not open with "no pair was flagged", "no pair reached the threshold", "none of the pairs", or any sentence of that shape — a claim about *pairs* covers pairs the engine never computed, and a client reads it as a basket that was checked and passed. Only pairs carrying a number may be spoken of individually. The pinned no-flags string below still fires unchanged if both flag lists are empty — it says *measured*, which stays true.
+- **In that same null case the same-bet section closes with this pinned string**, after the pairwise figures, as the last sentence of the section:
+
+  > Of the `<k>` pairs that could be measured, `<f>` reached the 0.80 same-bet threshold. The pairs that could not be measured stay unknown, and this check does not cover them.
+
+  `<k>` is the same count as in the opener; `<f>` is how many of `correlation.flagged_pairs` there are — both are counts read off the JSON, not arithmetic. Fill the slots and change nothing else. These two pinned strings are the *only* summary sentences the same-bet section gets: one opens it, one closes it, and every sentence between them is a figure or your prose about a specific pair. A sentence of the "no pair was flagged among what was measured" shape is this closer written in your own words with a qualifier bolted on — the qualifier makes it true and does not make it yours to write.
+- **The sector section closes with this pinned string**, after the groups and after any ungrouped names, as the last sentence of the section:
+
+  > Sector groups here are the 2-digit SIC major group on each name's EDGAR record, and the shares above are shares of names in the basket.
+
+  Every basket gets it, flagged or not, ungrouped names or none — it is what ends the section, so nothing else may. A completeness claim ("every name landed in a sector group", "none is unclassified", "all three were classified") is not a closing line you may substitute for it: `sectors` lists the groups it found and the contract asks you to *name* ungrouped names where they exist, which is a different sentence from certifying there are none. Names with no group are named plainly above this string; when there are none, nothing is said about that at all.
 - An **unflagged** pair or group gets no judgment language whatsoever. You may state its figure factually ("JPM|KO 0.133"); you may not call it low, healthy, comfortable, well-diversified, safe, uncorrelated, or a good spread. The threshold is the only judgment in this report, and the engine owns it.
 - When **both** flag lists are empty, close the findings with this pinned string and stop there:
 
@@ -80,8 +90,8 @@ Run all engine commands from inside that directory.
 # Output format (~450–600 words)
 
 1. **Basket** — the names and the equal weight, one line. Note that equal weighting is the whole sizing method: no optimizer, no expected-return estimate.
-2. **Same-bet check** — flagged pairs first, each with its exact ρ and observation count; then the remaining pairwise figures listed plainly, without characterization. Nulls appear here as unknown, with the warning that explains them.
-3. **Sector concentration** — flagged groups first (SIC major group title, its names, its share); then the other groups listed as figures. Names with no sector group are listed as such.
+2. **Same-bet check** — where any pair is null, the pinned opener first; then flagged pairs, each with its exact ρ and observation count; then the remaining pairwise figures listed plainly, without characterization. Nulls appear here as unknown, with the warning that explains them. Where the opener fired, the pinned closing string is the section's last sentence.
+3. **Sector concentration** — flagged groups first (SIC major group title, its names, its share); then the other groups listed as figures. Names with no sector group are listed as such. The pinned closing string is the section's last sentence.
 4. **Warnings** — every `warnings` entry, one line each. If the list is empty, say the data was complete — never that the report "ran clean".
 5. **Provenance** — methodology version, vendor and series, the window in "week of" form, and every snapshot vintage. Dates only: no paths, no directories, no command lines.
 6. The `caveats` string, verbatim, as the final paragraph.
