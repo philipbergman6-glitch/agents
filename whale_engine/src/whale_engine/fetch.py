@@ -1005,9 +1005,12 @@ def _fetch_annual_periods(
 def fetch_snapshot(
     ticker: str, today: date | None = None, market_cap_override: float | None = None
 ) -> dict:
-    """Fetch N_PERIODS historical TTM periods + market cap into a snapshot dict."""
-    import edgar
+    """Fetch N_PERIODS historical TTM periods + market cap into a snapshot dict.
 
+    Four stages, each a plain function so a fake company can drive them
+    offline: collect the quarterly TTM periods, fill from per-filing XBRL
+    what companyfacts drops, derive the market cap, assemble the snapshot.
+    """
     # Validate the override before any network work: hard-fail on bad input.
     manual_cap: tuple[float, str] | None = None
     if market_cap_override is not None:
@@ -1015,12 +1018,32 @@ def fetch_snapshot(
 
     warnings: list[dict] = []
 
-    identity = _require_identity()
-    edgar.set_identity(identity)
     today = today or date.today()
+    company = _edgar_company(ticker)
 
-    company = edgar.Company(ticker)
+    periods, histories = _collect_periods(ticker, company, today)
+    annual_periods = _fetch_annual_periods(
+        ticker,
+        histories["flow"],
+        histories["balance"],
+        histories["st_debt"],
+        histories["liabilities_total"],
+        histories["shares_proxy"],
+    )
+    share_count_check, cover_rows = _fill_filing_fallbacks(
+        ticker, company, periods, annual_periods, histories["shares_proxy"], warnings
+    )
+    market = _derive_market_cap(
+        ticker, today, manual_cap, periods, histories, cover_rows, warnings
+    )
+    return _assemble_snapshot(
+        ticker, company, today, periods, annual_periods, market, share_count_check, warnings
+    )
 
+
+def _collect_periods(ticker: str, company, today: date) -> tuple[list[dict], dict]:
+    """N_PERIODS distinct quarterly TTM windows plus the concept histories
+    every later stage reads. Hard-fails when EDGAR cannot supply the depth."""
     # Anchor on net income. Asking edgartools for a not-yet-filed quarter
     # clamps to the latest available TTM window, so walking back through
     # calendar quarters can return the same window repeatedly — dedupe on the
@@ -1137,16 +1160,29 @@ def fetch_snapshot(
             }
         )
 
-    annual_periods = _fetch_annual_periods(
-        ticker,
-        flow_histories,
-        balance_histories,
-        st_debt_histories,
-        liabilities_total_history,
-        shares_proxy_history,
-    )
+    histories = {
+        "flow": flow_histories,
+        "balance": balance_histories,
+        "st_debt": st_debt_histories,
+        "liabilities_total": liabilities_total_history,
+        "shares_proxy": shares_proxy_history,
+    }
+    return periods, histories
 
-    # Per-filing XBRL fallback for fields companyfacts drops (see constants).
+
+def _fill_filing_fallbacks(
+    ticker: str,
+    company,
+    periods: list[dict],
+    annual_periods: list[dict],
+    shares_proxy_history,
+    warnings: list[dict],
+) -> tuple[dict | None, list]:
+    """Per-filing XBRL fallback for fields companyfacts drops (see constants).
+
+    Mutates the periods in place; returns (share_count_check, cover_rows) for
+    the market-cap stage and the snapshot.
+    """
     missing_dna = [
         p for p in periods if p["ttm"]["depreciation_and_amortization"] is None
     ]
@@ -1243,9 +1279,20 @@ def fetch_snapshot(
                         f"filing-fallback:dei:{COVER_SHARES_TAG}@{hit[1]}"
                         f"(sum of {classes_by_instant[hit[1]]} classes)"
                     )
+    return share_count_check, cover_rows
 
-    # Market cap: manual override, else Cboe delayed close x freshest
-    # filed EDGAR share count. Cboe miss / stale quote = hard FetchError.
+
+def _derive_market_cap(
+    ticker: str,
+    today: date,
+    manual_cap: tuple[float, str] | None,
+    periods: list[dict],
+    histories: dict,
+    cover_rows: list,
+    warnings: list[dict],
+) -> dict:
+    """Market cap: manual override, else Cboe delayed close x freshest filed
+    EDGAR share count. Cboe miss / stale quote = hard FetchError."""
     price_reference = None
     market_cap_check = None
     if manual_cap is not None:
@@ -1254,9 +1301,9 @@ def fetch_snapshot(
     else:
         shares, shares_source = _freshest_share_count(
             ticker,
-            balance_histories["outstanding_shares"],
+            histories["balance"]["outstanding_shares"],
             cover_rows,
-            shares_proxy_history,
+            histories["shares_proxy"],
             date.fromisoformat(periods[0]["period_end"]),
         )
         price, price_field, last_trade_time = _fetch_cboe_close(ticker, today)
@@ -1277,6 +1324,32 @@ def fetch_snapshot(
         }
         market_cap_check = _yfinance_crosscheck(ticker, market_cap, warnings)
         _gate_market_cap_witness(ticker, market_cap, market_cap_source, market_cap_check)
+    return {
+        "market_cap": market_cap,
+        "market_cap_source": market_cap_source,
+        "market_data_source": market_data_source,
+        "price_reference": price_reference,
+        "market_cap_check": market_cap_check,
+    }
+
+
+def _assemble_snapshot(
+    ticker: str,
+    company,
+    today: date,
+    periods: list[dict],
+    annual_periods: list[dict],
+    market: dict,
+    share_count_check: dict | None,
+    warnings: list[dict],
+) -> dict:
+    """The snapshot dict: fundamentals, market cap, sidecar, SIC, Form 4
+    context and the validation section."""
+    market_cap = market["market_cap"]
+    market_cap_source = market["market_cap_source"]
+    market_data_source = market["market_data_source"]
+    price_reference = market["price_reference"]
+    market_cap_check = market["market_cap_check"]
 
     # Filings-text moat sidecar: cited narration evidence, never
     # a scoring input. Extraction failure must not fail the fetch — it lands
@@ -1284,8 +1357,6 @@ def fetch_snapshot(
     from .filings_text import extract_filings_text
 
     filings_sidecar, filings_warnings = extract_filings_text(company, ticker)
-
-    import edgar as _edgar_mod
 
     # Additive sector fields: EDGAR submissions SIC, for the portfolio
     # layer's 2-digit major-group concentration check. Never scored, so no
@@ -1305,9 +1376,7 @@ def fetch_snapshot(
         "market_cap": market_cap,
         "market_cap_source": market_cap_source,
         "source": {
-            "fundamentals": (
-                f"SEC EDGAR via edgartools {getattr(_edgar_mod, '__version__', 'unknown')}"
-            ),
+            "fundamentals": f"SEC EDGAR via edgartools {_edgartools_version()}",
             "market_data": market_data_source,
         },
         "periods": periods,  # most recent first
@@ -1348,7 +1417,7 @@ def fetch_snapshot(
 def fetch_sector_snapshot(ticker: str, today: date | None = None) -> dict:
     """EDGAR submissions -> a sector-only snapshot: the SIC code, nothing else.
 
-   The portfolio layer reads exactly one EDGAR field — the SIC
+    The portfolio layer reads exactly one EDGAR field — the SIC
     code, for the 2-digit major-group concentration check (methodology v1 §3) — but the
     only route to a snapshot was `fetch`, which hard-fails any company without
     N_PERIODS distinct TTM windows. A recent IPO in a client's basket
