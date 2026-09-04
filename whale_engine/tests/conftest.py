@@ -1,4 +1,5 @@
 import json
+import socket
 from pathlib import Path
 
 import pytest
@@ -60,3 +61,23 @@ def load_golden_portfolio(name: str) -> dict:
 @pytest.fixture
 def snapshot(request):
     return load_snapshot(request.param)
+
+
+class NetworkAccessAttempted(RuntimeError):
+    """A test tried to open a socket. The suite is offline by contract."""
+
+
+@pytest.fixture(autouse=True)
+def _no_network(monkeypatch):
+    """Every test runs offline: the networked seams (EDGAR, Cboe, Alpha
+    Vantage) are monkeypatched at the function level, so a real socket means
+    a seam was missed. Fail loudly rather than let a test pass on live data
+    that will drift."""
+
+    def refuse(*args, **kwargs):
+        raise NetworkAccessAttempted(
+            "test attempted a network connection; patch the fetch seam instead"
+        )
+
+    monkeypatch.setattr(socket, "socket", refuse)
+    monkeypatch.setattr(socket, "create_connection", refuse)
