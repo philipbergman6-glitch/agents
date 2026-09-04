@@ -2,22 +2,22 @@
 
 Run only when a rubric change is *intended*: uv run python tests/make_golden_lynch.py
 Then review the diff before committing.
-"""
 
-import json
+`--check` compares instead of writing and exits 1 on any difference (CI).
+"""
 
 from whale_engine.scorers.lynch import diagnose
 
 from conftest import GOLDEN_LYNCH, load_snapshot
+from golden_io import check_flag, emit, finish
 
 GOLDEN_TICKERS = ["NVDA", "LULU", "KO", "CCL", "AAL", "MA"]
 
 if __name__ == "__main__":
+    check = check_flag()
     GOLDEN_LYNCH.mkdir(parents=True, exist_ok=True)
-    for ticker in GOLDEN_TICKERS:
-        out = GOLDEN_LYNCH / f"{ticker}.json"
-        out.write_text(
-            json.dumps(diagnose(load_snapshot(ticker)), indent=2, sort_keys=True, ensure_ascii=False)
-            + "\n"
-        )
-        print(out)
+    results = [
+        emit(GOLDEN_LYNCH / f"{ticker}.json", diagnose(load_snapshot(ticker)), check)
+        for ticker in GOLDEN_TICKERS
+    ]
+    finish(results, check)

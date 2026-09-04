@@ -46,6 +46,11 @@ import math
 from .. import validation
 from ..errors import MissingDataError
 
+# Bumping this needs a signed judgment review, like the Buffett and Lynch
+# rubrics: every diagnosis carries it so a narration can be traced to the
+# exact rule set that produced it.
+RUBRIC_VERSION = 1
+
 MAX_SCORE = 16
 
 BULLISH_SCORE = 0.70
@@ -416,6 +421,7 @@ def diagnose(snapshot: dict) -> dict:
 
     result = {
         "ticker": snapshot["ticker"],
+        "rubric_version": RUBRIC_VERSION,
         "signal": signal,
         "confidence": compute_confidence(score_pct, mos),
         "score": {"total": total, "max": MAX_SCORE, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
