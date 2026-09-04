@@ -1,6 +1,6 @@
 # Whale Panel — deterministic investor-persona diagnosis engine with LLM narration
 
-[![CI](https://github.com/philipbergman6-glitch/agents/actions/workflows/ci.yml/badge.svg?branch=public-prep)](https://github.com/philipbergman6-glitch/agents/actions/workflows/ci.yml)
+[![CI](https://github.com/philipbergman6-glitch/agents/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/philipbergman6-glitch/agents/actions/workflows/ci.yml)
 
 Ask "what would Buffett, Graham or Lynch say about this stock?" without letting
 a language model touch a number. A plain-Python engine pulls a company's SEC
