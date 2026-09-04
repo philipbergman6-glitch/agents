@@ -41,7 +41,7 @@ def _prices_dir(arg: str | None) -> Path:
 
 
 def _sectors_dir(arg: str | None) -> Path:
-    """Sector-only snapshots (#94) get their own subdirectory too — never the
+    """Sector-only snapshots get their own subdirectory too — never the
     snapshots root, where a scorer would find them."""
     return _snapshots_dir(arg) / "sectors"
 
@@ -61,7 +61,7 @@ def cmd_fetch(args) -> int:
     out_dir = _snapshots_dir(args.snapshots_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Filings-text sidecar (ticket #49): written next to the snapshot; the
+    # Filings-text sidecar: written next to the snapshot; the
     # snapshot records only the filename, resolved relative to its own
     # directory so the pair stays portable as a unit.
     sidecar = snapshot.get("filings_sidecar")
@@ -78,7 +78,7 @@ def cmd_fetch(args) -> int:
 
 
 def _fetch_sector_only(args) -> int:
-    """`fetch TICKER --sector-only` (#94): EDGAR's SIC code and nothing else.
+    """`fetch TICKER --sector-only`: EDGAR's SIC code and nothing else.
 
     For a name the portfolio layer must place in a sector group but that has
     no fundamentals depth for a full snapshot — a recent IPO. Written to
@@ -125,7 +125,7 @@ def cmd_diagnose(args) -> int:
         path = candidates[-1]  # ISO dates in names sort chronologically
 
     snapshot = json.loads(path.read_text(encoding="utf-8"))
-    # A sector-only file (#94) carries one EDGAR field and no fundamentals at
+    # A sector-only file carries one EDGAR field and no fundamentals at
     # all. It can only reach here by being copied out of snapshots/sectors/,
     # and scoring it would be scoring nothing — refuse it by name.
     from .fetch import SECTOR_SNAPSHOT_KIND
@@ -146,11 +146,11 @@ def cmd_diagnose(args) -> int:
 
 
 def cmd_prices(args) -> int:
-    """Pin weekly-adjusted price history for a basket (ticket #84).
+    """Pin weekly-adjusted price history for a basket.
 
     One vendor request per ticker that needs one: a snapshot already holding
     the most recently completed weekly bar is reused at zero request cost
-    (weekly freshness gate, #83). Fails fast on the first bad ticker — a
+    (weekly freshness gate). Fails fast on the first bad ticker — a
     rate-cap `Information` body means the rest would fail too.
     """
     from .prices import ensure_price_snapshot, format_snapshot_line
@@ -173,10 +173,10 @@ def cmd_prices(args) -> int:
 
 
 def cmd_portfolio(args) -> int:
-    """Report on a client-chosen basket (ticket #85, contract #83).
+    """Report on a client-chosen basket (report contract v1).
 
     Offline and deterministic like `diagnose`: it reads pinned snapshots and
-    never fetches. Freshness belongs to `whale prices` (weekly gate, #83 §7),
+    never fetches. Freshness belongs to `whale prices` (weekly gate, report contract v1 §7),
     so the report states the vintages it read and reproduces byte-for-byte
     from them on any later day.
     """

@@ -2,11 +2,11 @@
 
 Peter Lynch GARP rubric v2 (max 15 = growth 6 + valuation 5 + fundamentals 4),
 adapted from the upstream Lynch heuristics (see README "Provenance") with the decisions locked on the rubric
-ticket (#64, from the #63 owner grilling):
+review:
 
 - sentiment and insider factors dropped (no snapshot data source); the three
   remaining dimensions reweighted to the whole score (40/33/27 -> 6/5/4)
-- growth is 5-year CAGR everywhere (the reference scores growth as total
+- growth is 5-year CAGR everywhere (the upstream ai-hedge-fund heuristics score growth as total
   first-vs-last change while PEG uses CAGR — the same bug upstream half-fixed):
   revenue and EPS CAGR over the 5 most recent complete annual periods, tiers
   >=20% / >=10% / >=3%; EPS derived per period as net_income /
@@ -18,7 +18,7 @@ ticket (#64, from the #63 owner grilling):
 - P/E = market_cap / quarterly TTM periods[0] net income (freshest earnings to
   match the near-live market cap; Buffett/Graham parity); PEG = P/E /
   (annual 5y EPS CAGR x 100), reference-verbatim, canonical Lynch
-- the signal is GARP-gated in BOTH directions (v2, #67 owner review): bullish
+- the signal is GARP-gated in BOTH directions (v2, owner review): bullish
   needs score >= 0.70 AND PEG defined & < 2 (mirrors Buffett's MoS-gated
   bullish); bearish needs score <= 0.45 AND the GARP story to actually fail
   (PEG undefined or >= 2) — a PEG-passing stalwart whose scorecard checks
@@ -26,10 +26,10 @@ ticket (#64, from the #63 owner grilling):
   flat revenue, D/E > 1) floors at neutral, not bearish. Either cap/floor
   appends a detail line. Confidence is the Graham rule: 50-100 by distance
   from the nearest boundary, saturating at 0.30.
-- growth-band label (unscored context, #63): from the 5y EPS CAGR, same edges
+- growth-band label (unscored context): from the 5y EPS CAGR, same edges
   as the scoring tiers; the persona narrates cyclical/turnaround/asset-play
   angles qualitatively
-- hard-fail all rubric inputs (#63: the reference's zeros-and-continue and
+- hard-fail all rubric inputs (the upstream ai-hedge-fund zeros-and-continue and
   1e-9 equity fallback are bugs, not behavior to port): market_cap; >= 5
   complete annual periods (revenue, net_income, outstanding_shares); complete
   periods[0] (net_income, revenue > 0, operating_income, capital_expenditure,
@@ -64,7 +64,7 @@ PEG_BULLISH_GATE = 2.0
 
 GROWTH_WINDOW = 5  # most recent complete annual periods (4 year-gaps)
 
-# Which scored dimensions consume each snapshot field (ticket #55 A2 parity):
+# Which scored dimensions consume each snapshot field (truth-in-scoring parity):
 # data_quality warnings gain a dimensions_affected list.
 _FIELD_DIMENSIONS = {
     "revenue": ["growth", "fundamentals"],
@@ -122,7 +122,7 @@ def _annual_complete(period: dict) -> bool:
 
 
 def _validate(ticker, market_cap, annual: list, periods: list) -> list:
-    """Hard-fail gate (#63: missing/degenerate input aborts, never scores
+    """Hard-fail gate (missing/degenerate input aborts, never scores
     around). Returns the growth window: the GROWTH_WINDOW most recent complete
     annual periods."""
     if market_cap is None:
@@ -164,9 +164,8 @@ def _validate(ticker, market_cap, annual: list, periods: list) -> list:
 
 
 def eps_series(window: list, flags: list) -> list[float]:
-    """Per-period annual EPS, most-recent-first, split-renormalized (shared
-    #48 machinery). An unexplained jump inside the window hard-fails: the
-    per-share growth history cannot be trusted (#63 degenerate-input rule)."""
+    """Per-period annual EPS, most-recent-first, split-renormalized (shared validation machinery). An unexplained jump inside the window hard-fails: the
+    per-share growth history cannot be trusted (degenerate-input rule)."""
     adjusted, events = validation.renormalize_share_series(
         [(p["period_end"], p["balance"]["outstanding_shares"]) for p in window]
     )
@@ -366,7 +365,7 @@ def compute_confidence(score_pct: float) -> int:
 
 
 def growth_band(eps_cagr: float | None) -> str:
-    """Unscored context (#63): band edges match the scoring tiers; the persona
+    """Unscored context: band edges match the scoring tiers; the persona
     narrates cyclical/turnaround/asset-play angles qualitatively."""
     if eps_cagr is None:
         return "not_meaningful"
@@ -484,8 +483,8 @@ def diagnose(snapshot: dict) -> dict:
             "quarterly_period": periods[0]["period_end"],
         },
     }
-    # Unscored context (ticket #52): whale-agnostic pass-through so the
-    # persona can cite Form 4 activity qualitatively. Never scored (#63).
+    # Unscored context: whale-agnostic pass-through so the
+    # persona can cite Form 4 activity qualitatively. Never scored.
     if "insider_activity" in snapshot:
         result["insider_activity"] = snapshot["insider_activity"]
     return result

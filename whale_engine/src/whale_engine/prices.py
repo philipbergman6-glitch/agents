@@ -1,9 +1,9 @@
 """Networked phase 2: Alpha Vantage weekly-adjusted price history -> pinned snapshots.
 
-Vendor pinned by the price-history vendor research (ticket #81,
+Vendor pinned by the price-history vendor research (vendor research,
 `research/price-history-vendor-2026.md`): Alpha Vantage free tier,
 `TIME_SERIES_WEEKLY_ADJUSTED` — one request per ticker returns the full
-history (IBM: 1396 weekly bars back to 1999). Methodology v1 (#82) consumes
+history (IBM: 1396 weekly bars back to 1999). Methodology v1 consumes
 weekly *adjusted* closes; `4. close` is unadjusted and would fabricate
 correlation across a split.
 
@@ -22,8 +22,8 @@ Three rules this module exists to enforce:
    keeps moving until the week closes. Only completed weeks are stored, and a
    bar's date is always read, never derived arithmetically.
 
-3. **Weekly freshness gate, not same-day (#83).** The EDGAR same-day gate
-   (#17) does not transfer: a weekly series only changes weekly, and the free
+3. **Weekly freshness gate, not same-day.** The EDGAR same-day gate
+   (same-day fetch rule) does not transfer: a weekly series only changes weekly, and the free
    tier is 25 requests/day at one request per ticker, so a same-day gate would
    burn 15 of 25 on every re-run of a 15-name basket. A snapshot is fresh iff
    it already contains the most recently completed weekly bar; the snapshot
@@ -236,7 +236,7 @@ def parse_weekly_adjusted(payload: dict, ticker: str, today: date) -> dict:
         "last_refreshed": meta.get("3. Last Refreshed"),
         # Read from the data, never derived: holiday weeks close on Thursday.
         "last_complete_week": last_bar.isoformat(),
-        # What the weekly freshness gate compares against (#83).
+        # What the weekly freshness gate compares against.
         "last_complete_week_start": week_start(last_bar).isoformat(),
         # In-progress bars, recorded so their exclusion is auditable.
         "partial_bars_dropped": sorted(partial),

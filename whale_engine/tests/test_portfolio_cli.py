@@ -92,7 +92,7 @@ def test_missing_edgar_snapshot_exits_non_zero(pinned, capsys, tmp_path):
     (tmp / "prices" / "CCC-2026-08-01.json").write_text(json.dumps(snapshot), encoding="utf-8")
     assert run(tmp, "AAA", "CCC") == 1
     err = capsys.readouterr().err
-    # Both routes named (#94): a young name is a `--sector-only` fetch away,
+    # Both routes named: a young name is a `--sector-only` fetch away,
     # not a dead end.
     assert "no EDGAR sector source" in err and "--sector-only" in err
 

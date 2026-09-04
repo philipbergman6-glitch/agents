@@ -1,8 +1,8 @@
-"""Ticket #55: flagged data must not score, trends must see the present.
+"""flagged data must not score, trends must see the present.
 
 The BLDR-2026-07-28 snapshot is the audit artifact behind the ticket: its
 issuance leg is a TTM window ending 2015-12-31 (stale by a decade), its ~$3.7B
-of real debt resolves under no pre-#55 tag, and its latest fundamentals lag
+of real debt resolves under no pre-truth-in-scoring tag, and its latest fundamentals lag
 the price by 119 days. The regression tests pin the post-fix behavior on that
 exact snapshot.
 """

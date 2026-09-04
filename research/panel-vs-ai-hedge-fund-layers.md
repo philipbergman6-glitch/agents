@@ -26,7 +26,7 @@ Three layers:
 
 ## Read-across to our roadmap
 
-- Their **risk manager is the codifiable part** and maps almost exactly onto our deferred portfolio layer (#23: 1/N + correlation/sector sanity check from pinned price history). Their vol-tier limits are deterministic and borrowable if #23 ever revives — though #23 deliberately chose 1/N over cleverness (DeMiguel 2009).
+- Their **risk manager is the codifiable part** and maps almost exactly onto our deferred portfolio layer (1/N + correlation/sector sanity check from pinned price history). Their vol-tier limits are deterministic and borrowable if that layer ever revives — though it deliberately chose 1/N over cleverness (DeMiguel 2009).
 - Their **portfolio manager is the cautionary tale**: it's what the "mechanical tally" we deferred looks like when built without a stated rule — an LLM vibe-weighting compressed signals. If clients ever demand a combined verdict, the bar set here is: versioned, deterministic, stated aggregation rule, or don't ship it.
 
 ## Client-facing one-liner

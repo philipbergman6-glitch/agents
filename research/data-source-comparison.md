@@ -24,7 +24,7 @@ Asset for wayfinder ticket [Compare financial data sources](https://github.com/p
 - Point-in-time: filings themselves are immutable (amendments stack as new filings); the aggregated APIs return latest-filed values, so strict reproducibility still requires snapshotting fetched data — same mitigation as every other source.
 
 ### financialdatasets.ai — perfect fit, wrong price
-- Exactly matches the reference implementation's API (`financial-metrics` with `period=ttm&limit=10`, `search/line-items` with the exact field names the Buffett agent requests). Zero adaptation work.
+- Exactly matches the upstream ai-hedge-fund API (`financial-metrics` with `period=ttm&limit=10`, `search/line-items` with the exact field names the Buffett agent requests). Zero adaptation work.
 - **No free tier** (confirmed on official pricing page + one independent review). $20 one-time credits tier covers only **1 year** of financials — useless for 10 TTM periods. Effective cost: **$200/mo**.
 - Revision/immutability policy undocumented; provenance page punts to support email. Local caching required for determinism regardless.
 - ai-hedge-fund issue tracker shows recurring operational friction: 60 req/min throttling (#295), server 500s on the line-items endpoint (#321), credits consumed on failed calls (#139).
@@ -45,6 +45,6 @@ Reasoning:
 3. Computing ratios ourselves from EDGAR line items is not extra work relative to the destination — the deterministic engine must own every formula anyway (numbers never come from an LLM, and now also never from a vendor's undocumented ratio definitions).
 
 Cost of this choice, eyes open:
-- **Adaptation work**: the reference consumes pre-computed metric objects; our data layer must build an equivalent metrics object from EDGAR line items (ROIC needs an explicit invested-capital definition — no standard XBRL tag; the rubric ticket should fix the formula).
+- **Adaptation work**: the upstream ai-hedge-fund heuristics consume pre-computed metric objects; our data layer must build an equivalent metrics object from EDGAR line items (ROIC needs an explicit invested-capital definition — no standard XBRL tag; the rubric should fix the formula).
 - **Coverage**: US SEC registrants only — same limit as financialdatasets.ai, so nothing lost.
 - **De-risking step for implementation**: pilot edgartools' historical `as_of` TTM on ~10 diverse tickers (non-calendar fiscal year like AAPL, a bank, a recent IPO) before building on it; fall back to `companyconcept` + own stitching only if the pilot fails.

@@ -1,6 +1,6 @@
 # Panel review sample — MA, user-named snapshot 2026-07-27
 
-Produced for judgment-review ticket #74 (map #71) by the `/panel` skill, **user-named-snapshot path**: owner directed the panel at `snapshots/MA-2026-07-27.json` (the 2026-07-29 fetch carries a broken market cap — see the companion sample `MA-2026-07-29-panel.md`); the named snapshot propagated to all three subagents, no fetch. Coverage role: Lynch's GARP-floor case.
+Produced during the panel judgment review by the `/panel` skill, **user-named-snapshot path**: the user directed the panel at `snapshots/MA-2026-07-27.json` (the 2026-07-29 fetch carries a broken market cap — see the companion sample `MA-2026-07-29-panel.md`); the named snapshot propagated to all three subagents, no fetch. Coverage role: Lynch's GARP-floor case.
 
 ---
 

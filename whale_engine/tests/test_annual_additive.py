@@ -1,4 +1,4 @@
-"""Contract of the deep-history annual_periods key, post rubric v2 (#40).
+"""Contract of the deep-history annual_periods key, post rubric v2.
 
 Graham is pinned by goldens and must still ignore annual_periods entirely.
 Buffett v2 *requires* them: a schema-v1 snapshot hard-fails with a refetch

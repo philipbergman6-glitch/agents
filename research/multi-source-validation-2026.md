@@ -63,7 +63,7 @@ networks/channel checks) — expensive, mostly intra-quarter timing, not replica
 - **yfinance is the weakest link in the current stack** (unofficial scraping, Feb-2025
   breakage precedent, no commercial license). For a sold product: derive market cap as
   price × EDGAR dei shares; Stooq price as cross-check (personal-use ToS caveat —
-  flag to owner); EDGAR-derived data is the only fully ToS-clean layer.
+  flag for review); EDGAR-derived data is the only fully ToS-clean layer.
 - Free extensions, all via EDGAR/edgartools (zero new deps, ToS-clean): 13F-HR
   holdings, Form 3/4/5 insiders, 8-K material news. Transcripts: no ToS-clean keyless
   source of record (defeatbeta-api exists but Yahoo-derived provenance); prepared

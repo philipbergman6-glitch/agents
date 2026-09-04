@@ -1,4 +1,4 @@
-"""Rubric v3 pins (ticket #56, owner-signed B1-B4 + the rolling-over guard).
+"""Rubric v3 pins (owner-signed B1-B4 + the rolling-over guard).
 
 Each test pins one signed judgment change so a regression is a loud failure,
 not a silent verdict drift — same pattern as test_truth_in_scoring.py.

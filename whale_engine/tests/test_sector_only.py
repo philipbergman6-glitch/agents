@@ -1,4 +1,4 @@
-"""Sector-only EDGAR route so a young name does not kill a basket (ticket #94).
+"""Sector-only EDGAR route so a young name does not kill a basket.
 
 The portfolio layer needs exactly one EDGAR field — the SIC code — but the
 only route to a snapshot was `whale fetch`, which hard-fails any company
@@ -6,10 +6,10 @@ without 10 distinct TTM windows. Two things had to become true:
 
 1. a recent IPO in a client's basket must yield a report with a warning, not
    an error about fundamentals depth pointing at the wrong layer;
-2. the `insufficient_history` path designed in #82/#83 must be reachable end
+2. the `insufficient_history` path designed in methodology v1 must be reachable end
    to end by a real young name, not only by a synthetic fixture.
 
-What must stay untouched (#40 precedent): whale scoring, the fetch depth
+What must stay untouched (rubric-v2 precedent): whale scoring, the fetch depth
 requirement, and the 10-TTM-window rule. A sector-only file is therefore not a
 snapshot — it lives in its own directory, is marked `kind`, and `diagnose`
 refuses it by name.
@@ -67,7 +67,7 @@ def test_sector_snapshot_carries_the_sic_code_and_nothing_financial(fake_edgar):
 
 
 def test_an_unusable_sic_is_a_warning_not_a_failed_fetch(fake_edgar, monkeypatch):
-    """Same degradation rule as a full fetch (#84), so the portfolio layer's
+    """Same degradation rule as a full fetch, so the portfolio layer's
     `sector_unavailable` path behaves identically whichever route wrote it."""
     monkeypatch.setattr(fake_edgar, "sic", None)
     snapshot = fetch.fetch_sector_snapshot("STUB")
@@ -178,7 +178,7 @@ def test_a_young_name_is_grouped_from_its_sector_only_snapshot(pinned):
 
 
 def test_the_young_name_reaches_insufficient_history_instead_of_an_error(pinned):
-    """The #82/#83 path, finally reachable by a name a client could actually
+    """The insufficient-history path, finally reachable by a name a client could actually
     own: weighted normally, null pairs, a first-class warning."""
     prices, edgar = load_basket_snapshots(["AAA", "YOUNG"], pinned)
     report = build_report(["AAA", "YOUNG"], prices, edgar)

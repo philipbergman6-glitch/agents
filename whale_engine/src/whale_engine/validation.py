@@ -1,4 +1,4 @@
-"""Snapshot validation layer (ticket #48, implementing the #44 decision).
+"""Snapshot validation layer.
 
 Three severity tiers:
 - ERROR: provably invalid or structurally inapplicable input. Scorers raise
@@ -34,24 +34,24 @@ INFO = "INFO"
 # Loose order-of-magnitude bounds on market_cap / outstanding_shares catch
 # unit-scale corruption (cap reported in thousands, share-count basis
 # mismatch, ...). Snapshots that pin a price_reference (Cboe close x filed
-# shares, ticket #50) additionally get the tight cross-check:
+# shares) additionally get the tight cross-check:
 # |market_cap / (shares * price) - 1| <= MARKET_CAP_RELATIVE_TOLERANCE.
 IMPLIED_PRICE_MIN = 0.10  # USD per share
 IMPLIED_PRICE_MAX = 1_000_000.0  # BRK.A trades ~$7e5; anything above is corrupt
 MARKET_CAP_RELATIVE_TOLERANCE = 0.10
 # Mirrors fetch.MARKET_CAP_MANUAL_SOURCE (fetch imports validation, not the
 # reverse). A manual cap has no price_reference, so the ±10% cross-check above
-# can never fire on it — the WARN keeps that bypass honest (ticket #55 A8).
+# can never fire on it — the WARN keeps that bypass honest (truth-in-scoring).
 _MANUAL_MARKET_CAP_SOURCE = "manual:owner-supplied"
 # When a snapshot carries a market_cap_check (yfinance witness, recorded at
 # fetch), a wide disagreement means the derived cap's share basis is corrupt —
 # MA's 2010 pre-split dei fact produced a −86% deviation that was recorded but
-# never gated (#77). Cboe-vs-yfinance timing noise is low single digits; 25%
+# never gated. Cboe-vs-yfinance timing noise is low single digits; 25%
 # only fires on structural corruption. Fetch imports this same constant to
 # hard-fail at fetch time; witness *absence* stays WARN-only.
 MARKET_CAP_WITNESS_TOLERANCE = 0.25
 
-# --- stale TTM windows (ticket #55 A1/A2) ----------------------------------
+# --- stale TTM windows (truth-in-scoring/A2) ----------------------------------
 # edgartools clamps get_ttm to the latest window a tag can build, so an
 # abandoned tag returns a years-stale value with only a prose warning. 185
 # days is edgartools' own staleness threshold. The window end is parsed from
@@ -61,7 +61,7 @@ MARKET_CAP_WITNESS_TOLERANCE = 0.25
 STALE_WINDOW_DAYS = 185
 _WINDOW_END_RE = re.compile(r"TTM window ends (\d{4}-\d{2}-\d{2})")
 
-# --- fundamentals staleness vs the price (ticket #55 A4) -------------------
+# --- fundamentals staleness vs the price (truth-in-scoring) -------------------
 # The market cap is near-live (Cboe delayed close); the fundamentals are as of
 # periods[0].period_end. Beyond ~a quarter of drift the diagnosis is pricing
 # fresh markets against old books, and must say so.
@@ -131,7 +131,7 @@ _OPTIONAL_ZERO_FIELDS = [
 # Debt is not zero-if-absent: dependent checks (D/E, ROIC) score 0 as a data
 # gap. One resolved component keeps the sum usable (the other is treated as
 # zero, INFO); both missing means real debt may be invisible (BLDR carried
-# ~$3.7B under tags outside the fallback lists, ticket #55 F3) — WARN, so it
+# ~$3.7B under tags outside the fallback lists, truth-in-scoring) — WARN, so it
 # reaches data_quality and must be narrated.
 _DEBT_FIELDS = [("balance", "short_term_debt"), ("balance", "long_term_debt")]
 
@@ -140,13 +140,13 @@ _DEBT_FIELDS = [("balance", "short_term_debt"), ("balance", "long_term_debt")]
 FETCH_ONLY_CODES = {
     "restatement_402",
     "restatement_guard_unavailable",
-    # Fetch-path findings from the filings sidecar (#49), yfinance
-    # cross-check (#50) and Form 4 insider fetch (#52): only observable at
+    # Fetch-path findings from the filings sidecar, yfinance
+    # cross-check and Form 4 insider fetch: only observable at
     # fetch time, so diagnoses must carry them forward from the snapshot.
     "filings_sidecar_extraction_failed",
     "yfinance-crosscheck-unavailable",
     "form4_fetch_failed",
-    # Additive SIC fields from the submissions API (#84): only observable at
+    # Additive SIC fields from the submissions API: only observable at
     # fetch time, and the portfolio layer's sector check depends on them.
     "sic_unavailable",
 }
@@ -288,7 +288,7 @@ def _present_arrays(snapshot: dict, arrays) -> list[tuple[str, list]]:
 def _check_ttm_warnings(snapshot: dict, arrays) -> list[dict]:
     """Check 1: edgartools stitched-TTM warnings, captured for all fields.
 
-    Two escalations beyond the generic stitched WARN (ticket #55):
+    Two escalations beyond the generic stitched WARN (truth-in-scoring):
     - ttm_stale_window: the stitched window ends > STALE_WINDOW_DAYS before
       the period's own end — the value describes a different era, and scorers
       must not let it earn points (A2).
@@ -398,7 +398,7 @@ def _check_market_cap(snapshot: dict, arrays) -> list[dict]:
                 implied_price=implied,
             )
         ]
-    # Tightened cross-check (#50 follow-up): when the snapshot pins its own
+    # Tightened cross-check (tightened later): when the snapshot pins its own
     # price_reference (Cboe close x filed shares), the stored market_cap must
     # re-derive to within MARKET_CAP_RELATIVE_TOLERANCE — anything wider means
     # the snapshot was edited or corrupted after fetch.
@@ -420,7 +420,7 @@ def _check_market_cap(snapshot: dict, arrays) -> list[dict]:
                     reference_cap=reference_cap,
                 )
             ]
-    # Witness gate (#77): the fetch records the yfinance cross-check when the
+    # Witness gate: the fetch records the yfinance cross-check when the
     # witness is reachable; a deviation past MARKET_CAP_WITNESS_TOLERANCE means
     # the derived cap's share basis is corrupt (stale pre-split dei fact, wrong
     # share class). ERROR — scorers must walk away, not price off it.
@@ -550,7 +550,7 @@ def _check_tags_alignment(snapshot: dict, arrays) -> list[dict]:
 def _check_zero_vs_missing(snapshot: dict, arrays) -> list[dict]:
     """Check 5b: mark all-absent zero-if-absent fields — EDGAR cannot say 0.
 
-    Debt fields escalate (ticket #55 A3): when *both* debt fields resolve
+    Debt fields escalate (truth-in-scoring): when *both* debt fields resolve
     nowhere, every debt-dependent check silently loses its input while real
     debt may simply live under tags outside the fallback lists — WARN, not
     INFO, so it reaches data_quality and gets narrated.
@@ -611,7 +611,7 @@ def _check_zero_vs_missing(snapshot: dict, arrays) -> list[dict]:
 
 
 def _check_fundamentals_staleness(snapshot: dict, arrays) -> list[dict]:
-    """Check 8 (ticket #55 A4): how stale is the diagnosis's own "present"?
+    """Check 8 (truth-in-scoring): how stale is the diagnosis's own "present"?
 
     The market cap is near-live; the fundamentals are as of the latest
     quarterly period end. Beyond FUNDAMENTALS_STALENESS_DAYS of drift the
@@ -644,7 +644,7 @@ def _check_fundamentals_staleness(snapshot: dict, arrays) -> list[dict]:
 
 
 def _check_manual_market_cap(snapshot: dict, arrays) -> list[dict]:
-    """Check 9 (ticket #55 A8): a manual --market-cap has no price_reference,
+    """Check 9 (truth-in-scoring): a manual --market-cap has no price_reference,
     so the ±10% re-derivation cross-check can never fire on it. Say so."""
     if snapshot.get("market_cap_source") != _MANUAL_MARKET_CAP_SOURCE:
         return []
@@ -777,7 +777,7 @@ def run_checks(snapshot: dict, arrays=DEFAULT_ARRAYS) -> tuple[list[dict], list[
 
 
 def data_quality(findings: list[dict], checks_run: list[str]) -> dict:
-    """The diagnosis-level block (#44): {errors, warnings, checks_run}.
+    """The diagnosis-level block: {errors, warnings, checks_run}.
 
     INFO findings stay snapshot-level by decision. A successful diagnosis has
     an empty errors list (scorers hard-fail on ERROR before emitting output);

@@ -1,4 +1,4 @@
-# Price-history vendor selection (map #80, ticket #81) — 2026-07-29
+# Price-history vendor selection — 2026-07-29
 
 **Question:** which keyed API supplies the portfolio layer's correlation input — ~3 years of adjusted price history for 5–15 US tickers, fetched by each client with their own key, pinned as snapshot files on disk (possibly committed to a private repo)?
 
@@ -10,10 +10,10 @@
 
 - **Fetch cost:** 1 request per ticker (full history in one call); a 15-ticker basket uses 15 of the free tier's 25 requests/day.
 - **Key setup:** instant web form, no credit card; key passed as `apikey=` query param → the engine must take it from an env var (proposed: `ALPHAVANTAGE_API_KEY`), same client-config pattern as `EDGAR_IDENTITY`, and never echo it.
-- **Statistical adequacy:** 3y of weekly returns ≈ 156 observations per pairwise correlation — standard practice for this purpose (weekly returns also carry less microstructure/asynchronous-close noise than daily). Final window/frequency ratification belongs to methodology ticket #82, but **daily frequency is now effectively a paid feature** at every acceptable vendor.
-- **Engine hard-fail trap (implementation note for #84):** Alpha Vantage returns **HTTP 200 with an `"Information"` JSON body** when a free key hits a premium endpoint or the daily cap — the fetcher must treat any response lacking the time-series key as a hard failure, never as empty data.
+- **Statistical adequacy:** 3y of weekly returns ≈ 156 observations per pairwise correlation — standard practice for this purpose (weekly returns also carry less microstructure/asynchronous-close noise than daily). Final window/frequency ratification belongs to the portfolio methodology, but **daily frequency is now effectively a paid feature** at every acceptable vendor.
+- **Engine hard-fail trap (implementation note for the price-snapshot module):** Alpha Vantage returns **HTTP 200 with an `"Information"` JSON body** when a free key hits a premium endpoint or the daily cap — the fetcher must treat any response lacking the time-series key as a hard failure, never as empty data.
 
-**Fallback (if the owner decides daily is non-negotiable): EODHD "All World" at $19.99/mo per client.** Only vendor whose ToS *expressly permits* local storage for non-professional users and whose endpoint returns true split+dividend `adjusted_close` with from/to ranges; but it is a per-client subscription, and its delete-within-1-month-of-termination clause sits awkwardly with git history.
+**Fallback (if daily frequency turns out to be non-negotiable): EODHD "All World" at $19.99/mo per client.** Only vendor whose ToS *expressly permits* local storage for non-professional users and whose endpoint returns true split+dividend `adjusted_close` with from/to ranges; but it is a per-client subscription, and its delete-within-1-month-of-termination clause sits awkwardly with git history.
 
 ## Why not the others
 
@@ -28,7 +28,7 @@
 
 ## License posture (applies to the recommendation)
 
-Alpha Vantage's ToS contains **no clause on local storage, caching, retention, or redistribution** — pinning snapshots is not prohibited text. The license grant is "personal, non-commercial"; the risk vector is a *firm* (rather than an individual) using the data, or sharing fetched data with others, which the ToS defines as commercial use requiring a written arrangement. Mitigations, to carry into the distro docs (#87): each client provisions **their own** key and accepts the ToS themselves at signup (the license relationship is theirs); the distro continues its **no-snapshots-shipped** policy (price snapshots gitignored in the distro, like EDGAR snapshots already are); docs state plainly that business/firm use of Alpha Vantage data needs the client's own commercial arrangement with the vendor. This paragraph is ToS reading, not legal advice.
+Alpha Vantage's ToS contains **no clause on local storage, caching, retention, or redistribution** — pinning snapshots is not prohibited text. The license grant is "personal, non-commercial"; the risk vector is a *firm* (rather than an individual) using the data, or sharing fetched data with others, which the ToS defines as commercial use requiring a written arrangement. Mitigations, to carry into the distro docs: each client provisions **their own** key and accepts the ToS themselves at signup (the license relationship is theirs); the distro continues its **no-snapshots-shipped** policy (price snapshots gitignored in the distro, like EDGAR snapshots already are); docs state plainly that business/firm use of Alpha Vantage data needs the client's own commercial arrangement with the vendor. This paragraph is ToS reading, not legal advice.
 
 ## Per-vendor evidence
 
@@ -84,6 +84,6 @@ The three agent reports below are reproduced verbatim (sources inline per claim)
 
 ## Consequences wired into the map
 
-1. **Methodology ticket #82** must ratify (or veto) weekly return frequency — the vendor pick makes weekly the free path; daily means EODHD at $19.99/mo per client.
-2. **Snapshot module #84**: env var `ALPHAVANTAGE_API_KEY`; hard-fail on any 200-with-`Information` body; pin the full weekly-adjusted series per ticker.
-3. **Distro sync #87**: client docs = key signup walkthrough, license-posture paragraph, price snapshots gitignored in distro.
+1. **The portfolio methodology** must ratify (or veto) weekly return frequency — the vendor pick makes weekly the free path; daily means EODHD at $19.99/mo per client.
+2. **Price-snapshot module**: env var `ALPHAVANTAGE_API_KEY`; hard-fail on any 200-with-`Information` body; pin the full weekly-adjusted series per ticker.
+3. **Distro sync**: client docs = key signup walkthrough, license-posture paragraph, price snapshots gitignored in distro.

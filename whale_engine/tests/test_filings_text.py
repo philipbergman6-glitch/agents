@@ -1,4 +1,4 @@
-"""Filings-text moat sidecar (ticket #49): extraction, failure paths, CLI wiring.
+"""Filings-text moat sidecar: extraction, failure paths, CLI wiring.
 
 Offline: edgartools objects are faked with the minimal surface the extractor
 touches (Company.get_filings(...).latest(1) -> Filing.obj() -> TenK["Item N"]).

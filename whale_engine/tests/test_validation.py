@@ -1,4 +1,4 @@
-"""Validation layer (ticket #48, per the #44 decision).
+"""Validation layer (validation layer).
 
 Covers the seven checks, the finding shape (mergeable list of plain dicts),
 the diagnosis `data_quality` block, and the hard-fail-on-ERROR contract, using
@@ -46,12 +46,12 @@ def test_data_quality_block_shape_and_info_excluded():
     assert dq["errors"] == []  # ERRORs raise; a successful diagnosis has none
     assert dq["warnings"], "stitched-TTM warnings must surface in the diagnosis"
     assert all(f["severity"] == "WARN" for f in dq["warnings"])
-    # INFO findings are snapshot-level only (per #44), never in data_quality.
+    # INFO findings are snapshot-level only (by design), never in data_quality.
     assert not any(f["severity"] == "INFO" for f in dq["warnings"] + dq["errors"])
 
 
 def test_parallel_features_can_append_findings():
-    """Tickets #49/#50/#52 merge by appending finding dicts — nothing else."""
+    """Sidecar, market-cap and Form 4 findings merge by appending finding dicts — nothing else."""
     dq = validation.data_quality(
         [validation.finding(validation.WARN, "someone_elses_check", "hi", extra=1)],
         ["someone_elses_check"],
@@ -155,7 +155,7 @@ def test_market_cap_witness_mismatch_hard_fails():
 
 
 def test_poisoned_ma_snapshot_hard_fails_all_whales():
-    # Regression fixture for #77: the real 2026-07-29 MA snapshot whose market
+    # Regression fixture: the real 2026-07-29 MA snapshot whose market
     # cap was derived from a 2010 pre-split dei share fact (deviation −86.2%
     # vs the recorded yfinance witness). Kept committed deliberately.
     from whale_engine.scorers import lynch

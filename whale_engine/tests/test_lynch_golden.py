@@ -47,7 +47,7 @@ def test_garp_names_outscore_expensive_and_broken():
 
 
 def test_growth_band_labels():
-    """Unscored context (#63): bands share the scoring-tier edges."""
+    """Unscored context: bands share the scoring-tier edges."""
     assert diagnose(load_snapshot("NVDA"))["growth_band"]["label"] == "fast_grower"
     assert diagnose(load_snapshot("LULU"))["growth_band"]["label"] == "stalwart"
     assert diagnose(load_snapshot("KO"))["growth_band"]["label"] == "slow_grower"
@@ -59,8 +59,8 @@ def test_rubric_version_pinned():
 
 
 # ---------------------------------------------------------------------------
-# hard-fail policy (#63: missing/degenerate rubric input aborts — the
-# reference's zeros-and-continue is a bug, not behavior to port)
+# hard-fail policy (missing/degenerate rubric input aborts — the
+# upstream ai-hedge-fund zeros-and-continue is a bug, not behavior to port)
 
 
 def test_missing_market_cap_hard_fails():

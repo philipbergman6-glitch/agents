@@ -1,4 +1,4 @@
-# Market-cap sourcing without yfinance — research synthesis (issue #45)
+# Market-cap sourcing without yfinance — research synthesis
 
 Researched 2026-07-28 (single agent: code read + live endpoint probes + ToS pulls + pilot).
 Question: replace/demote yfinance as the source of `market_cap` — the only non-EDGAR
@@ -119,11 +119,11 @@ always carries end-user licensing. The only coherent posture for a sold product 
 - Under that model Cboe is the least-bad option: personal use is the *licensed* case in
   its subscriber framework, and there is no automated-access prohibition being
   technically enforced against us (unlike Stooq) or written (unlike Yahoo §2.4(ix)).
-- Residual risk to flag to owner: professional/commercial *clients* technically fall
+- Residual risk to flag: professional/commercial *clients* technically fall
   outside Non-Professional scope; and the endpoint is undocumented. Mitigation: a
   `--market-cap` (or `--price`) manual-override CLI flag — user-typed input involves no
   automated access at all and is the ToS-bulletproof escape hatch for strict clients
-  and feed outages. This is a legal-posture judgment, not observed fact; owner signs
+  and feed outages. This is a legal-posture judgment, not observed fact; the maintainer signs
   off per repo precedent.
 
 ## Q3: pilot — Cboe close × EDGAR shares vs snapshot yfinance market_cap
@@ -186,7 +186,7 @@ is not error at all. The outliers decompose cleanly:
    count), cutting staleness to ≤1 quarter. Hard-fail if Cboe returns no quote, if
    `last_trade_time` is > 5 calendar days old (halted/delisted/stale feed), or if no
    dei share count exists — no silent fallback.
-2. **Manual override**: `--market-cap` CLI flag → provenance `manual:owner-supplied`.
+2. **Manual override**: `--market-cap` CLI flag → provenance `manual:user-supplied`.
    The ToS-bulletproof path and the outage escape hatch. (Hard-fail philosophy: the
    error message for a Cboe miss should name this flag.)
 3. **yfinance: demoted to optional cross-check, never load-bearing.** If importable and
@@ -196,7 +196,7 @@ is not error at all. The outliers decompose cleanly:
    can reference the derived count or prior-period counts instead).
 4. **Stooq: no role.** Actively blocks automated access in 2026 (observed); ToS bars
    redistribution; nothing it offers that Cboe doesn't.
-5. **Validation tolerance (issue #44, market-cap out-of-bounds = hard ERROR)**:
+5. **Validation tolerance (market-cap out-of-bounds = hard ERROR)**:
    - derived vs yfinance cross-check (when available): **ERROR beyond ±10%** —
      pilot worst honest case −6.8% is stale-shares dominated; with freshest-cover-page
      counts the observed spread is ±3.3%, so 10% flags real corruption (wrong ticker,

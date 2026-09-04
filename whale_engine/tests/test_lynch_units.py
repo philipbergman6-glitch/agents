@@ -1,4 +1,4 @@
-"""Unit checks for Lynch scoring edge cases locked on the rubric ticket (#64)."""
+"""Unit checks for Lynch scoring edge cases locked on the rubric ticket."""
 
 import pytest
 
@@ -72,7 +72,7 @@ def test_cagr_tiers():
 
 def test_negative_eps_endpoint_scores_zero_without_flag():
     """A loss year at an endpoint is real data, not a gap: the sub-check
-    scores 0 with a detail line, no flag, no hard-fail (#64)."""
+    scores 0 with a detail line, no flag, no hard-fail."""
     flags = []
     result = analyze_growth(_window(1.0, -0.5, rev_latest=200.0, rev_oldest=100.0), flags)
     assert result["eps_cagr_5y"] is None
@@ -95,7 +95,7 @@ def test_annual_split_jump_renormalized_and_flagged():
 
 def test_unexplained_share_jump_hard_fails():
     """No plausible split factor -> the per-share history is untrustworthy;
-    degenerate input aborts (#63), unlike Graham's exclude-and-flag."""
+    degenerate input aborts, unlike Graham's exclude-and-flag."""
     window = _window(2.0, 1.0)
     window[-1]["balance"]["outstanding_shares"] = 13.0  # x77: no split factor
     with pytest.raises(MissingDataError):
@@ -134,7 +134,7 @@ def test_peg_undefined_without_positive_earnings_or_growth():
 def test_negative_equity_is_data_not_a_gap():
     """AAL shape: negative equity makes D/E meaningless — scored 0 with a
     detail line, never a negative ratio earning the low-debt points and
-    never the reference's 1e-9 fallback."""
+    never the upstream ai-hedge-fund 1e-9 fallback."""
     result = analyze_fundamentals(_quarter(equity=-50.0, short_debt=40.0))
     assert result["debt_to_equity"] is None
     assert any("not meaningful" in d for d in result["details"])
@@ -156,8 +156,8 @@ def test_debt_tiers_and_derived_fcf():
 
 
 def test_signal_is_garp_gated_both_directions():
-    """Score alone never sets the signal (v2, #67 owner review): bullish needs
-    PEG defined and < 2 (#64, mirroring Buffett's MoS-gated bullish), and
+    """Score alone never sets the signal (v2, owner review): bullish needs
+    PEG defined and < 2 (mirroring Buffett's MoS-gated bullish), and
     bearish needs the GARP story to actually fail — PEG < 2 floors at
     neutral (the MA case)."""
     assert compute_signal(0.80, 1.5) == "bullish"

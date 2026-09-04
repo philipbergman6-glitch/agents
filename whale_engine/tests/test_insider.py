@@ -1,4 +1,4 @@
-"""Deterministic unit tests for Form 4 insider buy-cluster detection (#52).
+"""Deterministic unit tests for Form 4 insider buy-cluster detection.
 
 All tests are pure — synthetic transactions, no network. The cluster rule
 under test: >=3 code-P purchases by >=3 distinct insiders within any rolling

@@ -1,4 +1,4 @@
-"""Golden portfolio reports over real pinned snapshots (ticket #85).
+"""Golden portfolio reports over real pinned snapshots.
 
 Two layers, as with the whale scorers:
 - semantic expectations: V and MA are the textbook "same bet", a card network
@@ -23,8 +23,8 @@ GOLDEN_BASKETS = {
     # a young restaurant chain against the same card networks
     "payments-restaurant": ["V", "MA", "CAVA"],
     # a 2025 IPO with under a year of trading history, alongside two old names:
-    # the #82/#83 insufficient-history path on a real name, reachable only via
-    # the sector-only EDGAR route (#94)
+    # the insufficient-history path on a real name, reachable only via
+    # the sector-only EDGAR route
     "beverage-bank-ipo": ["KO", "JPM", "STUB"],
 }
 
@@ -85,7 +85,7 @@ def test_provenance_pins_the_vendor_series_and_snapshot_vintages():
 
 def test_a_real_ipo_lands_in_insufficient_history_rather_than_killing_the_report():
     """StubHub listed in 2025, so it has under a year of weekly returns — the
-    #82/#83 path on a name a client could actually own (#94). Before the
+    insufficient-history path on a name a client could actually own. Before the
     sector-only route existed this basket produced no report at all: the SIC
     lookup demanded a full fundamentals snapshot STUB cannot support."""
     result = report("beverage-bank-ipo")

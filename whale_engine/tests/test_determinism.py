@@ -11,7 +11,7 @@ from conftest import SNAPSHOT_DATE, SNAPSHOTS, load_snapshot
 ALL_SCORABLE = ["AAPL", "KO", "MA", "GM", "F", "AAL", "CCL"]
 
 # GM and F resolve no debt tags in any period: Buffett/Graham degrade (D/E
-# scored 0 as a data gap), but Lynch hard-fails by rubric (#63 crash-over-
+# scored 0 as a data gap), but Lynch hard-fails by rubric (crash-over-
 # silent), so they are not scorable for him.
 SCORABLE = {
     "buffett": ALL_SCORABLE,

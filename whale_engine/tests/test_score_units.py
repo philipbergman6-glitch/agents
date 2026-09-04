@@ -34,7 +34,7 @@ def test_negative_latest_earnings_does_not_crash():
 
 
 def test_zero_debt_is_data_not_a_gap():
-    """Intentional deviation from the reference, which truthiness-gates ratios
+    """Intentional deviation from the upstream ai-hedge-fund heuristics, which truthiness-gate ratios
     and scores an exact D/E of 0.0 as 'unavailable'. Zero debt is the best
     case and must earn the +2, with no missing-data flag."""
     metrics = {
@@ -83,7 +83,7 @@ def test_bvps_cagr_is_annualized_not_per_quarter():
 
 def test_stale_share_count_repaired_and_flagged():
     """A pre-split cover-page fact (10x off, NVDA 2024-07-28) is renormalized
-    back onto the surrounding basis with a flag (ticket #48: repair, not the
+    back onto the surrounding basis with a flag (repair, not the
     old exclude-as-outlier), so the period stays in the BVPS series."""
     q = 1.15 ** 0.25
     bvps = [10.0 * q ** (9 - i) for i in range(10)]
@@ -98,7 +98,7 @@ def test_stale_share_count_repaired_and_flagged():
 
 
 def test_split_renormalization_restores_full_history():
-    """NVDA shape (ticket #48): two real splits in the annual window must
+    """NVDA shape: two real splits in the annual window must
     renormalize the older cohorts onto the current basis — the old 3x-median
     filter excluded the *correct* post-split years — keeping every period."""
     q = 1.15 ** 0.25
@@ -120,7 +120,7 @@ def test_split_renormalization_restores_full_history():
 
 
 def test_unexplained_share_jump_excludes_older_segment():
-    """CAVA shape (ticket #48): an x80 jump snaps to no plausible split factor,
+    """CAVA shape: an x80 jump snaps to no plausible split factor,
     so the older segment is excluded with a flag instead of renormalized."""
     q = 1.15 ** 0.25
     bvps = [10.0 * q ** (9 - i) for i in range(10)]

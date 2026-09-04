@@ -78,4 +78,3 @@ upstream heuristics.
 - **The panel never averages.** It reports each whale's verdict and attributes
   disagreements to their differing models.
 
-Planning happens on the [wayfinder map](../../issues) (issue labelled `wayfinder:map`).

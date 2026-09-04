@@ -1,4 +1,4 @@
-"""SIC 2-digit major-group titles (ticket #85, methodology #82 §3).
+"""SIC 2-digit major-group titles (methodology v1 §3).
 
 Source: OSHA SIC manual major-group index (https://www.osha.gov/data/sic-manual),
 the standard published titles for the 2-digit major groups the SEC's 4-digit

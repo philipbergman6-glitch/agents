@@ -31,7 +31,7 @@ def test_eps_endpoint_growth_is_latest_vs_oldest():
 
 def test_eps_share_count_split_jump_renormalized_and_flagged():
     """A pre-split cover-page share fact (10x off its neighbor) is renormalized
-    onto the current basis with a flag (ticket #48: repair the count, not drop
+    onto the current basis with a flag (repair the count, not drop
     the period), so it is scored as real EPS instead of an EPS collapse."""
     periods = [_period(100.0 - i) for i in range(9)]  # newest first, growing
     periods.append(_period(90.0, shares=100.0, period_end="2024-07-28"))  # 10x below

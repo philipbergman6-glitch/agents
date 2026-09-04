@@ -1,4 +1,4 @@
-"""Form 4 insider buy-cluster detection (ticket #52, per the #47 decision).
+"""Form 4 insider buy-cluster detection.
 
 Networked part: fetch Form 4 non-derivative open-market purchases (transaction
 code P, acquired) via edgartools, looking back 12 months from the snapshot

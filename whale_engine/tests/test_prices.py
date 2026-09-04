@@ -1,4 +1,4 @@
-"""Price-history fetch + pinned snapshot module (ticket #84).
+"""Price-history fetch + pinned snapshot module.
 
 Offline: the Alpha Vantage network seam (prices._av_get_json) is monkeypatched
 with the real response shape captured live from the vendor's public `demo` key

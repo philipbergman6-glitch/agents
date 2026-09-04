@@ -1,4 +1,4 @@
-"""13F whale-holdings module (ticket #25): roster-wide fetch + offline report.
+"""13F whale-holdings module: roster-wide fetch + offline report.
 
 Two-phase, matching the fundamentals pipeline:
 

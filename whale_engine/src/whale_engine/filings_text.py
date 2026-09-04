@@ -1,4 +1,4 @@
-"""10-K filings-text moat sidecar (ticket #49, per the #46 decision).
+"""10-K filings-text moat sidecar.
 
 Fetch extracts the latest 10-K's Item 1 (Business — competition /
 competitive-strengths discussion) and Item 7 (MD&A) via edgartools item
@@ -11,7 +11,7 @@ The sidecar is *cited evidence for narration*, never a scoring input: the
 text is verbatim filing prose, whale-agnostic (any scorer's narration may
 cite it), and extraction failure must never fail the fetch. Failures are
 recorded as WARN findings — dicts of ``{severity, code, message}`` appended
-to the snapshot's ``validation`` list (created bare if absent; ticket #48
+to the snapshot's ``validation`` list (created bare if absent; the validation layer
 owns the full data-quality structure and this shape is designed to merge
 into it trivially).
 """
@@ -23,7 +23,7 @@ from datetime import date
 FORM = "10-K"
 
 # Items extracted, in sidecar order. Risk Factors deliberately excluded
-# (boilerplate-heavy; rejected in the #46 decision).
+# (boilerplate-heavy; rejected during design).
 ITEMS: list[tuple[str, str]] = [
     ("Item 1", "Business"),
     ("Item 7", "Management's Discussion and Analysis"),

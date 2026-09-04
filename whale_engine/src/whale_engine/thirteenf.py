@@ -2,7 +2,7 @@
 
 Standalone module — deliberately independent of the fundamentals fetch/snapshot
 pipeline so it can evolve separately. Parameterized by CIK so the full
-16-fund whale-holdings module (ticket #25) can reuse it verbatim:
+16-fund whale-holdings module can reuse it verbatim:
 
     uv run python -m whale_engine.thirteenf --cik 1067983 \
         --name "Berkshire Hathaway" --out ../portfolios/berkshire-13f.md

@@ -14,18 +14,18 @@ book value 5), with the decisions locked on the rubric ticket:
 - ratios from period-end EDGAR balances; ROIC = NOPAT(21% flat) / invested cap
 - ratio checks gate on None, not reference truthiness: an exact zero is data,
   not a gap — a debt-free filer (D/E 0.0) passes the debt check instead of
-  scoring 0 as "unavailable" like the reference (intentional deviation)
+  scoring 0 as "unavailable" like the upstream ai-hedge-fund heuristics (intentional deviation)
 
-Rubric v2 (ticket #40): the history-judging dimensions — consistency, moat,
+Rubric v2: the history-judging dimensions — consistency, moat,
 pricing power, book value, and the DCF growth derivation — read the snapshot's
-annual_periods (up to 10 fiscal years, ticket #38) so they measure the decade
+annual_periods (up to 10 fiscal years) so they measure the decade
 they were designed for instead of 2.5 years of seasonal quarterly steps.
 Present-state inputs — fundamentals, management, owner earnings — stay on the
 latest quarterly TTM, which is fresher than any fiscal-year figure. Snapshots
 without annual_periods (schema v1) hard-fail: refetch rather than silently
 diagnose from the shallow window. Every diagnosis carries rubric_version.
 
-Validation layer (ticket #48, per the #44 decision): diagnose runs the shared
+Validation layer (validation layer): diagnose runs the shared
 snapshot checks first — any ERROR finding hard-fails with its message (sector
 guard, market-cap bounds, sign/identity invariants); WARN findings ride the
 output in a top-level `data_quality` block the subagent must narrate. Share
@@ -34,7 +34,7 @@ filter — the NVDA bug); fiscal years an 8-K Item 4.02 declared non-reliable
 are excluded from the history dimensions. Rides rubric v2 by owner decision —
 no separate rubric_version bump.
 
-Rubric v3 (ticket #56, owner-signed): four judgment changes from the #55
+Rubric v3 (owner-signed): four judgment changes from the truth-in-scoring
 BLDR audit. B1 — trend checks (moat margin trend, pricing-power gross-margin
 trend) compare adjacent recent-vs-prior windows (3y each when history allows)
 instead of decade endpoints, and any trend award is capped at +1 when the
@@ -86,7 +86,7 @@ MIN_COMPLETE_PERIODS = 5
 # more history exclude themselves from the denominator as usual.
 MIN_COMPLETE_ANNUAL = 3
 
-# Which scored dimensions consume each snapshot field (ticket #55 A2): every
+# Which scored dimensions consume each snapshot field (truth-in-scoring): every
 # data_quality warning that names a field gains a dimensions_affected list so
 # a reader can see exactly which scores rest on degraded data. Split by the
 # array the dimension reads (rubric v2): present-state dimensions and the
@@ -201,7 +201,7 @@ def _ratio(num, den):
 
 
 def _trend_windows(values: list) -> tuple[float, float, int]:
-    """Adjacent recent-vs-prior window averages (rubric v3, ticket #56 B1).
+    """Adjacent recent-vs-prior window averages (rubric v3).
 
     Values are most-recent-first. Window width is 3 years when history allows,
     shrinking to len//2 for short histories so the windows never overlap —
@@ -214,14 +214,14 @@ def _trend_windows(values: list) -> tuple[float, float, int]:
 
 
 def _rolling_over(values: list) -> bool:
-    """Window averages can hide a fresh peak-and-decline (ticket #56 B1
+    """Window averages can hide a fresh peak-and-decline (rubric v3
     guard): true when the last two annual steps decline monotonically, which
     caps any trend award at +1 (values are most-recent-first)."""
     return len(values) >= 3 and values[0] < values[1] < values[2]
 
 
 def _gate_stale_present(periods: list, annual: list, flags: list) -> list:
-    """No point from a stale-flagged value (ticket #55 A2).
+    """No point from a stale-flagged value (truth-in-scoring).
 
     A TTM field in the present-state period whose stitched window ends beyond
     validation.STALE_WINDOW_DAYS before the period's own end describes an
@@ -263,7 +263,7 @@ def _gate_stale_present(periods: list, annual: list, flags: list) -> list:
 
 
 def recent_trajectory(periods: list) -> dict:
-    """Unscored recent-direction context (ticket #55 A5, per the #46/#47
+    """Unscored recent-direction context (truth-in-scoring, per the unscored-context
     cited-evidence pattern): the last four quarterly points, engine-computed,
     so narration can state when the present contradicts a decade-earned score.
     Every flow in the snapshot is a 12-month window, so ttm_net_income is a
@@ -344,7 +344,7 @@ def analyze_fundamentals(m: dict, flags: list) -> dict:
     elif dte is not None:
         details.append(f"Debt/equity {dte:.2f} >= 0.5 ✗ (+0)")
     elif lte is not None:
-        # Rubric v3 (ticket #56 B3): when no debt tag resolves, score total
+        # Rubric v3: when no debt tag resolves, score total
         # liabilities/equity against a ~2x looser bar — liabilities include
         # payables and deferred revenue, so 1.0 here approximates the 0.5 D/E
         # standard. The debt_unresolved WARN still rides data_quality.
@@ -386,7 +386,7 @@ def analyze_fundamentals(m: dict, flags: list) -> dict:
 
 def analyze_consistency(periods: list, flags: list) -> dict:
     details = []
-    # None-gated, not truthiness (ticket #55 A6): a true-zero year is data.
+    # None-gated, not truthiness (truth-in-scoring): a true-zero year is data.
     earnings = [
         p["ttm"]["net_income"] for p in periods if p["ttm"].get("net_income") is not None
     ]
@@ -571,7 +571,7 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
 
 
 def analyze_book_value(periods: list, flags: list) -> dict:
-    # None-gated equity (ticket #55 A6): a true-zero book value is data, not a
+    # None-gated equity (truth-in-scoring): a true-zero book value is data, not a
     # gap. Shares stay truthiness-gated — zero shares cannot denominate.
     usable, dropped = [], []
     for p in periods:
@@ -587,7 +587,7 @@ def analyze_book_value(periods: list, flags: list) -> dict:
             f"book_value: {len(dropped)} periods missing equity or share count "
             f"excluded ({', '.join(dropped)})"
         )
-    # Split-aware renormalization (ticket #48, replacing the majority-cohort
+    # Split-aware renormalization (replacing the majority-cohort
     # outlier filter that excluded NVDA's *correct* post-split years): jumps
     # consistent with a split rebase older counts onto the current share basis,
     # so BVPS is comparable across the whole decade; jumps no split explains
@@ -726,13 +726,13 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
     owner_earnings = earnings_data["owner_earnings"]
 
     # Growth from the 5 most recent fiscal years. Deliberate deviation from
-    # the reference, which fed 5 quarterly-spaced TTM windows (~1 year of real
+    # the upstream ai-hedge-fund heuristics, which fed 5 quarterly-spaced TTM windows (~1 year of real
     # span) into a formula that divides by len-1 "years" — understating any
     # steady grower's rate ~4x and amplifying seasonality into the sign.
     historical = [p["ttm"]["net_income"] for p in annual_periods[:5] if p["ttm"].get("net_income")]
     # Both endpoints must be positive: a negative ratio raised to 1/years is
     # complex (reference bug — it only guarded the oldest value).
-    # raw_growth_cagr rides the output (ticket #55 A7): the clamp to
+    # raw_growth_cagr rides the output (truth-in-scoring): the clamp to
     # [-5%, +15%] can sit far from reality (BLDR's actual 5y CAGR is -29%),
     # and calling the result "conservative" without stating the clamp misleads.
     raw_growth = None
@@ -744,7 +744,7 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
         growth = 0.03
 
     stage1_growth = min(growth, 0.08)
-    # Rubric v3 (ticket #56 B4): the half-and-cap was designed for positive
+    # Rubric v3: the half-and-cap was designed for positive
     # growth; halving a decline modeled unearned mean reversion. A declining
     # stage 1 carries its full rate through stage 2.
     stage2_growth = growth if growth < 0 else min(growth * 0.5, 0.04)
@@ -767,7 +767,7 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
 
     intrinsic = stage1_pv + stage2_pv + terminal_pv
     return {
-        "intrinsic_value": intrinsic * 0.85,  # reference's 15% conservatism haircut
+        "intrinsic_value": intrinsic * 0.85,  # upstream ai-hedge-fund 15% conservatism haircut
         "raw_intrinsic_value": intrinsic,
         "owner_earnings": owner_earnings,
         "owner_earnings_components": earnings_data,
@@ -810,7 +810,7 @@ def compute_confidence(score_pct: float, mos: float) -> int:
 
 def _affected_dimensions(dimensions: dict, dq_warnings: list, flags: list) -> list[str]:
     """Scored dimensions (plus valuation) fed by WARN-flagged or absent data
-    (rubric v3, ticket #56 B2). Sources: dimensions_affected on data_quality
+    (rubric v3). Sources: dimensions_affected on data_quality
     warnings, and engine flags that mark a missing/absent input or a stale
     value. Bookkeeping flags (split renormalization, denominator exclusions)
     are not data degradation and do not count."""
@@ -864,7 +864,7 @@ def diagnose(snapshot: dict) -> dict:
                 "years " + ", ".join(excluded_years)
             )
 
-    # No point from a stale-flagged value (ticket #55 A2): gate the
+    # No point from a stale-flagged value (truth-in-scoring): gate the
     # present-state period before any dimension reads it. The raw snapshot
     # periods stay untouched for the trajectory block below.
     raw_periods = periods
@@ -896,7 +896,7 @@ def diagnose(snapshot: dict) -> dict:
     market_cap = snapshot["market_cap"]
     mos = (valuation["intrinsic_value"] - market_cap) / market_cap
 
-    # Quality-aware confidence (rubric v3, ticket #56 B2): -5 per scored
+    # Quality-aware confidence (rubric v3): -5 per scored
     # dimension fed by WARN-flagged or absent data, floor 50.
     data_quality = _link_data_quality(validation.data_quality(findings, checks_run))
     affected = _affected_dimensions(dimensions, data_quality["warnings"], flags)
@@ -935,7 +935,7 @@ def diagnose(snapshot: dict) -> dict:
             "annual_periods": [p["period_end"] for p in annual],
         },
     }
-    # Unscored context (ticket #52): pass the whale-agnostic insider_activity
+    # Unscored context: pass the whale-agnostic insider_activity
     # section through verbatim so the subagent can cite it. Never scored;
     # absent from snapshots fetched before the section existed.
     if "insider_activity" in snapshot:

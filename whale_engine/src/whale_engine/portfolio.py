@@ -1,30 +1,30 @@
 """Offline portfolio layer: pinned snapshots -> one deterministic basket report.
 
-Ticket #85, implementing methodology v1 (#82) and report contract v1 (#83).
+Implements methodology v1 and report contract v1.
 
 What this layer is, and is not: the whales say which companies are worth
 owning; this layer says whether a basket the *client* chose actually spreads
 risk, and how much of each name to hold. Equal weight, no optimizer, no
-expected-return estimates (#23, DeMiguel/Garlappi/Uppal 2009). It never picks
+expected-return estimates (DeMiguel/Garlappi/Uppal 2009). It never picks
 or rejects a ticker, and the whales endorse neither the method nor the mix.
 
 Determinism contract, same as every scorer: pure function of the pinned
 snapshots handed in — no network, no clock, no randomness. `whale prices` owns
-freshness (the weekly gate, #83 §7); this module owns arithmetic. A report
+freshness (the weekly gate, report contract v1 §7); this module owns arithmetic. A report
 therefore always says which snapshot vintages it read, and re-running it
 against those same files reproduces the bytes forever, whatever day it is.
 
 Locked numbers (methodology v1 — changing any of them requires an owner-signed
-review, precedent #40, and a version bump):
+review, the rubric-v2 precedent, and a version bump):
 
-- weekly log returns from `5. adjusted close`, 3-year lookback (#82 §1)
-- Pearson correlation, "same bet" flag at >= 0.80 (#82 §2)
-- EDGAR SIC 2-digit major groups, concentration flag above 40% of names (#82 §3)
+- weekly log returns from `5. adjusted close`, 3-year lookback (methodology v1 §1)
+- Pearson correlation, "same bet" flag at >= 0.80 (methodology v1 §2)
+- EDGAR SIC 2-digit major groups, concentration flag above 40% of names (methodology v1 §3)
 - 52-week floor; below it a name is weighted normally, its pairs are null, and
-  a first-class warning names it (#82 §4, #83 §4)
-- basket of 2-15 tickers inclusive; outside that, hard fail (#82 §5)
+  a first-class warning names it (methodology v1 §4, report contract v1 §4)
+- basket of 2-15 tickers inclusive; outside that, hard fail (methodology v1 §5)
 
-Sector source per name (#94): the full EDGAR snapshot when one exists, else
+Sector source per name: the full EDGAR snapshot when one exists, else
 the sector-only snapshot in `snapshots/sectors/` — the same SIC field, fetched
 alone, for a name too young for the fundamentals depth `whale fetch` demands.
 `provenance.edgar_snapshots[].source` records which. Without that route a
@@ -63,9 +63,9 @@ SECTOR_CONCENTRATION_THRESHOLD = 0.40
 RHO_DECIMALS = 4
 SHARE_DECIMALS = 4
 
-# The #23 honesty mandate, pinned verbatim (#83 §3): the skill reproduces this
+# The honesty mandate, pinned verbatim (report contract v1 §3): the skill reproduces this
 # string word for word and may not soften, shorten or paraphrase it. Wording
-# versions with the methodology; owner review is ticket #86.
+# versions with the methodology; owner review covers the wording.
 RESIDUAL_RISK_CAVEAT = (
     "Equal weighting and low pairwise correlation spread company-specific risk. "
     "They do not remove market risk: in a broad decline these positions can fall "
@@ -184,7 +184,7 @@ def _correlation_block(
 ) -> dict:
     closes = {ticker: _weekly_closes(price_snapshots[ticker]) for ticker in basket}
 
-    # One window for the whole report (#83 §4: same window, or null — never a
+    # One window for the whole report (report contract v1 §4: same window, or null — never a
     # per-name shortening). It ends at the newest week *every* snapshot reaches,
     # so a basket priced across two fetch days still compares like with like.
     end_week = min(max(weeks) for weeks in closes.values())
@@ -345,7 +345,7 @@ def build_report(
     price_snapshots: dict[str, dict],
     edgar_snapshots: dict[str, dict],
 ) -> dict:
-    """Pinned snapshots -> the portfolio report of contract v1 (#83).
+    """Pinned snapshots -> the portfolio report of contract v1.
 
     `price_snapshots` and `edgar_snapshots` must cover every basket ticker; a
     missing one is the caller's hard failure, not a degraded report.
@@ -390,7 +390,7 @@ def build_report(
                 }
                 for t in basket
             ],
-            # `source` (#94) says which artifact the SIC came from: a full
+            # `source` says which artifact the SIC came from: a full
             # `whale fetch` snapshot, or the sector-only lookup a name too
             # young for one gets. The code itself is the same EDGAR
             # submissions field either way — the field records that a
@@ -421,13 +421,13 @@ def latest_edgar_snapshot_path(ticker: str, snapshots_dir: Path) -> Path | None:
 
 
 def latest_sector_snapshot_path(ticker: str, sectors_dir: Path) -> Path | None:
-    """Newest sector-only snapshot for `ticker`, or None (#94)."""
+    """Newest sector-only snapshot for `ticker`, or None."""
     candidates = sorted(Path(sectors_dir).glob(f"{ticker.upper()}-*.json"))
     return candidates[-1] if candidates else None
 
 
 def load_sector_snapshot(path: Path) -> dict:
-    """Read a sector-only snapshot, hard-failing on anything else (#94).
+    """Read a sector-only snapshot, hard-failing on anything else.
 
     The checks exist because this file sits one directory away from the real
     snapshots: a stray copy in either direction must say so, not be scored or
@@ -458,7 +458,7 @@ def load_basket_snapshots(
     """Load the pinned price and EDGAR snapshots a basket needs, or hard-fail.
 
     Sector source per ticker: the full snapshot when one exists, else the
-    sector-only snapshot (#94). Full always wins — it is the same SIC field
+    sector-only snapshot. Full always wins — it is the same SIC field
     plus everything else, so a name that has been properly fetched never
     silently reads from the lightweight file.
     """

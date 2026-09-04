@@ -4,21 +4,21 @@ The snapshot is the only artifact `diagnose` ever reads. Everything fetched is
 recorded verbatim with the XBRL tag it came from, so any number in a diagnosis
 can be traced back to a filing.
 
-Market cap (issue #45 decision): derived as Cboe delayed close x the freshest
+Market cap (market-cap sourcing decision): derived as Cboe delayed close x the freshest
 *filed* EDGAR share count (freshest across dei cover page, filing cover sums,
-us-gaap counts, and the weighted-average proxy — #77) — never sourced from
+us-gaap counts, and the weighted-average proxy) — never sourced from
 yfinance. A Cboe miss or a stale quote (last trade > QUOTE_STALENESS_DAYS
 calendar days) is a hard FetchError; the only alternative path is the explicit
 --market-cap manual override (provenance "manual:owner-supplied"). yfinance is
 an optional cross-check witness: if importable it contributes a
 market_cap_check block, if not the snapshot carries a WARN entry — its absence
 is never load-bearing, but when it IS present and disagrees past
-validation.MARKET_CAP_WITNESS_TOLERANCE the fetch hard-fails (#77): a
+validation.MARKET_CAP_WITNESS_TOLERANCE the fetch hard-fails: a
 disagreement that wide means the derived share basis is corrupt. The fetched
 price + quote timestamp are pinned in the snapshot (price_reference) like all
 other raw data, so diagnose stays deterministic.
 
-Sign conventions follow the reference implementation (financialdatasets style):
+Sign conventions follow the upstream ai-hedge-fund heuristics (financialdatasets style):
 - capital_expenditure: negative = cash out
 - dividends_and_other_cash_distributions: negative = paid
 - issuance_or_purchase_of_equity_shares: issuance proceeds minus repurchase
@@ -96,7 +96,7 @@ BALANCE_TAGS: dict[str, list[str]] = {
     ],
     # Ordered specific-first; the later entries carry filers that retired the
     # plain debt tags (BLDR files only LongTermDebtAndCapitalLeaseObligations
-    # since 2016 — ticket #55 F3). A tag only wins when it has a value at the
+    # since 2016 — truth-in-scoring). A tag only wins when it has a value at the
     # period end, so era-appropriate tags resolve per fiscal year.
     "long_term_debt": [
         "LongTermDebtNoncurrent",
@@ -162,7 +162,7 @@ SHARES_MISMATCH_FACTOR = 1.4
 _ANNUAL_DAYS = (350, 380)
 _END_MATCH_DAYS = 5
 
-# --- market cap: Cboe delayed quote (issue #45) ----------------------------
+# --- market cap: Cboe delayed quote ----------------------------
 # First-party keyless CDN endpoint backing Cboe's own quote pages. One JSON
 # GET, ~4 fields used; unknown tickers return HTTP 403.
 CBOE_QUOTE_URL = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{ticker}.json"
@@ -171,7 +171,7 @@ CBOE_QUOTE_URL = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{ticker}
 QUOTE_STALENESS_DAYS = 5
 MARKET_CAP_MANUAL_SOURCE = "manual:owner-supplied"
 
-# --- 8-K Item 4.02 restatement guard (validation check 7, ticket #48) ------
+# --- 8-K Item 4.02 restatement guard (validation check 7) ------
 # A 4.02 8-K declares previously issued financial statements non-reliable.
 # Which fiscal years it covers is stated in prose, not metadata, so without
 # parsing the filing text we conservatively treat the fiscal years ending in
@@ -181,7 +181,7 @@ RESTATEMENT_ITEM = "4.02"
 RESTATEMENT_WINDOW_YEARS = 10
 RESTATEMENT_AFFECTED_YEARS = 3
 
-# --- sector-only snapshot (ticket #94) -------------------------------------
+# --- sector-only snapshot -------------------------------------
 # A separate, deliberately tiny artifact carrying the one EDGAR field the
 # portfolio layer needs. It is never a snapshot: `kind` marks it, it lives in
 # its own directory, and no scorer may read it. See fetch_sector_snapshot.
@@ -216,8 +216,8 @@ def _edgartools_version() -> str:
 def _company_sic(company) -> tuple[str | None, str | None, dict | None]:
     """EDGAR submissions SIC code + description: (sic, sic_description, warning).
 
-    Additive field for the portfolio layer's sector check (ticket #84, per
-    methodology #82, which groups by 2-digit SIC major group). No scorer reads
+    Additive field for the portfolio layer's sector check (per the
+    portfolio methodology, which groups by 2-digit SIC major group). No scorer reads
     it, so an absent or unusable code is a WARN finding, never a failed fetch —
     the sector rule downstream decides what to do without one.
     """
@@ -488,7 +488,7 @@ def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dic
 
     Witness absence is never load-bearing: any failure appends a WARN entry
     and returns None. When the witness IS available, the caller gates on the
-    recorded deviation (#77), and validation re-checks it offline on every
+    recorded deviation, and validation re-checks it offline on every
     stored snapshot.
     """
     try:
@@ -517,7 +517,7 @@ def _yfinance_crosscheck(ticker: str, derived_cap: float, warnings: list) -> dic
 def _gate_market_cap_witness(
     ticker: str, market_cap: float, market_cap_source: str, check: dict | None
 ) -> None:
-    """Witness gate (#77): refuse a derived cap the yfinance witness contradicts.
+    """Witness gate: refuse a derived cap the yfinance witness contradicts.
 
     A deviation past MARKET_CAP_WITNESS_TOLERANCE means the filed share basis
     is corrupt (e.g. a pre-split dei fact). No check (witness unreachable) is
@@ -666,7 +666,7 @@ def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
     return None
 
 
-# Value keys are renamed before the snapshot is written (reference naming);
+# Value keys are renamed before the snapshot is written (upstream ai-hedge-fund naming);
 # tags_used provenance must follow, or a field->provenance join silently
 # reports the renamed fields as unattributed (audit b-6, validation check 5a).
 _TAG_RENAMES = {"dividends_paid": "dividends_and_other_cash_distributions"}
@@ -798,7 +798,7 @@ def _freshest_share_count(
     instant wins; source order above breaks date ties, so the dei cover page
     still leads whenever it is current. Strict source priority is what let a
     2010 dei fact (pre-split) outrank a current proxy count and poison MA's
-    market cap by −86% (#77). Hard-fail if no source exists — market cap
+    market cap by −86% on a real MA fetch. Hard-fail if no source exists — market cap
     needs a share count.
     """
     candidates: list[tuple[date, int, float, str]] = []
@@ -968,7 +968,7 @@ def _fetch_annual_periods(
                     period_start = start
                 break
 
-        # Net issuance/buyback per reference convention (negative = buyback).
+        # Net issuance/buyback per the upstream ai-hedge-fund convention (negative = buyback).
         issuance = ttm.pop("share_issuance", None)
         repurchase = ttm.pop("share_repurchase", None)  # already negated
         if issuance is None and repurchase is None:
@@ -1066,7 +1066,7 @@ def fetch_snapshot(
             if m is None:
                 ttm[field] = None
                 continue
-            # Freshness gate on multi-leg combines (ticket #55 A1): a combine
+            # Freshness gate on multi-leg combines (truth-in-scoring): a combine
             # sums legs fetched independently, so one abandoned tag (BLDR's
             # share-issuance, last window 2015) silently pollutes the sum with
             # a decade-stale value. net_income anchors window_end and is first
@@ -1100,7 +1100,7 @@ def fetch_snapshot(
         if window_end is None:
             raise FetchError(f"{ticker} {q}: net income TTM vanished mid-fetch.")
 
-        # Net issuance/buyback per reference convention (negative = buyback).
+        # Net issuance/buyback per the upstream ai-hedge-fund convention (negative = buyback).
         issuance = ttm.pop("share_issuance", None)
         repurchase = ttm.pop("share_repurchase", None)  # already negated
         if issuance is None and repurchase is None:
@@ -1126,7 +1126,7 @@ def fetch_snapshot(
                 # Labeled from the actual window end, not the requested
                 # calendar quarter: edgartools clamps a not-yet-filed quarter
                 # to the latest available window, so the requested q can run
-                # up to two quarters ahead of the data it returns (ticket #55
+                # up to two quarters ahead of the data it returns (truth-in-scoring
                 # F4 — BLDR's 2026-03-31 window labeled "2026-Q3").
                 "as_of_quarter": f"{window_end.year}-Q{(window_end.month - 1) // 3 + 1}",
                 "period_end": window_end.isoformat(),
@@ -1183,7 +1183,7 @@ def fetch_snapshot(
         if (missing_shares or missing_shares_annual) and cover_rows:
             # Sanity-check the raw multi-class sum against EDGAR's own
             # weighted-average-basic count (as-converted, so ~1x for sane
-            # sums) — yfinance is retired from this path (#45).
+            # sums) — yfinance is retired from this path.
             latest = max(cover_rows, key=lambda r: r[0])
             reference = reference_source = ratio = None
             if shares_proxy_history is not None:
@@ -1243,7 +1243,7 @@ def fetch_snapshot(
                         f"(sum of {classes_by_instant[hit[1]]} classes)"
                     )
 
-    # Market cap (#45): manual override, else Cboe delayed close x freshest
+    # Market cap: manual override, else Cboe delayed close x freshest
     # filed EDGAR share count. Cboe miss / stale quote = hard FetchError.
     price_reference = None
     market_cap_check = None
@@ -1265,7 +1265,7 @@ def fetch_snapshot(
         )
         market_data_source = "cboe:delayed_quotes (keyless CDN, delayed close)"
         # Pin the raw price like every other fetched number, so the derived
-        # cap is fully re-derivable and validation (#48) can bound-check it.
+        # cap is fully re-derivable and validation can bound-check it.
         price_reference = {
             "source": "cboe:delayed_quotes",
             "price": price,
@@ -1277,7 +1277,7 @@ def fetch_snapshot(
         market_cap_check = _yfinance_crosscheck(ticker, market_cap, warnings)
         _gate_market_cap_witness(ticker, market_cap, market_cap_source, market_cap_check)
 
-    # Filings-text moat sidecar (ticket #49): cited narration evidence, never
+    # Filings-text moat sidecar: cited narration evidence, never
     # a scoring input. Extraction failure must not fail the fetch — it lands
     # as a WARN finding on the snapshot instead.
     from .filings_text import extract_filings_text
@@ -1286,10 +1286,10 @@ def fetch_snapshot(
 
     import edgar as _edgar_mod
 
-    # Additive sector fields (#84): EDGAR submissions SIC, for the portfolio
+    # Additive sector fields: EDGAR submissions SIC, for the portfolio
     # layer's 2-digit major-group concentration check. Never scored, so no
-    # schema_version bump — a pre-#84 snapshot is still a valid v2 and is
-    # distinguishable by the keys being absent entirely, where a post-#84
+    # schema_version bump — a pre-SIC snapshot is still a valid v2 and is
+    # distinguishable by the keys being absent entirely, where a post-SIC
     # snapshot with no SIC carries them as null plus a sic_unavailable WARN.
     sic, sic_description, sic_warning = _company_sic(company)
     if sic_warning is not None:
@@ -1321,7 +1321,7 @@ def fetch_snapshot(
         # sidecar file next to the snapshot, and records "path".
         snapshot["filings_sidecar"] = filings_sidecar
 
-    # Form 4 insider buy-cluster context (ticket #52, per #47): whale-agnostic
+    # Form 4 insider buy-cluster context: whale-agnostic
     # unscored section. Fetch failure = WARN in the validation findings, never
     # a failed fetch; section omitted on failure so "no cluster" stays
     # distinguishable from "not checked".
@@ -1331,8 +1331,8 @@ def fetch_snapshot(
     if insider_section is not None:
         snapshot["insider_activity"] = insider_section
 
-    # Fetch-only findings from the sidecar (#49), market-cap cross-check (#50)
-    # and Form 4 (#52) paths merge into the validation section (#48); their
+    # Fetch-only findings from the sidecar, market-cap cross-check
+    # and Form 4 paths merge into the validation section; their
     # codes are registered in validation.FETCH_ONLY_CODES so diagnoses carry
     # them forward from stored snapshots.
     extra_findings = list(filings_warnings) + list(warnings)
@@ -1345,19 +1345,19 @@ def fetch_snapshot(
 def fetch_sector_snapshot(ticker: str, today: date | None = None) -> dict:
     """EDGAR submissions -> a sector-only snapshot: the SIC code, nothing else.
 
-    Ticket #94. The portfolio layer reads exactly one EDGAR field — the SIC
-    code, for the 2-digit major-group concentration check (#82 §3) — but the
+   The portfolio layer reads exactly one EDGAR field — the SIC
+    code, for the 2-digit major-group concentration check (methodology v1 §3) — but the
     only route to a snapshot was `fetch`, which hard-fails any company without
     N_PERIODS distinct TTM windows. A recent IPO in a client's basket
     therefore killed the entire report with an error about fundamentals depth
     (a whale-scoring concern the portfolio layer never asked about), and the
-    insufficient-history path designed in #82/#83 could not fire on any real
+    insufficient-history path designed in methodology v1 could not fire on any real
     young name.
 
     This is a separate artifact, not a degraded snapshot: it carries `kind`
     SECTOR_SNAPSHOT_KIND, is written to its own directory (snapshots/sectors/,
     beside snapshots/prices/), and no scorer ever reads it. Whale scoring, the
-    fetch depth requirement, and the 10-TTM-window rule are untouched (#40).
+    fetch depth requirement, and the 10-TTM-window rule are untouched (rubric-v2 precedent).
 
     An absent or unusable SIC stays a WARN rather than a failure, exactly as
     on a full fetch, so the portfolio layer's `sector_unavailable` path
@@ -1400,7 +1400,7 @@ def fetch_sector_snapshot(ticker: str, today: date | None = None) -> dict:
 def _attach_validation(
     snapshot: dict, company, today: date, extra_findings: list[dict] | None = None
 ) -> None:
-    """Write the snapshot's validation section (ticket #48).
+    """Write the snapshot's validation section.
 
     The pure checks over the snapshot, plus the fetch-only 8-K 4.02
     restatement guard. INFO findings live here only; diagnose recomputes the

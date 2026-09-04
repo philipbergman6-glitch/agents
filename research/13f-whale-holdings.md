@@ -1,6 +1,6 @@
 # 13F whale-holdings module — feasibility research
 
-Resolves [#22](https://github.com/philipbergman6-glitch/agents/issues/22). All facts below verified directly against SEC EDGAR on 2026-07-25 (company search + `data.sec.gov/submissions` JSON + a live edgartools parse). No numbers estimated.
+All facts below verified directly against SEC EDGAR on 2026-07-25 (company search + `data.sec.gov/submissions` JSON + a live edgartools parse). No numbers estimated.
 
 ## Verdict
 
@@ -8,7 +8,7 @@ Resolves [#22](https://github.com/philipbergman6-glitch/agents/issues/22). All f
 
 ## Confirmed roster (CIK registry)
 
-| Fund (owner's name) | EDGAR filer | CIK | Latest 13F-HR |
+| Fund (manager's name) | EDGAR filer | CIK | Latest 13F-HR |
 |---|---|---|---|
 | Berkshire Hathaway | BERKSHIRE HATHAWAY INC | 1067983 | 2026-05-15 (Q1 2026) |
 | Pershing Square | Pershing Square Capital Management, L.P. | 1336528 | 2026-05-15 (Q1 2026) |
@@ -33,7 +33,7 @@ Resolves [#22](https://github.com/philipbergman6-glitch/agents/issues/22). All f
 - **Omega Advisors Inc. (CIK 898202) stopped filing after Q4 2018** (family-office conversion). Cooperman files personally as COOPERMAN LEON G (CIK 898382), current through Q1 2026 — use that CIK.
 - **Icahn:** five stale Icahn entities on EDGAR; the live filer is the individual CIK 921669.
 - **Appaloosa:** APPALOOSA MANAGEMENT LP (1006438) stopped 2015; Appaloosa LP (1656456) is the live filer.
-- **Giverny is ambiguous in the wild but not on EDGAR:** only Rochon's Giverny Capital Inc. (Montreal) actively files. Poppe's Giverny Capital Asset Management renamed to 11 Capital Partners LP (CIK 1801172, also active) — if the owner meant Poppe, swap/add that CIK.
+- **Giverny is ambiguous in the wild but not on EDGAR:** only Rochon's Giverny Capital Inc. (Montreal) actively files. Poppe's Giverny Capital Asset Management renamed to 11 Capital Partners LP (CIK 1801172, also active) — to track Poppe instead, swap/add that CIK.
 - **Dual active filers to watch for double-counting:** PERSHING SQUARE INC. (2026053, new entity, files since 2025) alongside the LP; FUNDSMITH INVESTMENT SERVICES LTD. (1868537) alongside Fundsmith LLP. Roster tracks the flagship (LP / LLP); implementation should note the sibling CIKs, not sum them.
 - UK-based Fundsmith and Lindsell Train **do** file 13F-HRs (verified above) — US-listed holdings only, as expected.
 

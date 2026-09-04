@@ -1,4 +1,4 @@
-"""Additive SIC fields on the EDGAR snapshot (ticket #84, per methodology #82).
+"""Additive SIC fields on the EDGAR snapshot (per methodology v1).
 
 The portfolio layer groups a basket by 2-digit SIC major group; the source is
 the EDGAR submissions API (already behind edgartools' Company.sic /

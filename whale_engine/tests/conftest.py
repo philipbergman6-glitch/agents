@@ -10,7 +10,7 @@ GOLDEN_GRAHAM = GOLDEN / "graham"
 GOLDEN_LYNCH = GOLDEN / "lynch"
 GOLDEN_PORTFOLIO = GOLDEN / "portfolio"
 
-# The portfolio layer needs price snapshots and the SIC fields (#84), so its
+# The portfolio layer needs price snapshots and the SIC fields, so its
 # goldens read a later, explicitly pinned snapshot date than the scorers'.
 PORTFOLIO_SNAPSHOT_DATE = "2026-08-04"
 
@@ -43,7 +43,7 @@ def load_portfolio_inputs(basket: list[str]) -> tuple[dict, dict]:
         )
         for ticker in basket
     }
-    # Sector source per name, full snapshot first (#94): a name too young for
+    # Sector source per name, full snapshot first: a name too young for
     # the fundamentals depth a full fetch needs has only the sector-only file.
     edgar = {}
     for ticker in basket:

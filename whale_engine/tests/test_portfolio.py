@@ -1,4 +1,4 @@
-"""Unit tests for the portfolio layer (ticket #85, methodology #82, contract #83).
+"""Unit tests for the portfolio layer (methodology v1, report contract v1).
 
 Every number the report publishes is either pinned by those two tickets or is
 arithmetic over synthetic series built here, so a rule change fails loudly
@@ -66,7 +66,7 @@ def report(price_map, edgar_map=None, tickers=None):
     return build_report(tickers, price_map, edgar_map)
 
 
-# --- basket rules (#82 §5) ---------------------------------------------------
+# --- basket rules (methodology v1 §5) ---------------------------------------------------
 
 
 @pytest.mark.parametrize("tickers", [["V"], list("ABCDEFGHIJKLMNOP")])
@@ -90,7 +90,7 @@ def test_equal_weights_are_exactly_one_over_n():
     assert sum(b["weight"] for b in result["basket"]) == 1.0
 
 
-# --- correlation (#82 §1-2, #83 §1) ------------------------------------------
+# --- correlation (methodology v1 §1-2, report contract v1 §1) ------------------------------------------
 
 
 def test_identical_return_series_correlate_at_one_and_flag_as_the_same_bet():
@@ -164,7 +164,7 @@ def test_zero_variance_series_reports_null_with_a_warning_never_a_crash():
     assert [w["code"] for w in result["warnings"]] == ["zero_variance"]
 
 
-# --- short history (#82 §4, #83 §4) ------------------------------------------
+# --- short history (methodology v1 §4, report contract v1 §4) ------------------------------------------
 
 
 def test_short_history_name_is_weighted_normally_with_null_pairs_and_a_warning():
@@ -217,7 +217,7 @@ def test_window_observations_count_only_weeks_every_measured_name_has():
     assert result["correlation"]["window"]["observations"] == 79
 
 
-# --- sectors (#82 §3, #83 §5) ------------------------------------------------
+# --- sectors (methodology v1 §3, report contract v1 §5) ------------------------------------------------
 
 
 def test_sector_groups_use_the_two_digit_major_group_with_its_published_title():
@@ -258,14 +258,14 @@ def test_missing_sic_is_a_warned_gap_that_never_counts_as_concentration():
 def test_pre_sic_snapshot_is_told_apart_from_edgar_having_no_sic():
     tickers = ["A", "B"]
     prices = {t: price_snapshot(t, wiggle(200, phase=i)) for i, t in enumerate(tickers)}
-    old = {"ticker": "B", "fetched_at": "2026-07-01"}  # pre-#84: keys absent entirely
+    old = {"ticker": "B", "fetched_at": "2026-07-01"}  # pre-SIC fields: keys absent entirely
     result = report(prices, {"A": edgar_snapshot("A"), "B": old})
     codes = {w["code"] for w in result["warnings"]}
     assert codes == {"sic_field_absent"}
     assert "refetch" in next(w for w in result["warnings"])["message"]
 
 
-# --- contract shape, provenance, caveat (#83 §3, §6) -------------------------
+# --- contract shape, provenance, caveat (report contract v1 §3, §6) -------------------------
 
 
 def test_report_carries_the_methodology_version_and_the_verbatim_caveat():

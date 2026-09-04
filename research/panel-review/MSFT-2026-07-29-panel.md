@@ -1,6 +1,6 @@
 # Panel review sample — MSFT, snapshot 2026-07-29
 
-Produced for judgment-review ticket #74 (map #71) by the `/panel` skill: fresh fetch → buffett/graham/lynch fanned out in parallel → synthesis per the #72 contract. Coverage role: chosen as the broad-agreement case — the panel run showed a genuine three-way split instead (see synthesis).
+Produced during the panel judgment review by the `/panel` skill: fresh fetch → buffett/graham/lynch fanned out in parallel → synthesis. Coverage role: chosen as the broad-agreement case — the panel run showed a genuine three-way split instead (see synthesis).
 
 ---
 

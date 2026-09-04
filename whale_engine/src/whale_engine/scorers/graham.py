@@ -2,17 +2,17 @@
 
 Three dimensions, adapted from the upstream Graham heuristics (see README "Provenance") (max 16 =
 earnings stability 4 + financial strength 5 + Graham valuation 7 — the true
-sum; the reference hardcodes 15), with the decisions locked on the rubric
+sum; the upstream ai-hedge-fund heuristics hardcode 15), with the decisions locked on the rubric
 ticket:
 
 - EPS is derived per period as net_income / outstanding_shares (snapshots
   carry no per-share fields); periods are most-recent-first and the endpoint
-  growth check is explicit latest > oldest (the reference never pins ordering)
+  growth check is explicit latest > oldest (the upstream ai-hedge-fund heuristics never pin ordering)
 - signal: bullish if score >= 70%, bearish if <= 30%, else neutral; no
   separate MoS gate on the bullish side — bullish needs >= 11.2/16 and the
   non-valuation dimensions max at 9, so a real valuation discount is
   arithmetically required
-- deep-overprice override (judgment-review tuning, ticket #31): MoS <= -0.50
+- deep-overprice override (judgment-review tuning): MoS <= -0.50
   vs the Graham Number forces bearish regardless of quality points — bearish
   means "don't buy at today's price", and price alone must be able to say it;
   quality-driven neutral at 9x Graham Number is not a Graham read
@@ -22,16 +22,16 @@ ticket:
 - missing data: mandatory inputs hard-fail unless present in >= 5 periods;
   dividends are optional (absent -> 0 + flag); per-ratio gaps score 0 with a
   flag; ratio checks gate on None, never truthiness — an exact zero is data,
-  not a gap (the reference truthiness-gates, an intentional fix)
+  not a gap (the upstream ai-hedge-fund heuristics truthiness-gate, an intentional fix)
 - Graham Number unavailable because EPS/BVPS <= 0 is a legitimate 0 (Graham
   walks away), detail line only — flags are reserved for missing inputs
 - fixed denominator 16: the hard-fail gate keeps all three dimensions
   scorable, so there is no exclusion/renormalization machinery
-- the shared split-aware share renormalization (ticket #48, replacing the
+- the shared split-aware share renormalization (replacing the
   3x-median outlier guard) protects the per-period EPS series: split-shaped
   jumps rebase older counts onto the current basis, unexplained jumps exclude
   the older segment with a flag
-- validation layer (ticket #48): shared snapshot checks run first over the
+- validation layer: shared snapshot checks run first over the
   quarterly array only (Graham ignores annual_periods by contract); ERROR
   findings hard-fail, WARN findings ride the output in `data_quality`
 
@@ -53,7 +53,7 @@ BEARISH_SCORE = 0.30
 MAX_BOUNDARY_DIST = 0.30
 DEEP_OVERPRICE_MOS = -0.50
 
-# Which scored dimensions consume each snapshot field (ticket #55 A2 parity
+# Which scored dimensions consume each snapshot field (truth-in-scoring parity
 # with the Buffett scorer): data_quality warnings gain a dimensions_affected
 # list. Graham reads the quarterly array only.
 _FIELD_DIMENSIONS = {
@@ -139,7 +139,7 @@ def eps_series(periods: list, flags: list) -> list[float]:
 
     Cover-page share facts lag one quarter, so a split between filings leaves
     one period on the pre-split count — off by the split ratio, not by drift.
-    The shared renormalization (ticket #48) rebases split-shaped jumps onto
+    The shared renormalization rebases split-shaped jumps onto
     the current share basis (repairing the lagged period instead of dropping
     it); jumps no split factor explains exclude the older segment with a flag.
     """
@@ -372,7 +372,7 @@ def diagnose(snapshot: dict) -> dict:
     market_cap = snapshot["market_cap"]
     flags: list[str] = []
 
-    # 8-K Item 4.02 restatement guard (ticket #55 A9, parity with the Buffett
+    # 8-K Item 4.02 restatement guard (truth-in-scoring, parity with the Buffett
     # scorer): the snapshot already carries the fetch-time finding; Graham
     # scores quarterly TTM windows, so every window ending inside or before
     # the latest restated fiscal year rests on non-reliable statements and is
@@ -440,7 +440,7 @@ def diagnose(snapshot: dict) -> dict:
             "periods": [p["period_end"] for p in periods],
         },
     }
-    # Unscored context (ticket #52): the insider_activity snapshot section is
+    # Unscored context: the insider_activity snapshot section is
     # whale-agnostic; pass it through verbatim when present so any whale's
     # subagent can cite it. Never scored.
     if "insider_activity" in snapshot:

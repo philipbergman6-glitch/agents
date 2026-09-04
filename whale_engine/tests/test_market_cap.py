@@ -1,4 +1,4 @@
-"""Unit tests for Cboe-derived market cap (issue #45 / ticket #50). Offline:
+"""Unit tests for Cboe-derived market cap (market-cap sourcing). Offline:
 the Cboe network seam (_cboe_get_json) is monkeypatched with the real response
 shape observed live 2026-07-28.
 """
@@ -182,7 +182,7 @@ def test_freshest_share_count_fresher_gaap_beats_dei():
 
 
 def test_freshest_share_count_stale_dei_loses_to_current_proxy():
-    # The #77 shape: MA's dei companyfacts history topped out at a 2010
+    # The MA witness-gate shape: MA's dei companyfacts history topped out at a 2010
     # pre-split fact while the weighted-average proxy was current.
     dei = _history([("2010-10-27", 122_530_193.0, "2010-11-02")])
     proxy = _history([])
@@ -256,7 +256,7 @@ def test_crosscheck_available_records_deviation(monkeypatch):
     assert check["deviation_pct"] == pytest.approx((3.6e11 - 3.5e11) / 3.5e11 * 100)
 
 
-# --- witness gate (#77) -----------------------------------------------------
+# --- witness gate -----------------------------------------------------
 
 
 def test_witness_gate_hard_fails_past_tolerance():
