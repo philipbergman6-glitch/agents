@@ -1,6 +1,6 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
-Faithful port of the six dimensions in reference/warren_buffett.py (max 27 =
+Six dimensions, adapted from the upstream Buffett heuristics (see README "Provenance") (max 27 =
 fundamentals 7 + consistency 3 + moat 5 + management 2 + pricing power 5 +
 book value 5), with the decisions locked on the rubric ticket:
 

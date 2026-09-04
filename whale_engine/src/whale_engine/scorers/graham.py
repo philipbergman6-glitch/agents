@@ -1,6 +1,6 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
-Faithful port of the three dimensions in reference/ben_graham.py (max 16 =
+Three dimensions, adapted from the upstream Graham heuristics (see README "Provenance") (max 16 =
 earnings stability 4 + financial strength 5 + Graham valuation 7 — the true
 sum; the reference hardcodes 15), with the decisions locked on the rubric
 ticket:

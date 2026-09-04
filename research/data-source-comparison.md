@@ -1,6 +1,6 @@
 # Financial data source comparison
 
-Asset for wayfinder ticket [Compare financial data sources](https://github.com/philipbergman6-glitch/agents/issues/3), researched 2026-07-24 via three parallel research agents (web + live API/library tests). Full requirement, from `reference/warren_buffett.py`: per ticker, **10 TTM periods** of ratios (ROE, ROIC, debt/equity, operating margin, gross margin, current ratio), ~12 raw line items (net income, revenue, FCF, capex, D&A, equity, assets/liabilities, shares, dividends, buybacks), and market cap as of a date.
+Asset for wayfinder ticket [Compare financial data sources](https://github.com/philipbergman6-glitch/agents/issues/3), researched 2026-07-24 via three parallel research agents (web + live API/library tests). Full requirement, from the Buffett rubric: per ticker, **10 TTM periods** of ratios (ROE, ROIC, debt/equity, operating margin, gross margin, current ratio), ~12 raw line items (net income, revenue, FCF, capex, D&A, equity, assets/liabilities, shares, dividends, buybacks), and market cap as of a date.
 
 ## Verdict table
 

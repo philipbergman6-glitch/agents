@@ -56,8 +56,17 @@ uv run pytest                        # run the engine's tests
   - `tests/` — engine tests
 - `.claude/agents/` — the personas: how each whale talks and what it may/may not do
 - `.claude/skills/` — the `/buffett`, `/graham`, `/lynch`, `/panel` commands
-- `reference/` — source material the personas were distilled from
 - `portfolios/` — real holdings data (e.g. Berkshire's 13F) for context
+
+## Provenance
+
+The per-whale scoring rubrics (which ratios, which thresholds, how many
+points) are adapted from the analyst heuristics in the open-source
+[ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) project (MIT).
+Everything else — the deterministic engine, hard-fail missing-data semantics,
+versioned rubrics, golden-file tests, and the panel orchestration — is original
+to this repo. Comments that mention "the reference" compare against those
+upstream heuristics.
 
 ## Ground rules
 

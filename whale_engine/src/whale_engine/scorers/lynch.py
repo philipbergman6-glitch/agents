@@ -1,7 +1,7 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
 Peter Lynch GARP rubric v2 (max 15 = growth 6 + valuation 5 + fundamentals 4),
-ported from reference/peter_lynch.py with the decisions locked on the rubric
+adapted from the upstream Lynch heuristics (see README "Provenance") with the decisions locked on the rubric
 ticket (#64, from the #63 owner grilling):
 
 - sentiment and insider factors dropped (no snapshot data source); the three

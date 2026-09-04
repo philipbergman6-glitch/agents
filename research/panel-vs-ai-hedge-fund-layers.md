@@ -1,6 +1,6 @@
 # /panel vs. ai-hedge-fund's aggregation layers
 
-**Date:** 2026-07-28. **Question:** what does our panel layer give us against the layers `virattt/ai-hedge-fund` puts on top of its analyst agents? **Sources:** `src/agents/portfolio_manager.py` (262 lines) and `src/agents/risk_manager.py` (317 lines) fetched from the repo's `main` today; our `.claude/skills/panel/SKILL.md`. Our `reference/*.py` files are that project's analyst agents, so this is a comparison against our own upstream.
+**Date:** 2026-07-28. **Question:** what does our panel layer give us against the layers `virattt/ai-hedge-fund` puts on top of its analyst agents? **Sources:** `src/agents/portfolio_manager.py` (262 lines) and `src/agents/risk_manager.py` (317 lines) fetched from the repo's `main` today; our `.claude/skills/panel/SKILL.md`. Our scoring rubrics are adapted from that project (see README "Provenance"), so this is a comparison against our own upstream.
 
 ## Their stack (observed, not assumed)
 
