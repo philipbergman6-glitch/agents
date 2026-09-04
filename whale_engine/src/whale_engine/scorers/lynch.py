@@ -1,8 +1,8 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
 Peter Lynch GARP rubric v2 (max 15 = growth 6 + valuation 5 + fundamentals 4),
-adapted from the upstream Lynch heuristics (see README "Provenance") with the decisions locked on the rubric
-review:
+adapted from the upstream Lynch heuristics (see README "Provenance") with the
+decisions locked on the rubric review:
 
 - sentiment and insider factors dropped (no snapshot data source); the three
   remaining dimensions reweighted to the whole score (40/33/27 -> 6/5/4)
@@ -89,7 +89,7 @@ def _link_data_quality(dq: dict) -> dict:
         field = (f.get("context") or {}).get("field")
         if field is not None:
             return _FIELD_DIMENSIONS.get(field, [])
-        return _CODE_DIMENSIONS.get(f.get("code"), [])
+        return _CODE_DIMENSIONS.get(f.get("code") or "", [])
 
     return {
         **dq,
@@ -164,8 +164,9 @@ def _validate(ticker, market_cap, annual: list, periods: list) -> list:
 
 
 def eps_series(window: list, flags: list) -> list[float]:
-    """Per-period annual EPS, most-recent-first, split-renormalized (shared validation machinery). An unexplained jump inside the window hard-fails: the
-    per-share growth history cannot be trusted (degenerate-input rule)."""
+    """Per-period annual EPS, most-recent-first, split-renormalized (shared
+    validation machinery). An unexplained jump inside the window hard-fails:
+    the per-share growth history cannot be trusted (degenerate-input rule)."""
     adjusted, events = validation.renormalize_share_series(
         [(p["period_end"], p["balance"]["outstanding_shares"]) for p in window]
     )
@@ -189,7 +190,7 @@ def eps_series(window: list, flags: list) -> list[float]:
                 f"{ev['newer_period_end']} with no plausible split factor; the "
                 "EPS growth history is untrustworthy"
             )
-    return [p["ttm"]["net_income"] / adj for p, adj in zip(window, adjusted)]
+    return [p["ttm"]["net_income"] / adj for p, adj in zip(window, adjusted, strict=True)]
 
 
 def _cagr(latest: float, oldest: float, gaps: int) -> float | None:
@@ -421,6 +422,7 @@ def diagnose(snapshot: dict) -> dict:
         raise MissingDataError(
             str(e) if str(e).startswith(f"{ticker}:") else f"{ticker}: {e}"
         ) from None
+    assert market_cap is not None  # _validate hard-fails on a missing market cap
     valuation_dim = analyze_valuation(periods[0], market_cap, growth["eps_cagr_5y"])
     fundamentals = analyze_fundamentals(periods[0])
 
@@ -455,7 +457,12 @@ def diagnose(snapshot: dict) -> dict:
         "rubric_version": RUBRIC_VERSION,
         "signal": signal,
         "confidence": compute_confidence(score_pct),
-        "score": {"total": total, "max": MAX_SCORE, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
+        "score": {
+            "total": total,
+            "max": MAX_SCORE,
+            "max_possible": MAX_SCORE,
+            "pct": round(score_pct, 4),
+        },
         "growth_band": {
             "label": growth_band(growth["eps_cagr_5y"]),
             "eps_cagr_5y": _r(growth["eps_cagr_5y"]),

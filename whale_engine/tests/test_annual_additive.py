@@ -9,9 +9,10 @@ import copy
 
 import pytest
 
-from conftest import load_snapshot
 from whale_engine.errors import MissingDataError
 from whale_engine.scorers import buffett, graham
+
+from conftest import load_snapshot
 
 FAKE_ANNUAL = [
     {

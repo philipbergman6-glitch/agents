@@ -38,5 +38,8 @@ def check_flag() -> bool:
 
 def finish(results: list[bool], check: bool) -> None:
     if check and not all(results):
-        print("golden files differ from the current engine output; rerun without --check to regenerate")
+        print(
+            "golden files differ from the current engine output; "
+            "rerun without --check to regenerate"
+        )
         sys.exit(1)

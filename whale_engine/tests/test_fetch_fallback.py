@@ -47,7 +47,10 @@ def test_no_mixing_across_concepts():
     # Annual under one tag, YTDs under another: stitching must not combine them.
     facts = {
         "DepreciationDepletionAndAmortization": {
-            (date(2023, 7, 1), date(2024, 6, 30)): (22_000.0, "us-gaap:DepreciationDepletionAndAmortization"),
+            (date(2023, 7, 1), date(2024, 6, 30)): (
+                22_000.0,
+                "us-gaap:DepreciationDepletionAndAmortization",
+            ),
         },
         TAG: {
             (date(2024, 7, 1), date(2024, 12, 31)): (13_000.0, CONCEPT),

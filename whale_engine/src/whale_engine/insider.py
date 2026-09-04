@@ -56,8 +56,21 @@ def _to_date(v) -> date | None:
         return None
 
 
+def _date_of(t: dict) -> date:
+    """The transaction date of a row already known to carry one."""
+    d = _to_date(t.get("date"))
+    if d is None:
+        raise ValueError(f"transaction has no parseable date: {t!r}")
+    return d
+
+
 # ---------------------------------------------------------------------------
 # deterministic core
+
+
+def _transaction_order(t: dict) -> tuple[str, str, str]:
+    """Deterministic sort key: date, then insider, then accession number."""
+    return (str(t["date"]), str(t.get("insider", "")), str(t.get("accession_number", "")))
 
 
 def detect_cluster(transactions: list[dict]) -> dict | None:
@@ -71,13 +84,11 @@ def detect_cluster(transactions: list[dict]) -> dict | None:
     """
     dated = sorted(
         (t for t in transactions if _to_date(t.get("date")) is not None),
-        key=lambda t: (str(t["date"]), str(t.get("insider", "")), str(t.get("accession_number", ""))),
+        key=_transaction_order,
     )
     for i, anchor in enumerate(dated):
-        start = _to_date(anchor["date"])
-        in_window = [
-            t for t in dated[i:] if (_to_date(t["date"]) - start).days < WINDOW_DAYS
-        ]
+        start = _date_of(anchor)
+        in_window = [t for t in dated[i:] if (_date_of(t) - start).days < WINDOW_DAYS]
         insiders = sorted({str(t.get("insider", "")) for t in in_window})
         if len(in_window) >= MIN_PURCHASES and len(insiders) >= MIN_DISTINCT_INSIDERS:
             values = [t.get("value") for t in in_window if t.get("value") is not None]
@@ -104,9 +115,9 @@ def build_insider_activity(transactions: list[dict], snapshot_date: date) -> dic
             t
             for t in transactions
             if _to_date(t.get("date")) is not None
-            and lookback_start <= _to_date(t["date"]) <= snapshot_date
+            and lookback_start <= _date_of(t) <= snapshot_date
         ),
-        key=lambda t: (str(t["date"]), str(t.get("insider", "")), str(t.get("accession_number", ""))),
+        key=_transaction_order,
     )
     cluster = detect_cluster(in_lookback)
     return {

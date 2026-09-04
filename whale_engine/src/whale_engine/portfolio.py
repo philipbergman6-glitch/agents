@@ -41,6 +41,7 @@ derived: holiday weeks close on a Thursday. Narration should therefore say
 from __future__ import annotations
 
 import math
+from collections import Counter
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -90,8 +91,7 @@ def normalize_basket(tickers: list[str]) -> list[str]:
     if any(not t for t in basket):
         raise PortfolioError("basket contains an empty ticker.")
 
-    seen: set[str] = set()
-    duplicates = sorted({t for t in basket if t in seen or seen.add(t)})
+    duplicates = sorted(t for t, n in Counter(basket).items() if n > 1)
     if duplicates:
         raise PortfolioError(
             f"basket repeats {', '.join(duplicates)} — equal weighting a name "
@@ -168,7 +168,7 @@ def _pearson(xs: list[float], ys: list[float]) -> float | None:
     var_y = sum(d * d for d in dy)
     if var_x <= 0 or var_y <= 0:
         return None
-    return sum(a * b for a, b in zip(dx, dy)) / math.sqrt(var_x * var_y)
+    return sum(a * b for a, b in zip(dx, dy, strict=True)) / math.sqrt(var_x * var_y)
 
 
 def _pair_key(a: str, b: str) -> str:
@@ -323,7 +323,10 @@ def _sector_block(
         share = round(len(tickers) / total, SHARE_DECIMALS)
         # An unknown sector is not a concentration: it is a gap, already
         # warned about above, and flagging it would invent a sector bet.
-        flagged = sic2 is not None and share > SECTOR_CONCENTRATION_THRESHOLD
+        flagged = False
+        if sic2 is not None and share > SECTOR_CONCENTRATION_THRESHOLD:
+            flagged = True
+            flagged_groups.append(sic2)
         groups.append(
             {
                 "sic2": sic2,
@@ -333,8 +336,6 @@ def _sector_block(
                 "flagged": flagged,
             }
         )
-        if flagged:
-            flagged_groups.append(sic2)
 
     groups.sort(key=lambda g: (-g["share"], g["sic2"] or "~"))
     return {"groups": groups, "flagged_groups": sorted(flagged_groups)}

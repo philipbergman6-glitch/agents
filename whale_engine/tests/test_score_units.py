@@ -34,8 +34,8 @@ def test_negative_latest_earnings_does_not_crash():
 
 
 def test_zero_debt_is_data_not_a_gap():
-    """Intentional deviation from the upstream ai-hedge-fund heuristics, which truthiness-gate ratios
-    and scores an exact D/E of 0.0 as 'unavailable'. Zero debt is the best
+    """Intentional deviation from the upstream ai-hedge-fund heuristics, which
+    truthiness-gate ratios and score an exact D/E of 0.0 as 'unavailable'. Zero debt is the best
     case and must earn the +2, with no missing-data flag."""
     metrics = {
         "return_on_equity": 0.20,
@@ -65,7 +65,7 @@ def _quarterly_bv_periods(bvps_by_quarter, shares=1000.0):
     ]
     return [
         _bv_period(end, bvps * shares, shares)
-        for end, bvps in zip(ends, bvps_by_quarter)
+        for end, bvps in zip(ends, bvps_by_quarter, strict=True)
     ]
 
 

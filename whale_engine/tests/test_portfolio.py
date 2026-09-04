@@ -90,7 +90,7 @@ def test_equal_weights_are_exactly_one_over_n():
     assert sum(b["weight"] for b in result["basket"]) == 1.0
 
 
-# --- correlation (methodology v1 §1-2, report contract v1 §1) ------------------------------------------
+# --- correlation (methodology v1 §1-2, report contract v1 §1) -----------------
 
 
 def test_identical_return_series_correlate_at_one_and_flag_as_the_same_bet():
@@ -164,7 +164,7 @@ def test_zero_variance_series_reports_null_with_a_warning_never_a_crash():
     assert [w["code"] for w in result["warnings"]] == ["zero_variance"]
 
 
-# --- short history (methodology v1 §4, report contract v1 §4) ------------------------------------------
+# --- short history (methodology v1 §4, report contract v1 §4) -----------------
 
 
 def test_short_history_name_is_weighted_normally_with_null_pairs_and_a_warning():
@@ -217,14 +217,17 @@ def test_window_observations_count_only_weeks_every_measured_name_has():
     assert result["correlation"]["window"]["observations"] == 79
 
 
-# --- sectors (methodology v1 §3, report contract v1 §5) ------------------------------------------------
+# --- sectors (methodology v1 §3, report contract v1 §5) -----------------------
 
 
 def test_sector_groups_use_the_two_digit_major_group_with_its_published_title():
     prices = {t: price_snapshot(t, wiggle(200, phase=i)) for i, t in enumerate(["V", "JPM"])}
     result = report(
         prices,
-        {"V": edgar_snapshot("V", "7389", "Services"), "JPM": edgar_snapshot("JPM", "6022", "Banks")},
+        {
+            "V": edgar_snapshot("V", "7389", "Services"),
+            "JPM": edgar_snapshot("JPM", "6022", "Banks"),
+        },
     )
     groups = {g["sic2"]: g for g in result["sectors"]["groups"]}
     assert groups["73"]["desc"] == "Business Services"
@@ -252,7 +255,8 @@ def test_missing_sic_is_a_warned_gap_that_never_counts_as_concentration():
     unknown = next(g for g in result["sectors"]["groups"] if g["sic2"] is None)
     assert unknown["share"] == pytest.approx(0.6667) and unknown["flagged"] is False
     assert result["sectors"]["flagged_groups"] == []
-    assert {w["ticker"] for w in result["warnings"] if w["code"] == "sector_unavailable"} == {"B", "C"}
+    unavailable = {w["ticker"] for w in result["warnings"] if w["code"] == "sector_unavailable"}
+    assert unavailable == {"B", "C"}
 
 
 def test_pre_sic_snapshot_is_told_apart_from_edgar_having_no_sic():

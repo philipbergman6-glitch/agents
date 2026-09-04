@@ -210,11 +210,14 @@ def diff_snapshots(current: PortfolioSnapshot, prior: PortfolioSnapshot) -> list
     for cusip in sorted(cusips):
         cur, prev = current.positions.get(cusip), prior.positions.get(cusip)
         ref = cur or prev
+        assert ref is not None  # every cusip came from one of the two snapshots
         label = f"{ref.issuer}" + (f" ({ref.ticker})" if ref.ticker else "")
-        if cur and not prev:
+        if cur is not None and prev is None:
             changes.append(Change("opened", cusip, label, cur.shares, 0))
-        elif prev and not cur:
+        elif prev is not None and cur is None:
             changes.append(Change("exited", cusip, label, 0, prev.shares))
+        elif cur is None or prev is None:  # unreachable: the cusip set is the union
+            raise AssertionError(cusip)
         elif cur.shares > prev.shares:
             changes.append(Change("added", cusip, label, cur.shares, prev.shares))
         elif cur.shares < prev.shares:
@@ -313,7 +316,7 @@ def format_portfolio_markdown(
         lines.append(f"## Changes vs {prior_q} "
                      f"(prior {prior.form} filed {prior.filing_date})")
         lines.append("")
-        buckets = {"opened": [], "added": [], "trimmed": [], "exited": []}
+        buckets: dict[str, list[Change]] = {"opened": [], "added": [], "trimmed": [], "exited": []}
         for ch in change_by_cusip.values():
             if ch.kind in buckets:
                 buckets[ch.kind].append(ch)

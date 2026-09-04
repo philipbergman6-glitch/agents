@@ -3,11 +3,10 @@
 import json
 
 import pytest
+from test_portfolio import edgar_snapshot, price_snapshot, wiggle
 
 from whale_engine import portfolio, prices
 from whale_engine.cli import main
-
-from test_portfolio import edgar_snapshot, price_snapshot, wiggle
 
 
 @pytest.fixture

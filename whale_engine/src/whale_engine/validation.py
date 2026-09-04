@@ -555,7 +555,7 @@ def _check_zero_vs_missing(snapshot: dict, arrays) -> list[dict]:
     debt may simply live under tags outside the fallback lists — WARN, not
     INFO, so it reaches data_quality and gets narrated.
     """
-    out = []
+    out: list[dict] = []
     present = _present_arrays(snapshot, arrays)
     if not present:
         return out
@@ -687,13 +687,13 @@ def _check_invariants(snapshot: dict, arrays) -> list[dict]:
         checked, violators = 0, []
         for p in periods:
             b = p.get("balance") or {}
-            a, l, e = b.get("total_assets"), b.get("total_liabilities"), b.get(
-                "shareholders_equity"
-            )
-            if a is None or l is None or e is None or a == 0:
+            a = b.get("total_assets")
+            liab = b.get("total_liabilities")
+            e = b.get("shareholders_equity")
+            if a is None or liab is None or e is None or a == 0:
                 continue
             checked += 1
-            gap = abs(a - (l + e)) / abs(a)
+            gap = abs(a - (liab + e)) / abs(a)
             if gap > BALANCE_IDENTITY_TOLERANCE:
                 violators.append((p["period_end"], gap))
         if not violators:

@@ -19,7 +19,8 @@ from conftest import load_golden_graham, load_snapshot
 
 # ticker -> (expected signal, min quality pct, max quality pct)
 GOLDEN_BANDS = {
-    "NVDA": ("bearish", 0.45, 1.00),  # fortress balance sheet, but deep-overprice override (MoS -0.83)
+    # fortress balance sheet, but deep-overprice override (MoS -0.83)
+    "NVDA": ("bearish", 0.45, 1.00),
     "KO": ("bearish", 0.30, 0.55),    # dividend blue chip, deep-overprice override (MoS -0.71)
     "F": ("bearish", 0.00, 0.25),     # leveraged cyclical, negative TTM EPS
     "AAL": ("bearish", 0.00, 0.25),   # leveraged, negative shareholders' equity

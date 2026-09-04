@@ -11,7 +11,6 @@ import pytest
 import whale_engine.fetch as fetch
 from whale_engine.fetch import FetchError
 
-
 TODAY = date(2026, 7, 28)
 
 
@@ -115,7 +114,11 @@ def test_cli_passes_override_through(monkeypatch, tmp_path, capsys):
     def fake_fetch_snapshot(ticker, market_cap_override=None):
         captured["ticker"] = ticker
         captured["override"] = market_cap_override
-        return {"ticker": ticker.upper(), "fetched_at": "2026-07-28", "market_cap": market_cap_override}
+        return {
+            "ticker": ticker.upper(),
+            "fetched_at": "2026-07-28",
+            "market_cap": market_cap_override,
+        }
 
     monkeypatch.setattr(fetch, "fetch_snapshot", fake_fetch_snapshot)
     rc = cli.main(

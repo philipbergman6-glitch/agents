@@ -12,7 +12,6 @@ import pytest
 
 from whale_engine.holdings import (
     ROSTER_PATH,
-    FundHolding,
     format_holdings_markdown,
     load_fund_snapshots,
     load_roster,

@@ -137,7 +137,7 @@ def _dimensions_affected(finding: dict) -> list[str]:
             set(_PRESENT_FIELD_DIMENSIONS.get(field, []))
             | set(_ANNUAL_FIELD_DIMENSIONS.get(field, []))
         )
-    return _CODE_DIMENSIONS.get(finding.get("code"), [])
+    return _CODE_DIMENSIONS.get(finding.get("code") or "", [])
 
 
 def _link_data_quality(dq: dict) -> dict:
@@ -350,9 +350,13 @@ def analyze_fundamentals(m: dict, flags: list) -> dict:
         # standard. The debt_unresolved WARN still rides data_quality.
         if lte < 1.0:
             score += 2
-            details.append(f"Liabilities/equity {lte:.2f} < 1.0 ✓ (+2, fallback: no debt tag resolved)")
+            details.append(
+                f"Liabilities/equity {lte:.2f} < 1.0 ✓ (+2, fallback: no debt tag resolved)"
+            )
         else:
-            details.append(f"Liabilities/equity {lte:.2f} >= 1.0 ✗ (+0, fallback: no debt tag resolved)")
+            details.append(
+                f"Liabilities/equity {lte:.2f} >= 1.0 ✗ (+0, fallback: no debt tag resolved)"
+            )
         flags.append(
             "fundamentals: debt_to_equity unresolved; scored total_liabilities/equity "
             "fallback at the 1.0 bar"
@@ -398,7 +402,12 @@ def analyze_consistency(periods: list, flags: list) -> dict:
         )
     if len(earnings) < 4:
         flags.append("consistency: fewer than 4 earnings periods, excluded from denominator")
-        return {"score": 0, "max": 3, "excluded": True, "details": ["Insufficient earnings history (excluded)"]}
+        return {
+            "score": 0,
+            "max": 3,
+            "excluded": True,
+            "details": ["Insufficient earnings history (excluded)"],
+        }
     # Graduated credit (judgment-review tuning): monotonic = 3, at most one
     # down-step = 2, positive overall trend = 1.
     steps = len(earnings) - 1
@@ -408,10 +417,14 @@ def analyze_consistency(periods: list, flags: list) -> dict:
         details.append(f"Earnings grew every period across {len(earnings)} TTM windows ✓ (+3)")
     elif grew_steps >= steps - 1:
         score = 2
-        details.append(f"Earnings grew in {grew_steps}/{steps} steps across {len(earnings)} TTM windows ✓ (+2)")
+        details.append(
+            f"Earnings grew in {grew_steps}/{steps} steps across {len(earnings)} TTM windows ✓ (+2)"
+        )
     elif earnings[0] > earnings[-1]:
         score = 1
-        details.append(f"Earnings up oldest-to-latest but grew in only {grew_steps}/{steps} steps ✓ (+1)")
+        details.append(
+            f"Earnings up oldest-to-latest but grew in only {grew_steps}/{steps} steps ✓ (+1)"
+        )
     else:
         score = 0
         details.append(f"Earnings flat or declining: grew in {grew_steps}/{steps} steps ✗ (+0)")
@@ -424,7 +437,12 @@ def analyze_consistency(periods: list, flags: list) -> dict:
 def analyze_moat(metrics: list, flags: list) -> dict:
     if len(metrics) < 5:
         flags.append("moat: fewer than 5 metric periods, excluded from denominator")
-        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient history for moat analysis (excluded)"]}
+        return {
+            "score": 0,
+            "max": 5,
+            "excluded": True,
+            "details": ["Insufficient history for moat analysis (excluded)"],
+        }
     score, details = 0, []
 
     roes = [m["return_on_equity"] for m in metrics if m["return_on_equity"] is not None]
@@ -536,15 +554,26 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
             margins.append(gm)
     if len(margins) < 3:
         flags.append("pricing_power: fewer than 3 gross-margin periods, excluded from denominator")
-        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient gross margin history (excluded)"]}
+        return {
+            "score": 0,
+            "max": 5,
+            "excluded": True,
+            "details": ["Insufficient gross margin history (excluded)"],
+        }
 
     recent, older, w = _trend_windows(margins)
     if recent > older + 0.02 and not _rolling_over(margins):
         score += 3
-        details.append(f"Gross margin expanding (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✓ (+3)")
+        details.append(
+            f"Gross margin expanding (prior {w}y -> recent {w}y): "
+            f"{older:.1%} -> {recent:.1%} ✓ (+3)"
+        )
     elif recent > older and not _rolling_over(margins):
         score += 2
-        details.append(f"Gross margin improving (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✓ (+2)")
+        details.append(
+            f"Gross margin improving (prior {w}y -> recent {w}y): "
+            f"{older:.1%} -> {recent:.1%} ✓ (+2)"
+        )
     elif recent > older:
         score += 1
         details.append(
@@ -555,7 +584,10 @@ def analyze_pricing_power(periods: list, flags: list) -> dict:
         score += 1
         details.append(f"Gross margin stable near {recent:.1%} (recent {w}y vs prior {w}y) ✓ (+1)")
     else:
-        details.append(f"Gross margin declining (prior {w}y -> recent {w}y): {older:.1%} -> {recent:.1%} ✗ (+0)")
+        details.append(
+            f"Gross margin declining (prior {w}y -> recent {w}y): "
+            f"{older:.1%} -> {recent:.1%} ✗ (+0)"
+        )
 
     avg = sum(margins) / len(margins)
     if avg > 0.5:
@@ -615,12 +647,17 @@ def analyze_book_value(periods: list, flags: list) -> dict:
                 f"{ev['newer_period_end']} with no plausible split factor; periods "
                 f"{', '.join(ev['excluded_period_ends'])} excluded"
             )
-    pairs = [(p, adj) for p, adj in zip(usable, adjusted) if adj is not None]
+    pairs = [(p, adj) for p, adj in zip(usable, adjusted, strict=True) if adj is not None]
     usable = [p for p, _ in pairs]
     book_values = [p["balance"]["shareholders_equity"] / adj for p, adj in pairs]
     if len(book_values) < 3:
         flags.append("book_value: fewer than 3 BVPS periods, excluded from denominator")
-        return {"score": 0, "max": 5, "excluded": True, "details": ["Insufficient book value history (excluded)"]}
+        return {
+            "score": 0,
+            "max": 5,
+            "excluded": True,
+            "details": ["Insufficient book value history (excluded)"],
+        }
 
     score, details = 0, []
     grew = sum(1 for i in range(len(book_values) - 1) if book_values[i] > book_values[i + 1])
@@ -726,8 +763,8 @@ def calculate_intrinsic_value(periods: list, annual_periods: list) -> dict:
     owner_earnings = earnings_data["owner_earnings"]
 
     # Growth from the 5 most recent fiscal years. Deliberate deviation from
-    # the upstream ai-hedge-fund heuristics, which fed 5 quarterly-spaced TTM windows (~1 year of real
-    # span) into a formula that divides by len-1 "years" — understating any
+    # the upstream ai-hedge-fund heuristics, which fed 5 quarterly-spaced TTM
+    # windows (~1 year of real span) into a formula that divides by len-1 "years" — understating any
     # steady grower's rate ~4x and amplifying seasonality into the sign.
     historical = [p["ttm"]["net_income"] for p in annual_periods[:5] if p["ttm"].get("net_income")]
     # Both endpoints must be positive: a negative ratio raised to 1/years is
@@ -913,7 +950,12 @@ def diagnose(snapshot: dict) -> dict:
             "data_quality_penalty": 5 * len(affected),
             "affected_dimensions": affected,
         },
-        "score": {"total": total, "max": max_effective, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
+        "score": {
+            "total": total,
+            "max": max_effective,
+            "max_possible": MAX_SCORE,
+            "pct": round(score_pct, 4),
+        },
         "dimensions": dimensions,
         "valuation": {
             "intrinsic_value": valuation["intrinsic_value"],

@@ -7,7 +7,8 @@ ticket:
 
 - EPS is derived per period as net_income / outstanding_shares (snapshots
   carry no per-share fields); periods are most-recent-first and the endpoint
-  growth check is explicit latest > oldest (the upstream ai-hedge-fund heuristics never pin ordering)
+  growth check is explicit latest > oldest (the upstream ai-hedge-fund heuristics
+  never pin ordering)
 - signal: bullish if score >= 70%, bearish if <= 30%, else neutral; no
   separate MoS gate on the bullish side — bullish needs >= 11.2/16 and the
   non-valuation dimensions max at 9, so a real valuation discount is
@@ -83,7 +84,7 @@ def _link_data_quality(dq: dict) -> dict:
         field = (f.get("context") or {}).get("field")
         if field is not None:
             return _FIELD_DIMENSIONS.get(field, [])
-        return _CODE_DIMENSIONS.get(f.get("code"), [])
+        return _CODE_DIMENSIONS.get(f.get("code") or "", [])
 
     return {
         **dq,
@@ -178,7 +179,7 @@ def eps_series(periods: list, flags: list) -> list[float]:
             )
     return [
         p["ttm"]["net_income"] / adj
-        for p, adj in zip(usable, adjusted)
+        for p, adj in zip(usable, adjusted, strict=True)
         if adj is not None
     ]
 
@@ -258,9 +259,13 @@ def analyze_financial_strength(periods: list, flags: list) -> dict:
         paid = sum(1 for d in div_periods if d < 0)
         if paid >= len(div_periods) // 2 + 1:
             score += 1
-            details.append(f"Dividends paid in {paid}/{len(div_periods)} reporting periods (majority) ✓ (+1)")
+            details.append(
+                f"Dividends paid in {paid}/{len(div_periods)} reporting periods (majority) ✓ (+1)"
+            )
         else:
-            details.append(f"Dividends paid in only {paid}/{len(div_periods)} reporting periods ✗ (+0)")
+            details.append(
+                f"Dividends paid in only {paid}/{len(div_periods)} reporting periods ✗ (+0)"
+            )
 
     return {"score": score, "max": 5, "details": details}
 
@@ -286,7 +291,9 @@ def analyze_valuation(periods: list, market_cap: float, flags: list) -> dict:
             ncav_ps = _ratio(ncav, shares)
             if ncav_ps is None or price is None:
                 details.append("Per-share net-net check unavailable (+0)")
-                flags.append("valuation: outstanding_shares missing, per-share net-net check scored 0")
+                flags.append(
+                    "valuation: outstanding_shares missing, per-share net-net check scored 0"
+                )
             elif ncav_ps >= price * (2 / 3):
                 score += 2
                 details.append(
@@ -298,7 +305,9 @@ def analyze_valuation(periods: list, market_cap: float, flags: list) -> dict:
                 )
     else:
         details.append("NCAV unavailable (+0)")
-        flags.append("valuation: current_assets or total_liabilities missing, net-net check scored 0")
+        flags.append(
+            "valuation: current_assets or total_liabilities missing, net-net check scored 0"
+        )
 
     graham_number = None
     if eps is None or bvps is None:
@@ -310,7 +319,9 @@ def analyze_valuation(periods: list, market_cap: float, flags: list) -> dict:
     else:
         # Legitimate 0, not a data gap: negative earnings or book value means
         # Graham walks away — no flag.
-        details.append(f"Graham Number not meaningful (EPS {eps:.2f}, BVPS {bvps:.2f} — needs both > 0) (+0)")
+        details.append(
+            f"Graham Number not meaningful (EPS {eps:.2f}, BVPS {bvps:.2f} — needs both > 0) (+0)"
+        )
 
     mos = None
     if graham_number is not None and price is not None and price > 0:
@@ -405,7 +416,11 @@ def diagnose(snapshot: dict) -> dict:
     dimensions = {
         "earnings_stability": analyze_earnings_stability(periods, flags),
         "financial_strength": analyze_financial_strength(periods, flags),
-        "valuation": {"score": valuation["score"], "max": valuation["max"], "details": valuation["details"]},
+        "valuation": {
+            "score": valuation["score"],
+            "max": valuation["max"],
+            "details": valuation["details"],
+        },
     }
 
     total = sum(d["score"] for d in dimensions.values())
@@ -424,7 +439,12 @@ def diagnose(snapshot: dict) -> dict:
         "rubric_version": RUBRIC_VERSION,
         "signal": signal,
         "confidence": compute_confidence(score_pct, mos),
-        "score": {"total": total, "max": MAX_SCORE, "max_possible": MAX_SCORE, "pct": round(score_pct, 4)},
+        "score": {
+            "total": total,
+            "max": MAX_SCORE,
+            "max_possible": MAX_SCORE,
+            "pct": round(score_pct, 4),
+        },
         "dimensions": dimensions,
         "valuation": {
             "market_cap": market_cap,

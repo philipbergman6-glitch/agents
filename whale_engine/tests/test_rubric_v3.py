@@ -16,7 +16,6 @@ from whale_engine.scorers.buffett import (
     calculate_intrinsic_value,
 )
 
-
 # --- B2: quality-aware confidence -----------------------------------------
 
 

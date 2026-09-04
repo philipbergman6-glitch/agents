@@ -8,7 +8,6 @@ import pandas as pd
 import pytest
 
 from whale_engine.thirteenf import (
-    PortfolioSnapshot,
     ThirteenFError,
     aggregate_infotable,
     diff_snapshots,

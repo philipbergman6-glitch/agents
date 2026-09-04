@@ -19,13 +19,12 @@ import json
 from datetime import date
 
 import pytest
+from test_portfolio import edgar_snapshot, price_snapshot, wiggle
 
 import whale_engine.fetch as fetch
 from whale_engine.cli import main
 from whale_engine.errors import FetchError
 from whale_engine.portfolio import PortfolioError, build_report, load_basket_snapshots
-
-from test_portfolio import edgar_snapshot, price_snapshot, wiggle
 
 
 class FakeCompany:

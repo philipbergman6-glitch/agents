@@ -20,5 +20,6 @@ if __name__ == "__main__":
     results = []
     for name, basket in GOLDEN_BASKETS.items():
         prices, edgar = load_portfolio_inputs(basket)
-        results.append(emit(GOLDEN_PORTFOLIO / f"{name}.json", build_report(basket, prices, edgar), check))
+        report = build_report(basket, prices, edgar)
+        results.append(emit(GOLDEN_PORTFOLIO / f"{name}.json", report, check))
     finish(results, check)

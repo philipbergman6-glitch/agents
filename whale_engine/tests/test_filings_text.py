@@ -25,7 +25,7 @@ class FakeTenK:
         try:
             return self._items[item]
         except KeyError:
-            raise KeyError(item)
+            raise KeyError(item) from None
 
 
 class FakeFiling:

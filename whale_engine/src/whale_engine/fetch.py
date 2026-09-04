@@ -337,7 +337,7 @@ def _annual_fiscal_year_ends(history) -> set:
         return set()
     dur = history[history["period_type"] == "duration"]
     ends = set()
-    for s, e in zip(dur["period_start"], dur["period_end"]):
+    for s, e in zip(dur["period_start"], dur["period_end"], strict=True):
         sd, ed = _to_plain_date(s), _to_plain_date(e)
         if sd and ed and _ANNUAL_DAYS[0] <= (ed - sd).days <= _ANNUAL_DAYS[1]:
             ends.add(ed)
@@ -363,7 +363,7 @@ def _annual_at(history, fy_end: date) -> tuple[float, date, date] | None:
         and e is not None
         and _ANNUAL_DAYS[0] <= (e - s).days <= _ANNUAL_DAYS[1]
         and abs((e - fy_end).days) <= _END_MATCH_DAYS
-        for s, e in zip(dur["_start"], dur["_end"])
+        for s, e in zip(dur["_start"], dur["_end"], strict=True)
     ]
     hits = dur[keep]
     if hits.empty:
@@ -422,7 +422,8 @@ def _fetch_cboe_close(ticker: str, today: date) -> tuple[float, str, str]:
         ) from e
 
     data = payload.get("data") or {}
-    price, price_field = None, None
+    price: float | None = None
+    price_field = ""
     for field in ("close", "prev_day_close"):
         value = data.get(field)
         if value:
@@ -627,7 +628,7 @@ def _ttm_from_filing_durations(dna_by_localname: dict, window_end: date):
     otherwise stitch annual(prior FY) + YTD(current) - YTD(prior year), all
     three sharing fiscal-year boundaries. Returns (value, provenance) or None.
     """
-    for tag, facts in dna_by_localname.items():
+    for facts in dna_by_localname.values():
         # Direct 12-month duration ending at the window end.
         for (start, end), (value, concept) in sorted(facts.items()):
             if (
@@ -1055,7 +1056,7 @@ def fetch_snapshot(
     liabilities_total_history = _concept_history(company, LIABILITIES_TOTAL_TAG)
     shares_proxy_history = _concept_history(company, SHARES_PROXY_TAG)
 
-    periods = []
+    periods: list[dict] = []
     for q in quarters:
         ttm: dict = {}
         tags_used: dict = {}
@@ -1304,7 +1305,9 @@ def fetch_snapshot(
         "market_cap": market_cap,
         "market_cap_source": market_cap_source,
         "source": {
-            "fundamentals": f"SEC EDGAR via edgartools {getattr(_edgar_mod, '__version__', 'unknown')}",
+            "fundamentals": (
+                f"SEC EDGAR via edgartools {getattr(_edgar_mod, '__version__', 'unknown')}"
+            ),
             "market_data": market_data_source,
         },
         "periods": periods,  # most recent first

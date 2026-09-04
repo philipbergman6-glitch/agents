@@ -182,14 +182,21 @@ def _match_cusips(snaps: list[PortfolioSnapshot], *, ticker: str | None,
             if cusip is not None:
                 if pos.cusip == cusip:
                     matched.add(pos.cusip)
-            elif pos.ticker and _norm_ticker(pos.ticker) == _norm_ticker(ticker):
-                matched.add(pos.cusip)
+            elif pos.ticker:
+                if ticker is None:
+                    raise ValueError("holdings scan needs a ticker or a CUSIP")
+                if _norm_ticker(pos.ticker) == _norm_ticker(ticker):
+                    matched.add(pos.cusip)
     return matched
 
 
-def scan_holdings(ticker: str | None, snapshots_dir: Path, *,
-                  cusip: str | None = None,
-                  roster_path: Path = ROSTER_PATH) -> tuple[list[FundHolding], list[Whale], set[str], str]:
+def scan_holdings(
+    ticker: str | None,
+    snapshots_dir: Path,
+    *,
+    cusip: str | None = None,
+    roster_path: Path = ROSTER_PATH,
+) -> tuple[list[FundHolding], list[Whale], set[str], str]:
     """Cross-fund scan. Returns (holdings, funds-with-no-position,
     matched CUSIPs, display label for the security)."""
     if ticker is None and cusip is None:

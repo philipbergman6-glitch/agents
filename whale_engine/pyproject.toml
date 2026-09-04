@@ -14,7 +14,9 @@ whale = "whale_engine.cli:main"
 
 [dependency-groups]
 dev = [
+    "mypy>=2.3.1",
     "pytest>=8.0",
+    "ruff>=0.16.6",
 ]
 
 [build-system]
@@ -23,3 +25,23 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/whale_engine"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["whale_engine"]
+known-local-folder = ["conftest", "golden_io", "test_portfolio_golden"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+no_implicit_optional = true
+ignore_missing_imports = true

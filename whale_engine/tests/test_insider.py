@@ -227,9 +227,10 @@ def test_no_form4_filings_is_no_cluster_not_warn():
 
 
 def test_scorers_pass_section_through_unscored():
-    from conftest import load_snapshot
     from whale_engine.scorers import buffett as b
     from whale_engine.scorers import graham as g
+
+    from conftest import load_snapshot
 
     snap = load_snapshot("AAPL")
     base_b, base_g = b.diagnose(snap), g.diagnose(snap)

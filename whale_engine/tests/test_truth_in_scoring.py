@@ -9,14 +9,13 @@ exact snapshot.
 
 import copy
 import json
-from pathlib import Path
 
 import pytest
 
 from whale_engine import validation
+from whale_engine.errors import MissingDataError
 from whale_engine.fetch import _realign_tags
 from whale_engine.scorers import buffett, graham
-from whale_engine.errors import MissingDataError
 
 from conftest import SNAPSHOTS, load_snapshot
 
@@ -38,7 +37,9 @@ def test_bldr_management_point_not_from_stale_leg():
     mgmt = result["dimensions"]["management"]
     assert any("413,958,000" in d for d in mgmt["details"])
     assert not any("770,476,000" in d for d in mgmt["details"])
-    assert any(f.startswith("stale_data: issuance_or_purchase_of_equity_shares") for f in result["flags"])
+    assert any(
+        f.startswith("stale_data: issuance_or_purchase_of_equity_shares") for f in result["flags"]
+    )
 
 
 def test_bldr_stale_window_warned_with_dimensions():
@@ -59,7 +60,8 @@ def test_bldr_debt_gap_is_a_warning():
 def test_bldr_staleness_lag_warned():
     """A4: 2026-03-31 books vs a 2026-07-28 price is a 119-day lag."""
     result = buffett.diagnose(BLDR)
-    lag = [w for w in result["data_quality"]["warnings"] if w["code"] == "fundamentals_stale_vs_price"]
+    warnings = result["data_quality"]["warnings"]
+    lag = [w for w in warnings if w["code"] == "fundamentals_stale_vs_price"]
     assert lag and lag[0]["context"]["lag_days"] == 119
 
 
@@ -101,7 +103,6 @@ def test_stale_ttm_fields_parses_window_end_not_stated_lag():
 
 def test_gate_discards_stale_optional_field_without_clean_fallback():
     snapshot = copy.deepcopy(BLDR)
-    p0 = snapshot["periods"][0]
     # remove the annual fallback so policy (b) applies
     for p in snapshot["annual_periods"]:
         p["ttm"]["issuance_or_purchase_of_equity_shares"] = None
@@ -129,10 +130,14 @@ def test_gate_retains_stale_mandatory_input_with_flag():
 # unit: new validation checks
 
 
+def _bare_period(end: str) -> dict:
+    return {"period_end": end, "ttm": {}, "balance": {}, "tags_used": {}}
+
+
 def test_fundamentals_staleness_threshold():
-    ok = {"fetched_at": "2026-07-28", "periods": [{"period_end": "2026-06-30", "ttm": {}, "balance": {}, "tags_used": {}}]}
+    ok = {"fetched_at": "2026-07-28", "periods": [_bare_period("2026-06-30")]}
     assert validation._check_fundamentals_staleness(ok, ("periods",)) == []
-    stale = {"fetched_at": "2026-07-28", "periods": [{"period_end": "2026-03-31", "ttm": {}, "balance": {}, "tags_used": {}}]}
+    stale = {"fetched_at": "2026-07-28", "periods": [_bare_period("2026-03-31")]}
     found = validation._check_fundamentals_staleness(stale, ("periods",))
     assert found and found[0]["code"] == "fundamentals_stale_vs_price"
     assert found[0]["context"]["lag_days"] == 119

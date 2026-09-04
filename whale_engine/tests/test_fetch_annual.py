@@ -9,15 +9,14 @@ non-calendar case.
 from datetime import date
 
 import pandas as pd
+import pytest
 
 from whale_engine.fetch import (
+    FetchError,
     _annual_at,
     _annual_fiscal_year_ends,
     _fetch_annual_periods,
-    FetchError,
 )
-
-import pytest
 
 
 def _history(rows):
