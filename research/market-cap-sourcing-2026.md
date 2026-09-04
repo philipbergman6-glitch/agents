@@ -186,7 +186,7 @@ is not error at all. The outliers decompose cleanly:
    count), cutting staleness to ≤1 quarter. Hard-fail if Cboe returns no quote, if
    `last_trade_time` is > 5 calendar days old (halted/delisted/stale feed), or if no
    dei share count exists — no silent fallback.
-2. **Manual override**: `--market-cap` CLI flag → provenance `manual:user-supplied`.
+2. **Manual override**: `--market-cap` CLI flag → provenance `manual:owner-supplied`.
    The ToS-bulletproof path and the outage escape hatch. (Hard-fail philosophy: the
    error message for a Cboe miss should name this flag.)
 3. **yfinance: demoted to optional cross-check, never load-bearing.** If importable and
