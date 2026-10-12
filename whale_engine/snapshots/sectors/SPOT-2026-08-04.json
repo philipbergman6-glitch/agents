@@ -1,0 +1,14 @@
+{
+  "cik": "1639920",
+  "company_name": "Spotify Technology S.A.",
+  "fetched_at": "2026-08-04",
+  "kind": "sector-only",
+  "schema_version": 1,
+  "sic": "4832",
+  "sic_description": "Radio Broadcasting Stations",
+  "source": {
+    "sector": "SEC EDGAR submissions via edgartools 5.43.0"
+  },
+  "ticker": "SPOT",
+  "warnings": []
+}

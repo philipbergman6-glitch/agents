@@ -1,0 +1,851 @@
+{
+  "annual_periods": [
+    {
+      "balance": {
+        "cash_and_equivalents": 44914000.0,
+        "current_assets": 408183000.0,
+        "current_liabilities": 375583000.0,
+        "long_term_debt": 15745000.0,
+        "outstanding_shares": 110091358.0,
+        "shareholders_equity": 1421925000.0,
+        "short_term_debt": null,
+        "total_assets": 2753720000.0,
+        "total_liabilities": 1064250000.0
+      },
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-12-31",
+        "current_assets": "AssetsCurrent@2025-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2025-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization@2025-01-01..2025-12-31",
+        "long_term_debt": "FinanceLeaseLiabilityNoncurrent@2025-09-30",
+        "net_income": "NetIncomeLoss@2025-01-01..2025-12-31",
+        "operating_income": "OperatingIncomeLoss@2025-01-01..2025-12-31",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-12-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2025-01-01..2025-12-31",
+        "shareholders_equity": "StockholdersEquity@2025-12-31",
+        "total_assets": "Assets@2025-12-31",
+        "total_liabilities": "Liabilities@2025-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 101901000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": -248000000.0,
+        "operating_income": -321994000.0,
+        "revenue": 235118000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 85044000.0,
+        "current_assets": 256841000.0,
+        "current_liabilities": 153955000.0,
+        "long_term_debt": 235620000.0,
+        "outstanding_shares": 99478012.0,
+        "shareholders_equity": 976669000.0,
+        "short_term_debt": 64965000.0,
+        "total_assets": 1518860000.0,
+        "total_liabilities": 538281000.0
+      },
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-12-31",
+        "current_assets": "AssetsCurrent@2024-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2024-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization@2024-01-01..2024-12-31",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-12-31",
+        "net_income": "NetIncomeLoss@2024-01-01..2024-12-31",
+        "operating_income": "OperatingIncomeLoss@2024-01-01..2024-12-31",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-12-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2024-01-01..2024-12-31",
+        "shareholders_equity": "StockholdersEquity@2024-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-12-31",
+        "total_liabilities": "Liabilities@2024-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 47773000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 331400000.0,
+        "operating_income": 460539000.0,
+        "revenue": 162385000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 30504000.0,
+        "current_assets": 61620000.0,
+        "current_liabilities": 112558000.0,
+        "long_term_debt": 123320000.0,
+        "outstanding_shares": 88962964.0,
+        "shareholders_equity": 487639000.0,
+        "short_term_debt": 64127000.0,
+        "total_assets": 740840000.0,
+        "total_liabilities": 253201000.0
+      },
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-12-31",
+        "current_assets": "AssetsCurrent@2023-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2023-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization@2023-01-01..2023-12-31",
+        "long_term_debt": "LongTermDebtNoncurrent@2023-12-31",
+        "net_income": "NetIncomeLoss@2023-01-01..2023-12-31",
+        "operating_income": "OperatingIncomeLoss@2023-01-01..2023-12-31",
+        "outstanding_shares": "CommonStockSharesOutstanding@2023-12-31",
+        "revenue": "RevenueFromContractWithCustomerIncludingAssessedTax@2023-01-01..2023-12-31",
+        "shareholders_equity": "StockholdersEquity@2023-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2023-12-31",
+        "total_liabilities": "Liabilities@2023-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 17537000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 21900000.0,
+        "operating_income": 9396000.0,
+        "revenue": 96046000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 10379000.0,
+        "current_assets": 19370000.0,
+        "current_liabilities": 10336000.0,
+        "long_term_debt": 149891000.0,
+        "outstanding_shares": 43193201.0,
+        "shareholders_equity": 27373000.0,
+        "short_term_debt": 1299000.0,
+        "total_assets": 189997000.0,
+        "total_liabilities": 162624000.0
+      },
+      "period_end": "2023-06-30",
+      "period_start": "2022-07-01",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2023-06-30",
+        "current_assets": "AssetsCurrent@2023-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2023-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization@2022-07-01..2023-06-30",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOfCommonStock@2022-07-01..2023-06-30",
+        "long_term_debt": "LongTermDebtNoncurrent@2023-06-30",
+        "net_income": "NetIncomeLoss@2022-07-01..2023-06-30",
+        "operating_income": "OperatingIncomeLoss@2022-07-01..2023-06-30",
+        "outstanding_shares": "CommonStockSharesOutstanding@2023-06-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2022-07-01..2023-06-30",
+        "shareholders_equity": "StockholdersEquity@2023-06-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2023-06-30",
+        "total_liabilities": "Liabilities@2023-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 18779000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": -65611000.0,
+        "operating_income": -68689000.0,
+        "revenue": 82160000.0
+      }
+    },
+    {
+      "balance": {
+        "cash_and_equivalents": 21067000.0,
+        "current_assets": 37080000.0,
+        "current_liabilities": 100160000.0,
+        "long_term_debt": 51061000.0,
+        "outstanding_shares": 41464335.0,
+        "shareholders_equity": 87603000.0,
+        "short_term_debt": 77215000.0,
+        "total_assets": 245025000.0,
+        "total_liabilities": 157422000.0
+      },
+      "period_end": "2022-06-30",
+      "period_start": "2021-07-01",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2022-06-30",
+        "current_assets": "AssetsCurrent@2022-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2022-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization@2021-07-01..2022-06-30",
+        "issuance_or_purchase_of_equity_shares": "ProceedsFromIssuanceOfCommonStock@2021-07-01..2022-06-30",
+        "long_term_debt": "LongTermDebtNoncurrent@2022-06-30",
+        "net_income": "NetIncomeLoss@2021-07-01..2022-06-30",
+        "operating_income": "OperatingIncomeLoss@2021-07-01..2022-06-30",
+        "outstanding_shares": "CommonStockSharesOutstanding@2022-06-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax@2021-07-01..2022-06-30",
+        "shareholders_equity": "StockholdersEquity@2022-06-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2022-06-30",
+        "total_liabilities": "Liabilities@2022-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 11591000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": 0.0,
+        "net_income": -31803000.0,
+        "operating_income": -19815000.0,
+        "revenue": 73730000.0
+      }
+    }
+  ],
+  "fetched_at": "2026-08-12",
+  "filings_sidecar": {
+    "accession_number": "0001104659-26-019392",
+    "filing_date": "2026-02-25",
+    "fiscal_year": "FY2025",
+    "form": "10-K",
+    "items": [
+      "Item 1",
+      "Item 7"
+    ],
+    "path": "HUT-2026-08-12-filings.md",
+    "period_of_report": "2025-12-31"
+  },
+  "insider_activity": {
+    "cluster": null,
+    "cluster_rule": ">=3 code-P purchases by >=3 distinct insiders within any rolling 90-day window",
+    "lookback_end": "2026-08-12",
+    "lookback_start": "2025-08-12",
+    "source": "SEC Form 4 non-derivative open-market purchases (code P), via edgartools",
+    "transactions": [],
+    "verdict": "no_cluster"
+  },
+  "market_cap": 10942975569.04,
+  "market_cap_check": {
+    "derived": 10942975569.04,
+    "deviation_pct": 0.0,
+    "reference": 10942975569.04,
+    "reference_source": "yfinance:fast_info.market_cap"
+  },
+  "market_cap_source": "derived:cboe.close@2026-08-11T15:59:59xdei:EntityCommonStockSharesOutstanding@2026-07-31",
+  "periods": [
+    {
+      "as_of_quarter": "2026-Q2",
+      "balance": {
+        "cash_and_equivalents": 233579000.0,
+        "current_assets": 7085251000.0,
+        "current_liabilities": 366214000.0,
+        "long_term_debt": null,
+        "outstanding_shares": 123190559.0,
+        "shareholders_equity": 1442623000.0,
+        "short_term_debt": null,
+        "total_assets": 9975107000.0,
+        "total_liabilities": 8221074000.0
+      },
+      "period_end": "2026-06-30",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2026-06-30",
+        "current_assets": "AssetsCurrent@2026-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2026-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2026-06-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2026-06-30",
+        "total_assets": "Assets@2026-06-30",
+        "total_liabilities": "Liabilities@2026-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 145713000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": -599612000.0,
+        "operating_income": -938903000.0,
+        "revenue": 317953000.0
+      }
+    },
+    {
+      "as_of_quarter": "2026-Q1",
+      "balance": {
+        "cash_and_equivalents": 160016000.0,
+        "current_assets": 216574000.0,
+        "current_liabilities": 252427000.0,
+        "long_term_debt": null,
+        "outstanding_shares": 112546250.0,
+        "shareholders_equity": 1379839000.0,
+        "short_term_debt": null,
+        "total_assets": 2609744000.0,
+        "total_liabilities": 919568000.0
+      },
+      "period_end": "2026-03-31",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2026-03-31",
+        "current_assets": "AssetsCurrent@2026-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2026-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2026-03-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2026-03-31",
+        "total_assets": "Assets@2026-03-31",
+        "total_liabilities": "Liabilities@2026-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 125444000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": -312109000.0,
+        "operating_income": -544714000.0,
+        "revenue": 284320000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q4",
+      "balance": {
+        "cash_and_equivalents": 44914000.0,
+        "current_assets": 408183000.0,
+        "current_liabilities": 375583000.0,
+        "long_term_debt": 15745000.0,
+        "outstanding_shares": 110091358.0,
+        "shareholders_equity": 1421925000.0,
+        "short_term_debt": null,
+        "total_assets": 2753720000.0,
+        "total_liabilities": 1064250000.0
+      },
+      "period_end": "2025-12-31",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-12-31",
+        "current_assets": "AssetsCurrent@2025-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2025-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "FinanceLeaseLiabilityNoncurrent@2025-09-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-12-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-12-31",
+        "total_assets": "Assets@2025-12-31",
+        "total_liabilities": "Liabilities@2025-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 101901000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": -226149000.0,
+        "operating_income": -321994000.0,
+        "revenue": 235118000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q3",
+      "balance": {
+        "cash_and_equivalents": 33493000.0,
+        "current_assets": 223407000.0,
+        "current_liabilities": 310000000.0,
+        "long_term_debt": 15745000.0,
+        "outstanding_shares": 106311648.0,
+        "shareholders_equity": 1442086000.0,
+        "short_term_debt": null,
+        "total_assets": 2688221000.0,
+        "total_liabilities": 1034551000.0
+      },
+      "period_end": "2025-09-30",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-09-30",
+        "current_assets": "AssetsCurrent@2025-09-30",
+        "current_liabilities": "LiabilitiesCurrent@2025-09-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "FinanceLeaseLiabilityNoncurrent@2025-09-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-09-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-09-30",
+        "total_assets": "Assets@2025-09-30",
+        "total_liabilities": "Liabilities@2025-09-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 76460000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 205757000.0,
+        "operating_income": 394778000.0,
+        "revenue": 178318000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q2",
+      "balance": {
+        "cash_and_equivalents": 216251000.0,
+        "current_assets": 411262000.0,
+        "current_liabilities": 227370000.0,
+        "long_term_debt": 18220000.0,
+        "outstanding_shares": 104418127.0,
+        "shareholders_equity": 1266790000.0,
+        "short_term_debt": null,
+        "total_assets": 2021365000.0,
+        "total_liabilities": 632998000.0
+      },
+      "period_end": "2025-06-30",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-06-30",
+        "current_assets": "AssetsCurrent@2025-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2025-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "FinanceLeaseLiabilityNoncurrent@2025-06-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-06-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-06-30",
+        "total_assets": "Assets@2025-06-30",
+        "total_liabilities": "Liabilities@2025-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 59127000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 156295000.0,
+        "operating_income": 320554000.0,
+        "revenue": 138543000.0
+      }
+    },
+    {
+      "as_of_quarter": "2025-Q1",
+      "balance": {
+        "cash_and_equivalents": 108382000.0,
+        "current_assets": 269149000.0,
+        "current_liabilities": 213235000.0,
+        "long_term_debt": 235620000.0,
+        "outstanding_shares": 104150510.0,
+        "shareholders_equity": 959994000.0,
+        "short_term_debt": 64965000.0,
+        "total_assets": 1571883000.0,
+        "total_liabilities": 584188000.0
+      },
+      "period_end": "2025-03-31",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2025-03-31",
+        "current_assets": "AssetsCurrent@2025-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2025-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-12-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2025-03-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2025-03-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2025-03-31",
+        "total_liabilities": "Liabilities@2025-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 51200000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": -52883000.0,
+        "operating_income": 46002000.0,
+        "revenue": 132459000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q4",
+      "balance": {
+        "cash_and_equivalents": 85044000.0,
+        "current_assets": 256841000.0,
+        "current_liabilities": 153955000.0,
+        "long_term_debt": 235620000.0,
+        "outstanding_shares": 99478012.0,
+        "shareholders_equity": 976669000.0,
+        "short_term_debt": 64965000.0,
+        "total_assets": 1518860000.0,
+        "total_liabilities": 538281000.0
+      },
+      "period_end": "2024-12-31",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-12-31",
+        "current_assets": "AssetsCurrent@2024-12-31",
+        "current_liabilities": "LiabilitiesCurrent@2024-12-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-12-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-12-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "shareholders_equity": "StockholdersEquity@2024-12-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-12-31",
+        "total_liabilities": "Liabilities@2024-12-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 47773000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 331882000.0,
+        "operating_income": 460539000.0,
+        "revenue": 162385000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q3",
+      "balance": {
+        "cash_and_equivalents": 72911000.0,
+        "current_assets": 110252000.0,
+        "current_liabilities": 110478000.0,
+        "long_term_debt": 232341000.0,
+        "outstanding_shares": 93512499.0,
+        "shareholders_equity": 703915000.0,
+        "short_term_debt": 64956000.0,
+        "total_assets": 1099223000.0,
+        "total_liabilities": 386727000.0
+      },
+      "period_end": "2024-09-30",
+      "tags_used": {
+        "cash_and_equivalents": "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents@2024-09-30",
+        "current_assets": "AssetsCurrent@2024-09-30",
+        "current_liabilities": "LiabilitiesCurrent@2024-09-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-09-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-09-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Gaps detected in quarterly data. TTM calculation may not be accurate.",
+        "shareholders_equity": "StockholdersEquity@2024-09-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-09-30",
+        "total_liabilities": "Liabilities@2024-09-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 39548000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 190239000.0,
+        "operating_income": 189526000.0,
+        "revenue": 152394000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q2",
+      "balance": {
+        "cash_and_equivalents": 11546000.0,
+        "current_assets": 195657000.0,
+        "current_liabilities": 116788000.0,
+        "long_term_debt": 263858000.0,
+        "outstanding_shares": 90944959.0,
+        "shareholders_equity": 660136000.0,
+        "short_term_debt": 64961000.0,
+        "total_assets": 1086977000.0,
+        "total_liabilities": 418655000.0
+      },
+      "period_end": "2024-06-30",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-03-31",
+        "current_assets": "AssetsCurrent@2024-06-30",
+        "current_liabilities": "LiabilitiesCurrent@2024-06-30",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-06-30",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-06-30",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Gaps detected in quarterly data. TTM calculation may not be accurate.",
+        "shareholders_equity": "StockholdersEquity@2024-06-30",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-06-30",
+        "total_liabilities": "Liabilities@2024-06-30"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 33572000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 185218000.0,
+        "operating_income": 190430000.0,
+        "revenue": 129189000.0
+      }
+    },
+    {
+      "as_of_quarter": "2024-Q1",
+      "balance": {
+        "cash_and_equivalents": 11546000.0,
+        "current_assets": 33545000.0,
+        "current_liabilities": 107971000.0,
+        "long_term_debt": 110621000.0,
+        "outstanding_shares": 88456865.0,
+        "shareholders_equity": 731982000.0,
+        "short_term_debt": 66983000.0,
+        "total_assets": 999040000.0,
+        "total_liabilities": 258449000.0
+      },
+      "period_end": "2024-03-31",
+      "tags_used": {
+        "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue@2024-03-31",
+        "current_assets": "AssetsCurrent@2024-03-31",
+        "current_liabilities": "LiabilitiesCurrent@2024-03-31",
+        "depreciation_and_amortization": "DepreciationAndAmortization",
+        "depreciation_and_amortization_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "long_term_debt": "LongTermDebtNoncurrent@2024-03-31",
+        "net_income": "NetIncomeLoss",
+        "net_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "operating_income": "OperatingIncomeLoss",
+        "operating_income_warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "outstanding_shares": "CommonStockSharesOutstanding@2024-03-31",
+        "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "revenue_warning": "Gaps detected in quarterly data. TTM calculation may not be accurate.",
+        "shareholders_equity": "StockholdersEquity@2024-03-31",
+        "short_term_debt": "LongTermDebtCurrent",
+        "total_assets": "Assets@2024-03-31",
+        "total_liabilities": "Liabilities@2024-03-31"
+      },
+      "ttm": {
+        "capital_expenditure": null,
+        "depreciation_and_amortization": 26105000.0,
+        "dividends_and_other_cash_distributions": null,
+        "gross_profit": null,
+        "issuance_or_purchase_of_equity_shares": null,
+        "net_income": 255398000.0,
+        "operating_income": 278058000.0,
+        "revenue": 109621000.0
+      }
+    }
+  ],
+  "price_reference": {
+    "last_trade_time": "2026-08-11T15:59:59",
+    "price": 88.78,
+    "price_field": "close",
+    "shares": 123259468.0,
+    "shares_source": "dei:EntityCommonStockSharesOutstanding@2026-07-31",
+    "source": "cboe:delayed_quotes"
+  },
+  "schema_version": 2,
+  "sic": "6199",
+  "sic_description": "Finance Services",
+  "source": {
+    "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+    "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
+  },
+  "ticker": "HUT",
+  "validation": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap",
+      "restatement_402"
+    ],
+    "findings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "depreciation_and_amortization",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "operating_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "operating_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Gaps detected in quarterly data. TTM calculation may not be accurate."
+        },
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: Gaps detected in quarterly data. TTM calculation may not be accurate.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "share_split_renormalized",
+        "context": {
+          "array": "annual_periods",
+          "factor": 2.0,
+          "newer_period_end": "2023-12-31",
+          "observed_ratio": 2.0596520271789998,
+          "older_period_end": "2023-06-30"
+        },
+        "message": "annual_periods: share counts at and before 2023-06-30 renormalized onto the current basis (split factor x2 at this boundary; observed jump x2.06 into 2023-12-31)",
+        "severity": "INFO"
+      },
+      {
+        "code": "absent_optional_field",
+        "context": {
+          "field": "dividends_and_other_cash_distributions"
+        },
+        "message": "dividends_and_other_cash_distributions has no XBRL tag in any period — an untagged fact and a true zero are indistinguishable in EDGAR; the rubric treats it as zero where zero-if-absent applies",
+        "severity": "INFO"
+      },
+      {
+        "code": "balance_identity",
+        "context": {
+          "array": "periods",
+          "gaps": {
+            "2025-12-31": 0.09715766308847668,
+            "2026-03-31": 0.11891472880098584
+          },
+          "period_ends": [
+            "2026-03-31",
+            "2025-12-31"
+          ]
+        },
+        "message": "periods: assets != liabilities + equity beyond 8% in 2/10 periods: 2026-03-31 (gap 11.9%), 2025-12-31 (gap 9.7%) — isolated historical periods (tag-definition drift, e.g. pre-IPO mezzanine equity in neither tag); ratios for those periods rest on an inconsistent balance sheet",
+        "severity": "WARN"
+      },
+      {
+        "code": "balance_identity",
+        "context": {
+          "array": "annual_periods",
+          "gaps": {
+            "2025-12-31": 0.09715766308847668
+          },
+          "period_ends": [
+            "2025-12-31"
+          ]
+        },
+        "message": "annual_periods: assets != liabilities + equity beyond 8% in 1/5 periods: 2025-12-31 (gap 9.7%)",
+        "severity": "ERROR"
+      }
+    ]
+  }
+}

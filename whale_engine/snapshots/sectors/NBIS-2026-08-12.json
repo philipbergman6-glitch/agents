@@ -1,0 +1,14 @@
+{
+  "cik": "1513845",
+  "company_name": "Nebius Group N.V.",
+  "fetched_at": "2026-08-12",
+  "kind": "sector-only",
+  "schema_version": 1,
+  "sic": "7370",
+  "sic_description": "Services-Computer Programming, Data Processing, Etc.",
+  "source": {
+    "sector": "SEC EDGAR submissions via edgartools 5.43.0"
+  },
+  "ticker": "NBIS",
+  "warnings": []
+}

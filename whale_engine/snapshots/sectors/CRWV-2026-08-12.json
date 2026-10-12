@@ -1,0 +1,14 @@
+{
+  "cik": "1769628",
+  "company_name": "CoreWeave, Inc.",
+  "fetched_at": "2026-08-12",
+  "kind": "sector-only",
+  "schema_version": 1,
+  "sic": "7372",
+  "sic_description": "Services-Prepackaged Software",
+  "source": {
+    "sector": "SEC EDGAR submissions via edgartools 5.43.0"
+  },
+  "ticker": "CRWV",
+  "warnings": []
+}
