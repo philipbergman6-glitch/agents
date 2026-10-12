@@ -95,6 +95,7 @@ uv run whale fetch AAPL                       # EDGAR filings + Cboe close -> sn
 uv run whale fetch STUB --sector-only         # SIC code only, for names too young to score
 uv run whale diagnose AAPL --whale buffett    # score a snapshot (offline, deterministic)
 uv run whale diagnose AAPL --whale graham --snapshot snapshots/AAPL-2026-07-27.json
+uv run whale panel AAPL                       # all three whales over one snapshot, engine-counted (offline, no verdict)
 uv run whale prices V MA KO                   # pin weekly adjusted closes -> snapshots/prices/
 uv run whale portfolio V MA KO                # equal-weight basket report (offline)
 uv run whale fetch-13f                        # latest two 13F periods for the whale roster
@@ -110,6 +111,7 @@ uv run pytest -q                              # the engine's tests (offline; soc
   - `src/whale_engine/validation.py` — snapshot checks: stitched windows, stale
     fundamentals, share-split renormalization, restatements, market-cap bounds
   - `src/whale_engine/scorers/` — one rubric per whale, each with `RUBRIC_VERSION`
+  - `src/whale_engine/panel.py` — all three whales over one snapshot, engine-counted agreement summary (`PANEL_VERSION`, no verdict label)
   - `src/whale_engine/portfolio.py`, `prices.py` — the basket layer and its price pins
   - `src/whale_engine/thirteenf.py`, `holdings.py` — 13F roster and holdings scan
   - `snapshots/` — pinned filing data, one JSON per ticker per day, committed so
@@ -140,7 +142,7 @@ Narrations that cannot pass today are `xfail(strict=True)` with the leaked
 tokens named in the reason, and a companion test asserts each reason still
 matches exactly today's leaks. Currently: one panel recorded before the
 market-cap witness gate (the engine now refuses that snapshot), and one
-figurative number. Golden files for all three scorers and the portfolio layer
+figurative number. Golden files for all three scorers, the panel summary and the portfolio layer
 are checked for drift in CI (`make_golden_*.py --check`).
 
 ## Provenance

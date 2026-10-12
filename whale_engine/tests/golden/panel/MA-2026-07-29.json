@@ -1,0 +1,231 @@
+{
+  "counts": {
+    "bearish": 0,
+    "bullish": 0,
+    "neutral": 0,
+    "walked_away": 3
+  },
+  "data_quality_warnings": [
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "capital_expenditure",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "capital_expenditure TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "depreciation_and_amortization",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "dividends_and_other_cash_distributions",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "dividends_and_other_cash_distributions TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "issuance_or_purchase_of_equity_shares",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "issuance_or_purchase_of_equity_shares TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "net_income",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "operating_income",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "operating_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "revenue",
+        "period_ends": [
+          "2026-03-31",
+          "2025-12-31",
+          "2025-09-30",
+          "2025-06-30",
+          "2025-03-31",
+          "2024-12-31",
+          "2024-09-30",
+          "2024-06-30",
+          "2024-03-31",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "revenue TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "fundamentals_stale_vs_price",
+      "context": {
+        "fetched_at": "2026-07-29",
+        "lag_days": 120,
+        "period_end": "2026-03-31"
+      },
+      "message": "latest fundamentals period ends 2026-03-31, 120 days before the snapshot date 2026-07-29 — the price is 120 days fresher than the books it is being compared against",
+      "severity": "WARN"
+    }
+  ],
+  "engine_count": "Engine count: bullish 0, neutral 0, bearish 0, walked away 3",
+  "panel_version": 1,
+  "provenance": {
+    "market_cap_source": "derived:cboe.close@2026-07-29T09:35:50xdei:EntityCommonStockSharesOutstanding@2010-10-27",
+    "snapshot_fetched_at": "2026-07-29",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
+    },
+    "validation_checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap",
+      "restatement_402"
+    ],
+    "whales": [
+      "buffett",
+      "graham",
+      "lynch"
+    ]
+  },
+  "ticker": "MA",
+  "unanimity_suspect": false,
+  "whales": {
+    "buffett": {
+      "confidence": null,
+      "error": "MissingDataError",
+      "reason": "MA: validation failed -- market_cap 6.891e+10 deviates -86.2% from the yfinance:fast_info.market_cap witness 4.986e+11 (tolerance 25%); the derived share basis is corrupt — refetch, or pass --market-cap to override",
+      "rubric_version": 3,
+      "score": null,
+      "signal": null,
+      "walked_away": true
+    },
+    "graham": {
+      "confidence": null,
+      "error": "MissingDataError",
+      "reason": "MA: validation failed -- market_cap 6.891e+10 deviates -86.2% from the yfinance:fast_info.market_cap witness 4.986e+11 (tolerance 25%); the derived share basis is corrupt — refetch, or pass --market-cap to override",
+      "rubric_version": 1,
+      "score": null,
+      "signal": null,
+      "walked_away": true
+    },
+    "lynch": {
+      "confidence": null,
+      "error": "MissingDataError",
+      "reason": "MA: validation failed -- market_cap 6.891e+10 deviates -86.2% from the yfinance:fast_info.market_cap witness 4.986e+11 (tolerance 25%); the derived share basis is corrupt — refetch, or pass --market-cap to override",
+      "rubric_version": 2,
+      "score": null,
+      "signal": null,
+      "walked_away": true
+    }
+  }
+}

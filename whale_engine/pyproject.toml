@@ -35,7 +35,7 @@ select = ["E", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["whale_engine"]
-known-local-folder = ["conftest", "golden_io", "test_portfolio_golden"]
+known-local-folder = ["conftest", "golden_io", "test_panel_golden", "test_portfolio_golden"]
 
 [tool.mypy]
 python_version = "3.11"

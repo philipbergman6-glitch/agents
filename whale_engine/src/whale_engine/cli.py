@@ -8,6 +8,9 @@
                            snapshots/prices/TICKER-DATE.json (weekly freshness gate)
   <prog> portfolio T...    offline: pinned price + EDGAR snapshots -> equal-weight
                            basket report (correlation + sector concentration)
+  <prog> panel TICKER      offline: latest (or --snapshot) snapshot -> all three
+                           whales side by side + engine-counted agreement summary
+                           (no verdict label)
 
 Entry points:
   buffett ...              Buffett-only prog; behavior identical to the original CLI
@@ -104,14 +107,15 @@ def _fetch_sector_only(args) -> int:
     return 0
 
 
-def cmd_diagnose(args) -> int:
-    diagnose = get_diagnose(args.whale)
-
+def _resolve_snapshot(args) -> Path | None:
+    """The snapshot file a diagnose/panel run reads: `--snapshot` verbatim,
+    else the latest pinned for the ticker. None (after a stderr message) when
+    there is nothing to read or the file is a sector-only snapshot."""
     if args.snapshot:
         path = Path(args.snapshot)
         if not path.exists():
             print(f"error: snapshot not found: {path}", file=sys.stderr)
-            return 2
+            return None
     else:
         ticker = args.ticker.upper()
         candidates = sorted(_snapshots_dir(args.snapshots_dir).glob(f"{ticker}-*.json"))
@@ -121,15 +125,15 @@ def cmd_diagnose(args) -> int:
                 f"— run `{args.prog} fetch {ticker}` first",
                 file=sys.stderr,
             )
-            return 2
+            return None
         path = candidates[-1]  # ISO dates in names sort chronologically
 
-    snapshot = json.loads(path.read_text(encoding="utf-8"))
     # A sector-only file carries one EDGAR field and no fundamentals at
     # all. It can only reach here by being copied out of snapshots/sectors/,
     # and scoring it would be scoring nothing — refuse it by name.
     from .fetch import SECTOR_SNAPSHOT_KIND
 
+    snapshot = json.loads(path.read_text(encoding="utf-8"))
     if snapshot.get("kind") == SECTOR_SNAPSHOT_KIND:
         print(
             f"error: {path} is a sector-only snapshot (SIC code only, for the "
@@ -138,8 +142,35 @@ def cmd_diagnose(args) -> int:
             f"snapshot.",
             file=sys.stderr,
         )
+        return None
+    return path
+
+
+def cmd_diagnose(args) -> int:
+    diagnose = get_diagnose(args.whale)
+    path = _resolve_snapshot(args)
+    if path is None:
         return 2
+    snapshot = json.loads(path.read_text(encoding="utf-8"))
     result = diagnose(snapshot)
+    result["provenance"]["snapshot"] = str(path)
+    print(_dump(result))
+    return 0
+
+
+def cmd_panel(args) -> int:
+    """`panel TICKER`: all three whales over one snapshot, engine-counted.
+
+    Offline and clock-free like diagnose; the summary is a pure function of
+    the snapshot file. Renders no verdict — see panel.py for the contract.
+    """
+    from .panel import build_panel
+
+    path = _resolve_snapshot(args)
+    if path is None:
+        return 2
+    snapshot = json.loads(path.read_text(encoding="utf-8"))
+    result = build_panel(snapshot)
     result["provenance"]["snapshot"] = str(path)
     print(_dump(result))
     return 0
@@ -271,6 +302,19 @@ def main(argv: list[str] | None = None, *, prog: str = "whale", whale: str | Non
     p_port.add_argument("tickers", nargs="+", metavar="TICKER")
     p_port.add_argument("--snapshots-dir")
     p_port.set_defaults(func=cmd_portfolio, prog=prog)
+
+    if whale is None:
+        p_panel = sub.add_parser(
+            "panel",
+            help="run all three whales over one snapshot and emit the engine-counted "
+            "agreement summary — no verdict label (offline, deterministic)",
+        )
+        p_panel.add_argument("ticker")
+        p_panel.add_argument(
+            "--snapshot", help="explicit snapshot file (default: latest for ticker)"
+        )
+        p_panel.add_argument("--snapshots-dir")
+        p_panel.set_defaults(func=cmd_panel, prog=prog)
 
     p_f13 = sub.add_parser(
         "fetch-13f",
