@@ -9,8 +9,8 @@ per-investor rubric — same file in, byte-identical JSON out. Claude Code
 subagents then narrate the JSON in each investor's voice, and are contractually
 forbidden from computing, estimating or rounding beyond presentation. The
 `/panel` skill runs all three in parallel and reports where they agree and
-disagree; it never averages them, because three philosophies with different
-models of value are not a vote. The engineering point is the seam: **the engine
+disagree from an engine-counted summary; it never averages them, because three
+philosophies with different models of value are not a vote. The engineering point is the seam: **the engine
 computes, the LLM narrates, and the panel never averages** — and the test
 suite checks the narrations against the numbers.
 
@@ -84,7 +84,7 @@ All engine commands run from `whale_engine/`. Fetching needs `EDGAR_IDENTITY`
 | Skill | What it does |
 |---|---|
 | `/buffett TICKER`, `/graham TICKER`, `/lynch TICKER` | one whale's diagnosis, narrated in its voice |
-| `/panel TICKER` | all three in parallel plus an agreement/disagreement synthesis — no combined verdict |
+| `/panel TICKER` | all three in parallel, narrating the engine's `whale panel` summary (pinned `Engine count:` line, unanimity flag) plus an agreement/disagreement synthesis — no combined verdict |
 | `/portfolio T1 T2 …` | basket sanity check: equal weights, correlation and sector flags, pinned caveat |
 
 **On the command line (numbers only):**
