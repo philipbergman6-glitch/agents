@@ -59,6 +59,7 @@ CODE_VOCABULARY: dict[str, str] = {
     "market_cap_reference_mismatch": r"market[- ]cap",
     "market_cap_witness_mismatch": r"market[- ]cap",
     "balance_identity": r"balance[- ]sheet identity|assets .* liabilities",
+    "debt_unresolved": r"unresolved debt|debt .*unresolved|debt may be invisible",
     "yfinance-crosscheck-unavailable": r"cross-check|uncorroborated",
     "filings_sidecar_extraction_failed": r"filings[- ]text|sidecar",
     "form4_fetch_failed": r"form 4|insider",
@@ -251,8 +252,12 @@ def test_every_engine_warning_is_narrated(panel):
             codes |= {w["code"] for w in d["data_quality"]["warnings"]}
     missing_vocabulary = sorted(c for c in codes if c not in CODE_VOCABULARY)
     assert not missing_vocabulary, f"no vocabulary for warning codes {missing_vocabulary}"
+    # The panel skill (prompt v2) names codes literally in its caveats and in
+    # the unanimity sentence, so the code itself is an accepted mention.
     unmentioned = sorted(
-        c for c in codes if not re.search(CODE_VOCABULARY[c], text, re.IGNORECASE)
+        c
+        for c in codes
+        if c not in text and not re.search(CODE_VOCABULARY[c], text, re.IGNORECASE)
     )
     assert not unmentioned, f"{panel.name} never mentions warning(s) {unmentioned}"
 
