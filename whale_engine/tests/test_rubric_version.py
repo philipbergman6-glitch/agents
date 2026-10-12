@@ -3,16 +3,19 @@
 The README promises this for every diagnosis; the panel and the narration
 header lean on it to say which rule set a verdict came from. A scorer that
 forgets the field would silently break that traceability, so it is pinned
-here for all three rather than inside each scorer's own golden test.
+here for every registered scorer rather than inside each scorer's own
+golden test.
 """
+
+from importlib import import_module
 
 import pytest
 
-from whale_engine.scorers import buffett, graham, lynch
+from whale_engine.scorers import WHALES
 
 from conftest import load_snapshot
 
-SCORERS = {"buffett": buffett, "graham": graham, "lynch": lynch}
+SCORERS = {whale: import_module(f"whale_engine.scorers.{whale}") for whale in WHALES}
 
 
 @pytest.mark.parametrize("name", sorted(SCORERS))

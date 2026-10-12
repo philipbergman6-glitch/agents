@@ -42,9 +42,15 @@ from importlib import import_module
 from . import validation
 from .errors import MissingDataError
 from .fetch import SECTOR_SNAPSHOT_KIND
-from .scorers import WHALES, get_diagnose
+from .scorers import get_diagnose
 
 PANEL_VERSION = 1
+
+# The panel's own membership, separate from the scorer registry
+# (`scorers.WHALES`): a whale can ship diagnosable before it joins the panel.
+# Adding one here changes every panel summary, so it is a panel-shape change
+# (owner-signed review, `panel_version` bump), not a registry edit.
+PANEL_WHALES = ("buffett", "graham", "lynch")
 
 SIGNALS = ("bullish", "neutral", "bearish")
 WALKED_AWAY = "walked_away"
@@ -104,7 +110,7 @@ def build_panel(snapshot: dict) -> dict:
         if key not in snapshot:
             raise MissingDataError(f"snapshot is missing {key!r}")
 
-    whales = {whale: _run_whale(whale, snapshot) for whale in WHALES}
+    whales = {whale: _run_whale(whale, snapshot) for whale in PANEL_WHALES}
 
     counts = {signal: 0 for signal in SIGNALS}
     counts[WALKED_AWAY] = 0
@@ -130,6 +136,6 @@ def build_panel(snapshot: dict) -> dict:
             "source": snapshot["source"],
             "market_cap_source": snapshot.get("market_cap_source"),
             "validation_checks_run": checks_run,
-            "whales": list(WHALES),
+            "whales": list(PANEL_WHALES),
         },
     }

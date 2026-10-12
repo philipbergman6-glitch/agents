@@ -3,6 +3,7 @@
 Each scorer module exposes `diagnose(snapshot: dict) -> dict` — a pure,
 deterministic function of one snapshot. Adding a whale = adding a module here
 and listing it in WHALES; fetch/CLI/snapshots are shared and untouched.
+Joining the panel is a separate step: `panel.PANEL_WHALES`.
 """
 
 from __future__ import annotations

@@ -31,7 +31,8 @@ from pathlib import Path
 import pytest
 
 from whale_engine.errors import MissingDataError
-from whale_engine.scorers import buffett, graham, lynch
+from whale_engine.panel import PANEL_WHALES
+from whale_engine.scorers import get_diagnose
 
 from conftest import SNAPSHOTS
 
@@ -39,8 +40,6 @@ REPO = Path(__file__).resolve().parents[2]
 PANEL_REVIEW = REPO / "research" / "panel-review"
 PORTFOLIO_REVIEW = REPO / "research" / "portfolio-review"
 PORTFOLIO_PROMPT = REPO / ".claude" / "agents" / "portfolio.md"
-
-SCORERS = {"buffett": buffett, "graham": graham, "lynch": lynch}
 
 # How a persona is allowed to say each warning code in plain English. A code
 # without an entry is a harness bug, not a pass: the test fails on it.
@@ -85,9 +84,11 @@ def _snapshot_for(panel: Path) -> Path:
 def _diagnoses(snapshot_path: Path) -> dict[str, dict | MissingDataError]:
     snapshot = json.loads(snapshot_path.read_text())
     out: dict[str, dict | MissingDataError] = {}
-    for name, module in SCORERS.items():
+    # Recorded narrations are panel narrations: the panel's whales, not
+    # every registered scorer.
+    for name in PANEL_WHALES:
         try:
-            out[name] = module.diagnose(snapshot)
+            out[name] = get_diagnose(name)(snapshot)
         except MissingDataError as e:
             out[name] = e
     return out

@@ -13,6 +13,10 @@ ALL_SCORABLE = ["AAPL", "KO", "MA", "GM", "F", "AAL", "CCL"]
 # GM and F resolve no debt tags in any period: Buffett/Graham degrade (D/E
 # scored 0 as a data gap), but Lynch hard-fails by rubric (crash-over-
 # silent), so they are not scorable for him.
+#
+# Every registered whale needs a roster here; a missing one fails
+# `test_every_registered_whale_has_a_scorable_roster` below rather than
+# breaking collection.
 SCORABLE = {
     "buffett": ALL_SCORABLE,
     "graham": ALL_SCORABLE,
@@ -25,7 +29,7 @@ def _dump(payload: dict) -> str:
 
 
 @pytest.mark.parametrize(
-    "whale,ticker", [(w, t) for w in WHALES for t in SCORABLE[w]]
+    "whale,ticker", [(w, t) for w in WHALES for t in SCORABLE.get(w, ())]
 )
 def test_diagnose_is_deterministic(ticker, whale):
     diagnose = get_diagnose(whale)
@@ -33,6 +37,11 @@ def test_diagnose_is_deterministic(ticker, whale):
     second = diagnose(load_snapshot(ticker))
     assert first == second
     assert _dump(first) == _dump(second)
+
+
+def test_every_registered_whale_has_a_scorable_roster():
+    assert set(SCORABLE) == set(WHALES)
+    assert all(SCORABLE[w] for w in WHALES)
 
 
 def test_cli_output_is_byte_identical(capsys):
@@ -46,14 +55,18 @@ def test_cli_output_is_byte_identical(capsys):
     assert first == second
 
 
-@pytest.mark.parametrize("whale", ["graham", "lynch"])
-def test_whale_cli_output_is_byte_identical(capsys, whale):
+# Buffett's path is covered by the alias test above.
+@pytest.mark.parametrize(
+    "whale,ticker",
+    [(w, SCORABLE[w][0]) for w in WHALES if w != "buffett" and SCORABLE.get(w)],
+)
+def test_whale_cli_output_is_byte_identical(capsys, whale, ticker):
     from whale_engine.cli import main
 
     args = [
-        "diagnose", "AAPL",
+        "diagnose", ticker,
         "--whale", whale,
-        "--snapshot", str(SNAPSHOTS / f"AAPL-{SNAPSHOT_DATE}.json"),
+        "--snapshot", str(SNAPSHOTS / f"{ticker}-{SNAPSHOT_DATE}.json"),
     ]
     assert main(args) == 0
     first = capsys.readouterr().out
