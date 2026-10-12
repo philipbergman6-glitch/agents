@@ -1,0 +1,178 @@
+{
+  "counts": {
+    "bearish": 2,
+    "bullish": 0,
+    "neutral": 0,
+    "walked_away": 1
+  },
+  "data_quality_warnings": [
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "net_income",
+        "period_ends": [
+          "2025-12-28",
+          "2024-12-29",
+          "2023-12-31"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    },
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "net_income",
+        "period_ends": [
+          "2026-04-19",
+          "2025-07-13",
+          "2025-04-20",
+          "2024-07-14",
+          "2024-04-21",
+          "2023-07-09",
+          "2023-04-16"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data. Gaps detected in quarterly data. TTM calculation may not be accurate."
+      },
+      "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data. Gaps detected in quarterly data. TTM calculation may not be accurate.",
+      "severity": "WARN"
+    },
+    {
+      "code": "share_series_unexplained_jump",
+      "context": {
+        "array": "periods",
+        "excluded_period_ends": [
+          "2023-04-16"
+        ],
+        "newer_period_end": "2023-07-09",
+        "observed_ratio": 80.61081973030518,
+        "older_period_end": "2023-04-16"
+      },
+      "message": "periods: share count jumps x80.6 into 2023-07-09 — no plausible split factor; periods 2023-04-16 excluded from per-share history",
+      "severity": "WARN"
+    },
+    {
+      "code": "share_series_unexplained_jump",
+      "context": {
+        "array": "annual_periods",
+        "excluded_period_ends": [
+          "2022-12-25",
+          "2021-12-26"
+        ],
+        "newer_period_end": "2023-12-31",
+        "observed_ratio": 80.70120652945351,
+        "older_period_end": "2022-12-25"
+      },
+      "message": "annual_periods: share count jumps x80.7 into 2023-12-31 — no plausible split factor; periods 2022-12-25, 2021-12-26 excluded from per-share history",
+      "severity": "WARN"
+    },
+    {
+      "code": "debt_unresolved",
+      "context": {
+        "fields": [
+          "short_term_debt",
+          "long_term_debt"
+        ]
+      },
+      "message": "no short- or long-term debt resolved under any known XBRL tag in any period — a debt-free filer and unresolved tags are indistinguishable, and real debt may be invisible; debt-dependent checks (debt/equity, ROIC) are scored 0 as a data gap, not treated as zero debt",
+      "severity": "WARN"
+    },
+    {
+      "code": "balance_identity",
+      "context": {
+        "array": "periods",
+        "gaps": {
+          "2023-04-16": 1.138663054070764
+        },
+        "period_ends": [
+          "2023-04-16"
+        ]
+      },
+      "message": "periods: assets != liabilities + equity beyond 8% in 1/10 periods: 2023-04-16 (gap 113.9%) — isolated historical periods (tag-definition drift, e.g. pre-IPO mezzanine equity in neither tag); ratios for those periods rest on an inconsistent balance sheet",
+      "severity": "WARN"
+    },
+    {
+      "code": "balance_identity",
+      "context": {
+        "array": "annual_periods",
+        "gaps": {
+          "2022-12-25": 1.134316292818938
+        },
+        "period_ends": [
+          "2022-12-25"
+        ]
+      },
+      "message": "annual_periods: assets != liabilities + equity beyond 8% in 1/4 periods: 2022-12-25 (gap 113.4%) — isolated historical periods (tag-definition drift, e.g. pre-IPO mezzanine equity in neither tag); ratios for those periods rest on an inconsistent balance sheet",
+      "severity": "WARN"
+    }
+  ],
+  "engine_count": "Engine count: bullish 0, neutral 0, bearish 2, walked away 1",
+  "panel_version": 1,
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "snapshot_fetched_at": "2026-07-27",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    },
+    "validation_checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
+    ],
+    "whales": [
+      "buffett",
+      "graham",
+      "lynch"
+    ]
+  },
+  "ticker": "CAVA",
+  "unanimity_suspect": true,
+  "whales": {
+    "buffett": {
+      "confidence": 59,
+      "error": null,
+      "reason": null,
+      "rubric_version": 3,
+      "score": {
+        "max": 27,
+        "max_possible": 27,
+        "pct": 0.4815,
+        "total": 13
+      },
+      "signal": "bearish",
+      "walked_away": false
+    },
+    "graham": {
+      "confidence": 85,
+      "error": null,
+      "reason": null,
+      "rubric_version": 1,
+      "score": {
+        "max": 16,
+        "max_possible": 16,
+        "pct": 0.4375,
+        "total": 7
+      },
+      "signal": "bearish",
+      "walked_away": false
+    },
+    "lynch": {
+      "confidence": null,
+      "error": "MissingDataError",
+      "reason": "CAVA: latest quarterly period 2026-04-19 is missing rubric inputs -- short_term_debt+long_term_debt (neither resolved: real debt may be invisible, refusing to score D/E)",
+      "rubric_version": 2,
+      "score": null,
+      "signal": null,
+      "walked_away": true
+    }
+  }
+}

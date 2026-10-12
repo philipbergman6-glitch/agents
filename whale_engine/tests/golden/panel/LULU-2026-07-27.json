@@ -1,0 +1,103 @@
+{
+  "counts": {
+    "bearish": 0,
+    "bullish": 2,
+    "neutral": 1,
+    "walked_away": 0
+  },
+  "data_quality_warnings": [
+    {
+      "code": "ttm_stitched",
+      "context": {
+        "array": "periods",
+        "field": "net_income",
+        "period_ends": [
+          "2026-05-03",
+          "2026-02-01",
+          "2025-11-02",
+          "2025-08-03",
+          "2025-05-04",
+          "2025-02-02",
+          "2024-10-27",
+          "2024-07-28",
+          "2024-04-28",
+          "2024-01-28"
+        ],
+        "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+      },
+      "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+      "severity": "WARN"
+    }
+  ],
+  "engine_count": "Engine count: bullish 2, neutral 1, bearish 0, walked away 0",
+  "panel_version": 1,
+  "provenance": {
+    "market_cap_source": "yfinance:fast_info.market_cap",
+    "snapshot_fetched_at": "2026-07-27",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "yfinance"
+    },
+    "validation_checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap"
+    ],
+    "whales": [
+      "buffett",
+      "graham",
+      "lynch"
+    ]
+  },
+  "ticker": "LULU",
+  "unanimity_suspect": false,
+  "whales": {
+    "buffett": {
+      "confidence": 73,
+      "error": null,
+      "reason": null,
+      "rubric_version": 3,
+      "score": {
+        "max": 27,
+        "max_possible": 27,
+        "pct": 0.8519,
+        "total": 23
+      },
+      "signal": "bullish",
+      "walked_away": false
+    },
+    "graham": {
+      "confidence": 83,
+      "error": null,
+      "reason": null,
+      "rubric_version": 1,
+      "score": {
+        "max": 16,
+        "max_possible": 16,
+        "pct": 0.5,
+        "total": 8
+      },
+      "signal": "neutral",
+      "walked_away": false
+    },
+    "lynch": {
+      "confidence": 78,
+      "error": null,
+      "reason": null,
+      "rubric_version": 2,
+      "score": {
+        "max": 15,
+        "max_possible": 15,
+        "pct": 0.8667,
+        "total": 13
+      },
+      "signal": "bullish",
+      "walked_away": false
+    }
+  }
+}

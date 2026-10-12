@@ -81,3 +81,14 @@ def _no_network(monkeypatch):
 
     monkeypatch.setattr(socket, "socket", refuse)
     monkeypatch.setattr(socket, "create_connection", refuse)
+GOLDEN_PANEL = GOLDEN / "panel"
+
+
+def load_panel_snapshot(name: str) -> dict:
+    """A pinned snapshot by its full `TICKER-DATE` name (panel goldens name
+    their date explicitly: the walk-away and artifact cases are date-specific)."""
+    return json.loads((SNAPSHOTS / f"{name}.json").read_text())
+
+
+def load_golden_panel(name: str) -> dict:
+    return json.loads((GOLDEN_PANEL / f"{name}.json").read_text())
