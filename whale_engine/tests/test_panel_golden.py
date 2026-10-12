@@ -11,9 +11,15 @@ Two layers, as with the scorers and the portfolio layer:
       uv run python tests/make_golden_panel.py
 """
 
+import importlib
+import sys
+import types
+
 import pytest
 
-from whale_engine.panel import ENGINE_COUNT_PREFIX, PANEL_VERSION, build_panel
+import whale_engine.panel
+import whale_engine.scorers
+from whale_engine.panel import ENGINE_COUNT_PREFIX, PANEL_VERSION, PANEL_WHALES, build_panel
 from whale_engine.scorers import WHALES
 
 from conftest import load_golden_panel, load_panel_snapshot
@@ -51,8 +57,8 @@ def test_summary_is_deterministic(name):
 def test_counts_cover_the_full_three_and_nothing_else(name):
     result = panel(name)
     assert result["panel_version"] == PANEL_VERSION
-    assert set(result["whales"]) == set(WHALES)
-    assert sum(result["counts"].values()) == len(WHALES)
+    assert set(result["whales"]) == set(PANEL_WHALES)
+    assert sum(result["counts"].values()) == len(PANEL_WHALES)
     assert set(result["counts"]) == {"bullish", "neutral", "bearish", "walked_away"}
     # No ratio, no weighting, no label (#89 objections 1 and 3).
     assert not {"label", "verdict", "ratio", "weighted"} & set(result)
@@ -110,7 +116,7 @@ def test_a_split_panel_is_never_suspect():
 
 def test_each_scored_whale_carries_its_own_rubric_version_and_score():
     result = panel("LULU-2026-07-27")
-    for whale in WHALES:
+    for whale in PANEL_WHALES:
         entry = result["whales"][whale]
         assert entry["walked_away"] is False
         assert entry["rubric_version"] >= 1
@@ -123,3 +129,34 @@ def test_provenance_pins_the_snapshot_not_the_clock():
     assert result["ticker"] == "KO"
     assert result["provenance"]["snapshot_fetched_at"] == "2026-07-27"
     assert "source" in result["provenance"]
+
+
+@pytest.fixture
+def fourth_scorer_registered():
+    """A stub scorer registered in the scorer registry, with the panel module
+    re-imported on top of it — what the engine looks like once a fourth whale
+    ships diagnosable but has not yet joined the panel. Running the stub is
+    itself a failure: the panel must not even call an unlisted scorer."""
+
+    def diagnose(snapshot):
+        raise AssertionError("the panel ran a scorer that is not on the panel")
+
+    stub = types.ModuleType("whale_engine.scorers.stub")
+    stub.diagnose = diagnose  # type: ignore[attr-defined]
+    stub.RUBRIC_VERSION = 1  # type: ignore[attr-defined]
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setitem(sys.modules, "whale_engine.scorers.stub", stub)
+        mp.setattr(whale_engine.scorers, "WHALES", (*WHALES, "stub"))
+        yield importlib.reload(whale_engine.panel)
+    importlib.reload(whale_engine.panel)
+
+
+def test_panel_membership_is_the_panel_list_not_the_scorer_registry(
+    fourth_scorer_registered,
+):
+    # the stub really is registered: the registry would hand it out
+    assert whale_engine.scorers.get_diagnose("stub") is not None
+    result = fourth_scorer_registered.build_panel(load_panel_snapshot("KO-2026-07-27"))
+    assert list(result["whales"]) == ["buffett", "graham", "lynch"]
+    assert result["provenance"]["whales"] == ["buffett", "graham", "lynch"]
+    assert result == load_golden_panel("KO-2026-07-27")
