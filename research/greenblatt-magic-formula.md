@@ -1,6 +1,6 @@
 # Greenblatt magic formula — definitions and absolute anchors
 
-Researched 2026-10-12 for ticket #106 (map #105). This is the Greenblatt rubric's
+Researched 2026-10-12 for ticket #106 (map #105). Owner quote-check: not done, fallback applied (see that section). This is the Greenblatt rubric's
 "reference pin": what Greenblatt himself publishes, as short page-cited quotes, plus
 what secondary sources and open-source agents add.
 
@@ -290,9 +290,16 @@ names, material for a few.
 
 ## Owner quote-check
 
-Tick each against your own copy; note edition and actual page. If you have no copy,
-say so and the doc will be amended to mark which claims rest on secondary sources
-only.
+**Status 2026-10-12: NOT DONE — fallback applied.** The owner holds a 2006 edition
+but delegated the check to the agent. The agent cannot verify against a physical
+copy, and no local copy or URL of the unofficial PDF was retained from the research
+pass, so a re-read was not possible. Every book quote in this doc therefore
+**remains UNVERIFIED**. The rubric lock (#108) must treat the "book only" claims
+listed at the end of this section as unverified anchors and say so in the review.
+The checklist stays for whenever the owner does the read; ticking it is a one-line
+amendment, no ticket needed.
+
+Tick each against your own copy; note edition and actual page.
 
 - [ ] p.15 — "whenever the long-term government bond is paying less than 6 percent, we will still assume the rate is 6 percent."
 - [ ] p.15 — "if long-term U.S. government bond rates rose to 7 percent or higher, we would use 7 percent or that higher number."
