@@ -22,5 +22,5 @@ SCORERS = {whale: import_module(f"whale_engine.scorers.{whale}") for whale in WH
 def test_diagnosis_carries_the_module_rubric_version(name):
     module = SCORERS[name]
     assert isinstance(module.RUBRIC_VERSION, int) and module.RUBRIC_VERSION >= 1
-    out = module.diagnose(load_snapshot("KO"))
+    out = module.diagnose(load_snapshot("KO", whale=name))
     assert out["rubric_version"] == module.RUBRIC_VERSION

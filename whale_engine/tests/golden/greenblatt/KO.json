@@ -1,0 +1,450 @@
+{
+  "confidence": 73,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap",
+      "restatement_402"
+    ],
+    "confidence_penalty": 10,
+    "dimensions_affected": [
+      "earnings_yield",
+      "return_on_capital"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "capital_expenditure",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "capital_expenditure TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "capital_expenditure",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "capital_expenditure TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "depreciation_and_amortization",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "depreciation_and_amortization",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "dividends_and_other_cash_distributions",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "dividends_and_other_cash_distributions TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "dividends_and_other_cash_distributions",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "dividends_and_other_cash_distributions TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "gross_profit",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "gross_profit TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "gross_profit",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "gross_profit TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "operating_income",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "return_on_capital",
+          "earnings_yield"
+        ],
+        "message": "operating_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "operating_income",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "return_on_capital",
+          "earnings_yield"
+        ],
+        "message": "operating_income TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2025-12-31",
+            "2025-09-26",
+            "2025-06-27",
+            "2025-03-28",
+            "2024-12-31",
+            "2024-09-27",
+            "2024-06-28",
+            "2024-03-29",
+            "2023-12-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2026-04-03"
+          ],
+          "warning": "TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: TTM window ends 2026-04-03, which lags the reference date 2026-12-31 by 272 days. The result may be stale — the company may have stopped reporting this concept or migrated to a different XBRL tag. Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-10-13",
+          "lag_days": 193,
+          "period_end": "2026-04-03"
+        },
+        "dimensions_affected": [
+          "return_on_capital",
+          "earnings_yield"
+        ],
+        "message": "latest fundamentals period ends 2026-04-03, 193 days before the snapshot date 2026-10-13 — the price is 193 days fresher than the books it is being compared against",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "KO: failed to slice Item 1 (Business) from 10-K 0001628280-26-010047: 'NoneType' object has no attribute 'download'",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "KO: failed to slice Item 7 (Management's Discussion and Analysis) from 10-K 0001628280-26-010047: 'NoneType' object has no attribute 'download'",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "KO: no items extracted from 10-K 0001628280-26-010047; no sidecar written",
+        "severity": "WARN"
+      }
+    ]
+  },
+  "dimensions": {
+    "earnings_yield": {
+      "details": [
+        "After-tax earnings yield 2.7% < 3.0% (0.5x the 6% bond hurdle) ✗ (+0)"
+      ],
+      "max": 5,
+      "score": 0
+    },
+    "return_on_capital": {
+      "details": [
+        "Return on capital 123.6% >= 25% ✓ (+5)"
+      ],
+      "max": 5,
+      "score": 5
+    }
+  },
+  "earnings_context": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31"
+    ],
+    "ebit_5y_average": 11256400000.0,
+    "ebit_ttm": 14462000000.0,
+    "peak_earnings": false,
+    "ttm_to_average": 1.2848
+  },
+  "flags": [],
+  "insider_activity": {
+    "cluster": null,
+    "cluster_rule": ">=3 code-P purchases by >=3 distinct insiders within any rolling 90-day window",
+    "lookback_end": "2026-10-13",
+    "lookback_start": "2025-10-13",
+    "source": "SEC Form 4 non-derivative open-market purchases (code P), via edgartools",
+    "transactions": [
+      {
+        "accession_number": "0000021344-25-000075",
+        "date": "2025-10-23",
+        "insider": "Max R Levchin",
+        "role": "Director",
+        "shares": 2864.0,
+        "value": 200113.6944
+      },
+      {
+        "accession_number": "0000021344-25-000075",
+        "date": "2025-10-23",
+        "insider": "Max R Levchin",
+        "role": "Director",
+        "shares": 4197.0,
+        "value": 295075.1214
+      },
+      {
+        "accession_number": "0000021344-25-000075",
+        "date": "2025-10-24",
+        "insider": "Max R Levchin",
+        "role": "Director",
+        "shares": 7206.0,
+        "value": 503487.5436
+      }
+    ],
+    "verdict": "no_cluster"
+  },
+  "provenance": {
+    "market_cap_source": "derived:cboe.close@2026-10-12T16:00:00xdei:EntityCommonStockSharesOutstanding@2026-04-28",
+    "quarterly_period": "2026-04-03",
+    "sic": "2080",
+    "snapshot_fetched_at": "2026-10-13",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
+    }
+  },
+  "rubric_version": 1,
+  "score": {
+    "max": 10,
+    "max_possible": 10,
+    "pct": 0.5,
+    "total": 5
+  },
+  "signal": "neutral",
+  "ticker": "KO",
+  "valuation": {
+    "asset_light": false,
+    "capital": 11703000000.0,
+    "cash_and_equivalents": 10574000000.0,
+    "earnings_yield_after_tax": 0.0272,
+    "ebit_ttm": 14462000000.0,
+    "enterprise_value": 419553896312.22003,
+    "hurdle": 0.06,
+    "long_term_debt": 39065000000.0,
+    "market_cap": 386319896312.22003,
+    "net_fixed_assets": 9522000000.0,
+    "net_fixed_assets_tag": "PropertyPlantAndEquipmentNet@2026-04-03",
+    "net_working_capital": 2181000000.0,
+    "return_on_capital": 1.2358,
+    "short_term_debt": 4743000000.0,
+    "tax_rate": 0.21
+  }
+}
