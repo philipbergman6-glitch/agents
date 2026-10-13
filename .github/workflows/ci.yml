@@ -26,5 +26,6 @@ jobs:
           uv run python tests/make_golden.py --check
           uv run python tests/make_golden_graham.py --check
           uv run python tests/make_golden_lynch.py --check
+          uv run python tests/make_golden_greenblatt.py --check
           uv run python tests/make_golden_portfolio.py --check
           uv run python tests/make_golden_panel.py --check

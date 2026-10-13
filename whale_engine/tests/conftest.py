@@ -9,6 +9,7 @@ SNAPSHOTS = Path(__file__).parent.parent / "snapshots"
 GOLDEN = Path(__file__).parent / "golden"
 GOLDEN_GRAHAM = GOLDEN / "graham"
 GOLDEN_LYNCH = GOLDEN / "lynch"
+GOLDEN_GREENBLATT = GOLDEN / "greenblatt"
 GOLDEN_PORTFOLIO = GOLDEN / "portfolio"
 
 # The portfolio layer needs price snapshots and the SIC fields, so its
@@ -16,8 +17,20 @@ GOLDEN_PORTFOLIO = GOLDEN / "portfolio"
 PORTFOLIO_SNAPSHOT_DATE = "2026-08-04"
 
 
-def load_snapshot(ticker: str) -> dict:
-    return json.loads((SNAPSHOTS / f"{ticker}-{SNAPSHOT_DATE}.json").read_text())
+# Greenblatt reads the additive net_fixed_assets field, which no snapshot
+# before this date carries: his goldens and the shared per-whale tests pin a
+# later fetch. Every other whale stays on SNAPSHOT_DATE.
+GREENBLATT_SNAPSHOT_DATE = "2026-10-13"
+WHALE_SNAPSHOT_DATE = {"greenblatt": GREENBLATT_SNAPSHOT_DATE}
+
+
+def snapshot_path(ticker: str, whale: str | None = None) -> Path:
+    date = WHALE_SNAPSHOT_DATE.get(whale or "", SNAPSHOT_DATE)
+    return SNAPSHOTS / f"{ticker}-{date}.json"
+
+
+def load_snapshot(ticker: str, whale: str | None = None) -> dict:
+    return json.loads(snapshot_path(ticker, whale).read_text())
 
 
 def load_golden(ticker: str) -> dict:
@@ -30,6 +43,10 @@ def load_golden_graham(ticker: str) -> dict:
 
 def load_golden_lynch(ticker: str) -> dict:
     return json.loads((GOLDEN_LYNCH / f"{ticker}.json").read_text())
+
+
+def load_golden_greenblatt(ticker: str) -> dict:
+    return json.loads((GOLDEN_GREENBLATT / f"{ticker}.json").read_text())
 
 
 def load_portfolio_inputs(basket: list[str]) -> tuple[dict, dict]:
