@@ -504,14 +504,14 @@
   "dimensions": {
     "earnings_yield": {
       "details": [
-        "After-tax earnings yield 2.6% < 3.0% (0.5x the 6% bond hurdle) ✗ (+0)"
+        "After-tax earnings yield 2.59% < 3.00% (0.5x the 6% bond hurdle) ✗ (+0)"
       ],
       "max": 5,
       "score": 0
     },
     "return_on_capital": {
       "details": [
-        "Return on capital 110.3% >= 25% ✓ (+5)"
+        "Return on capital 110.32% >= 25% ✓ (+5)"
       ],
       "max": 5,
       "score": 5
@@ -519,9 +519,11 @@
   },
   "earnings_context": {
     "annual_periods": [],
+    "confidence_penalty": 0,
     "ebit_5y_average": null,
     "ebit_ttm": 21767000000.0,
     "peak_earnings": false,
+    "peak_reason": null,
     "ttm_to_average": null
   },
   "flags": [],

@@ -1,5 +1,5 @@
 {
-  "confidence": 57,
+  "confidence": 50,
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -360,14 +360,14 @@
   "dimensions": {
     "earnings_yield": {
       "details": [
-        "After-tax earnings yield 3.5% >= 3.0% (0.5x the 6% bond hurdle) ✓ (+1)"
+        "After-tax earnings yield 3.51% >= 3.00% (0.5x the 6% bond hurdle) ✓ (+1)"
       ],
       "max": 5,
       "score": 1
     },
     "return_on_capital": {
       "details": [
-        "Return on capital 31.1% >= 25% ✓ (+5)"
+        "Return on capital 31.12% >= 25% ✓ (+5)"
       ],
       "max": 5,
       "score": 5
@@ -381,9 +381,11 @@
       "2022-12-31",
       "2021-12-31"
     ],
+    "confidence_penalty": 10,
     "ebit_5y_average": 55020800000.0,
     "ebit_ttm": 86927000000.0,
     "peak_earnings": true,
+    "peak_reason": "ttm_above_1.5x_average",
     "ttm_to_average": 1.5799
   },
   "flags": [

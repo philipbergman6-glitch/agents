@@ -252,7 +252,7 @@ def test_bullish_score_under_hurdle_caps_at_neutral_with_pinned_line():
     assert result["score"]["total"] == 8
     assert result["signal"] == "neutral"
     assert (
-        "Capped at neutral: after-tax earnings yield 5.0% is below the 6% bond hurdle."
+        "Capped at neutral: after-tax earnings yield 5.00% is below the 6% bond hurdle."
         in result["dimensions"]["earnings_yield"]["details"]
     )
 
@@ -328,3 +328,47 @@ def test_peak_earnings_context_is_unscored():
     assert peak["earnings_context"]["ebit_5y_average"] == 100.0
     assert flat["earnings_context"]["peak_earnings"] is False
     assert peak["score"] == flat["score"]
+    assert peak["signal"] == flat["signal"]
+    assert peak["earnings_context"]["peak_reason"] == "ttm_above_1.5x_average"
+    assert flat["earnings_context"]["peak_reason"] is None
+
+
+def test_peak_earnings_costs_confidence_not_verdict():
+    """Rubric v2 (review Q13): a peak year costs 10 confidence points — the
+    score and signal are untouched, the deduction is reported on its own
+    field, and the 50 floor still holds."""
+    peak = diagnose(_snapshot(operating_income=200.0, annual_ebit=(100.0,) * 5))
+    flat = diagnose(_snapshot(operating_income=200.0, annual_ebit=(200.0,) * 5))
+    assert peak["earnings_context"]["confidence_penalty"] == 10
+    assert flat["earnings_context"]["confidence_penalty"] == 0
+    assert peak["confidence"] == max(50, flat["confidence"] - 10)
+    assert peak["signal"] == flat["signal"]
+
+
+def test_recovery_from_negative_average_is_flagged_as_peak():
+    """Rubric v2 (review Q14, CCL): a non-positive five-year average makes the
+    ratio undefined, which used to leave the strongest not-a-normal-year
+    case silent. Now it flags peak_earnings with its own reason."""
+    rec = diagnose(_snapshot(operating_income=200.0,
+                             annual_ebit=(100.0, -300.0, -400.0, 100.0, 100.0)))
+    ec = rec["earnings_context"]
+    assert ec["ebit_5y_average"] == -80.0
+    assert ec["ttm_to_average"] is None
+    assert ec["peak_earnings"] is True
+    assert ec["peak_reason"] == "average_nonpositive"
+    assert ec["confidence_penalty"] == 10
+    # negative EBIT on a negative average is not a recovery
+    loss = diagnose(_snapshot(operating_income=-50.0,
+                              annual_ebit=(-100.0,) * 5))
+    assert loss["earnings_context"]["peak_earnings"] is False
+    assert loss["earnings_context"]["peak_reason"] is None
+
+
+def test_detail_lines_carry_two_decimals():
+    """Review Q15 (CCL): 5.98% rendered as "6.0%" read as clearing the 6%
+    hurdle. Every ratio in a detail line now shows two decimals."""
+    result = diagnose(_snapshot())
+    roc = result["dimensions"]["return_on_capital"]["details"][0]
+    ey = result["dimensions"]["earnings_yield"]["details"][0]
+    assert roc.startswith("Return on capital 22.22% >= 15%")
+    assert ey.startswith("After-tax earnings yield 7.18% >= 6.00%")
