@@ -28,6 +28,8 @@ GOLDEN_BANDS = {
     "V": ("neutral", 0.45, 0.70),     # asset-light: capital <= 0, full ROC marks, EY 2.9%
     "AAL": ("bearish", 0.00, 0.30),   # ROC 4.5%, EY 2.2%
     "F": ("bearish", 0.00, 0.30),     # negative TTM EBIT: 0 on both dimensions
+    "MU": ("bullish", 0.70, 1.00),    # ROC 112%, EY 7.2%; peak year (TTM 4.3x avg) costs confidence only
+    "CCL": ("neutral", 0.30, 0.70),   # ROC 12.6%, EY 5.98% just under the gate; recovery from a negative 5y average
 }
 
 # ticker -> substring of the walk-away reason
