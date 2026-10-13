@@ -31,6 +31,11 @@ Two period arrays, both most recent first:
   duration is the TTM as of that fiscal year end — so scorers can consume
   either array with the same code. Fields a year never filed under any known
   tag stay None; completeness rules belong to the consuming scorer.
+
+Additive balance fields (no schema_version bump, SIC precedent): snapshots
+written before a field existed simply lack it; the whale that reads it
+decides what absence means. net_fixed_assets (Greenblatt) is one — see
+NFA_TAGS for its freshest-across-tags resolution.
 """
 
 from __future__ import annotations
@@ -124,6 +129,25 @@ ST_DEBT_COMPONENT_SLOTS = [
     ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent"],
 ]
 ST_DEBT_COMPONENTS = [tag for slot in ST_DEBT_COMPONENT_SLOTS for tag in slot]
+
+# Net fixed assets (Greenblatt rubric v1, additive — no schema bump). Filed net
+# tags resolve freshest-across-tags, not first-wins: filers switch from the
+# plain tag to the ASC 842 ROU-combined one mid-history and a fixed order lets a
+# stale value win in either direction (F +20%, HUT -44%, #116). Ties go to the
+# earlier entry. The Gross - AccumDep derivation is the last resort only.
+NFA_TAGS = [
+    "PropertyPlantAndEquipmentNet",
+    "PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfter"
+    "AccumulatedDepreciationAndAmortization",
+]
+
+# Last-resort derivation when no net tag is filed (IREN after 2025-09-30):
+# Gross - AccumDep, both legs at the same instant. It competes on freshness
+# like a filed tag but loses every date tie, and the value is flagged — a
+# derivation can run ~30% off the filed net figure (GOOGL, #116).
+NFA_GROSS_TAG = "PropertyPlantAndEquipmentGross"
+NFA_ACCUM_TAG = "AccumulatedDepreciationDepletionAndAmortizationPropertyPlantAndEquipment"
+NFA_DERIVED_TAGS = [NFA_GROSS_TAG, NFA_ACCUM_TAG]
 
 # Many filers (KO, AAL, CCL) never tag Liabilities directly; derive it from the
 # balance-sheet identity when both sides are filed for the same period end.
@@ -848,12 +872,55 @@ def _freshest_share_count(
     )
 
 
+def _net_fixed_assets_at(
+    nfa_histories: dict, window_end: date
+) -> tuple[float, str, str | None] | None:
+    """Freshest net-PP&E instant at window_end across NFA_TAGS, else derived.
+
+    Returns (value, provenance, derived_note) or None. Among candidates, the
+    latest period_end wins; a date tie goes to the earlier NFA_TAGS entry, and
+    the Gross - AccumDep derivation loses every tie. derived_note is set only
+    when the derivation won.
+    """
+    candidates: list[tuple[str, int, float, str, str | None]] = []
+    for rank, tag in enumerate(NFA_TAGS):
+        history = nfa_histories.get(tag)
+        if history is None:
+            continue
+        hit = _balance_at(history, window_end)
+        if hit is not None:
+            candidates.append((hit[1], rank, hit[0], f"{tag}@{hit[1]}", None))
+
+    gross_hist = nfa_histories.get(NFA_GROSS_TAG)
+    accum_hist = nfa_histories.get(NFA_ACCUM_TAG)
+    if gross_hist is not None and accum_hist is not None:
+        gross = _balance_at(gross_hist, window_end)
+        accum = _balance_at(accum_hist, window_end)
+        if gross is not None and accum is not None and gross[1] == accum[1]:
+            end = gross[1]
+            candidates.append(
+                (
+                    end,
+                    len(NFA_TAGS),
+                    gross[0] - accum[0],
+                    f"derived:{NFA_GROSS_TAG}-{NFA_ACCUM_TAG}@{end}",
+                    "net_fixed_assets is derived (gross - accumulated depreciation), "
+                    "not a filed net figure; derivations can run ~30% off filed values",
+                )
+            )
+    if not candidates:
+        return None
+    best = max(candidates, key=lambda c: (c[0], -c[1]))
+    return best[2], best[3], best[4]
+
+
 def _build_balance(
     window_end: date,
     balance_histories: dict,
     st_debt_histories: list,
     liabilities_total_history,
     shares_proxy_history,
+    nfa_histories: dict,
 ) -> tuple[dict, dict]:
     """Point-in-time balance sheet at window_end, with per-field tag provenance.
 
@@ -861,6 +928,12 @@ def _build_balance(
     """
     balance: dict = {}
     tags_used: dict = {}
+    nfa_hit = _net_fixed_assets_at(nfa_histories, window_end)
+    balance["net_fixed_assets"] = None if nfa_hit is None else nfa_hit[0]
+    if nfa_hit is not None:
+        tags_used["net_fixed_assets"] = nfa_hit[1]
+        if nfa_hit[2] is not None:
+            tags_used["net_fixed_assets_derived"] = nfa_hit[2]
     for field, histories in balance_histories.items():
         balance[field] = None
         for tag, history in histories:
@@ -933,6 +1006,7 @@ def _fetch_annual_periods(
     st_debt_histories: list,
     liabilities_total_history,
     shares_proxy_history,
+    nfa_histories: dict,
 ) -> list[dict]:
     """Up to N_ANNUAL_PERIODS fiscal years of directly-filed annual facts.
 
@@ -987,6 +1061,7 @@ def _fetch_annual_periods(
             st_debt_histories,
             liabilities_total_history,
             shares_proxy_history,
+            nfa_histories,
         )
         tags_used.update(balance_tags)
 
@@ -1029,6 +1104,7 @@ def fetch_snapshot(
         histories["st_debt"],
         histories["liabilities_total"],
         histories["shares_proxy"],
+        histories["nfa"],
     )
     share_count_check, cover_rows = _fill_filing_fallbacks(
         ticker, company, periods, annual_periods, histories["shares_proxy"], warnings
@@ -1078,6 +1154,9 @@ def _collect_periods(ticker: str, company, today: date) -> tuple[list[dict], dic
     ]
     liabilities_total_history = _concept_history(company, LIABILITIES_TOTAL_TAG)
     shares_proxy_history = _concept_history(company, SHARES_PROXY_TAG)
+    nfa_histories = {
+        tag: _concept_history(company, tag) for tag in NFA_TAGS + NFA_DERIVED_TAGS
+    }
 
     periods: list[dict] = []
     for q in quarters:
@@ -1142,6 +1221,7 @@ def _collect_periods(ticker: str, company, today: date) -> tuple[list[dict], dic
             st_debt_histories,
             liabilities_total_history,
             shares_proxy_history,
+            nfa_histories,
         )
         tags_used.update(balance_tags)
 
@@ -1166,6 +1246,7 @@ def _collect_periods(ticker: str, company, today: date) -> tuple[list[dict], dic
         "st_debt": st_debt_histories,
         "liabilities_total": liabilities_total_history,
         "shares_proxy": shares_proxy_history,
+        "nfa": nfa_histories,
     }
     return periods, histories
 

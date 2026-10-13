@@ -144,7 +144,7 @@ def test_fetch_annual_periods_tag_drift_resolves_per_year():
     )
     balances, st_debt, liab_total, shares_proxy = _no_balances()
 
-    annual = _fetch_annual_periods("TEST", flow, balances, st_debt, liab_total, shares_proxy)
+    annual = _fetch_annual_periods("TEST", flow, balances, st_debt, liab_total, shares_proxy, {})
 
     assert [p["period_end"] for p in annual] == ["2025-02-02", "2024-01-28"]
     assert annual[0]["ttm"]["revenue"] == 1200.0
@@ -161,4 +161,4 @@ def test_fetch_annual_periods_hard_fails_without_anchor():
     flow = _flow_histories(None, [("Revenues", None)])
     balances, st_debt, liab_total, shares_proxy = _no_balances()
     with pytest.raises(FetchError):
-        _fetch_annual_periods("TEST", flow, balances, st_debt, liab_total, shares_proxy)
+        _fetch_annual_periods("TEST", flow, balances, st_debt, liab_total, shares_proxy, {})
