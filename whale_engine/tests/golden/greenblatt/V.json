@@ -314,7 +314,7 @@
   "dimensions": {
     "earnings_yield": {
       "details": [
-        "After-tax earnings yield 2.9% < 3.0% (0.5x the 6% bond hurdle) ✗ (+0)"
+        "After-tax earnings yield 2.94% < 3.00% (0.5x the 6% bond hurdle) ✗ (+0)"
       ],
       "max": 5,
       "score": 0
@@ -335,9 +335,11 @@
       "2022-09-30",
       "2021-09-30"
     ],
+    "confidence_penalty": 0,
     "ebit_5y_average": 20641200000.0,
     "ebit_ttm": 26296000000.0,
     "peak_earnings": false,
+    "peak_reason": null,
     "ttm_to_average": 1.274
   },
   "flags": [
@@ -362,7 +364,7 @@
       "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
     }
   },
-  "rubric_version": 1,
+  "rubric_version": 2,
   "score": {
     "max": 10,
     "max_possible": 10,

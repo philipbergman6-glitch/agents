@@ -9,6 +9,7 @@ from whale_engine.scorers.greenblatt import (
     compute_confidence,
     compute_signal,
     diagnose,
+    penalized_dimensions,
 )
 
 # ---------------------------------------------------------------------------
@@ -120,6 +121,38 @@ def test_confidence_distance_rule():
     assert compute_confidence(0.0, affected_dimensions=[]) == 100
 
 
+def test_penalized_dimensions_skip_generic_stitched_warning():
+    """Rubric v2: the generic ttm_stitched WARN is the normal state of EDGAR
+    TTM data (it fires on operating_income for every pinned name and
+    saturated the two-dimension penalty at -10). It keeps its
+    dimensions_affected on the warning but no longer costs confidence; the
+    escalations (stale window, stale-vs-price, restatement) and missing-input
+    flags still do."""
+    stitched = {"code": "ttm_stitched", "context": {"field": "operating_income"},
+                "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    stale = {"code": "ttm_stale_window", "context": {"field": "operating_income"},
+             "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    price_stale = {"code": "fundamentals_stale_vs_price", "context": {},
+                   "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    assert penalized_dimensions([stitched], []) == []
+    assert penalized_dimensions([stale], []) == ["earnings_yield", "return_on_capital"]
+    assert penalized_dimensions([price_stale], []) == ["earnings_yield", "return_on_capital"]
+    assert penalized_dimensions([stitched], [
+        "long_term_debt: missing, treated as 0 in enterprise value"]) == ["earnings_yield"]
+
+
+def test_diagnose_generic_stitched_warning_costs_no_confidence():
+    snap = _snapshot()
+    snap["periods"][0]["tags_used"]["operating_income_warning"] = (
+        "Some quarters were derived from YTD or annual facts.")
+    result = diagnose(snap)
+    codes = [w["code"] for w in result["data_quality"]["warnings"]]
+    assert "ttm_stitched" in codes
+    assert result["data_quality"]["confidence_penalty"] == 0
+    assert result["data_quality"]["dimensions_affected"] == []
+    assert result["confidence"] == diagnose(_snapshot())["confidence"]
+
+
 def test_confidence_penalty_per_affected_dimension_floors_at_fifty():
     assert compute_confidence(1.0, affected_dimensions=["earnings_yield"]) == 95
     assert compute_confidence(
@@ -196,7 +229,7 @@ def test_diagnose_scores_a_clean_snapshot():
     ROC 22.2% (+3); EV = 1000 + 50 + 150 - 100 = 1100, after-tax EY
     79/1100 = 7.2% (+5): 8/10 bullish, EY clears the hurdle."""
     result = diagnose(_snapshot())
-    assert result["rubric_version"] == 1
+    assert result["rubric_version"] == 2
     assert result["score"] == {"total": 8, "max": 10, "max_possible": 10, "pct": 0.8}
     assert result["signal"] == "bullish"
     assert result["dimensions"]["return_on_capital"]["score"] == 3
@@ -219,7 +252,7 @@ def test_bullish_score_under_hurdle_caps_at_neutral_with_pinned_line():
     assert result["score"]["total"] == 8
     assert result["signal"] == "neutral"
     assert (
-        "Capped at neutral: after-tax earnings yield 5.0% is below the 6% bond hurdle."
+        "Capped at neutral: after-tax earnings yield 5.00% is below the 6% bond hurdle."
         in result["dimensions"]["earnings_yield"]["details"]
     )
 
@@ -295,3 +328,47 @@ def test_peak_earnings_context_is_unscored():
     assert peak["earnings_context"]["ebit_5y_average"] == 100.0
     assert flat["earnings_context"]["peak_earnings"] is False
     assert peak["score"] == flat["score"]
+    assert peak["signal"] == flat["signal"]
+    assert peak["earnings_context"]["peak_reason"] == "ttm_above_1.5x_average"
+    assert flat["earnings_context"]["peak_reason"] is None
+
+
+def test_peak_earnings_costs_confidence_not_verdict():
+    """Rubric v2 (review Q13): a peak year costs 10 confidence points — the
+    score and signal are untouched, the deduction is reported on its own
+    field, and the 50 floor still holds."""
+    peak = diagnose(_snapshot(operating_income=200.0, annual_ebit=(100.0,) * 5))
+    flat = diagnose(_snapshot(operating_income=200.0, annual_ebit=(200.0,) * 5))
+    assert peak["earnings_context"]["confidence_penalty"] == 10
+    assert flat["earnings_context"]["confidence_penalty"] == 0
+    assert peak["confidence"] == max(50, flat["confidence"] - 10)
+    assert peak["signal"] == flat["signal"]
+
+
+def test_recovery_from_negative_average_is_flagged_as_peak():
+    """Rubric v2 (review Q14, CCL): a non-positive five-year average makes the
+    ratio undefined, which used to leave the strongest not-a-normal-year
+    case silent. Now it flags peak_earnings with its own reason."""
+    rec = diagnose(_snapshot(operating_income=200.0,
+                             annual_ebit=(100.0, -300.0, -400.0, 100.0, 100.0)))
+    ec = rec["earnings_context"]
+    assert ec["ebit_5y_average"] == -80.0
+    assert ec["ttm_to_average"] is None
+    assert ec["peak_earnings"] is True
+    assert ec["peak_reason"] == "average_nonpositive"
+    assert ec["confidence_penalty"] == 10
+    # negative EBIT on a negative average is not a recovery
+    loss = diagnose(_snapshot(operating_income=-50.0,
+                              annual_ebit=(-100.0,) * 5))
+    assert loss["earnings_context"]["peak_earnings"] is False
+    assert loss["earnings_context"]["peak_reason"] is None
+
+
+def test_detail_lines_carry_two_decimals():
+    """Review Q15 (CCL): 5.98% rendered as "6.0%" read as clearing the 6%
+    hurdle. Every ratio in a detail line now shows two decimals."""
+    result = diagnose(_snapshot())
+    roc = result["dimensions"]["return_on_capital"]["details"][0]
+    ey = result["dimensions"]["earnings_yield"]["details"][0]
+    assert roc.startswith("Return on capital 22.22% >= 15%")
+    assert ey.startswith("After-tax earnings yield 7.18% >= 6.00%")

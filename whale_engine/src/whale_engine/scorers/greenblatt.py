@@ -1,6 +1,6 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
-Joel Greenblatt magic-formula rubric v1 (max 10 = return on capital 5 +
+Joel Greenblatt magic-formula rubric v2 (max 10 = return on capital 5 +
 earnings yield 5), scoring ONE company on ABSOLUTE tests — not the book's
 ranked universe. The anchor is Greenblatt's own single-company rule: compare
 the earnings yield to a risk-free bond floor (The Little Book That Beats the
@@ -9,8 +9,9 @@ research doc). Decisions locked on the rubric ticket:
 
 - EBIT = quarterly TTM `operating_income`, no normalization in the score; an
   unscored `earnings_context` block compares TTM to the 5-year average of
-  annual EBIT and flags `peak_earnings` when TTM > 1.5x (p.104 caveat,
-  narrated, never scored)
+  annual EBIT and flags `peak_earnings` when TTM > 1.5x, or when the
+  average is non-positive while TTM is positive (p.104 caveat, narrated,
+  never scored; rubric v2 charges it 10 confidence points — review Q13/Q14)
 - return on capital = EBIT / (net working capital + net fixed assets):
   all cash is excess (removed from capital), NWC excludes short-term debt,
   NFA is the additive `net_fixed_assets` snapshot field resolved
@@ -32,7 +33,15 @@ research doc). Decisions locked on the rubric ticket:
   fails it caps at neutral with a pinned detail line
 - confidence: Graham distance rule (50–100, saturating at 0.30) minus 5 per
   WARN-affected dimension, floor 50 (Buffett v3 B2); a capped signal
-  measures the same way (Lynch precedent)
+  measures the same way (Lynch precedent). Rubric v2 (judgment review,
+  owner-signed 2026-10-13): the generic `ttm_stitched` WARN is exempt from
+  the penalty — it fires on `operating_income` for every pinned name and
+  with only two dimensions saturated the deduction at -10 on every
+  diagnosis, discriminating nothing. It keeps its dimensions_affected on
+  the warning (truth-in-scoring). The escalations (`ttm_stale_window`,
+  `fundamentals_stale_vs_price`, `restatement_402`, manual market cap) and
+  the missing-input flags still cost confidence. Detail lines show two
+  decimals (5.98% must not read as 6.0% against a 6% hurdle — review Q15).
 - walk away (MissingDataError, reason string) on SIC 6000–6499, 6700–6799
   (banks, S&L, insurance, brokers, funds) and 4900–4999 (utilities) — EBIT
   and working capital mean nothing there. SIC 6199 (non-depository credit,
@@ -57,7 +66,7 @@ from ..errors import MissingDataError
 
 # Bumping this needs a signed judgment review, like the other rubrics: every
 # diagnosis carries it so a narration can be traced to the exact rule set.
-RUBRIC_VERSION = 1
+RUBRIC_VERSION = 2
 
 MAX_SCORE = 10
 
@@ -65,6 +74,10 @@ BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.30
 MAX_BOUNDARY_DIST = 0.30
 DATA_QUALITY_PENALTY = 5  # per WARN-affected dimension (Buffett v3 B2)
+# WARN codes that describe the normal state of EDGAR TTM data rather than a
+# degradation; they ride data_quality with dimensions_affected but do not
+# cost confidence (rubric v2).
+PENALTY_EXEMPT_CODES = frozenset({"ttm_stitched"})
 
 ROC_HIGH = 0.25  # declared repurpose of the p.136 ROA screener bar
 ROC_MID = 0.15  # owner judgment, unsourced
@@ -76,6 +89,7 @@ HURDLE = 0.06
 EY_TIERS = ((1.0, 5), (0.75, 3), (0.5, 1))  # (fraction of hurdle, points)
 
 PEAK_EARNINGS_RATIO = 1.5  # TTM EBIT vs 5-year annual average (p.104, unscored)
+PEAK_EARNINGS_PENALTY = 10  # confidence only, never the score (rubric v2, review Q13)
 EBIT_HISTORY_YEARS = 5
 
 # SIC ranges where EBIT and working capital say nothing: walk away, by charter.
@@ -165,15 +179,15 @@ def analyze_return_on_capital(ebit: float, capital: float) -> dict:
     roc = ebit / capital
     if roc >= ROC_HIGH:
         score = 5
-        details.append(f"Return on capital {roc:.1%} >= {ROC_HIGH:.0%} ✓ (+5)")
+        details.append(f"Return on capital {roc:.2%} >= {ROC_HIGH:.0%} ✓ (+5)")
     elif roc >= ROC_MID:
         score = 3
-        details.append(f"Return on capital {roc:.1%} >= {ROC_MID:.0%} ✓ (+3)")
+        details.append(f"Return on capital {roc:.2%} >= {ROC_MID:.0%} ✓ (+3)")
     elif roc > 0:
         score = 1
-        details.append(f"Return on capital {roc:.1%} > 0% ✓ (+1)")
+        details.append(f"Return on capital {roc:.2%} > 0% ✓ (+1)")
     else:
-        details.append(f"Return on capital {roc:.1%} <= 0% ✗ (+0)")
+        details.append(f"Return on capital {roc:.2%} <= 0% ✗ (+0)")
     return {
         "score": score,
         "max": 5,
@@ -199,7 +213,7 @@ def analyze_earnings_yield(ebit: float, enterprise_value: float) -> dict:
     ey = after_tax_ebit / enterprise_value
     if ebit <= 0:
         details.append(
-            f"EBIT {ebit:,.0f} <= 0: after-tax earnings yield {ey:.1%} has nothing "
+            f"EBIT {ebit:,.0f} <= 0: after-tax earnings yield {ey:.2%} has nothing "
             f"to clear the {HURDLE:.0%} hurdle with ✗ (+0)"
         )
         return {"score": 0, "max": 5, "details": details, "earnings_yield_after_tax": ey}
@@ -209,13 +223,13 @@ def analyze_earnings_yield(ebit: float, enterprise_value: float) -> dict:
         if ey >= bar:
             score = points
             details.append(
-                f"After-tax earnings yield {ey:.1%} >= {bar:.1%} "
+                f"After-tax earnings yield {ey:.2%} >= {bar:.2%} "
                 f"({fraction:g}x the {HURDLE:.0%} bond hurdle) ✓ (+{points})"
             )
             break
     else:
         details.append(
-            f"After-tax earnings yield {ey:.1%} < {HURDLE * EY_TIERS[-1][0]:.1%} "
+            f"After-tax earnings yield {ey:.2%} < {HURDLE * EY_TIERS[-1][0]:.2%} "
             f"({EY_TIERS[-1][0]:g}x the {HURDLE:.0%} bond hurdle) ✗ (+0)"
         )
     return {"score": score, "max": 5, "details": details, "earnings_yield_after_tax": ey}
@@ -238,13 +252,31 @@ def compute_signal(score_pct: float, ey_after_tax: float | None) -> str:
     return "neutral"
 
 
-def compute_confidence(score_pct: float, affected_dimensions: list[str]) -> int:
+def penalized_dimensions(warnings: list[dict], flags: list[str]) -> list[str]:
+    """Scored dimensions that cost confidence: those named by any WARN whose
+    code is not penalty-exempt, plus those fed by a missing-input flag
+    (`<field>: missing, ...`). Sorted for determinism."""
+    affected: set[str] = set()
+    for w in warnings:
+        if w.get("code") in PENALTY_EXEMPT_CODES:
+            continue
+        affected |= set(w.get("dimensions_affected", []))
+    for fl in flags:
+        prefix, _, _rest = fl.partition(": ")
+        affected |= set(_FIELD_DIMENSIONS.get(prefix, []))
+    return sorted(affected)
+
+
+def compute_confidence(
+    score_pct: float, affected_dimensions: list[str], extra_penalty: int = 0
+) -> int:
     """50–100 by distance from the nearest signal boundary (saturating at
-    0.30), minus 5 per WARN-affected dimension, floor 50 (Buffett v3 B2).
+    0.30), minus 5 per WARN-affected dimension, minus any extra penalty
+    (the peak-earnings deduction, rubric v2), floor 50 (Buffett v3 B2).
     A capped signal measures the same way (Lynch precedent)."""
     dist = min(abs(score_pct - BULLISH_SCORE), abs(score_pct - BEARISH_SCORE))
     conf = round(50 + 50 * min(1.0, dist / MAX_BOUNDARY_DIST))
-    return max(50, conf - DATA_QUALITY_PENALTY * len(affected_dimensions))
+    return max(50, conf - DATA_QUALITY_PENALTY * len(affected_dimensions) - extra_penalty)
 
 
 # ---------------------------------------------------------------------------
@@ -299,7 +331,12 @@ def _validate(ticker, snapshot: dict, latest: dict) -> None:
 
 def earnings_context(ebit_ttm: float, annual: list) -> dict:
     """Unscored: TTM EBIT against the average of the last EBIT_HISTORY_YEARS
-    filed fiscal years (Greenblatt's normal-earnings caveat, narrated only)."""
+    filed fiscal years (Greenblatt's normal-earnings caveat). Never moves the
+    score or signal. Rubric v2: `peak_earnings` costs PEAK_EARNINGS_PENALTY
+    confidence points (reported on `confidence_penalty` here), and is also
+    raised when the average is non-positive while TTM EBIT is positive — a
+    recovery from losses is the strongest not-a-normal-year case and the
+    undefined ratio used to leave it silent (`peak_reason` names which)."""
     history = [
         p["ttm"]["operating_income"]
         for p in annual
@@ -311,15 +348,25 @@ def earnings_context(ebit_ttm: float, annual: list) -> dict:
             "ebit_5y_average": None,
             "ttm_to_average": None,
             "peak_earnings": False,
+            "peak_reason": None,
+            "confidence_penalty": 0,
             "annual_periods": [],
         }
     average = sum(history) / len(history)
     ratio = None if average <= 0 else ebit_ttm / average
+    if ratio is not None and ratio > PEAK_EARNINGS_RATIO:
+        reason = "ttm_above_1.5x_average"
+    elif average <= 0 and ebit_ttm > 0:
+        reason = "average_nonpositive"
+    else:
+        reason = None
     return {
         "ebit_ttm": ebit_ttm,
         "ebit_5y_average": average,
         "ttm_to_average": None if ratio is None else round(ratio, 4),
-        "peak_earnings": ratio is not None and ratio > PEAK_EARNINGS_RATIO,
+        "peak_earnings": reason is not None,
+        "peak_reason": reason,
+        "confidence_penalty": PEAK_EARNINGS_PENALTY if reason is not None else 0,
         "annual_periods": [
             p["period_end"]
             for p in annual
@@ -422,17 +469,13 @@ def diagnose(snapshot: dict) -> dict:
     if score_pct >= BULLISH_SCORE and signal != "bullish":
         # Pinned line: the persona copies it verbatim.
         dimensions["earnings_yield"]["details"].append(
-            f"Capped at neutral: after-tax earnings yield {ey_after_tax:.1%} is "
+            f"Capped at neutral: after-tax earnings yield {ey_after_tax:.2%} is "
             f"below the {HURDLE:.0%} bond hurdle."
         )
 
     data_quality = _link_data_quality(validation.data_quality(findings, checks_run))
-    affected: set[str] = set()
-    for w in data_quality["warnings"]:
-        affected |= set(w["dimensions_affected"])
-    for fl in flags:
-        prefix, _, _rest = fl.partition(": ")
-        affected |= set(_FIELD_DIMENSIONS.get(prefix, []))
+    affected = penalized_dimensions(data_quality["warnings"], flags)
+    context = earnings_context(ebit, annual)
 
     def _r(v):
         return None if v is None else round(v, 4)
@@ -441,7 +484,7 @@ def diagnose(snapshot: dict) -> dict:
         "ticker": snapshot["ticker"],
         "rubric_version": RUBRIC_VERSION,
         "signal": signal,
-        "confidence": compute_confidence(score_pct, sorted(affected)),
+        "confidence": compute_confidence(score_pct, affected, context["confidence_penalty"]),
         "score": {
             "total": total,
             "max": MAX_SCORE,
@@ -466,11 +509,11 @@ def diagnose(snapshot: dict) -> dict:
             "tax_rate": TAX_RATE,
             "hurdle": HURDLE,
         },
-        "earnings_context": earnings_context(ebit, annual),
+        "earnings_context": context,
         "flags": flags,
         "data_quality": {
             **data_quality,
-            "dimensions_affected": sorted(affected),
+            "dimensions_affected": affected,
             "confidence_penalty": DATA_QUALITY_PENALTY * len(affected),
         },
         "provenance": {

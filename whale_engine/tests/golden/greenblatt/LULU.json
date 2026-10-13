@@ -1,5 +1,5 @@
 {
-  "confidence": 90,
+  "confidence": 95,
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -12,10 +12,9 @@
       "manual_market_cap",
       "restatement_402"
     ],
-    "confidence_penalty": 10,
+    "confidence_penalty": 5,
     "dimensions_affected": [
-      "earnings_yield",
-      "return_on_capital"
+      "earnings_yield"
     ],
     "errors": [],
     "warnings": [
@@ -206,14 +205,14 @@
   "dimensions": {
     "earnings_yield": {
       "details": [
-        "After-tax earnings yield 18.2% >= 6.0% (1x the 6% bond hurdle) ✓ (+5)"
+        "After-tax earnings yield 18.16% >= 6.00% (1x the 6% bond hurdle) ✓ (+5)"
       ],
       "max": 5,
       "score": 5
     },
     "return_on_capital": {
       "details": [
-        "Return on capital 70.7% >= 25% ✓ (+5)"
+        "Return on capital 70.66% >= 25% ✓ (+5)"
       ],
       "max": 5,
       "score": 5
@@ -227,9 +226,11 @@
       "2023-01-29",
       "2022-01-30"
     ],
+    "confidence_penalty": 0,
     "ebit_5y_average": 1902150200.0,
     "ebit_ttm": 1978775000.0,
     "peak_earnings": false,
+    "peak_reason": null,
     "ttm_to_average": 1.0403
   },
   "flags": [
@@ -279,7 +280,7 @@
       "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
     }
   },
-  "rubric_version": 1,
+  "rubric_version": 2,
   "score": {
     "max": 10,
     "max_possible": 10,

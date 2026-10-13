@@ -84,4 +84,4 @@ def test_peak_earnings_context_is_narrated_not_scored():
 
 
 def test_rubric_version_pinned():
-    assert diagnose(load_snapshot("LULU", whale="greenblatt"))["rubric_version"] == 1
+    assert diagnose(load_snapshot("LULU", whale="greenblatt"))["rubric_version"] == 2
