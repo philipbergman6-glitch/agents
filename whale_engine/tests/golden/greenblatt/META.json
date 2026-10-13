@@ -1,0 +1,437 @@
+{
+  "confidence": 57,
+  "data_quality": {
+    "checks_run": [
+      "ttm_stitched_warnings",
+      "market_cap_bounds",
+      "share_renormalization",
+      "sector_applicability",
+      "tags_alignment_and_zero_marker",
+      "invariants",
+      "fundamentals_staleness",
+      "manual_market_cap",
+      "restatement_402"
+    ],
+    "confidence_penalty": 10,
+    "dimensions_affected": [
+      "earnings_yield",
+      "return_on_capital"
+    ],
+    "errors": [],
+    "warnings": [
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "capital_expenditure",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "capital_expenditure TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "depreciation_and_amortization",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "depreciation_and_amortization TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "dividends_and_other_cash_distributions",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "dividends_and_other_cash_distributions TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "net_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "net_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "operating_income",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [
+          "return_on_capital",
+          "earnings_yield"
+        ],
+        "message": "operating_income TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "ttm_stitched",
+        "context": {
+          "array": "periods",
+          "field": "revenue",
+          "period_ends": [
+            "2026-06-30",
+            "2026-03-31",
+            "2025-12-31",
+            "2025-09-30",
+            "2025-06-30",
+            "2025-03-31",
+            "2024-12-31",
+            "2024-09-30",
+            "2024-06-30",
+            "2024-03-31"
+          ],
+          "warning": "Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data."
+        },
+        "dimensions_affected": [],
+        "message": "revenue TTM values are edgartools-stitched, not directly filed: Some quarters were derived from YTD or annual facts. These are calculated values, not directly reported quarterly data.",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-03-31 by 3013 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-03-31"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-03-31 by 3013 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-06-30 by 3104 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-06-30"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-06-30 by 3104 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-09-30 by 3196 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-09-30"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-09-30 by 3196 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-12-31 by 3288 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2024-12-31"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2024-12-31 by 3288 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-03-31 by 3378 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-03-31"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-03-31 by 3378 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-06-30 by 3469 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-06-30"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-06-30 by 3469 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-09-30 by 3561 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-09-30"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-09-30 by 3561 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-12-31 by 3653 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2025-12-31"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2025-12-31 by 3653 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2026-03-31 by 3743 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2026-03-31"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2026-03-31 by 3743 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "stale_leg_dropped",
+        "context": {
+          "array": "periods",
+          "field": "issuance_or_purchase_of_equity_shares",
+          "note": "ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2026-06-30 by 3834 days (> 185); stale leg dropped from the combine",
+          "period_ends": [
+            "2026-06-30"
+          ]
+        },
+        "dimensions_affected": [],
+        "message": "issuance_or_purchase_of_equity_shares: a stale leg was dropped from this multi-leg combine at fetch time — ProceedsFromIssuanceOfCommonStock: TTM window ends 2015-12-31, lagging the period end 2026-06-30 by 3834 days (> 185); stale leg dropped from the combine",
+        "severity": "WARN"
+      },
+      {
+        "code": "fundamentals_stale_vs_price",
+        "context": {
+          "fetched_at": "2026-10-13",
+          "lag_days": 105,
+          "period_end": "2026-06-30"
+        },
+        "dimensions_affected": [
+          "return_on_capital",
+          "earnings_yield"
+        ],
+        "message": "latest fundamentals period ends 2026-06-30, 105 days before the snapshot date 2026-10-13 — the price is 105 days fresher than the books it is being compared against",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "META: failed to slice Item 1 (Business) from 10-K 0001628280-26-003942: 'NoneType' object has no attribute 'download'",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "META: failed to slice Item 7 (Management's Discussion and Analysis) from 10-K 0001628280-26-003942: 'NoneType' object has no attribute 'download'",
+        "severity": "WARN"
+      },
+      {
+        "code": "filings_sidecar_extraction_failed",
+        "dimensions_affected": [],
+        "message": "META: no items extracted from 10-K 0001628280-26-003942; no sidecar written",
+        "severity": "WARN"
+      }
+    ]
+  },
+  "dimensions": {
+    "earnings_yield": {
+      "details": [
+        "After-tax earnings yield 3.5% >= 3.0% (0.5x the 6% bond hurdle) ✓ (+1)"
+      ],
+      "max": 5,
+      "score": 1
+    },
+    "return_on_capital": {
+      "details": [
+        "Return on capital 31.1% >= 25% ✓ (+5)"
+      ],
+      "max": 5,
+      "score": 5
+    }
+  },
+  "earnings_context": {
+    "annual_periods": [
+      "2025-12-31",
+      "2024-12-31",
+      "2023-12-31",
+      "2022-12-31",
+      "2021-12-31"
+    ],
+    "ebit_5y_average": 55020800000.0,
+    "ebit_ttm": 86927000000.0,
+    "peak_earnings": true,
+    "ttm_to_average": 1.5799
+  },
+  "flags": [
+    "short_term_debt: missing, treated as 0 in net working capital and enterprise value (long_term_debt resolved)"
+  ],
+  "insider_activity": {
+    "cluster": null,
+    "cluster_rule": ">=3 code-P purchases by >=3 distinct insiders within any rolling 90-day window",
+    "lookback_end": "2026-10-13",
+    "lookback_start": "2025-10-13",
+    "source": "SEC Form 4 non-derivative open-market purchases (code P), via edgartools",
+    "transactions": [],
+    "verdict": "no_cluster"
+  },
+  "provenance": {
+    "market_cap_source": "derived:cboe.close@2026-10-12T15:59:59xproxy:WeightedAverageNumberOfSharesOutstandingBasic@2026-06-30",
+    "quarterly_period": "2026-06-30",
+    "sic": "7370",
+    "snapshot_fetched_at": "2026-10-13",
+    "source": {
+      "fundamentals": "SEC EDGAR via edgartools 5.43.0",
+      "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
+    }
+  },
+  "rubric_version": 1,
+  "score": {
+    "max": 10,
+    "max_possible": 10,
+    "pct": 0.6,
+    "total": 6
+  },
+  "signal": "neutral",
+  "ticker": "META",
+  "valuation": {
+    "asset_light": false,
+    "capital": 279358000000.0,
+    "cash_and_equivalents": 15462000000.0,
+    "earnings_yield_after_tax": 0.0351,
+    "ebit_ttm": 86927000000.0,
+    "enterprise_value": 1957549280000.0,
+    "hurdle": 0.06,
+    "long_term_debt": 83664000000.0,
+    "market_cap": 1889347280000.0,
+    "net_fixed_assets": 225724000000.0,
+    "net_fixed_assets_tag": "PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization@2026-06-30",
+    "net_working_capital": 53634000000.0,
+    "return_on_capital": 0.3112,
+    "short_term_debt": 0.0,
+    "tax_rate": 0.21
+  }
+}

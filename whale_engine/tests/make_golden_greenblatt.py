@@ -11,7 +11,7 @@ from whale_engine.scorers.greenblatt import diagnose
 from conftest import GOLDEN_GREENBLATT, load_snapshot
 from golden_io import check_flag, emit, finish
 
-GOLDEN_TICKERS = ["LULU", "META", "JNJ", "KO", "AAL"]
+GOLDEN_TICKERS = ["LULU", "META", "JNJ", "KO", "V", "AAL", "F"]
 
 if __name__ == "__main__":
     check = check_flag()

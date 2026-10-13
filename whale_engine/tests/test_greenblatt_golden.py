@@ -2,7 +2,7 @@
 
 Same two layers as the other scorers' goldens:
 - semantic bands: a high-return name at a real earnings yield must read
-  bullish while a thin-margin leveraged airline reads bearish — the intent,
+  bullish while a thin-margin leveraged airline and a loss-maker read bearish — the intent,
   robust to deliberate rubric retuning;
 - exact golden output: the full diagnosis must match the committed golden
   JSON, so *any* unintended scoring change fails loudly. Retuning the rubric
@@ -21,17 +21,18 @@ from conftest import load_golden_greenblatt, load_snapshot
 
 # ticker -> (expected signal, min score pct, max score pct)
 GOLDEN_BANDS = {
-    "LULU": ("bullish", 0.70, 1.00),
-    "META": ("neutral", 0.70, 1.00),   # 8/10 capped: after-tax EY under the 6% hurdle
-    "JNJ": ("neutral", 0.30, 0.70),
-    "KO": ("neutral", 0.30, 0.70),
-    "AAL": ("bearish", 0.00, 0.30),
+    "LULU": ("bullish", 0.70, 1.00),  # ROC 71%, after-tax EY 18%: the formula's ideal
+    "META": ("neutral", 0.45, 0.70),  # ROC 31% but after-tax EY 3.5%, peak_earnings flagged
+    "JNJ": ("neutral", 0.30, 0.70),   # ROC 110% on thin tangible capital, EY 2.6%
+    "KO": ("neutral", 0.30, 0.70),    # ROC 124%, EY 2.7%
+    "V": ("neutral", 0.45, 0.70),     # asset-light: capital <= 0, full ROC marks, EY 2.9%
+    "AAL": ("bearish", 0.00, 0.30),   # ROC 4.5%, EY 2.2%
+    "F": ("bearish", 0.00, 0.30),     # negative TTM EBIT: 0 on both dimensions
 }
 
 # ticker -> substring of the walk-away reason
 WALK_AWAYS = {
-    "JPM": "walks away",                 # SIC 6021: bank
-    "F": "short_term_debt+long_term_debt",  # neither debt tag resolves: EV unknowable
+    "JPM": "walks away",  # SIC 6021: bank
 }
 
 
@@ -61,12 +62,25 @@ def test_pre_field_snapshot_walks_away_with_refetch_message():
         diagnose(load_snapshot("KO"))
 
 
-def test_capped_name_carries_the_pinned_line():
+def test_asset_light_name_scores_without_a_ratio():
+    result = diagnose(load_snapshot("V", whale="greenblatt"))
+    assert result["valuation"]["asset_light"] is True
+    assert result["valuation"]["return_on_capital"] is None
+    assert result["dimensions"]["return_on_capital"]["score"] == 5
+
+
+def test_negative_ebit_name_is_bearish_not_a_walk_away():
+    result = diagnose(load_snapshot("F", whale="greenblatt"))
+    assert result["score"]["total"] == 0
+    assert result["valuation"]["ebit_ttm"] < 0
+
+
+def test_peak_earnings_context_is_narrated_not_scored():
+    """META's TTM EBIT runs > 1.5x its 5-year average: flagged in the
+    context block, invisible to the score."""
     result = diagnose(load_snapshot("META", whale="greenblatt"))
-    assert any(
-        d.startswith("Capped at neutral: after-tax earnings yield")
-        for d in result["dimensions"]["earnings_yield"]["details"]
-    )
+    assert result["earnings_context"]["peak_earnings"] is True
+    assert result["score"]["total"] == 6
 
 
 def test_rubric_version_pinned():
