@@ -9,6 +9,7 @@ from whale_engine.scorers.greenblatt import (
     compute_confidence,
     compute_signal,
     diagnose,
+    penalized_dimensions,
 )
 
 # ---------------------------------------------------------------------------
@@ -120,6 +121,38 @@ def test_confidence_distance_rule():
     assert compute_confidence(0.0, affected_dimensions=[]) == 100
 
 
+def test_penalized_dimensions_skip_generic_stitched_warning():
+    """Rubric v2: the generic ttm_stitched WARN is the normal state of EDGAR
+    TTM data (it fires on operating_income for every pinned name and
+    saturated the two-dimension penalty at -10). It keeps its
+    dimensions_affected on the warning but no longer costs confidence; the
+    escalations (stale window, stale-vs-price, restatement) and missing-input
+    flags still do."""
+    stitched = {"code": "ttm_stitched", "context": {"field": "operating_income"},
+                "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    stale = {"code": "ttm_stale_window", "context": {"field": "operating_income"},
+             "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    price_stale = {"code": "fundamentals_stale_vs_price", "context": {},
+                   "dimensions_affected": ["return_on_capital", "earnings_yield"]}
+    assert penalized_dimensions([stitched], []) == []
+    assert penalized_dimensions([stale], []) == ["earnings_yield", "return_on_capital"]
+    assert penalized_dimensions([price_stale], []) == ["earnings_yield", "return_on_capital"]
+    assert penalized_dimensions([stitched], [
+        "long_term_debt: missing, treated as 0 in enterprise value"]) == ["earnings_yield"]
+
+
+def test_diagnose_generic_stitched_warning_costs_no_confidence():
+    snap = _snapshot()
+    snap["periods"][0]["tags_used"]["operating_income_warning"] = (
+        "Some quarters were derived from YTD or annual facts.")
+    result = diagnose(snap)
+    codes = [w["code"] for w in result["data_quality"]["warnings"]]
+    assert "ttm_stitched" in codes
+    assert result["data_quality"]["confidence_penalty"] == 0
+    assert result["data_quality"]["dimensions_affected"] == []
+    assert result["confidence"] == diagnose(_snapshot())["confidence"]
+
+
 def test_confidence_penalty_per_affected_dimension_floors_at_fifty():
     assert compute_confidence(1.0, affected_dimensions=["earnings_yield"]) == 95
     assert compute_confidence(
@@ -196,7 +229,7 @@ def test_diagnose_scores_a_clean_snapshot():
     ROC 22.2% (+3); EV = 1000 + 50 + 150 - 100 = 1100, after-tax EY
     79/1100 = 7.2% (+5): 8/10 bullish, EY clears the hurdle."""
     result = diagnose(_snapshot())
-    assert result["rubric_version"] == 1
+    assert result["rubric_version"] == 2
     assert result["score"] == {"total": 8, "max": 10, "max_possible": 10, "pct": 0.8}
     assert result["signal"] == "bullish"
     assert result["dimensions"]["return_on_capital"]["score"] == 3

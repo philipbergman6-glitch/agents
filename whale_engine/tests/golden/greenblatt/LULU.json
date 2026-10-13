@@ -1,5 +1,5 @@
 {
-  "confidence": 90,
+  "confidence": 95,
   "data_quality": {
     "checks_run": [
       "ttm_stitched_warnings",
@@ -12,10 +12,9 @@
       "manual_market_cap",
       "restatement_402"
     ],
-    "confidence_penalty": 10,
+    "confidence_penalty": 5,
     "dimensions_affected": [
-      "earnings_yield",
-      "return_on_capital"
+      "earnings_yield"
     ],
     "errors": [],
     "warnings": [
@@ -279,7 +278,7 @@
       "market_data": "cboe:delayed_quotes (keyless CDN, delayed close)"
     }
   },
-  "rubric_version": 1,
+  "rubric_version": 2,
   "score": {
     "max": 10,
     "max_possible": 10,

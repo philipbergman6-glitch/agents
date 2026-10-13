@@ -1,6 +1,6 @@
 """Offline phase: pure function of one snapshot -> full-diagnostic dict.
 
-Joel Greenblatt magic-formula rubric v1 (max 10 = return on capital 5 +
+Joel Greenblatt magic-formula rubric v2 (max 10 = return on capital 5 +
 earnings yield 5), scoring ONE company on ABSOLUTE tests — not the book's
 ranked universe. The anchor is Greenblatt's own single-company rule: compare
 the earnings yield to a risk-free bond floor (The Little Book That Beats the
@@ -32,7 +32,14 @@ research doc). Decisions locked on the rubric ticket:
   fails it caps at neutral with a pinned detail line
 - confidence: Graham distance rule (50–100, saturating at 0.30) minus 5 per
   WARN-affected dimension, floor 50 (Buffett v3 B2); a capped signal
-  measures the same way (Lynch precedent)
+  measures the same way (Lynch precedent). Rubric v2 (judgment review,
+  owner-signed 2026-10-13): the generic `ttm_stitched` WARN is exempt from
+  the penalty — it fires on `operating_income` for every pinned name and
+  with only two dimensions saturated the deduction at -10 on every
+  diagnosis, discriminating nothing. It keeps its dimensions_affected on
+  the warning (truth-in-scoring). The escalations (`ttm_stale_window`,
+  `fundamentals_stale_vs_price`, `restatement_402`, manual market cap) and
+  the missing-input flags still cost confidence.
 - walk away (MissingDataError, reason string) on SIC 6000–6499, 6700–6799
   (banks, S&L, insurance, brokers, funds) and 4900–4999 (utilities) — EBIT
   and working capital mean nothing there. SIC 6199 (non-depository credit,
@@ -57,7 +64,7 @@ from ..errors import MissingDataError
 
 # Bumping this needs a signed judgment review, like the other rubrics: every
 # diagnosis carries it so a narration can be traced to the exact rule set.
-RUBRIC_VERSION = 1
+RUBRIC_VERSION = 2
 
 MAX_SCORE = 10
 
@@ -65,6 +72,10 @@ BULLISH_SCORE = 0.70
 BEARISH_SCORE = 0.30
 MAX_BOUNDARY_DIST = 0.30
 DATA_QUALITY_PENALTY = 5  # per WARN-affected dimension (Buffett v3 B2)
+# WARN codes that describe the normal state of EDGAR TTM data rather than a
+# degradation; they ride data_quality with dimensions_affected but do not
+# cost confidence (rubric v2).
+PENALTY_EXEMPT_CODES = frozenset({"ttm_stitched"})
 
 ROC_HIGH = 0.25  # declared repurpose of the p.136 ROA screener bar
 ROC_MID = 0.15  # owner judgment, unsourced
@@ -236,6 +247,21 @@ def compute_signal(score_pct: float, ey_after_tax: float | None) -> str:
     if score_pct <= BEARISH_SCORE:
         return "bearish"
     return "neutral"
+
+
+def penalized_dimensions(warnings: list[dict], flags: list[str]) -> list[str]:
+    """Scored dimensions that cost confidence: those named by any WARN whose
+    code is not penalty-exempt, plus those fed by a missing-input flag
+    (`<field>: missing, ...`). Sorted for determinism."""
+    affected: set[str] = set()
+    for w in warnings:
+        if w.get("code") in PENALTY_EXEMPT_CODES:
+            continue
+        affected |= set(w.get("dimensions_affected", []))
+    for fl in flags:
+        prefix, _, _rest = fl.partition(": ")
+        affected |= set(_FIELD_DIMENSIONS.get(prefix, []))
+    return sorted(affected)
 
 
 def compute_confidence(score_pct: float, affected_dimensions: list[str]) -> int:
@@ -427,12 +453,7 @@ def diagnose(snapshot: dict) -> dict:
         )
 
     data_quality = _link_data_quality(validation.data_quality(findings, checks_run))
-    affected: set[str] = set()
-    for w in data_quality["warnings"]:
-        affected |= set(w["dimensions_affected"])
-    for fl in flags:
-        prefix, _, _rest = fl.partition(": ")
-        affected |= set(_FIELD_DIMENSIONS.get(prefix, []))
+    affected = penalized_dimensions(data_quality["warnings"], flags)
 
     def _r(v):
         return None if v is None else round(v, 4)
@@ -441,7 +462,7 @@ def diagnose(snapshot: dict) -> dict:
         "ticker": snapshot["ticker"],
         "rubric_version": RUBRIC_VERSION,
         "signal": signal,
-        "confidence": compute_confidence(score_pct, sorted(affected)),
+        "confidence": compute_confidence(score_pct, affected),
         "score": {
             "total": total,
             "max": MAX_SCORE,
@@ -470,7 +491,7 @@ def diagnose(snapshot: dict) -> dict:
         "flags": flags,
         "data_quality": {
             **data_quality,
-            "dimensions_affected": sorted(affected),
+            "dimensions_affected": affected,
             "confidence_penalty": DATA_QUALITY_PENALTY * len(affected),
         },
         "provenance": {
