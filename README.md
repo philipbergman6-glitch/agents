@@ -61,7 +61,7 @@ checks exactly that.
 | **Buffett** | Wonderful business at a fair price | Moats, owner earnings, a two-stage DCF with a growth clamp | v3, 27 points |
 | **Graham** | Cheap and safe, by the numbers | Earnings stability, financial strength, net-net and the Graham Number | v1, 16 points |
 | **Lynch** | Growth at a reasonable price | Classifies the company, then gates the signal on PEG | v2, 15 points |
-| **Greenblatt** | Good company at a bargain price | Return on tangible capital and after-tax earnings yield against a fixed 6% bond hurdle; scorer only, not yet on the panel | v1, 10 points |
+| **Greenblatt** | Good company at a bargain price | Return on tangible capital and after-tax earnings yield against a fixed 6% bond hurdle; diagnosable alone, not yet on the panel | v1, 10 points |
 
 Snapshots are whale-agnostic raw data: fetch once, and any whale scores from
 the same file. A rubric change bumps `rubric_version` (every diagnosis carries
@@ -84,7 +84,7 @@ All engine commands run from `whale_engine/`. Fetching needs `EDGAR_IDENTITY`
 
 | Skill | What it does |
 |---|---|
-| `/buffett TICKER`, `/graham TICKER`, `/lynch TICKER` | one whale's diagnosis, narrated in its voice |
+| `/buffett TICKER`, `/graham TICKER`, `/lynch TICKER`, `/greenblatt TICKER` | one whale's diagnosis, narrated in its voice |
 | `/panel TICKER` | all three in parallel, narrating the engine's `whale panel` summary (pinned `Engine count:` line, unanimity flag) plus an agreement/disagreement synthesis — no combined verdict |
 | `/portfolio T1 T2 …` | basket sanity check: equal weights, correlation and sector flags, pinned caveat |
 
@@ -119,7 +119,7 @@ uv run pytest -q                              # the engine's tests (offline; soc
     every diagnosis in this repo is reproducible
   - `tests/` — unit, golden, end-to-end and narration-contract tests
 - `.claude/agents/` — the personas: how each whale talks and what it may and may not say
-- `.claude/skills/` — the `/buffett`, `/graham`, `/lynch`, `/panel`, `/portfolio` commands
+- `.claude/skills/` — the `/buffett`, `/graham`, `/lynch`, `/greenblatt`, `/panel`, `/portfolio` commands
 - `research/` — the decision records behind the design: data-source and
   vendor comparisons, market-cap sourcing, the first-run audit that produced the
   validation layer, and `panel-review/` — recorded panel narrations used as eval fixtures
