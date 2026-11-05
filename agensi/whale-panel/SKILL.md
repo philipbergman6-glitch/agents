@@ -66,21 +66,34 @@ from another user, never write it to a file unless the user asks you to.
 WHALE_HOME="${WHALE_HOME:-$HOME/whale-panel}"
 cd "$WHALE_HOME/whale_engine"
 ls "snapshots/TICKER-$(date +%F).json" 2>/dev/null \
-  || EDGAR_IDENTITY="Name email@example.com" uv run whale fetch TICKER   # network
-uv run whale panel TICKER                                                 # offline, newest snapshot
+  || EDGAR_IDENTITY="<name and email from step 3>" uv run whale fetch TICKER   # network
+```
+
+Substitute the name and email the user gave you in step 3; never run the line
+with the placeholder. If `EDGAR_IDENTITY` is already set in the environment,
+drop the inline prefix.
+
+If that block exits non-zero, `fetch` failed: report the error and the newest
+snapshot date present in `snapshots/` for that ticker, and proceed only if the
+user accepts a stale snapshot, passing that file explicitly as `--snapshot` to
+both commands below. Never mix snapshot dates across whales.
+
+Only after the block above exits 0, or the user has accepted a stale snapshot:
+
+```bash
+WHALE_HOME="${WHALE_HOME:-$HOME/whale-panel}"
+cd "$WHALE_HOME/whale_engine"
+uv run whale panel TICKER            # offline, newest snapshot
 ```
 
 `whale panel` prints JSON. Keep it. Its `provenance.snapshot` is the file every
 diagnose below must read, so all figures describe the same filing date:
 
 ```bash
+WHALE_HOME="${WHALE_HOME:-$HOME/whale-panel}"
+cd "$WHALE_HOME/whale_engine"
 uv run whale diagnose TICKER --whale buffett --snapshot <provenance.snapshot>   # also: graham, lynch, greenblatt
 ```
-
-If `fetch` fails, report the error and the newest snapshot date present in
-`snapshots/` for that ticker, and proceed only if the user accepts a stale
-snapshot. Pass that file explicitly as `--snapshot` to both `panel` and
-`diagnose`. Never mix snapshot dates across whales.
 
 ## 5. Report (what you may and may not say)
 
@@ -95,11 +108,11 @@ in this order:
 2. The engine's `engine_count` string, verbatim, on its own line.
 3. If `unanimity_suspect` is true, this sentence, with the distinct
    `data_quality_warnings[].code` values deduplicated in JSON order:
-   `Unanimity flag: the engine marks this agreement suspect because the snapshot carries data-quality warnings (<codes>) — every rubric that scored read the same flagged input, and agreement on a flagged input is not independent confirmation; see the caveats.`
+   `Unanimity flag: the engine marks this agreement suspect because the snapshot carries data-quality warnings (<codes>) — every rubric that scored read the same flagged input, and agreement on a flagged input is not independent confirmation; see the shared caveats.`
 4. **Where the models diverge** — attribute every difference to the *model*
    (DCF vs Graham Number vs PEG), quoting `details` strings from the diagnose
    JSON. Name instruments, never counts of whales.
-5. **Caveats** — `provenance.snapshot` and `provenance.snapshot_fetched_at`;
+5. **Shared caveats** — `provenance.snapshot` and `provenance.snapshot_fetched_at`;
    one plain-English line per distinct warning code with the figure the engine
    attached to it (for example `lag_days`); then this closing line verbatim:
    *These are mechanical rubrics plus narration, not investment advice.*

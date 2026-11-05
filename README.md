@@ -52,7 +52,7 @@ Under the narration is plain JSON. The Buffett row above comes from this
                 "dcf_stages": {"raw_growth_cagr": 0.0761952516499298, "stage1_growth": 0.05333667615495086,
                                "growth_clamped": false, "discount_rate": 0.1}},
   "data_quality": {"warnings": [{"code": "ttm_stitched", "dimensions_affected": ["fundamentals", "valuation"]},
-                                {"code": "fundamentals_stale_vs_price"}]}
+                                {"code": "fundamentals_stale_vs_price", "dimensions_affected": ["fundamentals", "management", "valuation"]}]}
 }
 ```
 
