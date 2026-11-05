@@ -16,6 +16,16 @@ suite checks the narrations against the numbers.
 
 ## What it looks like
 
+`/panel KO` in Claude Code, against a pinned snapshot. Three rubrics, three
+routes to the same verdict, and an engine flag saying why that agreement is
+weaker than it looks:
+
+![Whale Panel narrating KO: Buffett, Graham and Lynch each bearish by a different model, engine count 0/0/3, unanimity flagged for stitched TTM data](docs/panel-KO.png)
+
+<sub>Recorded narration, reproduced verbatim from `research/panel-review/KO-2026-07-27-panel.md`.</sub>
+
+Under the narration is plain JSON:
+
 `uv run whale diagnose KO --whale buffett --snapshot snapshots/KO-2026-08-04.json`
 (committed snapshot, offline, deterministic — excerpt):
 
