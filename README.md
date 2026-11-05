@@ -16,18 +16,30 @@ suite checks the narrations against the numbers.
 
 ## What it looks like
 
-`uv run whale diagnose KO --whale buffett --snapshot snapshots/KO-2026-08-04.json`
-(committed snapshot, offline, deterministic — excerpt):
+A recorded `/panel KO` run against a pinned snapshot. Three rubrics, three
+routes to the same verdict, and an engine flag saying why that agreement is
+weaker than it looks:
+
+<img src="docs/panel-KO.png" width="900" alt="Terminal card of a recorded /panel KO narration: three bearish verdicts by three different models, the engine count line, and the unanimity flag">
+
+<sub>Typeset from `research/panel-review/KO-2026-07-27-panel.md`, abridged:
+per-whale gists, the agreement slot and the shared caveats are omitted; the
+text shown is verbatim and the numbers are unchanged.</sub>
+
+Under the narration is plain JSON. The Buffett row above comes from this
+(committed snapshot, offline, deterministic; excerpt):
+
+`uv run whale diagnose KO --whale buffett --snapshot snapshots/KO-2026-07-27.json`
 
 ```json
 {
   "ticker": "KO",
   "rubric_version": 3,
   "signal": "bearish",
-  "confidence": 55,
-  "confidence_detail": {"base": 70, "data_quality_penalty": 15,
+  "confidence": 50,
+  "confidence_detail": {"base": 60, "data_quality_penalty": 15,
                         "affected_dimensions": ["fundamentals", "management", "valuation"]},
-  "score": {"total": 16, "max": 27, "max_possible": 27, "pct": 0.5926},
+  "score": {"total": 18, "max": 27, "max_possible": 27, "pct": 0.6667},
   "dimensions": {
     "moat": {"score": 3, "max": 5, "details": [
       "ROE > 15% in 9/10 periods (avg 36.8%) ✓ (+2)",
@@ -36,16 +48,16 @@ suite checks the narrations against the numbers.
       "Performance stability 79.8% > 70% ✓ (+1)"]}
   },
   "valuation": {"owner_earnings": 14740350000.0, "intrinsic_value": 193960263457.88647,
-                "market_cap": 373713622827.48, "margin_of_safety": -0.481,
+                "market_cap": 353879178880.5, "margin_of_safety": -0.4519,
                 "dcf_stages": {"raw_growth_cagr": 0.0761952516499298, "stage1_growth": 0.05333667615495086,
                                "growth_clamped": false, "discount_rate": 0.1}},
-  "data_quality": {"warnings": [{"code": "ttm_stitched", "dimensions_affected": ["valuation"]},
-                                {"code": "fundamentals_stale_vs_price"}]}
+  "data_quality": {"warnings": [{"code": "ttm_stitched", "dimensions_affected": ["fundamentals", "valuation"]},
+                                {"code": "fundamentals_stale_vs_price", "dimensions_affected": ["fundamentals", "management", "valuation"]}]}
 }
 ```
 
-The Buffett persona's narration of a comparable diagnosis, from a recorded
-panel review (`research/panel-review/CCL-2026-07-29-panel.md`):
+A single whale's full voice, by contrast with the panel's compressed rows
+(Buffett on CCL, from `research/panel-review/CCL-2026-07-29-panel.md`):
 
 > **Buffett** — bearish, 53/100 confidence, 7/22 (pricing power excluded): moat 0/5 across the board; margin of safety −6.35%.
 >
